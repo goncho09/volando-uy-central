@@ -1,15 +1,21 @@
 package clases;
 
 
+import datatypes.DtAerolinea;
+import datatypes.DtUsuario;
+
+import java.util.List;
 
 public class Aerolinea extends Usuario {
     private String descripcion;
     private String linkWeb;
+    private List<RutaDeVuelo> rutasDeVuelo;
 
-    public Aerolinea(String nickname,String nombre, String email,String descripcion, String linkWeb){
-        super(nickname, nombre, email);
-        this.descripcion = descripcion;
-        this.linkWeb = linkWeb;
+    public Aerolinea(DtAerolinea aerolinea) {
+        super(new DtUsuario(aerolinea.getNickname(), aerolinea.getNombre(), aerolinea.getEmail()));
+        this.descripcion = aerolinea.getDescripcion();
+        this.linkWeb = aerolinea.getLinkWeb();
+        this.rutasDeVuelo = aerolinea.getRutasDeVuelo();
     }
 
     public String getDescripcion() {

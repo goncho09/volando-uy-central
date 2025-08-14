@@ -1,14 +1,16 @@
 package clases;
 
+import datatypes.DtUsuario;
+
 public class Usuario {
     protected String nickname;
     protected String nombre;
     protected String email;
 
-    public Usuario(String nickname,String nombre, String email){
-        this.nickname = nickname;
-        this.nombre = nombre;
-        this.email = email;
+    public Usuario(DtUsuario usuario){
+        this.nickname = usuario.getNickname();
+        this.nombre = usuario.getNombre();
+        this.email = usuario.getEmail();
     }
 
     public String getNickname() {

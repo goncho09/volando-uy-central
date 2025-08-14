@@ -1,4 +1,6 @@
 import datatypes.DtFecha;
+import clases.ISistema;
+import clases.Factory;
 
 public class Main {
     public static void main(String[] args) {
@@ -7,6 +9,10 @@ public class Main {
         DtFecha fecha2 = new DtFecha(2,4,2003);
 
         System.out.println(fecha.equals(fecha2));
+
+        ISistema s1 = Factory.getSistema();
+
+        s1.ejecutar();
 
     }
 }

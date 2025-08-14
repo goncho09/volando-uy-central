@@ -1,7 +1,11 @@
 package clases;
 
+import datatypes.DtCliente;
 import datatypes.DtFecha;
+import datatypes.DtUsuario;
 import enums.TipoDocumento;
+
+import java.util.List;
 
 public class Cliente extends Usuario{
     private String apellido;
@@ -9,14 +13,16 @@ public class Cliente extends Usuario{
     private String nacionalidad;
     private TipoDocumento tipoDocumento;
     private int numeroDocumento;
+    private List<CompraPaquete> comprasPaquetes;
 
-    public Cliente(String nickname, String nombre, String email, String apellido, DtFecha fechaNacimiento, String nacionalidad, TipoDocumento tipoDocumento, int numeroDocumento) {
-        super(nickname, nombre, email);
+    public Cliente(DtCliente cliente) {
+        super(new DtUsuario(cliente.getNickname(), cliente.getNombre(), cliente.getEmail()));
         this.apellido = apellido;
         this.fechaNacimiento = fechaNacimiento;
         this.nacionalidad = nacionalidad;
         this.tipoDocumento = tipoDocumento;
         this.numeroDocumento = numeroDocumento;
+        this.comprasPaquetes = comprasPaquetes;
     }
 
     public String getApellido() {
@@ -57,5 +63,13 @@ public class Cliente extends Usuario{
 
     public void setNumeroDocumento(int numeroDocumento) {
         this.numeroDocumento = numeroDocumento;
+    }
+
+    public List<CompraPaquete> getComprasPaquetes() {
+        return comprasPaquetes;
+    }
+
+    public void setComprasPaquetes(List<CompraPaquete> comprasPaquetes) {
+        this.comprasPaquetes = comprasPaquetes;
     }
 }
