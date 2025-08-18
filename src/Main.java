@@ -1,3 +1,4 @@
+import datatypes.DtCategoria;
 import datatypes.DtFecha;
 import clases.ISistema;
 import clases.Factory;
@@ -27,15 +28,17 @@ public class Main extends JFrame {
 
         new Main();
 
-        System.out.println("hgoaññ");
-        DtFecha fecha = new DtFecha(1,4,2003);
-        DtFecha fecha2 = new DtFecha(2,4,2003);
-
-        System.out.println(fecha.equals(fecha2));
-
         ISistema s1 = Factory.getSistema();
 
-        s1.ejecutar();
+
+        DtCategoria cat1 = new DtCategoria("Running");
+        DtCategoria cat2 = new DtCategoria("Salto Montaña");
+        DtCategoria cat3 = new DtCategoria("Tirolesa");
+
+        s1.altaCategoria(cat1);
+        //s1.altaCategoria(cat1);
+        s1.altaCategoria(cat2);
+        s1.altaCategoria(cat3);
 
     }
 
