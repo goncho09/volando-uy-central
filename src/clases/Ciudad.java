@@ -1,22 +1,23 @@
 package clases;
 
+import datatypes.DtCiudad;
 import datatypes.DtFecha;
 
 public class Ciudad {
     private String nombre;
-    private String ciudad;
+    private String pais;
     private String aeropuerto;
     private String descripcion;
     private String sitioWeb;
     private DtFecha fechaAlta;
 
-    public Ciudad(String nombre, String ciudad, String aeropuerto, String descripcion, String sitioWeb, DtFecha fechaAlta) {
-        this.nombre = nombre;
-        this.ciudad = ciudad;
-        this.aeropuerto = aeropuerto;
-        this.descripcion = descripcion;
-        this.sitioWeb = sitioWeb;
-        this.fechaAlta = fechaAlta;
+    public Ciudad(DtCiudad ciudad) {
+        this.nombre = ciudad.getNombre();
+        this.pais = ciudad.getPais();
+        this.aeropuerto = ciudad.getAeropuerto();
+        this.descripcion = ciudad.getDescripcion();
+        this.sitioWeb = ciudad.getSitioWeb();
+        this.fechaAlta = ciudad.getFechaAlta();
     }
 
     public String getNombre() {
@@ -27,12 +28,12 @@ public class Ciudad {
         this.nombre = nombre;
     }
 
-    public String getCiudad() {
-        return ciudad;
+    public String getPais() {
+        return pais;
     }
 
-    public void setCiudad(String ciudad) {
-        this.ciudad = ciudad;
+    public void setPais(String ciudad) {
+        this.pais = pais;
     }
 
     public String getAeropuerto() {
