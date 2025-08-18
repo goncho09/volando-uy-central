@@ -6,6 +6,7 @@ import datatypes.DtPaquete;
 
 import java.util.LinkedHashMap;
 import java.util.List;
+import datatypes.DtVuelo;
 
 public interface ISistema {
     List<DtPaquete> listarPaquetes();
@@ -14,6 +15,7 @@ public interface ISistema {
 
     void altaCategoria(DtCategoria categoria);
     void altaCiudad(DtCiudad ciudad);
+    void consultaVuelo(DtVuelo vuelo);
 
     // TEMPORAL
     List<Ciudad> getCiudades();

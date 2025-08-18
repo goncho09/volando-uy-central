@@ -3,6 +3,7 @@ package clases;
 import datatypes.DtCategoria;
 import datatypes.DtCiudad;
 import datatypes.DtPaquete;
+import datatypes.DtVuelo;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -15,6 +16,7 @@ public class Sistema implements ISistema {
     private Map<String, Ciudad> ciudades;
     private Map<String, Usuario> usuarios;
     private Map<String, Paquete> paquetes;
+    private Map<String, Vuelo> vuelos;
 
     private Paquete paqueteSeleccionado;
 
@@ -93,5 +95,12 @@ public class Sistema implements ISistema {
             listaCategorias.add(c);
         }
         return listaCategorias;
+    }
+
+    public void consultaVuelo(DtVuelo vuelo) {
+        Vuelo v = this.vuelos.get(vuelo.getNombre());
+        if (v == null) {
+            throw new IllegalArgumentException("Vuelo no encontrado.");
+        }
     }
 }
