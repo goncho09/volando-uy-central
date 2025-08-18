@@ -1,21 +1,27 @@
 package clases;
 
-import datatypes.DtCategoria;
-import datatypes.DtCiudad;
-import datatypes.DtPaquete;
+import datatypes.*;
 
-import java.util.LinkedHashMap;
 import java.util.List;
-import datatypes.DtVuelo;
 
 public interface ISistema {
+
     List<DtPaquete> listarPaquetes();
     void seleccionarPaquete(String nombre);
     DtPaquete getPaquete();
 
     void altaCategoria(DtCategoria categoria);
+
     void altaCiudad(DtCiudad ciudad);
+
     void consultaVuelo(DtVuelo vuelo);
+
+    void registrarCliente(DtCliente cliente);
+    void modificarCliente(DtCliente cliente);
+    void registrarAerolinea(DtAerolinea aerolinea);
+    void modificarAerolinea(DtAerolinea aerolinea);
+    void cancelarAltaUsuario();
+    void confirmarAltaUsuario();
 
     // TEMPORAL
     List<Ciudad> getCiudades();

@@ -2,6 +2,7 @@
 import clases.*;
 import enums.TipoAsiento;
 import datatypes.*;
+import enums.TipoDocumento;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -65,7 +66,7 @@ public class Main extends JFrame {
          */
 
         s.altaCategoria(cat1);
-        //s.altaCategoria(cat1);
+//        s.altaCategoria(cat1);
         s.altaCategoria(cat2);
         s.altaCategoria(cat3);
 
@@ -104,6 +105,13 @@ public class Main extends JFrame {
             System.out.println(p.getNombre() + " " + p.getDescripcion() + " " + p.getValidezDias() + " " + p.getDescuento() + " " + p.getCosto());
         }
 
+        DtCliente cliente1 = new DtCliente("gonzalo95", "Gonzalo", "maria88@hotmail.com", "Larrica", fecha1, "Uruguay", TipoDocumento.CEDULA, 51234567);
+        DtCliente cliente2 = new DtCliente("gonzalo945", "María", "maria88@hotmail.com", "Fernández", fecha2, "Argentina", TipoDocumento.PASAPORTE, 98765432);
+        DtCliente cliente3 = new DtCliente("juan2000", "Juan", "juan2000@yahoo.com", "Pérez", fecha2, "Chile", TipoDocumento.CEDULA_EXTRANJERA, 45678901);
+
+        s.registrarCliente(cliente1);
+        s.registrarCliente(cliente3);
+        s.registrarCliente(cliente2);
 
         /*Consulta de vuelos esto no va funciona porque no estan las rutas de vuelo
         s1.consultaVuelo(vuelo1);

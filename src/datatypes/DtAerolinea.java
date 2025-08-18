@@ -2,6 +2,7 @@ package datatypes;
 
 import clases.RutaDeVuelo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DtAerolinea extends DtUsuario {
@@ -9,11 +10,18 @@ public class DtAerolinea extends DtUsuario {
     private String linkWeb;
     private List<RutaDeVuelo> rutasDeVuelo;
 
-    public DtAerolinea(String nickname, String nombre, String email, String descripcion, String linkWeb, List<RutaDeVuelo> rutasDeVuelo) {
+    public DtAerolinea(String nickname, String nombre, String email, String descripcion) {
+        super(nickname, nombre, email);
+        this.descripcion = descripcion;
+        this.linkWeb = "";
+        this.rutasDeVuelo = new ArrayList<>();
+    }
+
+    public DtAerolinea(String nickname, String nombre, String email, String descripcion, String linkWeb) {
         super(nickname, nombre, email);
         this.descripcion = descripcion;
         this.linkWeb = linkWeb;
-        this.rutasDeVuelo = rutasDeVuelo;
+        this.rutasDeVuelo = new ArrayList<>();
     }
 
     public String getDescripcion() {
