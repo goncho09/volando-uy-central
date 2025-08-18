@@ -13,16 +13,29 @@ public class Main extends JFrame {
     private JTabbedPane tabbedPane1;
     private JTabbedPane tabbedPane2;
     private JTabbedPane tabbedPane3;
+    private JComboBox comboBox2;
+    private JTextField textField1;
+    private JTextField textField2;
+    private JSpinner spinner1;
+    private JSpinner spinner2;
+    private JSpinner spinner3;
+    private JSpinner spinner4;
+    private JSpinner spinner5;
+    private JComboBox comboBox1;
+    private JPanel formVuelo;
+    private JPanel fechaField;
+    private JButton crearVueloButton;
 
     public Main() {
-        add(menuPrincipal);
-
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(800, 600);
         setVisible(true);
         setResizable(false);
         setLocationRelativeTo(null);
         setTitle("Admin Dashboard");
+        add(menuPrincipal);
+
+
     }
 
     public static void main(String[] args) {
