@@ -1,8 +1,11 @@
+
+import clases.*;
+import enums.TipoAsiento;
 import datatypes.*;
-import clases.ISistema;
-import clases.Factory;
 
 import javax.swing.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Main extends JFrame {
 
@@ -40,7 +43,7 @@ public class Main extends JFrame {
 
         new Main();
 
-        ISistema s1 = Factory.getSistema();
+        ISistema s = Factory.getSistema();
 
 
         DtCategoria cat1 = new DtCategoria("Running");
@@ -61,16 +64,46 @@ public class Main extends JFrame {
         DtVuelo vuelo3 = new DtVuelo("Vuelo3", fecha1, hora1, 30, 10, fecha2);
          */
 
-        //Alta de categorías
-        s1.altaCategoria(cat1);
-        //s1.altaCategoria(cat1);
-        s1.altaCategoria(cat2);
-        s1.altaCategoria(cat3);
+        s.altaCategoria(cat1);
+        //s.altaCategoria(cat1);
+        s.altaCategoria(cat2);
+        s.altaCategoria(cat3);
 
-        //Alta de ciudades
-        s1.altaCiudad(c1);
-        s1.altaCiudad(c2);
-        s1.altaCiudad(c3);
+        s.altaCiudad(c1);
+        s.altaCiudad(c2);
+        s.altaCiudad(c3);
+
+        DtHora hora = new DtHora(10,0);
+
+        RutaDeVuelo ruta1 = new RutaDeVuelo(new DtRuta("Vuelo A1", "Descripcion A1", hora, 100, 200, 20, fecha1,s.getCategorias(), s.getCiudades()));
+        RutaDeVuelo ruta2 = new RutaDeVuelo(new DtRuta("Vuelo A2", "Descripcion A2", hora, 120, 220, 25, fecha1, s.getCategorias(), s.getCiudades()));
+
+        List<RutaDeVuelo> rutasPaquete1 = new ArrayList<>();
+        rutasPaquete1.add(ruta1);
+        rutasPaquete1.add(ruta2);
+
+        RutaEnPaquete rep1 = new RutaEnPaquete(2, TipoAsiento.TURISTA, ruta1);
+        RutaEnPaquete rep2 = new RutaEnPaquete(1, TipoAsiento.EJECUTIVO, ruta2);
+
+        List<RutaEnPaquete> rutasEnPaquete1 = new ArrayList<>();
+        rutasEnPaquete1.add(rep1);
+        rutasEnPaquete1.add(rep2);
+
+        DtPaquete p1 = new DtPaquete("Paquete A", "Descripcion A", 10, 5, 100,rutasPaquete1,rutasEnPaquete1);
+        DtPaquete p2 = new DtPaquete("Paquete B", "Descripcion B", 15, 10, 150, rutasPaquete1, rutasEnPaquete1);
+        DtPaquete p3 = new DtPaquete("Paquete C", "Descripcion C", 7, 3, 80, rutasPaquete1, rutasEnPaquete1);
+
+        // TEMPORAL
+        s.altaPaquete(p1);
+        s.altaPaquete(p2);
+        s.altaPaquete(p3);
+        List <DtPaquete> paquetes = s.listarPaquetes();
+
+        for (int i = 0; i < paquetes.size(); i++) {
+            DtPaquete p = paquetes.get(i);
+            System.out.println(p.getNombre() + " " + p.getDescripcion() + " " + p.getValidezDias() + " " + p.getDescuento() + " " + p.getCosto());
+        }
+
 
         /*Consulta de vuelos esto no va funciona porque no estan las rutas de vuelo
         s1.consultaVuelo(vuelo1);
