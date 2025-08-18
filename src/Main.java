@@ -1,10 +1,13 @@
-
 import clases.*;
 import enums.TipoAsiento;
 import datatypes.*;
 import enums.TipoDocumento;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +30,12 @@ public class Main extends JFrame {
     private JPanel formVuelo;
     private JPanel fechaField;
     private JButton crearVueloButton;
+    private JPanel vueloPanel;
+    private JComboBox comboBox3;
+    private JComboBox comboBox4;
+    private JComboBox comboBox5;
+    private JButton consultarVueloButton;
+
 
     public Main() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -37,7 +46,26 @@ public class Main extends JFrame {
         setTitle("Admin Dashboard");
         add(menuPrincipal);
 
+        consultarVueloButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                DtFecha fechaPrueba = new DtFecha(3,12,2025);
+                DtHora horaPrueba = new DtHora(10, 30);
+                DtFecha fechaAltaPrueba = new DtFecha(18,8,2025);
+                DtVuelo dataVuelo = new DtVuelo("A1", fechaPrueba, horaPrueba, 160, 40, fechaAltaPrueba);
 
+                JFrame vuelo = new dataVuelo(dataVuelo);
+                setEnabled(false);
+
+                vuelo.addWindowListener(new WindowAdapter() {
+                    @Override
+                    public void windowClosing(WindowEvent e){
+                        setEnabled(true);
+                    };
+                });
+
+            }
+        });
     }
 
     public static void main(String[] args) {

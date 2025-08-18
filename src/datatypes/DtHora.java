@@ -24,4 +24,9 @@ public class DtHora {
     public void setMinuto(int minuto) {
         this.minuto = minuto;
     }
+
+    @Override
+    public String toString() {
+        return hora + ":" + minuto;
+    }
 }
