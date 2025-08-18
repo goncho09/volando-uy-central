@@ -3,6 +3,7 @@ package datatypes;
 import clases.CompraPaquete;
 import enums.TipoDocumento;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DtCliente extends DtUsuario{
@@ -13,14 +14,14 @@ public class DtCliente extends DtUsuario{
     private int numeroDocumento;
     private List<CompraPaquete> comprasPaquetes;
 
-    public DtCliente(String nickname, String nombre, String email,String apellido, DtFecha fechaNacimiento, String nacionalidad, TipoDocumento tipoDocumento, int numeroDocumento, List<CompraPaquete> comprasPaquetes) {
+    public DtCliente(String nickname, String nombre, String email,String apellido, DtFecha fechaNacimiento, String nacionalidad, TipoDocumento tipoDocumento, int numeroDocumento) {
         super(nickname, nombre, email);
         this.apellido = apellido;
         this.fechaNacimiento = fechaNacimiento;
         this.nacionalidad = nacionalidad;
         this.tipoDocumento = tipoDocumento;
         this.numeroDocumento = numeroDocumento;
-        this.comprasPaquetes = comprasPaquetes;
+        this.comprasPaquetes = new ArrayList<>();
     }
 
     public String getApellido() {
