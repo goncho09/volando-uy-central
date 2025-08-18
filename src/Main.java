@@ -1,4 +1,5 @@
 import datatypes.DtCategoria;
+import datatypes.DtCiudad;
 import datatypes.DtFecha;
 import clases.ISistema;
 import clases.Factory;
@@ -35,10 +36,21 @@ public class Main extends JFrame {
         DtCategoria cat2 = new DtCategoria("Salto Montaña");
         DtCategoria cat3 = new DtCategoria("Tirolesa");
 
+        DtFecha fecha1 = new DtFecha(18,8,2025);
+
+        DtCiudad c1 = new DtCiudad("Montevideo","Uruguay","Aeropuerto de Carrasco","Mucha rambla","www.aeropuerto-carrasco.uy",fecha1);
+        DtCiudad c2 = new DtCiudad("Buenos Aires", "Argentina", "Aeropuerto Jorge Newbery", "Puerto Madero", "www.aeroparque.com.ar", fecha1);
+        DtCiudad c3 = new DtCiudad("Santiago", "Chile", "Aeropuerto Arturo Merino Benítez", "Cerro San Cristóbal", "www.aeropuertosantiago.cl", fecha1);
+
+
         s1.altaCategoria(cat1);
         //s1.altaCategoria(cat1);
         s1.altaCategoria(cat2);
         s1.altaCategoria(cat3);
+
+        s1.altaCiudad(c1);
+        s1.altaCiudad(c2);
+        s1.altaCiudad(c3);
 
     }
 
