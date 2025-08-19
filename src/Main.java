@@ -35,6 +35,16 @@ public class Main extends JFrame {
     private JComboBox comboBox4;
     private JComboBox comboBox5;
     private JButton consultarVueloButton;
+    private JTextField textField3;
+    private JTextField textField4;
+    private JComboBox comboBox6;
+    private JTextField textField5;
+    private JTextField textField6;
+    private JTextField textField7;
+    private JButton CANCELARButton;
+    private JButton CONFIRMARButton;
+    private JButton consultarUsuarioButton;
+    private JTextField textField8;
 
 
     public Main() {
@@ -45,6 +55,7 @@ public class Main extends JFrame {
         setLocationRelativeTo(null);
         setTitle("Admin Dashboard");
         add(menuPrincipal);
+
 
         consultarVueloButton.addActionListener(new ActionListener() {
             @Override
