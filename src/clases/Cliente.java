@@ -1,9 +1,9 @@
 package clases;
 
-import datatypes.DtCliente;
-import datatypes.DtFecha;
-import datatypes.DtUsuario;
+import datatypes.*;
 import enums.TipoDocumento;
+
+import java.util.ArrayList;
 
 import java.util.List;
 
@@ -14,6 +14,8 @@ public class Cliente extends Usuario{
     private TipoDocumento tipoDocumento;
     private int numeroDocumento;
     private List<CompraPaquete> comprasPaquetes;
+    private List<Reserva> reservas = new ArrayList<>();
+
 
     public Cliente(DtCliente cliente) {
         super(new DtUsuario(cliente.getNickname(), cliente.getNombre(), cliente.getEmail()));
@@ -72,4 +74,40 @@ public class Cliente extends Usuario{
     public void setComprasPaquetes(List<CompraPaquete> comprasPaquetes) {
         this.comprasPaquetes = comprasPaquetes;
     }
+
+    public List<DtReserva> getReservas() {
+        List<DtReserva> dtReservas = new ArrayList<>();
+        for (Reserva reserva : this.reservas) {
+            dtReservas.add(new DtReserva(
+                    reserva.getFecha(),
+                    reserva.getTipoAsiento(),
+                    reserva.getCantPasajes(),
+                    reserva.getEquipajeExtra(),
+                    reserva.getCosto(),
+                    reserva.getPasajeros(),
+                    this,  // El cliente actual
+                    reserva.getVuelo(),
+                    reserva.getPaquete()
+            ));
+        }
+        return dtReservas;
+    }
+
+    public List<DtPaquete> getPaquetesAdquiridos() {
+        List<DtPaquete> dtPaquetes = new ArrayList<>();
+        if (comprasPaquetes != null) {
+            for (CompraPaquete compra : comprasPaquetes) {
+                Paquete paquete = compra.getPaquete();
+                dtPaquetes.add(new DtPaquete(
+                        paquete.getNombre(),
+                        paquete.getDescripcion(),
+                        paquete.getValidezDias(),
+                        paquete.getDescuento(),
+                        paquete.getCosto(),
+                ));
+            }
+        }
+        return dtPaquetes;
+    }
 }
+

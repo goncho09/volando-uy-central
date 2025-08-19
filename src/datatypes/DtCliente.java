@@ -2,8 +2,8 @@ package datatypes;
 
 import clases.CompraPaquete;
 import enums.TipoDocumento;
-
 import java.util.List;
+
 
 public class DtCliente extends DtUsuario{
     private String apellido;
@@ -70,4 +70,5 @@ public class DtCliente extends DtUsuario{
     public void setComprasPaquetes(List<CompraPaquete> comprasPaquetes) {
         this.comprasPaquetes = comprasPaquetes;
     }
+
 }

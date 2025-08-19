@@ -2,6 +2,7 @@ package datatypes;
 
 import clases.Cliente;
 import clases.Paquete;
+import clases.Reserva;
 import clases.Vuelo;
 import enums.TipoAsiento;
 
@@ -100,5 +101,9 @@ public class DtReserva {
 
     public void setPaquete(Paquete paquete) {
         this.paquete = paquete;
+    }
+
+    public List<Reserva> getReservas() {
+        return new ArrayList<>(this.reservas); // Retorna copia defensiva
     }
 }
