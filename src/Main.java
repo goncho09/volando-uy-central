@@ -44,10 +44,20 @@ public class Main extends JFrame {
     private JButton CANCELARButton;
     private JButton CONFIRMARButton;
     private JButton consultarUsuarioButton;
-    private JTextField textField8;
+    private JTextField webAltaCiudad;
+    private JButton btnConfirmarAltaCiudad;
+    private JTextField nombreAltaCiudad;
+    private JTextField paisAltaCiudad;
+    private JTextField aeropuertoAltaCiudad;
+    private JTextField descripcionAltaCiudad;
+    private JSpinner diaAltaciudad;
+    private JSpinner mesAltaCiudad;
+    private JSpinner añoAltaCiudad;
+    private ISistema s;
 
 
     public Main() {
+
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(800, 600);
         setVisible(true);
@@ -56,34 +66,16 @@ public class Main extends JFrame {
         setTitle("Admin Dashboard");
         add(menuPrincipal);
 
+        // Limitar Spinners
+        diaAltaciudad.setModel(new SpinnerNumberModel(1, 1, 31, 1));
+        mesAltaCiudad.setModel(new SpinnerNumberModel(1, 1, 12, 1));
+        añoAltaCiudad.setModel(new SpinnerNumberModel(2025, 1900, 2100, 1));
+        // Que no se puedan editar
+        ((JSpinner.DefaultEditor) diaAltaciudad.getEditor()).getTextField().setEditable(false);
+        ((JSpinner.DefaultEditor) mesAltaCiudad.getEditor()).getTextField().setEditable(false);
+        ((JSpinner.DefaultEditor) añoAltaCiudad.getEditor()).getTextField().setEditable(false);
 
-        consultarVueloButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                DtFecha fechaPrueba = new DtFecha(3,12,2025);
-                DtHora horaPrueba = new DtHora(10, 30);
-                DtFecha fechaAltaPrueba = new DtFecha(18,8,2025);
-                DtVuelo dataVuelo = new DtVuelo("A1", fechaPrueba, horaPrueba, 160, 40, fechaAltaPrueba);
-
-                JFrame vuelo = new dataVuelo(dataVuelo);
-                setEnabled(false);
-
-                vuelo.addWindowListener(new WindowAdapter() {
-                    @Override
-                    public void windowClosing(WindowEvent e){
-                        setEnabled(true);
-                    };
-                });
-
-            }
-        });
-    }
-
-    public static void main(String[] args) {
-
-        new Main();
-
-        ISistema s = Factory.getSistema();
+        s = Factory.getSistema();
 
 
         DtCategoria cat1 = new DtCategoria("Running");
@@ -152,11 +144,52 @@ public class Main extends JFrame {
         s.registrarCliente(cliente3);
         s.registrarCliente(cliente2);
 
-        /*Consulta de vuelos esto no va funciona porque no estan las rutas de vuelo
+         /*Consulta de vuelos esto no va funciona porque no estan las rutas de vuelo
         s1.consultaVuelo(vuelo1);
         s1.consultaVuelo(vuelo2);
         s1.consultaVuelo(vuelo3);
         */
+
+        consultarVueloButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                DtFecha fechaPrueba = new DtFecha(3,12,2025);
+                DtHora horaPrueba = new DtHora(10, 30);
+                DtFecha fechaAltaPrueba = new DtFecha(18,8,2025);
+                DtVuelo dataVuelo = new DtVuelo("A1", fechaPrueba, horaPrueba, 160, 40, fechaAltaPrueba);
+
+                JFrame vuelo = new dataVuelo(dataVuelo);
+                setEnabled(false);
+
+                vuelo.addWindowListener(new WindowAdapter() {
+                    @Override
+                    public void windowClosing(WindowEvent e){
+                        setEnabled(true);
+                    };
+                });
+
+            }
+        });
+
+        btnConfirmarAltaCiudad.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String sitioWeb = webAltaCiudad.getText();
+                int dia = (Integer) diaAltaciudad.getValue();
+                int mes = (Integer) mesAltaCiudad.getValue();
+                int año = (Integer) añoAltaCiudad.getValue();
+                if(nombreAltaCiudad.getText().isEmpty() && paisAltaCiudad.getText().isEmpty() && aeropuertoAltaCiudad.getText().isEmpty() && descripcionAltaCiudad.getText().isEmpty() && dia != 0 && mes != 0 && año != 0){
+                    System.out.println("faltan argumentos");
+                }else{
+                    s.altaCiudad(new DtCiudad(nombreAltaCiudad.getText(), paisAltaCiudad.getText(),aeropuertoAltaCiudad.getText(),descripcionAltaCiudad.getText(),sitioWeb,new DtFecha(dia,mes,año)));
+                }
+            }
+        });
+    }
+
+    public static void main(String[] args) {
+
+        new Main();
     }
 
     private void createUIComponents() {

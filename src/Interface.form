@@ -407,7 +407,7 @@
                       <text value="Pais:"/>
                     </properties>
                   </component>
-                  <component id="cb0c1" class="javax.swing.JTextField" default-binding="true">
+                  <component id="cb0c1" class="javax.swing.JTextField" binding="paisAltaCiudad">
                     <constraints>
                       <grid row="3" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                         <preferred-size width="150" height="-1"/>
@@ -431,19 +431,19 @@
                     <properties/>
                     <border type="none"/>
                     <children>
-                      <component id="940f0" class="javax.swing.JSpinner" default-binding="true">
+                      <component id="940f0" class="javax.swing.JSpinner" binding="mesAltaCiudad">
                         <constraints>
                           <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                         </constraints>
                         <properties/>
                       </component>
-                      <component id="65a06" class="javax.swing.JSpinner" default-binding="true">
+                      <component id="65a06" class="javax.swing.JSpinner" binding="añoAltaCiudad">
                         <constraints>
                           <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                         </constraints>
                         <properties/>
                       </component>
-                      <component id="42a04" class="javax.swing.JSpinner" default-binding="true">
+                      <component id="42a04" class="javax.swing.JSpinner" binding="diaAltaciudad">
                         <constraints>
                           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                         </constraints>
@@ -451,7 +451,7 @@
                       </component>
                     </children>
                   </grid>
-                  <component id="b4816" class="javax.swing.JTextField" default-binding="true">
+                  <component id="b4816" class="javax.swing.JTextField" binding="nombreAltaCiudad">
                     <constraints>
                       <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                         <preferred-size width="150" height="-1"/>
@@ -467,7 +467,7 @@
                       <text value="Aeropuerto:"/>
                     </properties>
                   </component>
-                  <component id="7f333" class="javax.swing.JTextField" default-binding="true">
+                  <component id="7f333" class="javax.swing.JTextField" binding="aeropuertoAltaCiudad">
                     <constraints>
                       <grid row="4" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                         <preferred-size width="150" height="-1"/>
@@ -483,7 +483,7 @@
                       <text value="Descripcion:"/>
                     </properties>
                   </component>
-                  <component id="c8572" class="javax.swing.JTextField" default-binding="true">
+                  <component id="c8572" class="javax.swing.JTextField" binding="descripcionAltaCiudad">
                     <constraints>
                       <grid row="5" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                         <preferred-size width="150" height="-1"/>
@@ -507,7 +507,7 @@
                           <text value="CANCELAR"/>
                         </properties>
                       </component>
-                      <component id="8c570" class="javax.swing.JButton" default-binding="true">
+                      <component id="8c570" class="javax.swing.JButton" binding="btnConfirmarAltaCiudad">
                         <constraints>
                           <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                         </constraints>
@@ -538,7 +538,7 @@
                       <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
                     </constraints>
                   </vspacer>
-                  <component id="ca65e" class="javax.swing.JTextField" binding="textField8" default-binding="true">
+                  <component id="ca65e" class="javax.swing.JTextField" binding="webAltaCiudad">
                     <constraints>
                       <grid row="6" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                         <preferred-size width="150" height="-1"/>
