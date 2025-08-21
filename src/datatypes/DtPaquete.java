@@ -15,6 +15,14 @@ public class DtPaquete {
     private List<RutaDeVuelo> rutasDeVuelo;
     private List<RutaEnPaquete> rutaEnPaquete;
 
+    public DtPaquete(String nombre, String descripcion, int validezDias, float descuento, float costo) {
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.validezDias = validezDias;
+        this.descuento = descuento;
+        this.costo = costo;
+    }
+
     public DtPaquete(String nombre, String descripcion, int validezDias, float descuento, float costo, List<RutaDeVuelo> rutasDeVuelo, List<RutaEnPaquete> rutaEnPaquete) {
         this.nombre = nombre;
         this.descripcion = descripcion;

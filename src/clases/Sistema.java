@@ -17,8 +17,8 @@ public class Sistema implements ISistema {
     private Map<String, Vuelo> vuelos;
      private List<Aerolinea> aerolineas = new ArrayList<>();
     private List<RutaDeVuelo> rutas = new ArrayList<>();
-    private List<Vuelo> vuelos = new ArrayList<>();
-    private List<Usuario> usuarios = new ArrayList<>();
+    private List<Vuelo> consultaVuelos = new ArrayList<>();
+    private List<Usuario> consultaUsuarios = new ArrayList<>();
     private Usuario usuarioSeleccionado; // Guarda selección actual
 
     private Paquete paqueteSeleccionado;
@@ -72,6 +72,8 @@ public class Sistema implements ISistema {
                         r.getCostoEjecutivo(),
                         r.getEquipajeExtra(),
                         r.getFechaAlta(),
+                        r.getCategorias(),
+                        r.getCiudades()
                 );
             }
         }
@@ -79,7 +81,7 @@ public class Sistema implements ISistema {
     }
 
     public DtVuelo consultarVuelo(String nickename) {
-        for (Vuelo v : vuelos) {
+        for (Vuelo v : consultaVuelos) {
             if (v.getNombre().equals(nickename)) {
                 return v.getDatos();
             }
@@ -114,7 +116,7 @@ public class Sistema implements ISistema {
     }
 
     public List<DtUsuario> listarUsuarios() {
-        return usuarios.stream()
+        return consultaUsuarios.stream()
                 .map(u -> {
                     if (u instanceof Cliente) {
                         Cliente c = (Cliente)u;
@@ -126,8 +128,7 @@ public class Sistema implements ISistema {
                                 c.getFechaNacimiento(),
                                 c.getNacionalidad(),
                                 c.getTipoDocumento(),
-                                c.getNumeroDocumento(),
-                                null
+                                c.getNumeroDocumento()
                         );
                     } else if (u instanceof Aerolinea) {
                         Aerolinea a = (Aerolinea)u;
@@ -136,8 +137,7 @@ public class Sistema implements ISistema {
                                 a.getNombre(),
                                 a.getEmail(),
                                 a.getDescripcion(),
-                                a.getLinkWeb(),
-                                null
+                                a.getLinkWeb()
                         );
                     }
                     return new DtUsuario(u.getNickname(), u.getNombre(), u.getEmail());
@@ -146,10 +146,9 @@ public class Sistema implements ISistema {
     }
 
     public void elegirUsuario(String nickname) {
-        this.usuarioSeleccionado = usuarios.stream()
-                .filter(u -> u.getNickname().equals(nickname))
-                .findFirst()
-                .orElse(null);
+        Usuario u  = this.usuarios.get(nickname);
+        if(u  == null ) { throw new IllegalArgumentException("No existe un usuario con ese nickname.");}
+        this.usuarioSeleccionado = u;
     }
 
     public DtUsuario getUsuarioSeleccionado() {
@@ -165,8 +164,7 @@ public class Sistema implements ISistema {
                     c.getFechaNacimiento(),
                     c.getNacionalidad(),
                     c.getTipoDocumento(),
-                    c.getNumeroDocumento(),
-                    null
+                    c.getNumeroDocumento()
             );
         } else if (usuarioSeleccionado instanceof Aerolinea) {
             Aerolinea a = (Aerolinea)usuarioSeleccionado;
@@ -175,8 +173,7 @@ public class Sistema implements ISistema {
                     a.getNombre(),
                     a.getEmail(),
                     a.getDescripcion(),
-                    a.getLinkWeb(),
-                    null
+                    a.getLinkWeb()
             );
         }
         return new DtUsuario(
@@ -219,7 +216,7 @@ public class Sistema implements ISistema {
                         paquete.getDescripcion(),
                         paquete.getValidezDias(),
                         paquete.getDescuento(),
-                        paquete.getCosto(),
+                        paquete.getCosto()
                 ));
             }
         }
@@ -249,13 +246,11 @@ public class Sistema implements ISistema {
                 ruta.getCostoEjecutivo(),
                 ruta.getEquipajeExtra(),
                 ruta.getFechaAlta(),
+                ruta.getCategorias(),
+                ruta.getCiudades()
         );
     }
 
-    @Override
-    public void ejecutar() {
-        System.out.println("Sistema ejecutando...");
-      
     public List<DtPaquete> listarPaquetes(){
         if(this.paquetes.isEmpty()) { throw new IllegalArgumentException("No hay paquetes.");}
         List <DtPaquete> dtPaquetes = new ArrayList<>();
