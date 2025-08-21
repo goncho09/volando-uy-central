@@ -84,4 +84,20 @@ public class RutaDeVuelo {
     public void setFechaAlta(DtFecha fechaAlta) {
         this.fechaAlta = fechaAlta;
     }
+
+    public List<Ciudad> getCiudades() {
+        return ciudades;
+    }
+
+    public void setCiudades(List<Ciudad> ciudades) {
+        this.ciudades = ciudades;
+    }
+
+    public List<Categoria> getCategorias() {
+        return categorias;
+    }
+
+    public void setCategorias(List<Categoria> categorias) {
+        this.categorias = categorias;
+    }
 }

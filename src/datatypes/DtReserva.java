@@ -103,7 +103,5 @@ public class DtReserva {
         this.paquete = paquete;
     }
 
-    public List<Reserva> getReservas() {
-        return new ArrayList<>(this.reservas); // Retorna copia defensiva
-    }
+
 }
