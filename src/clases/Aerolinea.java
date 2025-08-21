@@ -17,6 +17,7 @@ public class Aerolinea extends Usuario {
         this.rutasDeVuelo = new ArrayList<>();
     }
 
+
     public String getDescripcion() {
         return descripcion;
     }

@@ -78,4 +78,8 @@ public class Paquete {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
+
+    public DtPaquete getDatos(){
+        return new DtPaquete(this.getNombre(),this.getDescripcion(),this.getValidezDias(),this.getDescuento(),this.getCosto(),this.getRutasDeVuelo(),this.getRutaEnPaquete());
+    }
 }

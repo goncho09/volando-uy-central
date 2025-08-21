@@ -3,12 +3,32 @@ package clases;
 import datatypes.*;
 
 import java.util.List;
-import java.util.List;
-import java.util.Set;
 
 public interface ISistema {
-    void ejecutar();
-    // Consulta de Ruta de Vuelo
+
+    List<DtPaquete> listarPaquetes();
+    void seleccionarPaquete(String nombre);
+    DtPaquete getPaquete();
+
+    void altaCategoria(DtCategoria categoria);
+
+    void altaCiudad(DtCiudad ciudad);
+
+    void consultaVuelo(DtVuelo vuelo);
+
+    void registrarCliente(DtCliente cliente);
+    void modificarCliente(DtCliente cliente);
+    void registrarAerolinea(DtAerolinea aerolinea);
+    void modificarAerolinea(DtAerolinea aerolinea);
+    void cancelarAltaUsuario();
+    void confirmarAltaUsuario();
+
+    // TEMPORAL
+    List<Ciudad> getCiudades();
+    void altaPaquete(DtPaquete paquete);
+    List<Categoria> getCategorias();
+  
+  // Consulta de Ruta de Vuelo
     List<String> listarAerolineas();
     List<String> listarRutasDeAerolinea(String nickname);
     DtRuta consultarRuta(String nombre);
@@ -18,7 +38,6 @@ public interface ISistema {
     boolean existeRuta(String nombre);
     void altaRutaDeVuelo(String nickname, DtRuta datosRuta);
 
-    //Consulta de Usuario
     // Consulta de Usuario
     List<DtUsuario> listarUsuarios();
     void elegirUsuario(String nickname);
@@ -26,5 +45,4 @@ public interface ISistema {
     List<DtReserva> mostrarReservas();
     List<DtPaquete> mostrarPaquetes();
     List<DtRuta> mostrarRutasDeVuelo();
-
 }
