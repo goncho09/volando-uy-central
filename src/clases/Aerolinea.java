@@ -1,9 +1,8 @@
 package clases;
 
-
 import datatypes.DtAerolinea;
 import datatypes.DtUsuario;
-
+import java.util.ArrayList;
 import java.util.List;
 
 public class Aerolinea extends Usuario {
@@ -15,7 +14,7 @@ public class Aerolinea extends Usuario {
         super(new DtUsuario(aerolinea.getNickname(), aerolinea.getNombre(), aerolinea.getEmail()));
         this.descripcion = aerolinea.getDescripcion();
         this.linkWeb = aerolinea.getLinkWeb();
-        this.rutasDeVuelo = aerolinea.getRutasDeVuelo();
+        this.rutasDeVuelo = new ArrayList<>();
     }
 
 
@@ -34,4 +33,13 @@ public class Aerolinea extends Usuario {
     public void setLinkWeb(String linkWeb) {
         this.linkWeb = linkWeb;
     }
+
+    public List<RutaDeVuelo> getRutasDeVuelo() {
+        return rutasDeVuelo;
+    }
+
+    public void agregarRuta(RutaDeVuelo ruta) {
+        this.rutasDeVuelo.add(ruta);
+    }
+
 }

@@ -2,7 +2,6 @@ package datatypes;
 
 import clases.CompraPaquete;
 import enums.TipoDocumento;
-
 import java.util.ArrayList;
 import java.util.List;
 
