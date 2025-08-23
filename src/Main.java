@@ -35,6 +35,14 @@ public class Main extends JFrame {
     private JComboBox comboBox4;
     private JComboBox comboBox5;
     private JButton consultarVueloButton;
+    private JTextField textField3;
+    private JTextField textField4;
+    private JComboBox comboBox6;
+    private JTextField textField5;
+    private JTextField textField6;
+    private JTextField textField7;
+    private JButton CANCELARButton;
+    private JButton CONFIRMARButton;
     private JButton consultarUsuarioButton;
     private JTextField webAltaCiudad;
     private JButton btnConfirmarAltaCiudad;
@@ -66,13 +74,24 @@ public class Main extends JFrame {
     private JButton cancelarAltaAerolinea;
     private JButton confirmarAltaAerolinea;
     private JTabbedPane tabbedPane4;
-    private JTextField textField3;
-    private JComboBox comboBox6;
+    //private JTextField textField3;
+    //private JComboBox comboBox6;
     private JComboBox comboBox7;
     private JSpinner spinner6;
     private JSpinner spinner7;
     private JSpinner spinner8;
     private JComboBox comboBox8;
+    private JComboBox userType;
+    private JPanel reservaPanel;
+    private JComboBox aerolineaReserva;
+    private JComboBox rutaDeVueloReserva;
+    private JComboBox vueloReserva;
+    private JButton verVueloButton;
+    private JComboBox clienteReserva;
+    private JComboBox tipoAsientoReserva;
+    private JSpinner pasajesReserva;
+    private JSpinner equipajeExtraReserva;
+    private JButton hacerReservaButton;
     private ISistema s;
 
 
@@ -203,6 +222,44 @@ public class Main extends JFrame {
                 }else{
                     s.altaCiudad(new DtCiudad(nombreAltaCiudad.getText(), paisAltaCiudad.getText(),aeropuertoAltaCiudad.getText(),descripcionAltaCiudad.getText(),sitioWeb,new DtFecha(dia,mes,año)));
                 }
+            }
+        });
+
+
+        hacerReservaButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(auxiliarFunctions.estanVaciosJComboBox(aerolineaReserva, rutaDeVueloReserva, vueloReserva, clienteReserva, tipoAsientoReserva)){
+                    System.out.println("Faltan argumentos");
+                    JDialog err = new errorMessage("Faltan argumentos");
+                    return;
+                }
+                // Valores que maneja la reserva
+                String aerolinea = aerolineaReserva.getSelectedItem().toString();
+                String rutaDeVuelo = rutaDeVueloReserva.getSelectedItem().toString();
+                String vuelo = vueloReserva.getSelectedItem().toString();
+                String cliente = clienteReserva.getSelectedItem().toString();
+                String tipoAsiento = tipoAsientoReserva.getSelectedItem().toString();
+                int pasajes = (Integer) pasajesReserva.getValue();
+                int equipajeExtra = (Integer) equipajeExtraReserva.getValue();
+
+                if(pasajes <= 0){
+                    JDialog err = new errorMessage("Pasajes de reservas debe ser mayor a 0");
+                    return;
+                }
+
+                // Esto se puede comentar, solamente lo vamos a usar para verificar el botón.
+                System.out.println("===== Debug Reserva =====");
+                System.out.printf("%-15s: %s%n", "Aerolinea", aerolinea);
+                System.out.printf("%-15s: %s%n", "Ruta de Vuelo", rutaDeVuelo);
+                System.out.printf("%-15s: %s%n", "Vuelo", vuelo);
+                System.out.printf("%-15s: %s%n", "Cliente", cliente);
+                System.out.printf("%-15s: %s%n", "Tipo Asiento", tipoAsiento);
+                System.out.printf("%-15s: %d%n", "Pasajes", pasajes);
+                System.out.printf("%-15s: %d%n", "Equipaje Extra", equipajeExtra);
+                System.out.println("=========================");
+
+
             }
         });
     }
