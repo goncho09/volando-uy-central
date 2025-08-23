@@ -36,7 +36,6 @@ public class Main extends JFrame {
     private JComboBox comboBox5;
     private JButton consultarVueloButton;
     private JTextField textField3;
-    private JTextField textField4;
     private JComboBox comboBox6;
     private JTextField textField5;
     private JTextField textField6;
@@ -92,6 +91,13 @@ public class Main extends JFrame {
     private JSpinner pasajesReserva;
     private JSpinner equipajeExtraReserva;
     private JButton hacerReservaButton;
+    private JSpinner spinner9;
+    private JSpinner spinner10;
+    private JTextField textField4;
+    private JComboBox comboBox9;
+    private JComboBox comboBox10;
+    private JButton CONFIRMARButton1;
+    private JButton CANCELARButton1;
     private ISistema s;
 
 
