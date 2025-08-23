@@ -4,10 +4,7 @@ import datatypes.*;
 import enums.TipoDocumento;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,8 +50,6 @@ public class Main extends JFrame {
     private JSpinner diaAltaciudad;
     private JSpinner mesAltaCiudad;
     private JSpinner añoAltaCiudad;
-    private JButton clienteButton;
-    private JButton aerolineaButton;
     private JPanel JPanelRegistrarCliente;
     private JPanel JPanelRegistrarAerolinea;
     private JTextField nickname;
@@ -92,6 +87,7 @@ public class Main extends JFrame {
     private JSpinner pasajesReserva;
     private JSpinner equipajeExtraReserva;
     private JButton hacerReservaButton;
+    private JComboBox comboBox9;
     private ISistema s;
 
 
@@ -104,6 +100,9 @@ public class Main extends JFrame {
         setLocationRelativeTo(null);
         setTitle("Admin Dashboard");
         add(menuPrincipal);
+
+        //Settear visibles false
+        JPanelRegistrarAerolinea.setVisible(false);
 
         // Limitar Spinners
         diaAltaciudad.setModel(new SpinnerNumberModel(1, 1, 31, 1));
@@ -260,6 +259,28 @@ public class Main extends JFrame {
                 System.out.println("=========================");
 
 
+            }
+        });
+        userType.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+        userType.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if(e.getStateChange() == ItemEvent.SELECTED){
+                    String tipoUsuario = userType.getSelectedItem().toString();
+                    if(tipoUsuario.equals("Cliente")){
+                        JPanelRegistrarAerolinea.setVisible(false);
+                        JPanelRegistrarCliente.setVisible(true);
+                    }else{
+                        JPanelRegistrarAerolinea.setVisible(true);
+                        JPanelRegistrarCliente.setVisible(false);
+                    }
+
+                }
             }
         });
     }
