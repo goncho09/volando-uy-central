@@ -2,7 +2,7 @@
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="Main">
   <grid id="27dc6" binding="menuPrincipal" layout-manager="BorderLayout" hgap="-1" vgap="-1">
     <constraints>
-      <xy x="67" y="37" width="1295" height="981"/>
+      <xy x="67" y="37" width="779" height="545"/>
     </constraints>
     <properties/>
     <border type="none"/>
@@ -65,11 +65,16 @@
                               <text value="Tipo de usuario:"/>
                             </properties>
                           </component>
-                          <component id="8bbc3" class="javax.swing.JComboBox" default-binding="true">
+                          <component id="8bbc3" class="javax.swing.JComboBox" binding="userType">
                             <constraints>
                               <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                             </constraints>
-                            <properties/>
+                            <properties>
+                              <model>
+                                <item value="Cliente"/>
+                                <item value="Aerolinea"/>
+                              </model>
+                            </properties>
                           </component>
                           <component id="2a4d3" class="javax.swing.JLabel">
                             <constraints>
@@ -880,7 +885,7 @@
                       </vspacer>
                     </children>
                   </grid>
-                  <grid id="e1b22" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                  <grid id="e1b22" layout-manager="GridLayoutManager" row-count="2" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
                     <margin top="0" left="0" bottom="0" right="0"/>
                     <constraints>
                       <tabbedpane title="Reservar"/>
@@ -889,7 +894,173 @@
                       <enabled value="true"/>
                     </properties>
                     <border type="none"/>
-                    <children/>
+                    <children>
+                      <grid id="34993" binding="reservaPanel" layout-manager="GridLayoutManager" row-count="8" column-count="5" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                        <margin top="0" left="0" bottom="0" right="0"/>
+                        <constraints>
+                          <grid row="0" column="0" row-span="1" col-span="2" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties/>
+                        <border type="none"/>
+                        <children>
+                          <component id="5052d" class="javax.swing.JLabel">
+                            <constraints>
+                              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <text value="Seleccionar Aerolinea"/>
+                            </properties>
+                          </component>
+                          <component id="311a1" class="javax.swing.JComboBox" binding="aerolineaReserva">
+                            <constraints>
+                              <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <model>
+                                <item value="Ejemplo"/>
+                              </model>
+                            </properties>
+                          </component>
+                          <hspacer id="1f356">
+                            <constraints>
+                              <grid row="0" column="3" row-span="1" col-span="2" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                          </hspacer>
+                          <hspacer id="1a714">
+                            <constraints>
+                              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                          </hspacer>
+                          <component id="84959" class="javax.swing.JLabel">
+                            <constraints>
+                              <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <text value="Seleccionar Ruta de Vuelo"/>
+                            </properties>
+                          </component>
+                          <component id="60073" class="javax.swing.JLabel">
+                            <constraints>
+                              <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <text value="Seleccionar Vuelo"/>
+                            </properties>
+                          </component>
+                          <component id="beec7" class="javax.swing.JComboBox" binding="rutaDeVueloReserva">
+                            <constraints>
+                              <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <model>
+                                <item value="Esto es una Ruta"/>
+                              </model>
+                            </properties>
+                          </component>
+                          <component id="f4fb5" class="javax.swing.JComboBox" binding="vueloReserva">
+                            <constraints>
+                              <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <model>
+                                <item value="Asd"/>
+                              </model>
+                            </properties>
+                          </component>
+                          <component id="136db" class="javax.swing.JButton" binding="verVueloButton" default-binding="true">
+                            <constraints>
+                              <grid row="2" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <text value="Ver Vuelo"/>
+                            </properties>
+                          </component>
+                          <hspacer id="d7b4a">
+                            <constraints>
+                              <grid row="2" column="4" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                          </hspacer>
+                          <component id="b8396" class="javax.swing.JLabel">
+                            <constraints>
+                              <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <text value="Seleccionar Cliente"/>
+                            </properties>
+                          </component>
+                          <component id="f952d" class="javax.swing.JComboBox" binding="clienteReserva">
+                            <constraints>
+                              <grid row="3" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <model>
+                                <item value="Pepe"/>
+                              </model>
+                            </properties>
+                          </component>
+                          <component id="cded" class="javax.swing.JLabel">
+                            <constraints>
+                              <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <text value="Tipo Asiento"/>
+                            </properties>
+                          </component>
+                          <component id="9949f" class="javax.swing.JComboBox" binding="tipoAsientoReserva">
+                            <constraints>
+                              <grid row="4" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <model>
+                                <item value="Turista"/>
+                                <item value="Ejecutivo"/>
+                              </model>
+                            </properties>
+                          </component>
+                          <component id="f5e5f" class="javax.swing.JLabel">
+                            <constraints>
+                              <grid row="5" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <text value="Cantidad de Pasajes"/>
+                            </properties>
+                          </component>
+                          <component id="73cbd" class="javax.swing.JSpinner" binding="pasajesReserva">
+                            <constraints>
+                              <grid row="5" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties/>
+                          </component>
+                          <component id="2813" class="javax.swing.JLabel">
+                            <constraints>
+                              <grid row="6" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <text value="Cantidad de Equipaje Extra"/>
+                            </properties>
+                          </component>
+                          <component id="2a665" class="javax.swing.JSpinner" binding="equipajeExtraReserva">
+                            <constraints>
+                              <grid row="6" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties/>
+                          </component>
+                          <component id="bf074" class="javax.swing.JButton" binding="hacerReservaButton" default-binding="true">
+                            <constraints>
+                              <grid row="7" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <text value="Hacer Reserva"/>
+                            </properties>
+                          </component>
+                        </children>
+                      </grid>
+                      <vspacer id="75254">
+                        <constraints>
+                          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                      </vspacer>
+                    </children>
                   </grid>
                 </children>
               </tabbedpane>

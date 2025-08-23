@@ -53,6 +53,17 @@ public class Main extends JFrame {
     private JSpinner diaAltaciudad;
     private JSpinner mesAltaCiudad;
     private JSpinner añoAltaCiudad;
+    private JComboBox userType;
+    private JPanel reservaPanel;
+    private JComboBox aerolineaReserva;
+    private JComboBox rutaDeVueloReserva;
+    private JComboBox vueloReserva;
+    private JButton verVueloButton;
+    private JComboBox clienteReserva;
+    private JComboBox tipoAsientoReserva;
+    private JSpinner pasajesReserva;
+    private JSpinner equipajeExtraReserva;
+    private JButton hacerReservaButton;
     private ISistema s;
 
 
@@ -183,6 +194,44 @@ public class Main extends JFrame {
                 }else{
                     s.altaCiudad(new DtCiudad(nombreAltaCiudad.getText(), paisAltaCiudad.getText(),aeropuertoAltaCiudad.getText(),descripcionAltaCiudad.getText(),sitioWeb,new DtFecha(dia,mes,año)));
                 }
+            }
+        });
+
+
+        hacerReservaButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(auxiliarFunctions.estanVaciosJComboBox(aerolineaReserva, rutaDeVueloReserva, vueloReserva, clienteReserva, tipoAsientoReserva)){
+                    System.out.println("Faltan argumentos");
+                    JDialog err = new errorMessage("Faltan argumentos");
+                    return;
+                }
+                // Valores que maneja la reserva
+                String aerolinea = aerolineaReserva.getSelectedItem().toString();
+                String rutaDeVuelo = rutaDeVueloReserva.getSelectedItem().toString();
+                String vuelo = vueloReserva.getSelectedItem().toString();
+                String cliente = clienteReserva.getSelectedItem().toString();
+                String tipoAsiento = tipoAsientoReserva.getSelectedItem().toString();
+                int pasajes = (Integer) pasajesReserva.getValue();
+                int equipajeExtra = (Integer) equipajeExtraReserva.getValue();
+
+                if(pasajes <= 0){
+                    JDialog err = new errorMessage("Pasajes de reservas debe ser mayor a 0");
+                    return;
+                }
+
+                // Esto se puede comentar, solamente lo vamos a usar para verificar el botón.
+                System.out.println("===== Debug Reserva =====");
+                System.out.printf("%-15s: %s%n", "Aerolinea", aerolinea);
+                System.out.printf("%-15s: %s%n", "Ruta de Vuelo", rutaDeVuelo);
+                System.out.printf("%-15s: %s%n", "Vuelo", vuelo);
+                System.out.printf("%-15s: %s%n", "Cliente", cliente);
+                System.out.printf("%-15s: %s%n", "Tipo Asiento", tipoAsiento);
+                System.out.printf("%-15s: %d%n", "Pasajes", pasajes);
+                System.out.printf("%-15s: %d%n", "Equipaje Extra", equipajeExtra);
+                System.out.println("=========================");
+
+
             }
         });
     }
