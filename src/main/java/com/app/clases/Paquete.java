@@ -1,25 +1,34 @@
 package com.app.clases;
 
 import com.app.datatypes.DtPaquete;
+import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
+@Entity
+@Table(name = "paquete")
 public class Paquete {
+    @Id
+    @Column(nullable = false, length = 50)
     private String nombre;
+
     private String descripcion;
     private int validezDias;
     private float descuento;
     private float costo;
-    private List<RutaDeVuelo> rutasDeVuelo;
-    private List<RutaEnPaquete> rutaEnPaquete;
 
+    @OneToMany
+    @JoinColumn(name="paquete_name")
+    private List<RutaEnPaquete> rutaEnPaquete = new ArrayList<>();
+
+    public Paquete() {}
     public Paquete(DtPaquete paquete) {
         this.nombre = paquete.getNombre();
         this.descripcion = paquete.getDescripcion();
         this.validezDias = paquete.getValidezDias();
         this.descuento = paquete.getDescuento();
         this.costo = paquete.getCosto();
-        this.rutasDeVuelo = paquete.getRutasDeVuelo();
         this.rutaEnPaquete = paquete.getRutaEnPaquete();
     }
 
@@ -29,14 +38,6 @@ public class Paquete {
 
     public void setRutaEnPaquete(List<RutaEnPaquete> rutaEnPaquete) {
         this.rutaEnPaquete = rutaEnPaquete;
-    }
-
-    public List<RutaDeVuelo> getRutasDeVuelo() {
-        return rutasDeVuelo;
-    }
-
-    public void setRutasDeVuelo(List<RutaDeVuelo> rutasDeVuelo) {
-        this.rutasDeVuelo = rutasDeVuelo;
     }
 
     public float getCosto() {
@@ -80,6 +81,6 @@ public class Paquete {
     }
 
     public DtPaquete getDatos(){
-        return new DtPaquete(this.getNombre(),this.getDescripcion(),this.getValidezDias(),this.getDescuento(),this.getCosto(),this.getRutasDeVuelo(),this.getRutaEnPaquete());
+        return new DtPaquete(this.getNombre(),this.getDescripcion(),this.getValidezDias(),this.getDescuento(),this.getCosto(),this.getRutaEnPaquete());
     }
 }

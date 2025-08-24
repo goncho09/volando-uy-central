@@ -1,22 +1,32 @@
 package com.app.clases;
 
-import com.app.datatypes.DtFecha;
-import com.app.datatypes.DtHora;
 import com.app.datatypes.DtRuta;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
+@Entity
+@Table(name="rutaDeVuelo")
 public class RutaDeVuelo {
+    @Id
+    @Column(nullable = false, length = 50)
     private String nombre;
+
     private String descripcion;
-    private DtHora hora;
+    private LocalTime hora;
     private float costoTurista;
     private float costoEjecutivo;
     private float equipajeExtra;
-    private DtFecha fechaAlta;
+    private LocalDate fechaAlta;
     private List<Categoria> categorias;
     private List<Ciudad> ciudades;
 
+    public RutaDeVuelo() {}
     public RutaDeVuelo(DtRuta ruta) {
         this.nombre = ruta.getNombre();
         this.descripcion = ruta.getDescripcion();
@@ -45,11 +55,11 @@ public class RutaDeVuelo {
         this.descripcion = descripcion;
     }
 
-    public DtHora getHora() {
+    public LocalTime getHora() {
         return hora;
     }
 
-    public void setHora(DtHora hora) {
+    public void setHora(LocalTime hora) {
         this.hora = hora;
     }
 
@@ -77,11 +87,11 @@ public class RutaDeVuelo {
         this.equipajeExtra = equipajeExtra;
     }
 
-    public DtFecha getFechaAlta() {
+    public LocalDate getFechaAlta() {
         return fechaAlta;
     }
 
-    public void setFechaAlta(DtFecha fechaAlta) {
+    public void setFechaAlta(LocalDate fechaAlta) {
         this.fechaAlta = fechaAlta;
     }
 

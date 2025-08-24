@@ -1,18 +1,18 @@
 package com.app.clases;
 
-import com.app.datatypes.DtFecha;
-import com.app.datatypes.DtHora;
 import com.app.datatypes.DtVuelo;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 public class Vuelo {
     private String nombre;
-    private DtFecha fecha;
-    private DtHora duracion;
+    private LocalDate fecha;
+    private LocalTime duracion;
     private int maxTuristas;
     private int maxEjecutivos;
-    private DtFecha fechaAlta;
+    private LocalDate fechaAlta;
     private List<RutaDeVuelo> rutasDeVuelo;
 
     public DtVuelo getDatos() {return null;}
@@ -35,19 +35,19 @@ public class Vuelo {
         this.nombre = nombre;
     }
 
-    public DtFecha getFecha() {
+    public LocalDate getFecha() {
         return fecha;
     }
 
-    public void setFecha(DtFecha fecha) {
+    public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
     }
 
-    public DtHora getDuracion() {
+    public LocalTime getDuracion() {
         return duracion;
     }
 
-    public void setDuracion(DtHora duracion) {
+    public void setDuracion(LocalTime duracion) {
         this.duracion = duracion;
     }
 
@@ -67,11 +67,11 @@ public class Vuelo {
         this.maxEjecutivos = maxEjecutivos;
     }
 
-    public DtFecha getFechaAlta() {
+    public LocalDate getFechaAlta() {
         return fechaAlta;
     }
 
-    public void setFechaAlta(DtFecha fechaAlta) {
+    public void setFechaAlta(LocalDate fechaAlta) {
         this.fechaAlta = fechaAlta;
     }
 

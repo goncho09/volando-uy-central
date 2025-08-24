@@ -2,21 +2,29 @@ package com.app.clases;
 
 import com.app.datatypes.*;
 import com.app.enums.*;
+import jakarta.persistence.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import java.util.List;
 
+@Entity
+@DiscriminatorValue("Cliente") // Cuando se haga la tabla de usuarios, éste en particular será "userType" Cliente
 public class Cliente extends Usuario{
     private String apellido;
-    private DtFecha fechaNacimiento;
+    private LocalDate fechaNacimiento;
     private String nacionalidad;
     private TipoDocumento tipoDocumento;
     private int numeroDocumento;
-    private List<CompraPaquete> comprasPaquetes;
+
+    @OneToMany(mappedBy = "cliente") // 1 - N (un cliente tiene muchas "compras"
+    private List<CompraPaquete> comprasPaquetes = new ArrayList<>();
+
+    @OneToMany(mappedBy = "cliente") // 1 - N (un cliente tiene muchas "reservas"
     private List<Reserva> reservas = new ArrayList<>();
 
-
+    public Cliente(){}
     public Cliente(DtCliente cliente) {
         super(new DtUsuario(cliente.getNickname(), cliente.getNombre(), cliente.getEmail()));
         this.apellido = apellido;
@@ -24,7 +32,8 @@ public class Cliente extends Usuario{
         this.nacionalidad = nacionalidad;
         this.tipoDocumento = tipoDocumento;
         this.numeroDocumento = numeroDocumento;
-        this.comprasPaquetes = comprasPaquetes;
+        this.comprasPaquetes = new ArrayList<>();
+        this.reservas = new ArrayList<>();
     }
 
     public String getApellido() {
@@ -35,11 +44,11 @@ public class Cliente extends Usuario{
         this.apellido = apellido;
     }
 
-    public DtFecha getFechaNacimiento() {
+    public LocalDate getFechaNacimiento() {
         return fechaNacimiento;
     }
 
-    public void setFechaNacimiento(DtFecha fechaNacimiento) {
+    public void setFechaNacimiento(LocalDate fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
 

@@ -1,7 +1,8 @@
 package com.app.clases;
 
 import com.app.datatypes.DtCiudad;
-import com.app.datatypes.DtFecha;
+
+import java.time.LocalDate;
 
 public class Ciudad {
     private String nombre;
@@ -9,7 +10,7 @@ public class Ciudad {
     private String aeropuerto;
     private String descripcion;
     private String sitioWeb;
-    private DtFecha fechaAlta;
+    private LocalDate fechaAlta;
 
     public Ciudad(DtCiudad ciudad) {
         this.nombre = ciudad.getNombre();
@@ -60,11 +61,11 @@ public class Ciudad {
         this.sitioWeb = sitioWeb;
     }
 
-    public DtFecha getFechaAlta() {
+    public LocalDate getFechaAlta() {
         return fechaAlta;
     }
 
-    public void setFechaAlta(DtFecha fechaAlta) {
+    public void setFechaAlta(LocalDate fechaAlta) {
         this.fechaAlta = fechaAlta;
     }
 }

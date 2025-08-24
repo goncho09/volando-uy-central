@@ -12,7 +12,6 @@ public class DtPaquete {
     private int validezDias;
     private float descuento;
     private float costo;
-    private List<RutaDeVuelo> rutasDeVuelo;
     private List<RutaEnPaquete> rutaEnPaquete;
 
     public DtPaquete(String nombre, String descripcion, int validezDias, float descuento, float costo) {
@@ -23,13 +22,12 @@ public class DtPaquete {
         this.costo = costo;
     }
 
-    public DtPaquete(String nombre, String descripcion, int validezDias, float descuento, float costo, List<RutaDeVuelo> rutasDeVuelo, List<RutaEnPaquete> rutaEnPaquete) {
+    public DtPaquete(String nombre, String descripcion, int validezDias, float descuento, float costo, List<RutaEnPaquete> rutaEnPaquete) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.validezDias = validezDias;
         this.descuento = descuento;
         this.costo = costo;
-        this.rutasDeVuelo = rutasDeVuelo;
         this.rutaEnPaquete = rutaEnPaquete;
     }
 
@@ -39,14 +37,6 @@ public class DtPaquete {
 
     public void setRutaEnPaquete(List<RutaEnPaquete> rutaEnPaquete) {
         this.rutaEnPaquete = rutaEnPaquete;
-    }
-
-    public List<RutaDeVuelo> getRutasDeVuelo() {
-        return rutasDeVuelo;
-    }
-
-    public void setRutasDeVuelo(List<RutaDeVuelo> rutasDeVuelo) {
-        this.rutasDeVuelo = rutasDeVuelo;
     }
 
     public float getCosto() {
