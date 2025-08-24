@@ -1,17 +1,25 @@
 package com.app.clases;
 
 import com.app.datatypes.DtCiudad;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 import java.time.LocalDate;
 
+@Entity
+@Table(name="ciudad")
 public class Ciudad {
+    @Id
     private String nombre;
+
     private String pais;
     private String aeropuerto;
     private String descripcion;
     private String sitioWeb;
     private LocalDate fechaAlta;
 
+    public Ciudad() {}
     public Ciudad(DtCiudad ciudad) {
         this.nombre = ciudad.getNombre();
         this.pais = ciudad.getPais();

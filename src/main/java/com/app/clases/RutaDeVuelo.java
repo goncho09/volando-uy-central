@@ -1,10 +1,7 @@
 package com.app.clases;
 
 import com.app.datatypes.DtRuta;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -23,7 +20,13 @@ public class RutaDeVuelo {
     private float costoEjecutivo;
     private float equipajeExtra;
     private LocalDate fechaAlta;
+
+    @OneToMany
+    @JoinColumn(name="rutaDeVuelo_name", nullable = false)
     private List<Categoria> categorias;
+
+    @OneToMany
+    @JoinColumn(name="rutaDeVuelo_name", nullable = false)
     private List<Ciudad> ciudades;
 
     public RutaDeVuelo() {}
