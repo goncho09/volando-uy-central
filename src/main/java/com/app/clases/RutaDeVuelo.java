@@ -2,7 +2,6 @@ package com.app.clases;
 
 import com.app.datatypes.DtRuta;
 import jakarta.persistence.*;
-
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
