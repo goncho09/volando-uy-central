@@ -2,18 +2,20 @@ package com.app.datatypes;
 
 import com.app.clases.CompraPaquete;
 import com.app.enums.TipoDocumento;
+
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 public class DtCliente extends DtUsuario{
     private String apellido;
-    private DtFecha fechaNacimiento;
+    private LocalDate fechaNacimiento;
     private String nacionalidad;
     private TipoDocumento tipoDocumento;
     private int numeroDocumento;
     private List<CompraPaquete> comprasPaquetes;
 
-    public DtCliente(String nickname, String nombre, String email,String apellido, DtFecha fechaNacimiento, String nacionalidad, TipoDocumento tipoDocumento, int numeroDocumento) {
+    public DtCliente(String nickname, String nombre, String email,String apellido, LocalDate fechaNacimiento, String nacionalidad, TipoDocumento tipoDocumento, int numeroDocumento) {
         super(nickname, nombre, email);
         this.apellido = apellido;
         this.fechaNacimiento = fechaNacimiento;
@@ -31,11 +33,11 @@ public class DtCliente extends DtUsuario{
         this.apellido = apellido;
     }
 
-    public DtFecha getFechaNacimiento() {
+    public LocalDate getFechaNacimiento() {
         return fechaNacimiento;
     }
 
-    public void setFechaNacimiento(DtFecha fechaNacimiento) {
+    public void setFechaNacimiento(LocalDate fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
 

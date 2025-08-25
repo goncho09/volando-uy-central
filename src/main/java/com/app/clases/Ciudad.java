@@ -1,16 +1,25 @@
 package com.app.clases;
 
 import com.app.datatypes.DtCiudad;
-import com.app.datatypes.DtFecha;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
+import java.time.LocalDate;
+
+@Entity
+@Table(name="ciudad")
 public class Ciudad {
+    @Id
     private String nombre;
+
     private String pais;
     private String aeropuerto;
     private String descripcion;
     private String sitioWeb;
-    private DtFecha fechaAlta;
+    private LocalDate fechaAlta;
 
+    public Ciudad() {}
     public Ciudad(DtCiudad ciudad) {
         this.nombre = ciudad.getNombre();
         this.pais = ciudad.getPais();
@@ -60,11 +69,11 @@ public class Ciudad {
         this.sitioWeb = sitioWeb;
     }
 
-    public DtFecha getFechaAlta() {
+    public LocalDate getFechaAlta() {
         return fechaAlta;
     }
 
-    public void setFechaAlta(DtFecha fechaAlta) {
+    public void setFechaAlta(LocalDate fechaAlta) {
         this.fechaAlta = fechaAlta;
     }
 }

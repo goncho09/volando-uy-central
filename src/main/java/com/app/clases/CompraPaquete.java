@@ -1,35 +1,48 @@
 package com.app.clases;
 
-import com.app.datatypes.DtFecha;
+import jakarta.persistence.*;
 
+import java.time.LocalDate;
+
+@Entity
+@Table(name="compraPaquete")
 public class CompraPaquete {
-    private DtFecha fechaCompra;
-    private  DtFecha fechaVencimiento;
+    @Id @GeneratedValue(strategy= GenerationType.IDENTITY)
+    private long id;
+    private LocalDate fechaCompra;
+    private  LocalDate fechaVencimiento;
     private float costo;
+
+    @ManyToOne
+    @JoinColumn(name = "paquete_name", nullable = false)
     private Paquete paquete;
+
+    @ManyToOne(optional = false) // Indica que sí o sí debe existir un cliente asociado
+    @JoinColumn(name="cliente_nickName")
     private Cliente cliente;
 
-    public CompraPaquete(DtFecha fechaCompra, DtFecha fechaVencimiento, float costo, Paquete paquete, Cliente cliente) {
+    public CompraPaquete() {}
+    public CompraPaquete(LocalDate fechaCompra, LocalDate fechaVencimiento, float costo, Paquete paquete, Cliente cliente) {
         this.fechaCompra = fechaCompra;
         this.fechaVencimiento = fechaVencimiento;
         this.costo = costo;
         this.paquete = paquete;
-        this.cliente = cliente;
+        //this.cliente = cliente;
     }
 
-    public DtFecha getFechaCompra() {
+    public LocalDate getFechaCompra() {
         return fechaCompra;
     }
 
-    public void setFechaCompra(DtFecha fechaCompra) {
+    public void setFechaCompra(LocalDate fechaCompra) {
         this.fechaCompra = fechaCompra;
     }
 
-    public DtFecha getFechaVencimiento() {
+    public LocalDate getFechaVencimiento() {
         return fechaVencimiento;
     }
 
-    public void setFechaVencimiento(DtFecha fechaVencimiento) {
+    public void setFechaVencimiento(LocalDate fechaVencimiento) {
         this.fechaVencimiento = fechaVencimiento;
     }
 
@@ -49,11 +62,7 @@ public class CompraPaquete {
         this.paquete = paquete;
     }
 
-    public Cliente getCliente() {
-        return cliente;
-    }
+    // public Cliente getCliente() {return cliente;}
 
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
-    }
+    // public void setCliente(Cliente cliente) {this.cliente = cliente;}
 }
