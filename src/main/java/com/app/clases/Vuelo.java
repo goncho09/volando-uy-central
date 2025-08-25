@@ -1,18 +1,26 @@
 package com.app.clases;
 
 import com.app.datatypes.DtVuelo;
-
+import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
+@Entity
+@Table(name="vuelo")
 public class Vuelo {
+    @Id
+    @Column(nullable = false, length = 50)
     private String nombre;
+
     private LocalDate fecha;
     private LocalTime duracion;
     private int maxTuristas;
     private int maxEjecutivos;
     private LocalDate fechaAlta;
+
+    @OneToMany
+    @JoinColumn(name="rutasDeVuelos_name", nullable = false)
     private List<RutaDeVuelo> rutasDeVuelo;
 
     public DtVuelo getDatos() {return null;}
