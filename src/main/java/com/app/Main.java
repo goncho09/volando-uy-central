@@ -291,6 +291,29 @@ public class Main extends JFrame {
                 }
             }
         });
+        confirmarAltaCliente.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(nickname.getText().isEmpty() || nombre.getText().isEmpty() || correoElectronico.getText().isEmpty() || Apellido.getText().isEmpty() || nacionalidad.getText().isEmpty() || tipoDocumento.getSelectedItem() != null || documento.getText().isEmpty() ) { //ver como validar fecha!=0
+                    System.out.println("faltan argumentos");
+                }else{
+                    DtFecha fecha1 = new DtFecha(18,8,2025);
+                    //String nicknameValue = nickname.getText();
+                    //System.out.printf("%-15s: %s%n", "nicknameValue", nicknameValue);
+                    TipoDocumento documentoT = null;
+                    if (tipoDocumento.getSelectedItem() == "cedula"){
+                        documentoT = TipoDocumento.CEDULA;
+                    }else {
+                        documentoT = TipoDocumento.PASAPORTE;
+                    }
+
+                    DtCliente cliente = new DtCliente(nickname.getText(), nombre.getText(), correoElectronico.getText(), Apellido.getText(), fecha1, nacionalidad.getText(), documentoT, Integer.parseInt(documento.getText()));
+                    System.out.println("registrar cliente");
+                    s.registrarCliente(cliente);
+                }
+
+            }
+        });
     }
 
     public static void main(String[] args) {
