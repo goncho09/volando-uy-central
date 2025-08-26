@@ -1,5 +1,7 @@
 package com.app.datatypes;
 
+import com.app.clases.RutaDeVuelo;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -10,14 +12,16 @@ public class DtVuelo {
     private int maxTuristas;
     private int maxEjecutivos;
     private LocalDate fechaAlta;
+    private RutaDeVuelo rutaDeVuelo;
 
-    public DtVuelo(String nombre, LocalDate fecha, LocalTime duracion, int maxTuristas, int maxEjecutivos, LocalDate fechaAlta) {
+    public DtVuelo(String nombre, LocalDate fecha, LocalTime duracion, int maxTuristas, int maxEjecutivos, LocalDate fechaAlta,RutaDeVuelo rutaDeVuelo) {
         this.nombre = nombre;
         this.fecha = fecha;
         this.duracion = duracion;
         this.maxTuristas = maxTuristas;
         this.maxEjecutivos = maxEjecutivos;
         this.fechaAlta = fechaAlta;
+        this.rutaDeVuelo = rutaDeVuelo;
     }
 
     public String getNombre() {
@@ -66,5 +70,13 @@ public class DtVuelo {
 
     public void setFechaAlta(LocalDate fechaAlta) {
         this.fechaAlta = fechaAlta;
+    }
+
+    public RutaDeVuelo getRutaDeVuelo() {
+        return rutaDeVuelo;
+    }
+
+    public void setRutaDeVuelo(RutaDeVuelo rutaDeVuelo) {
+        this.rutaDeVuelo = rutaDeVuelo;
     }
 }

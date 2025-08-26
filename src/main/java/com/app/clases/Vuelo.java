@@ -4,7 +4,6 @@ import com.app.datatypes.DtVuelo;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.List;
 
 @Entity
 @Table(name="vuelo")
@@ -13,15 +12,23 @@ public class Vuelo {
     @Column(nullable = false, length = 50)
     private String nombre;
 
+    @Column(nullable = false)
     private LocalDate fecha;
+
+    @Column(nullable = false)
     private LocalTime duracion;
+
+    @Column(nullable = false)
     private int maxTuristas;
+
+    @Column(nullable = false)
     private int maxEjecutivos;
+
+    @Column(nullable = false)
     private LocalDate fechaAlta;
 
-    @OneToMany
-    @JoinColumn(name="rutasDeVuelos_name", nullable = false)
-    private List<RutaDeVuelo> rutasDeVuelo;
+    @Column(nullable = false)
+    private RutaDeVuelo rutaDeVuelo;
 
     public DtVuelo getDatos() {return null;}
 
@@ -32,7 +39,7 @@ public class Vuelo {
         this.maxTuristas = vuelo.getMaxTuristas();
         this.maxEjecutivos = vuelo.getMaxEjecutivos();
         this.fechaAlta = vuelo.getFechaAlta();
-        this.rutasDeVuelo = getRutasDeVuelo();
+        this.rutaDeVuelo = vuelo.getRutaDeVuelo();
     }
 
     public String getNombre() {
@@ -83,11 +90,11 @@ public class Vuelo {
         this.fechaAlta = fechaAlta;
     }
 
-    public List<RutaDeVuelo> getRutasDeVuelo() {
-        return rutasDeVuelo;
+    public RutaDeVuelo getRutaDeVuelo() {
+        return rutaDeVuelo;
     }
 
-    public void setRutasDeVuelo(List<RutaDeVuelo> rutasDeVuelo) {
-        this.rutasDeVuelo = rutasDeVuelo;
+    public void setRutaDeVuelo(RutaDeVuelo rutaDeVuelo) {
+        this.rutaDeVuelo = rutaDeVuelo;
     }
 }

@@ -192,7 +192,7 @@ public class Main extends JFrame {
                 LocalDate fechaPrueba = LocalDate.of(3,12,2025);
                 LocalTime horaPrueba = LocalTime.of(10, 30);
                 LocalDate fechaAltaPrueba = LocalDate.of(18,8,2025);
-                DtVuelo dataVuelo = new DtVuelo("A1", fechaPrueba, horaPrueba, 160, 40, fechaAltaPrueba);
+                DtVuelo dataVuelo = new DtVuelo("A1", fechaPrueba, horaPrueba, 160, 40, fechaAltaPrueba,ruta1);
 
                 JFrame vuelo = new dataVuelo(dataVuelo);
                 setEnabled(false);
