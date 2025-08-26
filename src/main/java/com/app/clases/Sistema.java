@@ -262,7 +262,7 @@ public class Sistema implements ISistema {
         List<DtPaquete> dtPaquetes = new ArrayList<>();
         for (Map.Entry<String, Paquete> entry : paquetes.entrySet()) {
             Paquete p = entry.getValue();
-            DtPaquete paquete = new DtPaquete(p.getNombre(), p.getDescripcion(), p.getValidezDias(), p.getDescuento(), p.getCosto(), p.getRutasDeVuelo(), p.getRutaEnPaquete());
+            DtPaquete paquete = new DtPaquete(p.getNombre(),p.getDescripcion(),p.getValidezDias(),p.getDescuento(),p.getCosto(),p.getRutaEnPaquete());
             dtPaquetes.add(paquete);
         }
         return dtPaquetes;

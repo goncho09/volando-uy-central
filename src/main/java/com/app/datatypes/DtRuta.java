@@ -3,20 +3,22 @@ package com.app.datatypes;
 import com.app.clases.Categoria;
 import com.app.clases.Ciudad;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 public class DtRuta {
     private String nombre;
     private String descripcion;
-    private DtHora hora;
+    private LocalTime hora;
     private float costoTurista;
     private float costoEjecutivo;
     private float equipajeExtra;
-    private DtFecha fechaAlta;
+    private LocalDate fechaAlta;
     private List<Categoria> categorias;
     private List<Ciudad> ciudades;
 
-    public DtRuta(String nombre, String descripcion, DtHora hora, float costoTurista, float costoEjecutivo, float equipajeExtra, DtFecha fechaAlta, List<Categoria> categorias, List<Ciudad> ciudades) {
+    public DtRuta(String nombre, String descripcion, LocalTime hora, float costoTurista, float costoEjecutivo, float equipajeExtra, LocalDate fechaAlta, List<Categoria> categorias, List<Ciudad> ciudades) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.hora = hora;
@@ -44,11 +46,11 @@ public class DtRuta {
         this.descripcion = descripcion;
     }
 
-    public DtHora getHora() {
+    public LocalTime getHora() {
         return hora;
     }
 
-    public void setHora(DtHora hora) {
+    public void setHora(LocalTime hora) {
         this.hora = hora;
     }
 
@@ -76,11 +78,11 @@ public class DtRuta {
         this.equipajeExtra = equipajeExtra;
     }
 
-    public DtFecha getFechaAlta() {
+    public LocalDate getFechaAlta() {
         return fechaAlta;
     }
 
-    public void setFechaAlta(DtFecha fechaAlta) {
+    public void setFechaAlta(LocalDate fechaAlta) {
         this.fechaAlta = fechaAlta;
     }
 

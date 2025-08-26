@@ -7,6 +7,8 @@ import com.app.enums.*;
 import jakarta.persistence.*;
 import javax.swing.*;
 import java.awt.event.*;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -128,9 +130,9 @@ public class Main extends JFrame {
         DtCategoria cat2 = new DtCategoria("Salto Montaña");
         DtCategoria cat3 = new DtCategoria("Tirolesa");
 
-        DtFecha fecha1 = new DtFecha(18,8,2025);
-        DtFecha fecha2 = new DtFecha(19,8,2025);
-        DtHora hora1 = new DtHora(10, 30);
+        LocalDate fecha1 = LocalDate.of(2025,8,18);
+        LocalDate fecha2 = LocalDate.of(2025,8,19);
+        LocalTime hora1 = LocalTime.of(10, 30);
 
         DtCiudad c1 = new DtCiudad("Montevideo","Uruguay","Aeropuerto de Carrasco","Mucha rambla","www.aeropuerto-carrasco.uy",fecha1);
         DtCiudad c2 = new DtCiudad("Buenos Aires", "Argentina", "Aeropuerto Jorge Newbery", "Puerto Madero", "www.aeroparque.com.ar", fecha1);
@@ -145,7 +147,7 @@ public class Main extends JFrame {
         s.altaCiudad(c2);
         s.altaCiudad(c3);
 
-        DtHora hora = new DtHora(10,0);
+        LocalTime hora = LocalTime.of(10,0);
 
         RutaDeVuelo ruta1 = new RutaDeVuelo(new DtRuta("Vuelo A1", "Descripcion A1", hora, 100, 200, 20, fecha1,s.getCategorias(), s.getCiudades()));
         RutaDeVuelo ruta2 = new RutaDeVuelo(new DtRuta("Vuelo A2", "Descripcion A2", hora, 120, 220, 25, fecha1, s.getCategorias(), s.getCiudades()));
@@ -161,9 +163,9 @@ public class Main extends JFrame {
         rutasEnPaquete1.add(rep1);
         rutasEnPaquete1.add(rep2);
 
-        DtPaquete p1 = new DtPaquete("Paquete A", "Descripcion A", 10, 5, 100,rutasPaquete1,rutasEnPaquete1);
-        DtPaquete p2 = new DtPaquete("Paquete B", "Descripcion B", 15, 10, 150, rutasPaquete1, rutasEnPaquete1);
-        DtPaquete p3 = new DtPaquete("Paquete C", "Descripcion C", 7, 3, 80, rutasPaquete1, rutasEnPaquete1);
+        DtPaquete p1 = new DtPaquete("Paquete A", "Descripcion A", 10, 5, 100,rutasEnPaquete1);
+        DtPaquete p2 = new DtPaquete("Paquete B", "Descripcion B", 15, 10, 150,  rutasEnPaquete1);
+        DtPaquete p3 = new DtPaquete("Paquete C", "Descripcion C", 7, 3, 80, rutasEnPaquete1);
 
         // TEMPORAL
         s.altaPaquete(p1);
@@ -187,9 +189,9 @@ public class Main extends JFrame {
         consultarVueloButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                DtFecha fechaPrueba = new DtFecha(3,12,2025);
-                DtHora horaPrueba = new DtHora(10, 30);
-                DtFecha fechaAltaPrueba = new DtFecha(18,8,2025);
+                LocalDate fechaPrueba = LocalDate.of(3,12,2025);
+                LocalTime horaPrueba = LocalTime.of(10, 30);
+                LocalDate fechaAltaPrueba = LocalDate.of(18,8,2025);
                 DtVuelo dataVuelo = new DtVuelo("A1", fechaPrueba, horaPrueba, 160, 40, fechaAltaPrueba);
 
                 JFrame vuelo = new dataVuelo(dataVuelo);
@@ -215,7 +217,7 @@ public class Main extends JFrame {
                 if(nombreAltaCiudad.getText().isEmpty() && paisAltaCiudad.getText().isEmpty() && aeropuertoAltaCiudad.getText().isEmpty() && descripcionAltaCiudad.getText().isEmpty() && dia != 0 && mes != 0 && año != 0){
                     System.out.println("faltan argumentos");
                 }else{
-                    s.altaCiudad(new DtCiudad(nombreAltaCiudad.getText(), paisAltaCiudad.getText(),aeropuertoAltaCiudad.getText(),descripcionAltaCiudad.getText(),sitioWeb,new DtFecha(dia,mes,año)));
+                    s.altaCiudad(new DtCiudad(nombreAltaCiudad.getText(), paisAltaCiudad.getText(),aeropuertoAltaCiudad.getText(),descripcionAltaCiudad.getText(),sitioWeb,LocalDate.of(dia,mes,año)));
                 }
             }
         });
