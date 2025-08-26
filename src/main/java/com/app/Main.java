@@ -136,12 +136,6 @@ public class Main extends JFrame {
         DtCiudad c2 = new DtCiudad("Buenos Aires", "Argentina", "Aeropuerto Jorge Newbery", "Puerto Madero", "www.aeroparque.com.ar", fecha1);
         DtCiudad c3 = new DtCiudad("Santiago", "Chile", "Aeropuerto Arturo Merino Benítez", "Cerro San Cristóbal", "www.aeropuertosantiago.cl", fecha1);
 
-        /*
-        DtVuelo vuelo1 = new DtVuelo("Vuelo1", fecha1, hora1, 45, 15, fecha2);
-        DtVuelo vuelo2 = new DtVuelo("Vuelo2", fecha1, hora1, 60, 20, fecha2);
-        DtVuelo vuelo3 = new DtVuelo("Vuelo3", fecha1, hora1, 30, 10, fecha2);
-         */
-
         s.altaCategoria(cat1);
 //        s.altaCategoria(cat1);
         s.altaCategoria(cat2);
@@ -189,12 +183,6 @@ public class Main extends JFrame {
         s.registrarCliente(cliente1);
         s.registrarCliente(cliente3);
         s.registrarCliente(cliente2);
-
-         /*Consulta de vuelos esto no va funciona porque no estan las rutas de vuelo
-        s1.consultaVuelo(vuelo1);
-        s1.consultaVuelo(vuelo2);
-        s1.consultaVuelo(vuelo3);
-        */
 
         consultarVueloButton.addActionListener(new ActionListener() {
             @Override

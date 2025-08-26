@@ -38,6 +38,7 @@ public interface ISistema {
     boolean existeRuta(String nombre);
     void altaRutaDeVuelo(String nickname, DtRuta datosRuta);
 
+
     // Consulta de Usuario
     List<DtUsuario> listarUsuarios();
     void elegirUsuario(String nickname);
