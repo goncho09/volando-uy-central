@@ -1,6 +1,7 @@
 package com.app.clases;
 
 import com.app.datatypes.*;
+import com.app.enums.TipoAsiento;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -309,7 +310,7 @@ public class Sistema implements ISistema {
         return dtRutas;
     }
 
-    public void seleccionarRutaDeVuelo(String nombre) {
+    public void seleccionarRutaDeVuelo(String nombre, int cantidad, TipoAsiento tipoAsiento) {
         if (this.aerolineaTemporal == null) {
             throw new IllegalArgumentException("No hay una aerolinea seleccionada.");
         }
@@ -328,28 +329,27 @@ public class Sistema implements ISistema {
         }
 
         // Verificar si la ruta ya está en el paquete
-        for (RutaDeVuelo r : this.paqueteSeleccionado.getRutasDeVuelo()) {
-            if (r.getNombre().equals(ruta.getNombre())) {
+        for (RutaEnPaquete r : this.paqueteSeleccionado.getRutaEnPaquete()) {
+            if (r.getRutaDeVuelo().getNombre().equals(ruta.getNombre())) {
                 throw new IllegalArgumentException("La ruta ya está asociada al paquete.");
             }
         }
 
-        this.paqueteSeleccionado.getRutasDeVuelo().add(ruta);
-        // Agregar con cantidad 1 y tipoAsiento null por defecto, luego se podrá modificar
-        this.paqueteSeleccionado.getRutaEnPaquete().add(new RutaEnPaquete(1, null, ruta));
+        RutaEnPaquete tp = new RutaEnPaquete();
+        tp.setCantidad(cantidad);
+        tp.setTipoAsiento(tipoAsiento);
+        this.paqueteSeleccionado.getRutaEnPaquete().add(tp);
 
     }
 
-    public void agregarRutaDeVueloAPaquete(DtPaquete paquete, DtAerolinea aerolinea, String nombreRuta) {
+    public void agregarRutaDeVueloAPaquete(DtPaquete paquete, DtAerolinea aerolinea, String nombreRuta,int cantidad,TipoAsiento tipoAsiento) {
         listarPaquetes();
         seleccionarPaquete(paquete.getNombre());
         listarAerolineas();
         seleccionarAeroLinea(aerolinea.getNickname());
         listarRutasDeVuelo();
-        seleccionarRutaDeVuelo(nombreRuta);
+        seleccionarRutaDeVuelo(nombreRuta,cantidad,tipoAsiento);
 
-        // Actualizar el paquete en el sistema
-        this.paquetes.put(this.paqueteSeleccionado.getNombre(), this.paqueteSeleccionado);
         this.aerolineaTemporal = null;
         this.paqueteSeleccionado = null;
     }
