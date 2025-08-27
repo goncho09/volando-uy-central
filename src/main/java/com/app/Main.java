@@ -291,27 +291,90 @@ public class Main extends JFrame {
                 }
             }
         });
+
+        //REGISTRAR USUARIO
         confirmarAltaCliente.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(nickname.getText().isEmpty() || nombre.getText().isEmpty() || correoElectronico.getText().isEmpty() || Apellido.getText().isEmpty() || nacionalidad.getText().isEmpty() || tipoDocumento.getSelectedItem() != null || documento.getText().isEmpty() ) { //ver como validar fecha!=0
-                    System.out.println("faltan argumentos");
-                }else{
-                    DtFecha fecha1 = new DtFecha(18,8,2025);
-                    //String nicknameValue = nickname.getText();
-                    //System.out.printf("%-15s: %s%n", "nicknameValue", nicknameValue);
-                    TipoDocumento documentoT = null;
-                    if (tipoDocumento.getSelectedItem() == "cedula"){
-                        documentoT = TipoDocumento.CEDULA;
-                    }else {
-                        documentoT = TipoDocumento.PASAPORTE;
+                try {
+                    String tipoUsuario = userType.getSelectedItem().toString();
+                    if (tipoUsuario.equals("Cliente")) {
+                        if (nickname.getText().isEmpty() || nombre.getText().isEmpty() ||
+                                correoElectronico.getText().isEmpty() || Apellido.getText().isEmpty() ||
+                                nacionalidad.getText().isEmpty() ||// tipoDocumento.getSelectedItem() == null ||
+                                documento.getText().isEmpty()) {
+
+                            errorMessage errorDialog = new errorMessage("Faltan argumentos");
+                            return;
+                        }
+                        // Crear DtCliente
+                        DtFecha fecha1 = new DtFecha(18, 8, 2025);
+                        TipoDocumento documentoT = tipoDocumento.getSelectedItem().toString().equals("cedula") ?
+                                TipoDocumento.CEDULA : TipoDocumento.PASAPORTE;
+
+                        DtCliente cliente = new DtCliente(
+                                nickname.getText(), nombre.getText(), correoElectronico.getText(),
+                                Apellido.getText(), fecha1, nacionalidad.getText(),
+                                documentoT, Integer.parseInt(documento.getText())
+                        );
+                        s.registrarCliente(cliente);
+                        System.out.println("Cliente registrado: " + nickname.getText());
+
+                    } else if (tipoUsuario.equals("Aerolinea")) {
+                        if (nickname.getText().isEmpty() || nombre.getText().isEmpty() ||
+                                correoElectronico.getText().isEmpty() || descripcion.getText().isEmpty() ||
+                                sitioWebAerolinea.getText().isEmpty()) {
+
+                            errorMessage errorDialog = new errorMessage("Faltan argumentos");
+                            return;
+                        }
+                        // Crear DtAerolinea
+                        DtAerolinea aerolinea = new DtAerolinea(
+                                nickname.getText(), nombre.getText(), correoElectronico.getText(),
+                                descripcion.getText(), sitioWebAerolinea.getText()
+                        );
+                        s.registrarAerolinea(aerolinea);
+                        System.out.println("Aerolínea registrada: " + nickname.getText());
                     }
-
-                    DtCliente cliente = new DtCliente(nickname.getText(), nombre.getText(), correoElectronico.getText(), Apellido.getText(), fecha1, nacionalidad.getText(), documentoT, Integer.parseInt(documento.getText()));
-                    System.out.println("registrar cliente");
-                    s.registrarCliente(cliente);
+                    // Actualizar ComboBox de consulta
+                    comboBox6.removeAllItems();
+                    java.util.List<DtUsuario> usuarios = s.listarUsuarios();
+                    for (DtUsuario usuario : usuarios) {
+                        comboBox6.addItem(usuario.getNickname());
+                    }
+                } catch (Exception ex) {
+                        errorMessage errorDialog = new errorMessage("Error al registrar: " + ex.getMessage());
+                        errorDialog.setVisible(true);
+                        ex.printStackTrace();
+                    }
                 }
+            });
 
+        //CONSULTAR USUARIO
+        consultarUsuarioButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (comboBox6.getSelectedItem() == null) {
+                    errorMessage errorDialog = new errorMessage("Seleccione un usuario");
+                    errorDialog.setVisible(true);
+                    return;
+                }
+                String nicknameSeleccionado = comboBox6.getSelectedItem().toString();
+
+                s.elegirUsuario(nicknameSeleccionado);
+                DtUsuario dtUsuario = s.getUsuarioSeleccionado();
+
+                textField3.setText(dtUsuario.getNickname());
+                textField5.setText(dtUsuario.getNombre());
+                textField7.setText(dtUsuario.getEmail());
+
+                if (dtUsuario instanceof DtCliente) {
+                    DtCliente cliente = (DtCliente) dtUsuario;
+                    textField6.setText(cliente.getApellido());
+                } else if (dtUsuario instanceof DtAerolinea) {
+                    DtAerolinea aerolinea = (DtAerolinea) dtUsuario;
+
+                }
             }
         });
     }
