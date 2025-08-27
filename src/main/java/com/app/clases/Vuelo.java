@@ -6,7 +6,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 @Entity
-@Table(name="vuelo")
+//@Table(name="vuelo")
 public class Vuelo {
     @Id
     @Column(nullable = false, length = 50)
@@ -27,11 +27,12 @@ public class Vuelo {
     @Column(nullable = false)
     private LocalDate fechaAlta;
 
-    @Column(nullable = false)
+    @ManyToOne(optional = false)
     private RutaDeVuelo rutaDeVuelo;
 
     public DtVuelo getDatos() {return null;}
 
+    public Vuelo() {}
     public Vuelo(DtVuelo vuelo) {
         this.nombre = vuelo.getNombre();
         this.fecha = vuelo.getFecha();

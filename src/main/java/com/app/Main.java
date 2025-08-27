@@ -4,7 +4,6 @@ import com.app.clases.*;
 import com.app.datatypes.*;
 import com.app.enums.*;
 
-import jakarta.persistence.*;
 import javax.swing.*;
 import java.awt.event.*;
 import java.time.LocalDate;
@@ -14,6 +13,11 @@ import java.util.List;
 
 public class Main extends JFrame {
 
+    //Declaración de variables "importantes"
+    private ISistema s;
+    private auxiliarFunctions auxiliar;
+
+    //Declaració de JavaSwing
     private JPanel menuPrincipal;
     private JTabbedPane gestionUsuarios;
     private JTabbedPane tabbedPane1;
@@ -94,11 +98,35 @@ public class Main extends JFrame {
     private JComboBox comboBox10;
     private JButton CONFIRMARButton1;
     private JButton CANCELARButton1;
+    private JPanel JPanelModificarAerolinea;
+    private JButton JButtonModificarAerolinea;
+    private JTextField nicknameModificarAerolinea;
+    private JPanel JPanelModificarCliente;
+    private JTextField nicknameModificarCliente;
+    private JComboBox JComboBoxSeleccionarUsuarioModificar;
+    private JTextField nombreClienteModificar;
+    private JTextField correoClienteModificar;
+    private JTextField apellidoClienteModificar;
+    private JSpinner fechaDiaClienteModificar;
+    private JSpinner fechaMesClienteModificar;
+    private JSpinner fechaAnioClienteModificar;
+    private JTextField nacionalidadClienteModificar;
+    private JComboBox tipoDocumentoClienteModificar;
+    private JComboBox JComboBoxSeleccionarUsuarioConsultar;
     //private JComboBox comboBox9;
-    private ISistema s;
+
 
 
     public Main() {
+
+        //Inicializar Sistema
+        s = Factory.getSistema();
+
+        //Inicializar Auxiliar
+        this.auxiliar = new auxiliarFunctions(s.getUserDao());
+
+        //Getter de los modelos
+        auxiliar.getComboUserModel();
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(800, 600);
@@ -108,11 +136,29 @@ public class Main extends JFrame {
         add(menuPrincipal);
         setVisible(true);
 
-        //Settear visibles false
+        //Settear swing elements visibles false
         JPanelRegistrarAerolinea.setVisible(false);
+        JPanelModificarAerolinea.setVisible(false);
+        JPanelModificarCliente.setVisible(false);
 
-        s = Factory.getSistema();
 
+        //Settear swing elements enabled false
+
+
+        //Settear swing elements isEditable false
+        nicknameModificarAerolinea.setEditable(false);
+        nicknameModificarCliente.setEditable(false);
+
+        //Settear no selección JComboBox
+        JComboBoxSeleccionarUsuarioModificar.setSelectedIndex(-1);
+
+
+        //Settear modelos JComboBox
+        JComboBoxSeleccionarUsuarioModificar.setModel(auxiliar.getComboUserModel());
+        JComboBoxSeleccionarUsuarioConsultar.setModel(auxiliar.getComboUserModel());
+
+        //¡Cargar datitos!
+        auxiliar.cargarUsuariosComboBox();
 
         DtCategoria cat1 = new DtCategoria("Running");
         DtCategoria cat2 = new DtCategoria("Salto Montaña");
@@ -166,7 +212,7 @@ public class Main extends JFrame {
         }
 
         DtCliente cliente1 = new DtCliente("gonzalo95", "Gonzalo", "maria88@hotmail.com", "Larrica", fecha1, "Uruguay", TipoDocumento.CEDULA, 51234567);
-        DtCliente cliente2 = new DtCliente("gonzalo945", "María", "maria88@hotmail.com", "Fernández", fecha2, "Argentina", TipoDocumento.PASAPORTE, 98765432);
+        DtCliente cliente2 = new DtCliente("gonzalo945", "María", "maria89@hotmail.com", "Fernández", fecha2, "Argentina", TipoDocumento.PASAPORTE, 98765432);
         DtCliente cliente3 = new DtCliente("juan2000", "Juan", "juan2000@yahoo.com", "Pérez", fecha2, "Chile", TipoDocumento.CEDULA_EXTRANJERA, 45678901);
 
         s.registrarCliente(cliente1);
@@ -197,7 +243,7 @@ public class Main extends JFrame {
         btnConfirmarAltaCiudad.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(auxiliarFunctions.estanVaciosJTextField(nombreAltaCiudad, paisAltaCiudad, aeropuertoAltaCiudad, descripcionAltaCiudad)){
+                if(auxiliar.estanVaciosJTextField(nombreAltaCiudad, paisAltaCiudad, aeropuertoAltaCiudad, descripcionAltaCiudad)){
                     JDialog err = new errorMessage("Faltan argumentos");
                     return;
                 }
@@ -210,7 +256,7 @@ public class Main extends JFrame {
         hacerReservaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(auxiliarFunctions.estanVaciosJComboBox(aerolineaReserva, rutaDeVueloReserva, vueloReserva, clienteReserva, tipoAsientoReserva)){
+                if(auxiliar.estanVaciosJComboBox(aerolineaReserva, rutaDeVueloReserva, vueloReserva, clienteReserva, tipoAsientoReserva)){
                     System.out.println("Faltan argumentos");
                     JDialog err = new errorMessage("Faltan argumentos");
                     return;
@@ -261,7 +307,6 @@ public class Main extends JFrame {
                         JPanelRegistrarAerolinea.setVisible(true);
                         JPanelRegistrarCliente.setVisible(false);
                     }
-
                 }
             }
         });
@@ -346,22 +391,35 @@ public class Main extends JFrame {
                 }
             }
         });
+        JComboBoxSeleccionarUsuarioModificar.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if(e.getStateChange() == ItemEvent.SELECTED){
+                    Usuario user = (Usuario)JComboBoxSeleccionarUsuarioModificar.getSelectedItem();
+                    if(user instanceof Cliente){ // Pregunta si mi usuario es un cliente
+                        Cliente cliente = (Cliente) user;
+                        LocalDate fechaCliente = cliente.getFechaNacimiento();
+                        JPanelModificarCliente.setVisible(true);
+                        JPanelModificarAerolinea.setVisible(false);
+                        nicknameModificarCliente.setText(cliente.getNickname());
+                        nombreClienteModificar.setText(cliente.getNombre());
+                        apellidoClienteModificar.setText(cliente.getApellido());
+                        correoClienteModificar.setText(cliente.getEmail());
+                        fechaDiaClienteModificar.setValue(fechaCliente.getDayOfMonth());
+                        fechaMesClienteModificar.setValue(fechaCliente.getMonthValue());
+                        fechaAnioClienteModificar.setValue(fechaCliente.getYear());
+                        nacionalidadClienteModificar.setText(cliente.getNacionalidad());
+                        //tipoDocumentoClienteModificar.setSelectedItem(cliente.getTipoDocumento()); <- Investigar este wey
+
+                    }else{
+                        Aerolinea aerolinea = (Aerolinea) user;
+                    }
+                }
+            }
+        });
     }
 
     public static void main(String[] args) {
         new Main();
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("MiUnidadPersistencia");
-        EntityManager em = emf.createEntityManager();
-
-        em.getTransaction().begin();
-        Query q = em.createNativeQuery("SELECT 1");
-        Object result = q.getSingleResult();
-        System.out.println("Conexión OK, resultado: " + result);
-        em.getTransaction().commit();
-
-        em.close();
-        emf.close();
     }
-
-    private void createUIComponents() {};
 }

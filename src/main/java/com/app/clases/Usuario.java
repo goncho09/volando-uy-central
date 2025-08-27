@@ -5,7 +5,6 @@ import jakarta.persistence.*;
 
 
 @Entity
-@Table(name = "user")
 @Inheritance(strategy = InheritanceType.JOINED) // Esto indica que es una herencia, por ende tendrá subclases, utilizará el método Join para crear las "subtablas"
 @DiscriminatorColumn(name = "userType") // Indica que creará una columna para diferenciar las clases. El valor depende de las subclases.
 public abstract class Usuario {
@@ -46,6 +45,11 @@ public abstract class Usuario {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    @Override
+    public String toString() {
+        return this.nombre;
     }
 }
 

@@ -1,14 +1,21 @@
 package com.app.clases;
 
 import com.app.datatypes.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
+
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
 public class Aerolinea extends Usuario {
     private String descripcion;
     private String linkWeb;
+
+    @OneToMany
     private List<RutaDeVuelo> rutasDeVuelo;
 
+    public Aerolinea() {}
     public Aerolinea(DtAerolinea aerolinea) {
         super(new DtUsuario(aerolinea.getNickname(), aerolinea.getNombre(), aerolinea.getEmail()));
         this.descripcion = aerolinea.getDescripcion();
