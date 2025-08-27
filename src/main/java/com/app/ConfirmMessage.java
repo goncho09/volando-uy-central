@@ -3,15 +3,17 @@ package com.app;
 import javax.swing.*;
 import java.awt.event.*;
 
-public class confirmMessage extends JDialog {
+public class ConfirmMessage extends JDialog {
     private JPanel contentPane;
     private JButton buttonOK;
-    private JButton buttonCancel;
+    private JLabel errorMessage;
 
-    public confirmMessage() {
+    public ConfirmMessage(String msg) {
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
+
+        errorMessage.setText(msg);
 
         buttonOK.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -19,11 +21,6 @@ public class confirmMessage extends JDialog {
             }
         });
 
-        buttonCancel.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onCancel();
-            }
-        });
 
         // call onCancel() when cross is clicked
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
@@ -39,6 +36,8 @@ public class confirmMessage extends JDialog {
                 onCancel();
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+
+        inicializar();
     }
 
     private void onOK() {
@@ -51,10 +50,9 @@ public class confirmMessage extends JDialog {
         dispose();
     }
 
-    public static void main(String[] args) {
-        confirmMessage dialog = new confirmMessage();
-        dialog.pack();
-        dialog.setVisible(true);
-        System.exit(0);
+    private void inicializar(){
+        pack();
+        setLocationRelativeTo(null);
+        setVisible(true);
     }
 }

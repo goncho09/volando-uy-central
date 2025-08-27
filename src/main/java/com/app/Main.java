@@ -113,6 +113,8 @@ public class Main extends JFrame {
     private JComboBox tipoDocumentoClienteModificar;
     private JComboBox JComboBoxSeleccionarUsuarioConsultar;
     private JSpinner JSpinnerDuracionAltaVuelo;
+    private JTextField nombreAltaCategoría;
+    private JButton confirmarAltaCategoria;
     //private JComboBox comboBox9;
 
 
@@ -180,17 +182,13 @@ public class Main extends JFrame {
         DtCiudad c2 = new DtCiudad("Buenos Aires", "Argentina", "Aeropuerto Jorge Newbery", "Puerto Madero", "www.aeroparque.com.ar", fecha1);
         DtCiudad c3 = new DtCiudad("Santiago", "Chile", "Aeropuerto Arturo Merino Benítez", "Cerro San Cristóbal", "www.aeropuertosantiago.cl", fecha1);
 
-        s.altaCategoria(cat1);
-//        s.altaCategoria(cat1);
-        s.altaCategoria(cat2);
-        s.altaCategoria(cat3);
-
         s.altaCiudad(c1);
         s.altaCiudad(c2);
         s.altaCiudad(c3);
 
-        RutaDeVuelo ruta1 = new RutaDeVuelo(new DtRuta("Vuelo A1", "Descripcion A1", hora, 100, 200, 20, fecha1,s.getCategorias(), s.getCiudades()));
-        RutaDeVuelo ruta2 = new RutaDeVuelo(new DtRuta("Vuelo A2", "Descripcion A2", hora, 120, 220, 25, fecha1, s.getCategorias(), s.getCiudades()));
+
+        RutaDeVuelo ruta1 = new RutaDeVuelo(new DtRuta("Vuelo A1", "Descripcion A1", hora, 100, 200, 20, fecha1,s.getCategorias(),s.getCiudades().get(0),s.getCiudades().get(1)));
+        RutaDeVuelo ruta2 = new RutaDeVuelo(new DtRuta("Vuelo A2", "Descripcion A2", hora, 120, 220, 25, fecha1, s.getCategorias(), s.getCiudades().get(1),s.getCiudades().get(2)));
 
 
         List<RutaDeVuelo> rutasPaquete1 = new ArrayList<>();
@@ -434,6 +432,20 @@ public class Main extends JFrame {
                     return;
                 }
                 // FALTA CASO USO ALTA VUELO
+            }
+        });
+
+        confirmarAltaCategoria.addActionListener(e -> {
+            try{
+                if(auxiliar.estanVaciosJTextField(nombreAltaCategoría)){
+                    new errorMessage("Ingrese un nombre de categoría");
+                    return;
+                }
+                s.altaCategoria(new DtCategoria(nombreAltaCategoría.getText()));
+                new ConfirmMessage("Categoria creada correctamente");
+                nombreAltaCiudad.setText("");
+            } catch (Exception ex) {
+                new errorMessage(ex.getMessage());
             }
         });
     }

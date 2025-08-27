@@ -16,9 +16,10 @@ public class DtRuta {
     private float equipajeExtra;
     private LocalDate fechaAlta;
     private List<Categoria> categorias;
-    private List<Ciudad> ciudades;
+    private Ciudad ciudadOrigen;
+    private Ciudad ciudadDestino;
 
-    public DtRuta(String nombre, String descripcion, LocalTime hora, float costoTurista, float costoEjecutivo, float equipajeExtra, LocalDate fechaAlta, List<Categoria> categorias, List<Ciudad> ciudades) {
+    public DtRuta(String nombre, String descripcion, LocalTime hora, float costoTurista, float costoEjecutivo, float equipajeExtra, LocalDate fechaAlta, List<Categoria> categorias, Ciudad origen,Ciudad destino) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.hora = hora;
@@ -27,7 +28,8 @@ public class DtRuta {
         this.equipajeExtra = equipajeExtra;
         this.fechaAlta = fechaAlta;
         this.categorias = categorias;
-        this.ciudades = ciudades;
+        this.ciudadOrigen = origen;
+        this.ciudadDestino = destino;
     }
 
     public String getNombre() {
@@ -94,11 +96,19 @@ public class DtRuta {
         this.categorias = categorias;
     }
 
-    public List<Ciudad> getCiudades() {
-        return ciudades;
+    public Ciudad getCiudadDestino() {
+        return ciudadDestino;
     }
 
-    public void setCiudades(List<Ciudad> ciudades) {
-        this.ciudades = ciudades;
+    public void setCiudadDestino(Ciudad ciudadDestino) {
+        this.ciudadDestino = ciudadDestino;
+    }
+
+    public Ciudad getCiudadOrigen() {
+        return ciudadOrigen;
+    }
+
+    public void setCiudadOrigen(Ciudad ciudadOrigen) {
+        this.ciudadOrigen = ciudadOrigen;
     }
 }
