@@ -1,6 +1,6 @@
 package com.app.clases;
 
-import com.app.datatypes.DtFecha;
+import java.time.LocalDate;
 import com.app.datatypes.DtPasajero;
 import java.util.Set;
 
@@ -11,12 +11,12 @@ public class Pasaje {
     private int cantidadPasajes;
     private int equipajeExtra;
     private Set<DtPasajero> pasajeros;
-    private DtFecha fechaReserva;
+    private LocalDate fechaReserva;
     private float costoTotal;
 
     public Pasaje(String nicknameCliente, Vuelo vuelo, boolean esEjecutivo,
                   int cantidadPasajes, int equipajeExtra, Set<DtPasajero> pasajeros,
-                  DtFecha fechaReserva) {
+                  LocalDate fechaReserva) {
         this.nicknameCliente = nicknameCliente;
         this.vuelo = vuelo;
         this.esEjecutivo = esEjecutivo;
@@ -59,11 +59,11 @@ public class Pasaje {
         this.pasajeros = pasajeros;
     }
 
-    public DtFecha getFechaReserva() {
+    public LocalDate getFechaReserva() {
         return fechaReserva;
     }
 
-    public void setFechaReserva(DtFecha fechaReserva) {
+    public void setFechaReserva(LocalDate fechaReserva) {
         this.fechaReserva = fechaReserva;
     }
 

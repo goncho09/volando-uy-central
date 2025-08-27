@@ -282,7 +282,7 @@ public class Main extends JFrame {
                             return;
                         }
                         // Crear DtCliente
-                        DtFecha fecha1 = new DtFecha(18, 8, 2025);
+                        LocalDate fecha1 = LocalDate.of (2025, 8, 25);
                         TipoDocumento documentoT = tipoDocumento.getSelectedItem().toString().equals("cedula") ?
                                 TipoDocumento.CEDULA : TipoDocumento.PASAPORTE;
 
