@@ -1,5 +1,6 @@
 package com.app.clases;
 
+import com.app.DAOs.CategoriaDao;
 import com.app.DAOs.RutaDeVueloDao;
 import com.app.DAOs.UserDao;
 import com.app.datatypes.*;
@@ -10,6 +11,7 @@ public interface ISistema {
 
     UserDao getUserDao();
     RutaDeVueloDao getRutaDeVueloDao();
+    CategoriaDao getCategoriaDao();
 
     List<DtPaquete> listarPaquetes();
     void seleccionarPaquete(String nombre);

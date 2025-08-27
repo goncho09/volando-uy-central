@@ -13,20 +13,39 @@ public class RutaDeVuelo {
     @Column(nullable = false, length = 50)
     private String nombre;
 
+    @Column( nullable = false)
     private String descripcion;
+
+    @Column( nullable = false)
     private LocalTime hora;
+
+    @Column( nullable = false)
     private float costoTurista;
+
+    @Column( nullable = false)
     private float costoEjecutivo;
+
+    @Column( nullable = false)
     private float equipajeExtra;
+
+    @Column( nullable = false)
     private LocalDate fechaAlta;
 
-    @OneToMany
-    @JoinColumn(name="rutaDeVuelo_name", nullable = false)
+    @ManyToMany
+    @JoinTable(
+            name = "ruta_categoria",
+            joinColumns = @JoinColumn(name = "ruta_nombre"),
+            inverseJoinColumns = @JoinColumn(name = "categoria_nombre")
+    )
     private List<Categoria> categorias;
 
-    @OneToMany
-    @JoinColumn(name="rutaDeVuelo_name", nullable = false)
-    private List<Ciudad> ciudades;
+    @ManyToOne
+    @JoinColumn(name = "ciudad_origen", nullable = false)
+    private Ciudad ciudadOrigen;
+
+    @ManyToOne
+    @JoinColumn(name = "ciudad_destino", nullable = false)
+    private Ciudad ciudadDestino;
 
     public RutaDeVuelo() {}
 
@@ -39,7 +58,8 @@ public class RutaDeVuelo {
         this.equipajeExtra = ruta.getEquipajeExtra();
         this.fechaAlta = ruta.getFechaAlta();
         this.categorias = ruta.getCategorias();
-        this.ciudades = ruta.getCiudades();
+        this.ciudadOrigen = ruta.getCiudadOrigen();
+        this.ciudadDestino = ruta.getCiudadDestino();
     }
 
     public String getNombre() {
@@ -98,13 +118,6 @@ public class RutaDeVuelo {
         this.fechaAlta = fechaAlta;
     }
 
-    public List<Ciudad> getCiudades() {
-        return ciudades;
-    }
-
-    public void setCiudades(List<Ciudad> ciudades) {
-        this.ciudades = ciudades;
-    }
 
     public List<Categoria> getCategorias() {
         return categorias;
@@ -112,6 +125,22 @@ public class RutaDeVuelo {
 
     public void setCategorias(List<Categoria> categorias) {
         this.categorias = categorias;
+    }
+
+    public Ciudad getCiudadOrigen() {
+        return ciudadOrigen;
+    }
+
+    public void setCiudadOrigen(Ciudad ciudadOrigen) {
+        this.ciudadOrigen = ciudadOrigen;
+    }
+
+    public Ciudad getCiudadDestino() {
+        return ciudadDestino;
+    }
+
+    public void setCiudadDestino(Ciudad ciudadDestino) {
+        this.ciudadDestino = ciudadDestino;
     }
 
     @Override

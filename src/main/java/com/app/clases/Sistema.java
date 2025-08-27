@@ -20,6 +20,7 @@ public class Sistema implements ISistema {
     private EntityManager em;
     private UserDao userDao;
     private RutaDeVueloDao rutaDeVueloDao;
+    private CategoriaDao categoriaDao;
 
     private Map<String, Categoria> categorias;
     private Map<String, Ciudad> ciudades;
@@ -44,6 +45,7 @@ public class Sistema implements ISistema {
         this.em = emf.createEntityManager(); //Inicializamos el "controlador" global de la BD
         this.userDao = new UserDao(em); // Inicializamos "controlador" de usuarios
         this.rutaDeVueloDao = new RutaDeVueloDao(em);
+        this.categoriaDao = new CategoriaDao(em);
 
         this.categorias = new LinkedHashMap<>();
         this.ciudades = new LinkedHashMap<>();
@@ -63,6 +65,8 @@ public class Sistema implements ISistema {
     }
 
     public RutaDeVueloDao getRutaDeVueloDao(){return this.rutaDeVueloDao;}
+
+    public CategoriaDao getCategoriaDao(){ return this.categoriaDao;}
 
     public List<String> listarAerolineas() {
         List<String> nickname = new ArrayList<>();
@@ -98,7 +102,8 @@ public class Sistema implements ISistema {
                         r.getEquipajeExtra(),
                         r.getFechaAlta(),
                         r.getCategorias(),
-                        r.getCiudades()
+                        r.getCiudadOrigen(),
+                        r.getCiudadDestino()
                 );
             }
         }
@@ -271,7 +276,8 @@ public class Sistema implements ISistema {
                 ruta.getEquipajeExtra(),
                 ruta.getFechaAlta(),
                 ruta.getCategorias(),
-                ruta.getCiudades()
+                ruta.getCiudadOrigen(),
+                ruta.getCiudadDestino()
         );
     }
 
@@ -323,7 +329,7 @@ public class Sistema implements ISistema {
         }
         List<DtRuta> dtRutas = new ArrayList<>();
         for (RutaDeVuelo r : this.aerolineaTemporal.getRutasDeVuelo()) {
-            DtRuta ruta = new DtRuta(r.getNombre(), r.getDescripcion(), r.getHora(), r.getCostoTurista(), r.getCostoEjecutivo(), r.getEquipajeExtra(), r.getFechaAlta(), r.getCategorias(), r.getCiudades());
+            DtRuta ruta = new DtRuta(r.getNombre(), r.getDescripcion(), r.getHora(), r.getCostoTurista(), r.getCostoEjecutivo(), r.getEquipajeExtra(), r.getFechaAlta(), r.getCategorias(), r.getCiudadOrigen(),r.getCiudadDestino());
             dtRutas.add(ruta);
         }
         return dtRutas;
@@ -383,9 +389,10 @@ public class Sistema implements ISistema {
     }
 
     public void altaCategoria(DtCategoria categoria){
-        if(this.categorias.containsKey(categoria.getNombre())) { throw new IllegalArgumentException("Ya existe una categoría con ese nombre.");}
+        if(categoriaDao.buscar(categoria.getNombre()) != null) { throw new IllegalArgumentException("Ya existe una categoría con ese nombre.");}
         Categoria c = new Categoria(categoria);
         this.categorias.put(c.getNombre(),c);
+        categoriaDao.guardar(c);
     }
 
     public void altaCiudad(DtCiudad ciudad){
@@ -396,7 +403,7 @@ public class Sistema implements ISistema {
     }
 
     public List<Ciudad> getCiudades(){
-        if(this.ciudades.isEmpty()) { throw new IllegalArgumentException("No hay paquetes.");}
+        if(this.ciudades.isEmpty()) { throw new IllegalArgumentException("No hay ciudades.");}
         List <Ciudad> listaCiudades = new ArrayList<>();
         for (Map.Entry<String, Ciudad> entry : ciudades.entrySet()) {
             Ciudad c = entry.getValue();
@@ -406,13 +413,8 @@ public class Sistema implements ISistema {
     }
 
     public List<Categoria> getCategorias(){
-        if(this.categorias.isEmpty()) { throw new IllegalArgumentException("No hay paquetes.");}
-        List <Categoria> listaCategorias = new ArrayList<>();
-        for (Map.Entry<String, Categoria> entry : categorias.entrySet()) {
-            Categoria c = entry.getValue();
-            listaCategorias.add(c);
-        }
-        return listaCategorias;
+        if(categoriaDao.listarCategorias().isEmpty()) { throw new IllegalArgumentException("No hay categorias.");}
+        return categoriaDao.listarCategorias();
     }
 
     public void consultaVuelo(DtVuelo vuelo) {
