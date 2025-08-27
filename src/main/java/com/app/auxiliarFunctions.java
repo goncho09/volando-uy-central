@@ -15,7 +15,14 @@ public class auxiliarFunctions {
         return false;
     }
 
-
+    public static boolean estanVaciosJTextField(JTextField... fields) {
+        for (JTextField field : fields) {
+            if (field.getText() == null || field.getText().trim().isEmpty()) {
+                return true;
+            }
+        }
+        return false;
+    }
 
 
 

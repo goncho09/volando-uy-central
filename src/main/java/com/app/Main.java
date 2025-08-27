@@ -50,9 +50,6 @@ public class Main extends JFrame {
     private JTextField paisAltaCiudad;
     private JTextField aeropuertoAltaCiudad;
     private JTextField descripcionAltaCiudad;
-    private JSpinner diaAltaciudad;
-    private JSpinner mesAltaCiudad;
-    private JSpinner añoAltaCiudad;
     private JPanel JPanelRegistrarCliente;
     private JPanel JPanelRegistrarAerolinea;
     private JTextField nickname;
@@ -105,23 +102,14 @@ public class Main extends JFrame {
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(800, 600);
-        setVisible(true);
         setResizable(false);
         setLocationRelativeTo(null);
         setTitle("Admin Dashboard");
         add(menuPrincipal);
+        setVisible(true);
 
         //Settear visibles false
         JPanelRegistrarAerolinea.setVisible(false);
-
-        // Limitar Spinners
-        diaAltaciudad.setModel(new SpinnerNumberModel(1, 1, 31, 1));
-        mesAltaCiudad.setModel(new SpinnerNumberModel(1, 1, 12, 1));
-        añoAltaCiudad.setModel(new SpinnerNumberModel(2025, 1900, 2100, 1));
-        // Que no se puedan editar
-        ((JSpinner.DefaultEditor) diaAltaciudad.getEditor()).getTextField().setEditable(false);
-        ((JSpinner.DefaultEditor) mesAltaCiudad.getEditor()).getTextField().setEditable(false);
-        ((JSpinner.DefaultEditor) añoAltaCiudad.getEditor()).getTextField().setEditable(false);
 
         s = Factory.getSistema();
 
@@ -173,8 +161,7 @@ public class Main extends JFrame {
         s.altaPaquete(p3);
         List<DtPaquete> paquetes = s.listarPaquetes();
 
-        for (int i = 0; i < paquetes.size(); i++) {
-            DtPaquete p = paquetes.get(i);
+        for (DtPaquete p : paquetes) {
             System.out.println(p.getNombre() + " " + p.getDescripcion() + " " + p.getValidezDias() + " " + p.getDescuento() + " " + p.getCosto());
         }
 
@@ -189,9 +176,9 @@ public class Main extends JFrame {
         consultarVueloButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                LocalDate fechaPrueba = LocalDate.of(3,12,2025);
+                LocalDate fechaPrueba = LocalDate.of(2025,12,3);
                 LocalTime horaPrueba = LocalTime.of(10, 30);
-                LocalDate fechaAltaPrueba = LocalDate.of(18,8,2025);
+                LocalDate fechaAltaPrueba = LocalDate.of(2025,8,18);
                 DtVuelo dataVuelo = new DtVuelo("A1", fechaPrueba, horaPrueba, 160, 40, fechaAltaPrueba,ruta1);
 
                 JFrame vuelo = new dataVuelo(dataVuelo);
@@ -210,15 +197,12 @@ public class Main extends JFrame {
         btnConfirmarAltaCiudad.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String sitioWeb = webAltaCiudad.getText();
-                int dia = (Integer) diaAltaciudad.getValue();
-                int mes = (Integer) mesAltaCiudad.getValue();
-                int año = (Integer) añoAltaCiudad.getValue();
-                if(nombreAltaCiudad.getText().isEmpty() && paisAltaCiudad.getText().isEmpty() && aeropuertoAltaCiudad.getText().isEmpty() && descripcionAltaCiudad.getText().isEmpty() && dia != 0 && mes != 0 && año != 0){
-                    System.out.println("faltan argumentos");
-                }else{
-                    s.altaCiudad(new DtCiudad(nombreAltaCiudad.getText(), paisAltaCiudad.getText(),aeropuertoAltaCiudad.getText(),descripcionAltaCiudad.getText(),sitioWeb,LocalDate.of(dia,mes,año)));
+                if(auxiliarFunctions.estanVaciosJTextField(nombreAltaCiudad, paisAltaCiudad, aeropuertoAltaCiudad, descripcionAltaCiudad)){
+                    JDialog err = new errorMessage("Faltan argumentos");
+                    return;
                 }
+                s.altaCiudad(new DtCiudad(nombreAltaCiudad.getText(), paisAltaCiudad.getText(),aeropuertoAltaCiudad.getText(),descripcionAltaCiudad.getText(),webAltaCiudad.getText(),LocalDate.now()));
+
             }
         });
 
@@ -298,7 +282,5 @@ public class Main extends JFrame {
         emf.close();
     }
 
-    private void createUIComponents() {
-        // TODO: place custom component creation code here
-    }
+    private void createUIComponents() {};
 }
