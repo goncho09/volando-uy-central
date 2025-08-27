@@ -32,6 +32,10 @@ public class UserDao {
         return em.find(Usuario.class, nickname); // Saldrá a buscar a ese usuario en AMBAS clases.
     }
 
+    public Aerolinea buscarAerolinea(String nickname){
+        return em.find(Aerolinea.class, nickname); // Saldrá a buscar a ese usuario en AMBAS clases.
+    }
+
     public void guardar(Usuario usuario) {
         System.out.println("Guardando usuario:" + usuario);
         EntityTransaction tx = em.getTransaction();
