@@ -7,7 +7,7 @@ import java.time.LocalTime;
 import java.util.List;
 
 @Entity
-@Table(name="rutaDeVuelo")
+//@Table(name="rutaDeVuelo")
 public class RutaDeVuelo {
     @Id
     @Column(nullable = false, length = 50)

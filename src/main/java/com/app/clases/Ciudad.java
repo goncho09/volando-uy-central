@@ -8,7 +8,7 @@ import jakarta.persistence.Table;
 import java.time.LocalDate;
 
 @Entity
-@Table(name="ciudad")
+// @Table(name="ciudad") <- Se toma por defecto el nombre de la clase "Ciudad"
 public class Ciudad {
     @Id
     private String nombre;

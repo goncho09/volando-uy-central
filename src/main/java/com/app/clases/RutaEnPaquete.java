@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "rutaEnPaquete")
+//@Table(name = "rutaEnPaquete")
 public class RutaEnPaquete {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;

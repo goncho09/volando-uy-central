@@ -1,9 +1,15 @@
 package com.app.datatypes;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+
+@Entity
 public class DtPasajero {
+    @Id
     private String nombre;
     private String apellido;
 
+    public DtPasajero() {}
     public DtPasajero(String nombre, String apellido) {
         this.nombre = nombre;
         this.apellido = apellido;

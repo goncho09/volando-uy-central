@@ -1,7 +1,12 @@
 package com.app.clases;
 
+import com.app.DAOs.*;
+import com.app.auxiliarFunctions;
 import com.app.datatypes.*;
 import com.app.enums.TipoAsiento;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -11,22 +16,33 @@ import java.util.stream.Collectors;
 
 public class Sistema implements ISistema {
     private static Sistema instancia;
+
+    private EntityManagerFactory emf;
+    private EntityManager em;
+    private UserDao userDao;
+
     private Map<String, Categoria> categorias;
     private Map<String, Ciudad> ciudades;
     private Map<String, Usuario> usuarios;
     private Map<String, Paquete> paquetes;
     private Map<String, Vuelo> vuelos;
+
     private List<Aerolinea> aerolineas = new ArrayList<>();
     private List<RutaDeVuelo> rutas = new ArrayList<>();
     private List<Vuelo> consultaVuelos = new ArrayList<>();
     private List<Usuario> consultaUsuarios = new ArrayList<>();
-    private Usuario usuarioSeleccionado; // Guarda selección actual
 
+    private Usuario usuarioSeleccionado; // Guarda selección actual
     private Paquete paqueteSeleccionado;
     private Cliente clienteTemporal;
     private Aerolinea aerolineaTemporal;
 
     private Sistema() {
+        //Inicializar JPA
+        this.emf = Persistence.createEntityManagerFactory("pepitoElLaburador");
+        this.em = emf.createEntityManager(); //Inicializamos el "controlador" global de la BD
+        this.userDao = new UserDao(em); // Inicializamos "controlador" de usuarios
+
         this.categorias = new LinkedHashMap<>();
         this.ciudades = new LinkedHashMap<>();
         this.usuarios = new LinkedHashMap<>();
@@ -461,7 +477,8 @@ public class Sistema implements ISistema {
 
     public void confirmarAltaUsuario(){
         if(this.clienteTemporal != null){
-            this.usuarios.put(this.clienteTemporal .getNickname(),this.clienteTemporal);
+            this.usuarios.put(this.clienteTemporal.getNickname(), this.clienteTemporal);
+            userDao.guardar(this.clienteTemporal);
             this.clienteTemporal = null;
         }else{
             this.usuarios.put(this.aerolineaTemporal.getNickname(),this.aerolineaTemporal);
@@ -472,6 +489,10 @@ public class Sistema implements ISistema {
     public void cancelarAltaUsuario(){
         this.clienteTemporal = null;
         this.aerolineaTemporal = null;
+    }
+
+    public UserDao getUserDao() {
+        return userDao;
     }
 
 }

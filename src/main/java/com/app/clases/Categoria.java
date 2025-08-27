@@ -6,12 +6,13 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="categoria")
+//@Table(name="categoria") <- Agarra por defecto el nombre "Categoria"
 
 public class Categoria {
     @Id
     private String nombre;
 
+    public Categoria() {}
     public Categoria(DtCategoria categoria) {
         this.nombre = categoria.getNombre();
     }
