@@ -1600,7 +1600,7 @@
                               <text value="Seleccionar Aerolínea"/>
                             </properties>
                           </component>
-                          <component id="d9ec3" class="javax.swing.JComboBox" binding="comboBox1" default-binding="true">
+                          <component id="d9ec3" class="javax.swing.JComboBox" binding="JComboBoxAerolineaAltaVuelo">
                             <constraints>
                               <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                             </constraints>
@@ -1638,19 +1638,19 @@
                               <text value="Max. Ejecutivos:"/>
                             </properties>
                           </component>
-                          <component id="836ee" class="javax.swing.JSpinner" binding="spinner2" default-binding="true">
+                          <component id="836ee" class="javax.swing.JSpinner" binding="JSpinnerEjecutivosAltaVuelo">
                             <constraints>
                               <grid row="6" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                             </constraints>
                             <properties/>
                           </component>
-                          <component id="f5556" class="javax.swing.JSpinner" binding="spinner1" default-binding="true">
+                          <component id="f5556" class="javax.swing.JSpinner" binding="JSpinnerTuristasAltaVuelo">
                             <constraints>
                               <grid row="5" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                             </constraints>
                             <properties/>
                           </component>
-                          <component id="90e15" class="javax.swing.JTextField" binding="textField1" default-binding="true">
+                          <component id="90e15" class="javax.swing.JTextField" binding="nombreAltaVuelo">
                             <constraints>
                               <grid row="2" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                                 <preferred-size width="150" height="-1"/>
@@ -1658,7 +1658,7 @@
                             </constraints>
                             <properties/>
                           </component>
-                          <component id="abda4" class="javax.swing.JComboBox" binding="comboBox2">
+                          <component id="abda4" class="javax.swing.JComboBox" binding="JComboBoxRutaVueloAltaVuelo">
                             <constraints>
                               <grid row="1" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="0" fill="1" indent="0" use-parent-layout="false">
                                 <minimum-size width="200" height="-1"/>
@@ -1673,14 +1673,6 @@
                             <properties>
                               <text value="Duración:"/>
                             </properties>
-                          </component>
-                          <component id="b1a30" class="javax.swing.JTextField" binding="textField2" default-binding="true">
-                            <constraints>
-                              <grid row="4" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                                <preferred-size width="150" height="-1"/>
-                              </grid>
-                            </constraints>
-                            <properties/>
                           </component>
                           <component id="3dc97" class="javax.swing.JLabel">
                             <constraints>
@@ -1698,19 +1690,19 @@
                             <properties/>
                             <border type="none"/>
                             <children>
-                              <component id="5219f" class="javax.swing.JSpinner" binding="spinner5" default-binding="true">
+                              <component id="5219f" class="javax.swing.JSpinner" binding="JSpinnerMesAltaVuelo">
                                 <constraints>
                                   <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                                 </constraints>
                                 <properties/>
                               </component>
-                              <component id="2a2" class="javax.swing.JSpinner" binding="spinner4" default-binding="true">
+                              <component id="2a2" class="javax.swing.JSpinner" binding="JSpinnerAñoAltaVuelo">
                                 <constraints>
                                   <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                                 </constraints>
                                 <properties/>
                               </component>
-                              <component id="1fbc5" class="javax.swing.JSpinner" binding="spinner3" default-binding="true">
+                              <component id="1fbc5" class="javax.swing.JSpinner" binding="JSpinnerDiaAltaVuelo">
                                 <constraints>
                                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                                 </constraints>
@@ -1725,6 +1717,12 @@
                             <properties>
                               <text value="Crear Vuelo"/>
                             </properties>
+                          </component>
+                          <component id="63422" class="javax.swing.JSpinner" binding="JSpinnerDuracionAltaVuelo">
+                            <constraints>
+                              <grid row="4" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties/>
                           </component>
                         </children>
                       </grid>

@@ -1,5 +1,6 @@
 package com.app.clases;
 
+import com.app.DAOs.RutaDeVueloDao;
 import com.app.DAOs.UserDao;
 import com.app.datatypes.*;
 
@@ -8,6 +9,7 @@ import java.util.List;
 public interface ISistema {
 
     UserDao getUserDao();
+    RutaDeVueloDao getRutaDeVueloDao();
 
     List<DtPaquete> listarPaquetes();
     void seleccionarPaquete(String nombre);

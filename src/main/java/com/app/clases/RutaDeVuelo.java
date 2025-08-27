@@ -113,4 +113,9 @@ public class RutaDeVuelo {
     public void setCategorias(List<Categoria> categorias) {
         this.categorias = categorias;
     }
+
+    @Override
+    public String toString() {
+        return this.nombre;
+    }
 }

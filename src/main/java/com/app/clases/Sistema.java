@@ -1,7 +1,6 @@
 package com.app.clases;
 
 import com.app.DAOs.*;
-import com.app.auxiliarFunctions;
 import com.app.datatypes.*;
 import com.app.enums.TipoAsiento;
 import jakarta.persistence.EntityManager;
@@ -20,6 +19,7 @@ public class Sistema implements ISistema {
     private EntityManagerFactory emf;
     private EntityManager em;
     private UserDao userDao;
+    private RutaDeVueloDao rutaDeVueloDao;
 
     private Map<String, Categoria> categorias;
     private Map<String, Ciudad> ciudades;
@@ -34,14 +34,16 @@ public class Sistema implements ISistema {
 
     private Usuario usuarioSeleccionado; // Guarda selección actual
     private Paquete paqueteSeleccionado;
-    private Cliente clienteTemporal;
-    private Aerolinea aerolineaTemporal;
+    private DtCliente clienteTemporal;
+    private DtAerolinea aerolineaTemporal;
+    private Aerolinea aerolineaTemporalClase;
 
     private Sistema() {
         //Inicializar JPA
         this.emf = Persistence.createEntityManagerFactory("pepitoElLaburador");
         this.em = emf.createEntityManager(); //Inicializamos el "controlador" global de la BD
         this.userDao = new UserDao(em); // Inicializamos "controlador" de usuarios
+        this.rutaDeVueloDao = new RutaDeVueloDao(em);
 
         this.categorias = new LinkedHashMap<>();
         this.ciudades = new LinkedHashMap<>();
@@ -55,6 +57,12 @@ public class Sistema implements ISistema {
         }
         return instancia;
     }
+
+    public UserDao getUserDao() {
+        return this.userDao;
+    }
+
+    public RutaDeVueloDao getRutaDeVueloDao(){return this.rutaDeVueloDao;}
 
     public List<String> listarAerolineas() {
         List<String> nickname = new ArrayList<>();
@@ -97,9 +105,9 @@ public class Sistema implements ISistema {
         return null;
     }
 
-    public DtVuelo consultarVuelo(String nickename) {
+    public DtVuelo consultarVuelo(String nickname) {
         for (Vuelo v : consultaVuelos) {
-            if (v.getNombre().equals(nickename)) {
+            if (v.getNombre().equals(nickname)) {
                 return v.getDatos();
             }
         }
@@ -116,19 +124,14 @@ public class Sistema implements ISistema {
     }
 
     public void altaRutaDeVuelo(String nombreAerolinea, DtRuta datosRuta) {
-        Aerolinea aerolinea = null;
-        for (Aerolinea a : aerolineas) {
-            if (a.getNickname().equals(nombreAerolinea)) {
-                aerolinea = a;
-                break;
-            }
-        }
+        Aerolinea aerolinea = userDao.buscarAerolinea(nombreAerolinea);
+
         if (aerolinea == null) return;
 
-        // Nueva ruta
         RutaDeVuelo nuevaRuta = new RutaDeVuelo(datosRuta);
 
-        rutas.add(nuevaRuta);
+        this.rutas.add(nuevaRuta);
+        this.rutaDeVueloDao.guardar(nuevaRuta);
         aerolinea.getRutasDeVuelo().add(nuevaRuta);
     }
 
@@ -308,7 +311,7 @@ public class Sistema implements ISistema {
         if (aerolinea == null) {
             throw new IllegalArgumentException("No existe una aerolinea con ese nombre.");
         }
-        this.aerolineaTemporal = aerolinea;
+        this.aerolineaTemporalClase = aerolinea;
     }
 
     public List<DtRuta> listarRutasDeVuelo() {
@@ -429,7 +432,7 @@ public class Sistema implements ISistema {
             }
         }
 
-        this.clienteTemporal = new Cliente(cliente);
+        this.clienteTemporal = cliente;
     };
 
     public void modificarCliente(DtCliente cliente){
@@ -443,7 +446,6 @@ public class Sistema implements ISistema {
             c.setNacionalidad(cliente.getNacionalidad());
             c.setTipoDocumento(cliente.getTipoDocumento());
             c.setNumeroDocumento(cliente.getNumeroDocumento());
-            this.clienteTemporal = c;
         }else{
             throw new IllegalArgumentException("Este usuario es aerolinea.");
         }
@@ -458,7 +460,7 @@ public class Sistema implements ISistema {
             }
         }
 
-        this.aerolineaTemporal = new Aerolinea(aerolinea);
+        this.aerolineaTemporal = aerolinea;
     };
 
     public void modificarAerolinea(DtAerolinea aerolinea){
@@ -469,7 +471,6 @@ public class Sistema implements ISistema {
             a.setNombre(aerolinea.getNombre());
             a.setDescripcion(aerolinea.getDescripcion());
             a.setLinkWeb(aerolinea.getLinkWeb());
-            this.aerolineaTemporal = a;
         }else{
             throw new IllegalArgumentException("Este usuario es cliente.");
         }
@@ -477,11 +478,14 @@ public class Sistema implements ISistema {
 
     public void confirmarAltaUsuario(){
         if(this.clienteTemporal != null){
-            this.usuarios.put(this.clienteTemporal.getNickname(), this.clienteTemporal);
-            userDao.guardar(this.clienteTemporal);
+            Cliente nuevo = new Cliente(this.clienteTemporal);
+            this.usuarios.put(nuevo.getNickname(), nuevo);
+            userDao.guardar(nuevo);
             this.clienteTemporal = null;
         }else{
-            this.usuarios.put(this.aerolineaTemporal.getNickname(),this.aerolineaTemporal);
+            Aerolinea nueva = new Aerolinea(this.aerolineaTemporal);
+            this.usuarios.put(nueva.getNickname(),nueva);
+            userDao.guardar(nueva);
             this.aerolineaTemporal = null;
         }
     };
@@ -491,8 +495,6 @@ public class Sistema implements ISistema {
         this.aerolineaTemporal = null;
     }
 
-    public UserDao getUserDao() {
-        return userDao;
-    }
+
 
 }

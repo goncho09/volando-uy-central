@@ -23,15 +23,14 @@ public class Main extends JFrame {
     private JTabbedPane tabbedPane1;
     private JTabbedPane tabbedPane2;
     private JTabbedPane tabbedPane3;
-    private JComboBox comboBox2;
-    private JTextField textField1;
-    private JTextField textField2;
-    private JSpinner spinner1;
-    private JSpinner spinner2;
-    private JSpinner spinner3;
-    private JSpinner spinner4;
-    private JSpinner spinner5;
-    private JComboBox comboBox1;
+    private JComboBox JComboBoxRutaVueloAltaVuelo;
+    private JTextField nombreAltaVuelo;
+    private JSpinner JSpinnerTuristasAltaVuelo;
+    private JSpinner JSpinnerEjecutivosAltaVuelo;
+    private JSpinner JSpinnerDiaAltaVuelo;
+    private JSpinner JSpinnerAñoAltaVuelo;
+    private JSpinner JSpinnerMesAltaVuelo;
+    private JComboBox JComboBoxAerolineaAltaVuelo;
     private JPanel formVuelo;
     private JPanel fechaField;
     private JButton crearVueloButton;
@@ -113,6 +112,7 @@ public class Main extends JFrame {
     private JTextField nacionalidadClienteModificar;
     private JComboBox tipoDocumentoClienteModificar;
     private JComboBox JComboBoxSeleccionarUsuarioConsultar;
+    private JSpinner JSpinnerDuracionAltaVuelo;
     //private JComboBox comboBox9;
 
 
@@ -123,10 +123,7 @@ public class Main extends JFrame {
         s = Factory.getSistema();
 
         //Inicializar Auxiliar
-        this.auxiliar = new auxiliarFunctions(s.getUserDao());
-
-        //Getter de los modelos
-        auxiliar.getComboUserModel();
+        this.auxiliar = new auxiliarFunctions(s.getUserDao(),s.getRutaDeVueloDao());
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(800, 600);
@@ -142,31 +139,42 @@ public class Main extends JFrame {
         JPanelModificarCliente.setVisible(false);
 
 
-        //Settear swing elements enabled false
-
-
         //Settear swing elements isEditable false
         nicknameModificarAerolinea.setEditable(false);
         nicknameModificarCliente.setEditable(false);
 
         //Settear no selección JComboBox
         JComboBoxSeleccionarUsuarioModificar.setSelectedIndex(-1);
+        JComboBoxAerolineaAltaVuelo.setSelectedIndex(-1);
+        JComboBoxRutaVueloAltaVuelo.setSelectedIndex(-1);
 
 
         //Settear modelos JComboBox
         JComboBoxSeleccionarUsuarioModificar.setModel(auxiliar.getComboUserModel());
         JComboBoxSeleccionarUsuarioConsultar.setModel(auxiliar.getComboUserModel());
+        JComboBoxAerolineaAltaVuelo.setModel(auxiliar.getComboAerolineaModel());
+        JComboBoxRutaVueloAltaVuelo.setModel(auxiliar.getComboRutaDeVueloModel());
 
-        //¡Cargar datitos!
-        auxiliar.cargarUsuariosComboBox();
+        JSpinnerDiaAltaVuelo.setModel(new SpinnerNumberModel(1, 1, 31, 1));
+        JSpinnerMesAltaVuelo.setModel(new SpinnerNumberModel(1, 1, 12, 1));
+        JSpinnerAñoAltaVuelo.setModel(new SpinnerNumberModel(2025, 2025, 2030, 1));
+        JSpinnerDuracionAltaVuelo.setModel(new SpinnerNumberModel(1, 1, 12, 1));
+        JSpinnerEjecutivosAltaVuelo.setModel(new SpinnerNumberModel(1, 1, 100, 1));
+        JSpinnerTuristasAltaVuelo.setModel(new SpinnerNumberModel(1, 1, 100, 1));
 
-        DtCategoria cat1 = new DtCategoria("Running");
-        DtCategoria cat2 = new DtCategoria("Salto Montaña");
-        DtCategoria cat3 = new DtCategoria("Tirolesa");
+
+//        s.registrarAerolinea(new DtAerolinea("aviones123","aviones america","avines@gmail.com","aerolinea famosa"));
+//        s.confirmarAltaUsuario();
+
+        LocalTime hora = LocalTime.of(10,0);
 
         LocalDate fecha1 = LocalDate.of(2025,8,18);
         LocalDate fecha2 = LocalDate.of(2025,8,19);
         LocalTime hora1 = LocalTime.of(10, 30);
+
+        DtCategoria cat1 = new DtCategoria("Running");
+        DtCategoria cat2 = new DtCategoria("Salto Montaña");
+        DtCategoria cat3 = new DtCategoria("Tirolesa");
 
         DtCiudad c1 = new DtCiudad("Montevideo","Uruguay","Aeropuerto de Carrasco","Mucha rambla","www.aeropuerto-carrasco.uy",fecha1);
         DtCiudad c2 = new DtCiudad("Buenos Aires", "Argentina", "Aeropuerto Jorge Newbery", "Puerto Madero", "www.aeroparque.com.ar", fecha1);
@@ -181,10 +189,9 @@ public class Main extends JFrame {
         s.altaCiudad(c2);
         s.altaCiudad(c3);
 
-        LocalTime hora = LocalTime.of(10,0);
-
         RutaDeVuelo ruta1 = new RutaDeVuelo(new DtRuta("Vuelo A1", "Descripcion A1", hora, 100, 200, 20, fecha1,s.getCategorias(), s.getCiudades()));
         RutaDeVuelo ruta2 = new RutaDeVuelo(new DtRuta("Vuelo A2", "Descripcion A2", hora, 120, 220, 25, fecha1, s.getCategorias(), s.getCiudades()));
+
 
         List<RutaDeVuelo> rutasPaquete1 = new ArrayList<>();
         rutasPaquete1.add(ruta1);
@@ -205,11 +212,7 @@ public class Main extends JFrame {
         s.altaPaquete(p1);
         s.altaPaquete(p2);
         s.altaPaquete(p3);
-        List<DtPaquete> paquetes = s.listarPaquetes();
 
-        for (DtPaquete p : paquetes) {
-            System.out.println(p.getNombre() + " " + p.getDescripcion() + " " + p.getValidezDias() + " " + p.getDescuento() + " " + p.getCosto());
-        }
 
         DtCliente cliente1 = new DtCliente("gonzalo95", "Gonzalo", "maria88@hotmail.com", "Larrica", fecha1, "Uruguay", TipoDocumento.CEDULA, 51234567);
         DtCliente cliente2 = new DtCliente("gonzalo945", "María", "maria89@hotmail.com", "Fernández", fecha2, "Argentina", TipoDocumento.PASAPORTE, 98765432);
@@ -218,6 +221,12 @@ public class Main extends JFrame {
         s.registrarCliente(cliente1);
         s.registrarCliente(cliente3);
         s.registrarCliente(cliente2);
+
+        //¡Cargar datitos!
+        auxiliar.cargarUsuariosComboBox();
+        auxiliar.cargarAerolineasComboBox();
+        auxiliar.cargarRutasDeVueloComboBox();
+
 
         consultarVueloButton.addActionListener(new ActionListener() {
             @Override
@@ -415,6 +424,16 @@ public class Main extends JFrame {
                         Aerolinea aerolinea = (Aerolinea) user;
                     }
                 }
+            }
+        });
+        crearVueloButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(auxiliar.estanVaciosJComboBox(JComboBoxAerolineaAltaVuelo,JComboBoxRutaVueloAltaVuelo) || auxiliar.estanVaciosJTextField(nombreAltaVuelo)){
+                    errorMessage err = new errorMessage("Faltan argumentos");
+                    return;
+                }
+                // FALTA CASO USO ALTA VUELO
             }
         });
     }
