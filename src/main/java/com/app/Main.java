@@ -310,12 +310,7 @@ public class Main extends JFrame {
                         s.registrarAerolinea(aerolinea);
                         System.out.println("Aerolínea registrada: " + nickname.getText());
                     }
-                    // Actualizar ComboBox de consulta
-                    comboBox6.removeAllItems();
-                    java.util.List<DtUsuario> usuarios = s.listarUsuarios();
-                    for (DtUsuario usuario : usuarios) {
-                        comboBox6.addItem(usuario.getNickname());
-                    }
+
                 } catch (Exception ex) {
                         errorMessage errorDialog = new errorMessage("Error al registrar: " + ex.getMessage());
                         errorDialog.setVisible(true);
