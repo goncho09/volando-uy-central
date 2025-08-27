@@ -404,7 +404,8 @@ public class Sistema implements ISistema {
     }
 
     public void registrarCliente(DtCliente cliente){
-        if(this.usuarios.containsKey(cliente.getNickname())) { throw new IllegalArgumentException("Este usuario ya existe.");}
+        if(this.usuarios.containsKey(cliente.getNickname())) {
+            throw new IllegalArgumentException("Este usuario ya existe.");}
 
         for (Usuario existente : this.usuarios.values()) {
             if (existente.getEmail().equals(cliente.getEmail())) {
@@ -472,4 +473,5 @@ public class Sistema implements ISistema {
         this.clienteTemporal = null;
         this.aerolineaTemporal = null;
     }
+
 }
