@@ -7,7 +7,7 @@ import java.util.Set;
 public class Pasaje {
     private String nicknameCliente;
     private Vuelo vuelo;
-    private boolean esEjecutivo;  // true = ejecutivo, false = turista
+    private boolean esEjecutivo;
     private int cantidadPasajes;
     private int equipajeExtra;
     private Set<DtPasajero> pasajeros;
