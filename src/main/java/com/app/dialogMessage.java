@@ -3,17 +3,17 @@ package com.app;
 import javax.swing.*;
 import java.awt.event.*;
 
-public class ConfirmMessage extends JDialog {
+public class dialogMessage extends JDialog {
     private JPanel contentPane;
     private JButton buttonOK;
-    private JLabel errorMessage;
+    private JLabel message;
 
-    public ConfirmMessage(String msg) {
+    public dialogMessage(String msg) {
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
 
-        errorMessage.setText(msg);
+        message.setText(msg);
 
         buttonOK.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {

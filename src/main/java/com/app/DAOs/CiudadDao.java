@@ -1,35 +1,32 @@
 package com.app.DAOs;
 
-import com.app.clases.Aerolinea;
-import com.app.clases.RutaDeVuelo;
+import com.app.clases.Ciudad;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 
 import java.util.List;
 
-public class RutaDeVueloDao {
+public class CiudadDao {
     private EntityManager em;
 
-    public RutaDeVueloDao(EntityManager em) {
+    public CiudadDao(EntityManager em) {
         this.em = em;
     }
 
-    public List<RutaDeVuelo> listarRutasDeVuelo(){
-        return em.createQuery("SELECT rt FROM RutaDeVuelo rt", RutaDeVuelo.class).getResultList();
+    public List<Ciudad> listarCiudades(){
+        return em.createQuery("SELECT c FROM Ciudad c", Ciudad.class).getResultList();
     }
 
 
-    public RutaDeVuelo buscar(String nombre){
-        return em.find(RutaDeVuelo.class, nombre);
+    public Ciudad buscar(String nombre){
+        return em.find(Ciudad.class, nombre);
     }
 
-    public void guardar(RutaDeVuelo rt, Aerolinea a) {
-        System.out.println("Guardando ruta de vuelo:" + rt);
+    public void guardar(Ciudad c) {
         EntityTransaction tx = em.getTransaction();
         try{ //Se intenta "guardar"
             tx.begin();
-            em.persist(rt);
-            em.persist(a);
+            em.persist(c);
             tx.commit();
         }catch(Exception e){ //Si llega a fallar se hace un rollback y se lanza el error a la capa de presentación
             if(tx.isActive()){
@@ -39,11 +36,11 @@ public class RutaDeVueloDao {
         }
     }
 
-    public void actualizar(RutaDeVuelo rt) {
+    public void actualizar(Ciudad c) {
         EntityTransaction tx = em.getTransaction();
         try{ //Se intenta "modificar"
             tx.begin();
-            em.merge(rt);
+            em.merge(c);
             tx.commit();
         }catch(Exception e){ //Si llega a fallar se hace un rollback y se lanza el error a la capa de presentación
             if(tx.isActive()){
@@ -55,9 +52,9 @@ public class RutaDeVueloDao {
 
     public void eliminar(String nombre) {
         em.getTransaction().begin();
-        RutaDeVuelo rt = em.find(RutaDeVuelo.class, nombre);
-        if (rt != null) {
-            em.remove(rt);
+        Ciudad c = em.find(Ciudad.class, nombre);
+        if (c != null) {
+            em.remove(c);
         }
         em.getTransaction().commit();
     }

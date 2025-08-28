@@ -76,4 +76,9 @@ public class Ciudad {
     public void setFechaAlta(LocalDate fechaAlta) {
         this.fechaAlta = fechaAlta;
     }
+
+    @Override
+    public String toString() {
+        return this.nombre;
+    }
 }

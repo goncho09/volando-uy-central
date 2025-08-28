@@ -21,6 +21,7 @@ public class Sistema implements ISistema {
     private UserDao userDao;
     private RutaDeVueloDao rutaDeVueloDao;
     private CategoriaDao categoriaDao;
+    private CiudadDao ciudadDao;
 
     private Map<String, Categoria> categorias;
     private Map<String, Ciudad> ciudades;
@@ -46,6 +47,7 @@ public class Sistema implements ISistema {
         this.userDao = new UserDao(em); // Inicializamos "controlador" de usuarios
         this.rutaDeVueloDao = new RutaDeVueloDao(em);
         this.categoriaDao = new CategoriaDao(em);
+        this.ciudadDao = new CiudadDao(em);
 
         this.categorias = new LinkedHashMap<>();
         this.ciudades = new LinkedHashMap<>();
@@ -67,6 +69,8 @@ public class Sistema implements ISistema {
     public RutaDeVueloDao getRutaDeVueloDao(){return this.rutaDeVueloDao;}
 
     public CategoriaDao getCategoriaDao(){ return this.categoriaDao;}
+
+    public CiudadDao getCiudadDao() {return  this.ciudadDao;}
 
     public List<String> listarAerolineas() {
         List<String> nickname = new ArrayList<>();
@@ -96,7 +100,7 @@ public class Sistema implements ISistema {
                 return new DtRuta(
                         r.getNombre(),
                         r.getDescripcion(),
-                        r.getHora(),
+                        r.getDuracion(),
                         r.getCostoTurista(),
                         r.getCostoEjecutivo(),
                         r.getEquipajeExtra(),
@@ -131,13 +135,15 @@ public class Sistema implements ISistema {
     public void altaRutaDeVuelo(String nombreAerolinea, DtRuta datosRuta) {
         Aerolinea aerolinea = userDao.buscarAerolinea(nombreAerolinea);
 
-        if (aerolinea == null) return;
+        if (aerolinea == null) throw new IllegalArgumentException("Aerolinea no existe");
+
+        if(aerolinea.existeRutaDeVuelo(datosRuta.getNombre())) throw new IllegalArgumentException("Ya existe esa ruta de vuelo en esa aerolinea");
 
         RutaDeVuelo nuevaRuta = new RutaDeVuelo(datosRuta);
 
         this.rutas.add(nuevaRuta);
-        this.rutaDeVueloDao.guardar(nuevaRuta);
-        aerolinea.getRutasDeVuelo().add(nuevaRuta);
+        aerolinea.añadirRuta(nuevaRuta);
+        this.rutaDeVueloDao.guardar(nuevaRuta,aerolinea);
     }
 
 
@@ -270,7 +276,7 @@ public class Sistema implements ISistema {
         return new DtRuta(
                 ruta.getNombre(),
                 ruta.getDescripcion(),
-                ruta.getHora(),
+                ruta.getDuracion(),
                 ruta.getCostoTurista(),
                 ruta.getCostoEjecutivo(),
                 ruta.getEquipajeExtra(),
@@ -329,7 +335,7 @@ public class Sistema implements ISistema {
         }
         List<DtRuta> dtRutas = new ArrayList<>();
         for (RutaDeVuelo r : this.aerolineaTemporal.getRutasDeVuelo()) {
-            DtRuta ruta = new DtRuta(r.getNombre(), r.getDescripcion(), r.getHora(), r.getCostoTurista(), r.getCostoEjecutivo(), r.getEquipajeExtra(), r.getFechaAlta(), r.getCategorias(), r.getCiudadOrigen(),r.getCiudadDestino());
+            DtRuta ruta = new DtRuta(r.getNombre(), r.getDescripcion(), r.getDuracion(), r.getCostoTurista(), r.getCostoEjecutivo(), r.getEquipajeExtra(), r.getFechaAlta(), r.getCategorias(), r.getCiudadOrigen(),r.getCiudadDestino());
             dtRutas.add(ruta);
         }
         return dtRutas;
@@ -478,6 +484,15 @@ public class Sistema implements ISistema {
         }
     };
 
+    public List<Categoria> getCategoriasPorNombre(List<String> nombres){
+        List <Categoria> categorias = new ArrayList<>();
+        for(String nombreCategoria : nombres)
+        {
+            categorias.add(this.categorias.get(nombreCategoria));
+        }
+        return  categorias;
+    }
+
     public void confirmarAltaUsuario(){
         if(this.clienteTemporal != null){
             Cliente nuevo = new Cliente(this.clienteTemporal);
@@ -497,6 +512,10 @@ public class Sistema implements ISistema {
         this.aerolineaTemporal = null;
     }
 
-
+    public Ciudad buscarCiudad (String nombre){
+        Ciudad c = this.ciudadDao.buscar(nombre);
+        if(c == null)  throw new IllegalArgumentException("Esta ciudad no existe.");
+        return  c;
+    }
 
 }
