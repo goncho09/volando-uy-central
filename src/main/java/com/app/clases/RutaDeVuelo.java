@@ -17,7 +17,7 @@ public class RutaDeVuelo {
     private String descripcion;
 
     @Column( nullable = false)
-    private LocalTime hora;
+    private LocalTime duracion;
 
     @Column( nullable = false)
     private float costoTurista;
@@ -52,7 +52,7 @@ public class RutaDeVuelo {
     public RutaDeVuelo(DtRuta ruta) {
         this.nombre = ruta.getNombre();
         this.descripcion = ruta.getDescripcion();
-        this.hora = ruta.getHora();
+        this.duracion = ruta.getDuracion();
         this.costoTurista = ruta.getCostoTurista();
         this.costoEjecutivo = ruta.getCostoEjecutivo();
         this.equipajeExtra = ruta.getEquipajeExtra();
@@ -78,12 +78,12 @@ public class RutaDeVuelo {
         this.descripcion = descripcion;
     }
 
-    public LocalTime getHora() {
-        return hora;
+    public LocalTime getDuracion() {
+        return duracion;
     }
 
-    public void setHora(LocalTime hora) {
-        this.hora = hora;
+    public void setDuracion(LocalTime duracion) {
+        this.duracion = duracion;
     }
 
     public float getCostoTurista() {

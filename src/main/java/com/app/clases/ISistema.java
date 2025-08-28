@@ -28,7 +28,7 @@ public interface ISistema {
     void registrarAerolinea(DtAerolinea aerolinea);
     void modificarAerolinea(DtAerolinea aerolinea);
     void cancelarAltaUsuario();
-    void confirmarAltaUsuario();
+    void confirmarAltaUsuario(DtUsuario user);
 
     // TEMPORAL
     List<Ciudad> getCiudades();

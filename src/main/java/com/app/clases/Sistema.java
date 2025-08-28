@@ -96,7 +96,7 @@ public class Sistema implements ISistema {
                 return new DtRuta(
                         r.getNombre(),
                         r.getDescripcion(),
-                        r.getHora(),
+                        r.getDuracion(),
                         r.getCostoTurista(),
                         r.getCostoEjecutivo(),
                         r.getEquipajeExtra(),
@@ -270,7 +270,7 @@ public class Sistema implements ISistema {
         return new DtRuta(
                 ruta.getNombre(),
                 ruta.getDescripcion(),
-                ruta.getHora(),
+                ruta.getDuracion(),
                 ruta.getCostoTurista(),
                 ruta.getCostoEjecutivo(),
                 ruta.getEquipajeExtra(),
@@ -329,7 +329,7 @@ public class Sistema implements ISistema {
         }
         List<DtRuta> dtRutas = new ArrayList<>();
         for (RutaDeVuelo r : this.aerolineaTemporal.getRutasDeVuelo()) {
-            DtRuta ruta = new DtRuta(r.getNombre(), r.getDescripcion(), r.getHora(), r.getCostoTurista(), r.getCostoEjecutivo(), r.getEquipajeExtra(), r.getFechaAlta(), r.getCategorias(), r.getCiudadOrigen(),r.getCiudadDestino());
+            DtRuta ruta = new DtRuta(r.getNombre(), r.getDescripcion(), r.getDuracion(), r.getCostoTurista(), r.getCostoEjecutivo(), r.getEquipajeExtra(), r.getFechaAlta(), r.getCategorias(), r.getCiudadOrigen(),r.getCiudadDestino());
             dtRutas.add(ruta);
         }
         return dtRutas;
@@ -425,7 +425,7 @@ public class Sistema implements ISistema {
     }
 
     public void registrarCliente(DtCliente cliente){
-        if(this.usuarios.containsKey(cliente.getNickname())) {
+        if(this.usuarios.containsKey(cliente.getNickname()) || userDao.buscar(cliente.getNickname()) != null ) {
             throw new IllegalArgumentException("Este usuario ya existe.");}
 
         for (Usuario existente : this.usuarios.values()) {
@@ -434,7 +434,7 @@ public class Sistema implements ISistema {
             }
         }
 
-        this.clienteTemporal = cliente;
+        confirmarAltaUsuario(cliente);
     };
 
     public void modificarCliente(DtCliente cliente){
@@ -462,7 +462,7 @@ public class Sistema implements ISistema {
             }
         }
 
-        this.aerolineaTemporal = aerolinea;
+        confirmarAltaUsuario(aerolinea);
     };
 
     public void modificarAerolinea(DtAerolinea aerolinea){
@@ -478,17 +478,17 @@ public class Sistema implements ISistema {
         }
     };
 
-    public void confirmarAltaUsuario(){
-        if(this.clienteTemporal != null){
-            Cliente nuevo = new Cliente(this.clienteTemporal);
-            this.usuarios.put(nuevo.getNickname(), nuevo);
-            userDao.guardar(nuevo);
-            this.clienteTemporal = null;
+    public void confirmarAltaUsuario(DtUsuario usuario){
+        if(usuario instanceof DtCliente){
+            Cliente newUser = new Cliente((DtCliente) usuario);
+            this.usuarios.put(newUser.getNickname(),newUser);
+            userDao.guardar(newUser);
+        }else if (usuario instanceof DtAerolinea){
+            Aerolinea newUser  = new Aerolinea((DtAerolinea) usuario);
+            this.usuarios.put(newUser.getNickname(),newUser);
+            userDao.guardar(newUser);
         }else{
-            Aerolinea nueva = new Aerolinea(this.aerolineaTemporal);
-            this.usuarios.put(nueva.getNickname(),nueva);
-            userDao.guardar(nueva);
-            this.aerolineaTemporal = null;
+            throw new IllegalArgumentException("Ha ocurrido un error al crear el usuario.");
         }
     };
 

@@ -35,6 +35,7 @@ public class DtAerolinea extends DtUsuario {
     public List<RutaDeVuelo> getRutasDeVuelo() {
         return rutasDeVuelo;
     }
+
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
@@ -42,7 +43,6 @@ public class DtAerolinea extends DtUsuario {
     public void setLinkWeb(String linkWeb) {
         this.linkWeb = linkWeb;
     }
-
 
     public void setRutasDeVuelo(List<RutaDeVuelo> rutasDeVuelo) {
         this.rutasDeVuelo = rutasDeVuelo;

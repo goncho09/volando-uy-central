@@ -37,7 +37,14 @@ public class UserDao {
     }
 
     public void guardar(Usuario usuario) {
-        System.out.println("Guardando usuario:" + usuario);
+        if(usuario instanceof Cliente cliente){
+            System.out.println("Guardando Cliente: " + cliente);
+            cliente.mostrarDatos();
+        }else if(usuario instanceof Aerolinea aerolinea){
+            System.out.println("Guardando Aerolinea: " + aerolinea);
+            aerolinea.mostrarDatos();
+        }
+
         EntityTransaction tx = em.getTransaction();
         try{ //Se intenta "guardar"
             tx.begin();

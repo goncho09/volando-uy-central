@@ -48,4 +48,8 @@ public class Aerolinea extends Usuario {
         this.rutasDeVuelo.add(ruta);
     }
 
+    public void mostrarDatos() {
+        System.out.println("Datos: " + nickname + " - " + nombre + " - " +
+                email + " - " + descripcion + " - " + linkWeb);
+    }
 }

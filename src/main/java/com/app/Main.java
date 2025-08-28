@@ -55,20 +55,20 @@ public class Main extends JFrame {
     private JTextField descripcionAltaCiudad;
     private JPanel JPanelRegistrarCliente;
     private JPanel JPanelRegistrarAerolinea;
-    private JTextField nickname;
-    private JTextField nombre;
-    private JTextField correoElectronico;
-    private JTextField Apellido;
-    private JTextField nacionalidad;
-    private JComboBox tipoDocumento;
-    private JTextField documento;
+    private JTextField nicknameRegistrarCliente;
+    private JTextField nombreRegistrarCliente;
+    private JTextField correoElectronicoRegistrarCliente;
+    private JTextField apellidoRegistrarCliente;
+    private JTextField nacionalidadRegistrarCliente;
+    private JComboBox tipoDocumentoRegistrarCliente;
+    private JTextField documentoRegistrarCliente;
     private JButton confirmarAltaCliente;
     private JButton cancelarAltaCliente;
-    private JTextField nicknameAerolinea;
-    private JTextField nombreAerolinea;
-    private JTextField correoAerolinea;
-    private JTextField sitioWebAerolinea;
-    private JTextField descripcion;
+    private JTextField nicknameRegistrarAerolinea;
+    private JTextField nombreRegistrarAerolinea;
+    private JTextField correoRegistrarAerolinea;
+    private JTextField sitioWebRegistrarAerolinea;
+    private JTextField descripcionRegistrarAerolinea;
     private JButton cancelarAltaAerolinea;
     private JButton confirmarAltaAerolinea;
     private JTabbedPane tabbedPane4;
@@ -115,6 +115,9 @@ public class Main extends JFrame {
     private JSpinner JSpinnerDuracionAltaVuelo;
     private JTextField nombreAltaCategoría;
     private JButton confirmarAltaCategoria;
+    private JSpinner fechaDiaRegistrarCliente;
+    private JSpinner fechaMesRegistrarCliente;
+    private JSpinner fechaAnioRegistrarCliente;
     //private JComboBox comboBox9;
 
 
@@ -216,10 +219,14 @@ public class Main extends JFrame {
         DtCliente cliente2 = new DtCliente("gonzalo945", "María", "maria89@hotmail.com", "Fernández", fecha2, "Argentina", TipoDocumento.PASAPORTE, 98765432);
         DtCliente cliente3 = new DtCliente("juan2000", "Juan", "juan2000@yahoo.com", "Pérez", fecha2, "Chile", TipoDocumento.CEDULA_EXTRANJERA, 45678901);
 
-        s.registrarCliente(cliente1);
-        s.registrarCliente(cliente3);
-        s.registrarCliente(cliente2);
-
+        try {
+            s.registrarCliente(cliente1);
+            s.registrarCliente(cliente3);
+            s.registrarCliente(cliente2);
+        }catch(Exception e){
+            e.printStackTrace();
+            new errorMessage(e.getMessage());
+        }
         //¡Cargar datitos!
         auxiliar.cargarUsuariosComboBox();
         auxiliar.cargarAerolineasComboBox();
@@ -232,7 +239,7 @@ public class Main extends JFrame {
                 LocalDate fechaPrueba = LocalDate.of(2025,12,3);
                 LocalTime horaPrueba = LocalTime.of(10, 30);
                 LocalDate fechaAltaPrueba = LocalDate.of(2025,8,18);
-                DtVuelo dataVuelo = new DtVuelo("A1", fechaPrueba, horaPrueba, 160, 40, fechaAltaPrueba,ruta1);
+                DtVuelo dataVuelo = new DtVuelo("A1", fechaPrueba, horaPrueba, 160, 40, fechaAltaPrueba, ruta1);
 
                 JFrame vuelo = new dataVuelo(dataVuelo);
                 setEnabled(false);
@@ -325,48 +332,34 @@ public class Main extends JFrame {
                 try {
                     String tipoUsuario = userType.getSelectedItem().toString();
                     if (tipoUsuario.equals("Cliente")) {
-                        if (nickname.getText().isEmpty() || nombre.getText().isEmpty() ||
-                                correoElectronico.getText().isEmpty() || Apellido.getText().isEmpty() ||
-                                nacionalidad.getText().isEmpty() ||// tipoDocumento.getSelectedItem() == null ||
-                                documento.getText().isEmpty()) {
-
+                        if (auxiliar.estanVaciosJTextField(nicknameRegistrarCliente, nombreRegistrarCliente, correoElectronicoRegistrarCliente, apellidoRegistrarCliente, nacionalidadRegistrarCliente, documentoRegistrarCliente) || auxiliar.estanVaciosJComboBox(tipoDocumentoRegistrarCliente)){
                             errorMessage errorDialog = new errorMessage("Faltan argumentos");
                             return;
                         }
                         // Crear DtCliente
-                        LocalDate fecha1 = LocalDate.of (2025, 8, 25);
-                        TipoDocumento documentoT = tipoDocumento.getSelectedItem().toString().equals("cedula") ?
+                        LocalDate fecha1 = LocalDate.of(2025, 8, 25);
+                        TipoDocumento documentoT = tipoDocumentoRegistrarCliente.getSelectedItem().toString().equals("Cedula") ?
                                 TipoDocumento.CEDULA : TipoDocumento.PASAPORTE;
 
                         DtCliente cliente = new DtCliente(
-                                nickname.getText(), nombre.getText(), correoElectronico.getText(),
-                                Apellido.getText(), fecha1, nacionalidad.getText(),
-                                documentoT, Integer.parseInt(documento.getText())
+                                nicknameRegistrarCliente.getText(), nombreRegistrarCliente.getText(), correoElectronicoRegistrarCliente.getText(),
+                                apellidoRegistrarCliente.getText(), fecha1, nacionalidadRegistrarCliente.getText(),
+                                documentoT, Integer.parseInt(documentoRegistrarCliente.getText())
                         );
-                        s.registrarCliente(cliente);
-                        System.out.println("Cliente registrado: " + nickname.getText());
-
-                    } else if (tipoUsuario.equals("Aerolinea")) {
-                        if (nickname.getText().isEmpty() || nombre.getText().isEmpty() ||
-                                correoElectronico.getText().isEmpty() || descripcion.getText().isEmpty() ||
-                                sitioWebAerolinea.getText().isEmpty()) {
-
-                            errorMessage errorDialog = new errorMessage("Faltan argumentos");
-                            return;
+                        try {
+                            s.registrarCliente(cliente);
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
+                            s.cancelarAltaUsuario();
+                            new errorMessage(ex.getMessage());
                         }
-                        // Crear DtAerolinea
-                        DtAerolinea aerolinea = new DtAerolinea(
-                                nickname.getText(), nombre.getText(), correoElectronico.getText(),
-                                descripcion.getText(), sitioWebAerolinea.getText()
-                        );
-                        s.registrarAerolinea(aerolinea);
-                        System.out.println("Aerolínea registrada: " + nickname.getText());
+                        System.out.println("Cliente registrado: " + nicknameRegistrarCliente.getText());
+                        auxiliar.cargarUsuariosComboBox();
                     }
 
                 } catch (Exception ex) {
-                        errorMessage errorDialog = new errorMessage("Error al registrar: " + ex.getMessage());
-                        errorDialog.setVisible(true);
                         ex.printStackTrace();
+                        new errorMessage(ex.getMessage());
                     }
                 }
             });
@@ -418,8 +411,13 @@ public class Main extends JFrame {
                         nacionalidadClienteModificar.setText(cliente.getNacionalidad());
                         //tipoDocumentoClienteModificar.setSelectedItem(cliente.getTipoDocumento()); <- Investigar este wey
 
-                    }else{
+                    }else if(user instanceof Aerolinea){
                         Aerolinea aerolinea = (Aerolinea) user;
+                        JPanelModificarCliente.setVisible(false);
+                        JPanelModificarAerolinea.setVisible(true);
+                    }else{
+                        JPanelModificarAerolinea.setVisible(false);
+                        JPanelModificarCliente.setVisible(false);
                     }
                 }
             }
@@ -445,7 +443,50 @@ public class Main extends JFrame {
                 new ConfirmMessage("Categoria creada correctamente");
                 nombreAltaCiudad.setText("");
             } catch (Exception ex) {
+                ex.printStackTrace();
                 new errorMessage(ex.getMessage());
+            }
+        });
+        confirmarAltaAerolinea.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    if(auxiliar.estanVaciosJComboBox(userType)){
+                        System.out.println("Ta vacio");
+                        return;
+                    }
+                    String tipoUsuario = userType.getSelectedItem().toString();
+                    if (tipoUsuario.equals("Aerolinea")) {
+                        if (auxiliar.estanVaciosJTextField(nombreRegistrarAerolinea)) {
+
+                            errorMessage errorDialog = new errorMessage("Faltan argumentos");
+                            return;
+                        }
+                        // Crear DtAerolinea
+                        DtAerolinea aerolinea = new DtAerolinea(
+                                nicknameRegistrarAerolinea.getText(), nombreRegistrarAerolinea.getText(), correoRegistrarAerolinea.getText(),
+                                descripcionRegistrarAerolinea.getText(), sitioWebRegistrarAerolinea.getText()
+                        );
+                        try{
+                            s.registrarAerolinea(aerolinea);
+                        }catch (Exception ex){
+                            ex.printStackTrace();
+                            s.cancelarAltaUsuario();
+                            new errorMessage(ex.getMessage());
+                        }
+                        System.out.println("Aerolínea registrada: " + nicknameRegistrarCliente.getText());
+                    }
+                    auxiliar.cargarUsuariosComboBox();
+            }catch (Exception ex) {
+                    ex.printStackTrace();
+                    new errorMessage(ex.getMessage());
+                }
+            }
+        });
+        cancelarAltaCliente.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
             }
         });
     }

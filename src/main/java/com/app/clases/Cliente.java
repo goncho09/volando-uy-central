@@ -27,13 +27,14 @@ public class Cliente extends Usuario{
     public Cliente(){}
     public Cliente(DtCliente cliente) {
         super(new DtUsuario(cliente.getNickname(), cliente.getNombre(), cliente.getEmail()));
-        this.apellido = apellido;
-        this.fechaNacimiento = fechaNacimiento;
-        this.nacionalidad = nacionalidad;
-        this.tipoDocumento = tipoDocumento;
-        this.numeroDocumento = numeroDocumento;
+        this.apellido = cliente.getApellido();
+        this.fechaNacimiento = cliente.getFechaNacimiento();
+        this.nacionalidad = cliente.getNacionalidad();
+        this.tipoDocumento = cliente.getTipoDocumento();
+        this.numeroDocumento = cliente.getNumeroDocumento();
         this.comprasPaquetes = new ArrayList<>();
         this.reservas = new ArrayList<>();
+        //System.out.println("Creando datatype: " + nickname + " - " + nombre + " - " + email + " - " + apellido + " - " + fechaNacimiento + " - " + nacionalidad + " - " + tipoDocumento + " - " + numeroDocumento);
     }
 
     public String getApellido() {
@@ -117,6 +118,12 @@ public class Cliente extends Usuario{
             }
         }
         return dtPaquetes;
+    }
+
+    public void mostrarDatos() {
+        System.out.println("Datos Usuario: " +
+                nickname + " - " + nombre + " - " + apellido + " - " +
+                email + " - " + fechaNacimiento + " - " + nacionalidad);
     }
 }
 

@@ -21,6 +21,7 @@ public abstract class Usuario {
         this.nickname = usuario.getNickname();
         this.nombre = usuario.getNombre();
         this.email = usuario.getEmail();
+        //userDao.guardar(this);
     }
 
     public String getNickname() {

@@ -10,7 +10,7 @@ import java.util.List;
 public class DtRuta {
     private String nombre;
     private String descripcion;
-    private LocalTime hora;
+    private LocalTime duracion;
     private float costoTurista;
     private float costoEjecutivo;
     private float equipajeExtra;
@@ -19,10 +19,10 @@ public class DtRuta {
     private Ciudad ciudadOrigen;
     private Ciudad ciudadDestino;
 
-    public DtRuta(String nombre, String descripcion, LocalTime hora, float costoTurista, float costoEjecutivo, float equipajeExtra, LocalDate fechaAlta, List<Categoria> categorias, Ciudad origen,Ciudad destino) {
+    public DtRuta(String nombre, String descripcion, LocalTime duracion, float costoTurista, float costoEjecutivo, float equipajeExtra, LocalDate fechaAlta, List<Categoria> categorias, Ciudad origen, Ciudad destino) {
         this.nombre = nombre;
         this.descripcion = descripcion;
-        this.hora = hora;
+        this.duracion = duracion;
         this.costoTurista = costoTurista;
         this.costoEjecutivo = costoEjecutivo;
         this.equipajeExtra = equipajeExtra;
@@ -48,12 +48,12 @@ public class DtRuta {
         this.descripcion = descripcion;
     }
 
-    public LocalTime getHora() {
-        return hora;
+    public LocalTime getDuracion() {
+        return duracion;
     }
 
-    public void setHora(LocalTime hora) {
-        this.hora = hora;
+    public void setDuracion(LocalTime duracion) {
+        this.duracion = duracion;
     }
 
     public float getCostoTurista() {
