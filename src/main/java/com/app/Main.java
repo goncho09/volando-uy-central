@@ -229,7 +229,6 @@ public class Main extends JFrame {
         s.altaPaquete(p2);
         s.altaPaquete(p3);
 
-
         DtCliente cliente1 = new DtCliente("gonzalo95", "Gonzalo", "maria88@hotmail.com", "Larrica", fecha1, "Uruguay", TipoDocumento.CEDULA, 51234567);
         DtCliente cliente2 = new DtCliente("gonzalo945", "María", "maria89@hotmail.com", "Fernández", fecha2, "Argentina", TipoDocumento.PASAPORTE, 98765432);
         DtCliente cliente3 = new DtCliente("juan2000", "Juan", "juan2000@yahoo.com", "Pérez", fecha2, "Chile", TipoDocumento.CEDULA_EXTRANJERA, 45678901);
@@ -442,13 +441,43 @@ public class Main extends JFrame {
         crearVueloButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(auxiliar.estanVaciosJComboBox(JComboBoxAerolineaAltaVuelo,JComboBoxRutaVueloAltaVuelo) || auxiliar.estanVaciosJTextField(nombreAltaVuelo)){
-                    new dialogMessage("Faltan argumentos");
-                    return;
+                try {
+                    if(auxiliar.estanVaciosJComboBox(JComboBoxAerolineaAltaVuelo,JComboBoxRutaVueloAltaVuelo) || auxiliar.estanVaciosJTextField(nombreAltaVuelo)){
+                        new dialogMessage("Faltan argumentos");
+                        return;
+                    }
+
+                    String aerolinea = JComboBoxAerolineaAltaVuelo.getSelectedItem().toString();
+                    String ruta = JComboBoxRutaVueloAltaVuelo.getSelectedItem().toString();
+                    String nombre = nombreAltaVuelo.getText();
+
+                    LocalDate fecha = LocalDate.of((Integer)JSpinnerAñoAltaVuelo.getValue(), (Integer)JSpinnerMesAltaVuelo.getValue(), (Integer)JSpinnerDiaAltaVuelo.getValue());
+                    LocalTime hora = LocalTime.of(10, 0);
+
+                    DtVuelo dtVuelo = new DtVuelo(nombre, fecha, hora, (Integer)JSpinnerTuristasAltaVuelo.getValue(), (Integer)JSpinnerEjecutivosAltaVuelo.getValue(), LocalDate.now(), null);
+
+                    s.seleccionarAerolineaParaVuelo(aerolinea);
+                    s.seleccionarRuta(ruta);
+                    s.ingresarDatosVuelo(dtVuelo);
+                    s.confirmarAltaVuelo();
+
+                    //pa verificar que se creo
+                    try {
+                        s.consultaVuelo(dtVuelo);
+                        new dialogMessage("Vuelo creado y verificado correctamente");
+                    } catch (IllegalArgumentException ex) {
+                        new dialogMessage("Error: el vuelo no se registró correctamente");
+                    }
+
+                    new dialogMessage("Vuelo creado correctamente");
+                    auxiliar.limpiarJTextField(nombreAltaVuelo);
+
+                } catch (Exception ex) {
+                    new dialogMessage(ex.getMessage());
                 }
-                // FALTA CASO USO ALTA VUELO
             }
         });
+
 
         confirmarAltaCategoria.addActionListener(e -> {
             try{
@@ -545,6 +574,8 @@ public class Main extends JFrame {
             }
         });
     }
+
+
 
     public static void main(String[] args) {
         new Main();

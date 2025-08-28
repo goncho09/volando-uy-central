@@ -44,6 +44,8 @@ public class Sistema implements ISistema {
     private RutaDeVuelo rutaTemporal;
     private Aerolinea aerolineaTemp;
 
+    private Cliente clienteTemp;
+
 
     private Sistema() {
         //Inicializar JPA
@@ -533,7 +535,7 @@ public class Sistema implements ISistema {
         return  c;
     }
 
-    // ALTA DE VUELO
+    // ---------- ALTA DE VUELO ---------- //
     public void seleccionarAerolineaParaVuelo(String nickname) {
         Aerolinea aerolinea = userDao.buscarAerolinea(nickname);
         if (aerolinea == null) {
@@ -597,4 +599,13 @@ public class Sistema implements ISistema {
         this.vueloTemporal = null;
     }
 
+
+    // ---------- COMPRA PAQUETE ---------- //
+    public void seleccionarPaqueteCompra(String nombre){
+
+    }
+
+    public void seleccionarCliente(){
+
+    }
 }

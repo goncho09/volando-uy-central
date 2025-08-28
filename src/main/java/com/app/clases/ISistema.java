@@ -58,4 +58,14 @@ public interface ISistema {
     List<DtReserva> mostrarReservas();
     List<DtPaquete> mostrarPaquetes();
     List<DtRuta> mostrarRutasDeVuelo();
+
+    // ---------- ALTA DE VUELO ---------- //
+    void seleccionarAerolineaParaVuelo(String nickname);
+    void seleccionarRuta(String nombre);
+    void ingresarDatosVuelo(DtVuelo datosVuelo);
+    void confirmarAltaVuelo();
+    void cancelarAlta();
+
+    // ---------- COMPRA PAQUETE ---------- //
+
 }
