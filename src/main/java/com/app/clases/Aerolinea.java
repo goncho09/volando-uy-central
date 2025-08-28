@@ -1,8 +1,7 @@
 package com.app.clases;
 
 import com.app.datatypes.*;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +12,11 @@ public class Aerolinea extends Usuario {
     private String linkWeb;
 
     @OneToMany
+    @JoinTable(
+            name = "aerolinea_rutas",
+            joinColumns = @JoinColumn(name = "aerolinea_nombre"),
+            inverseJoinColumns = @JoinColumn(name = "ruta_nombre")
+    )
     private List<RutaDeVuelo> rutasDeVuelo;
 
     public Aerolinea() {}
@@ -22,7 +26,6 @@ public class Aerolinea extends Usuario {
         this.linkWeb = aerolinea.getLinkWeb();
         this.rutasDeVuelo = new ArrayList<>();
     }
-
 
     public String getDescripcion() {
         return descripcion;
@@ -47,6 +50,19 @@ public class Aerolinea extends Usuario {
     public void agregarRuta(RutaDeVuelo ruta) {
         this.rutasDeVuelo.add(ruta);
     }
+
+    public boolean existeRutaDeVuelo(String nombre){
+        System.out.println("tamaño" + this.rutasDeVuelo.size());
+        for (RutaDeVuelo rt : this.getRutasDeVuelo()){
+            System.out.println("Ruta en lista: '" + rt.getNombre() + "'");
+            if(rt.getNombre().equals(nombre)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void añadirRuta(RutaDeVuelo ruta) {this.rutasDeVuelo.add(ruta);}
 
     public void mostrarDatos() {
         System.out.println("Datos: " + nickname + " - " + nombre + " - " +

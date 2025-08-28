@@ -1,6 +1,7 @@
 package com.app.clases;
 
 import com.app.DAOs.CategoriaDao;
+import com.app.DAOs.CiudadDao;
 import com.app.DAOs.RutaDeVueloDao;
 import com.app.DAOs.UserDao;
 import com.app.datatypes.*;
@@ -12,6 +13,7 @@ public interface ISistema {
     UserDao getUserDao();
     RutaDeVueloDao getRutaDeVueloDao();
     CategoriaDao getCategoriaDao();
+    CiudadDao getCiudadDao();
 
     List<DtPaquete> listarPaquetes();
     void seleccionarPaquete(String nombre);
@@ -34,6 +36,9 @@ public interface ISistema {
     List<Ciudad> getCiudades();
     void altaPaquete(DtPaquete paquete);
     List<Categoria> getCategorias();
+
+    List<Categoria> getCategoriasPorNombre(List<String> nombres);
+    Ciudad buscarCiudad (String nombre);
   
   // Consulta de Ruta de Vuelo
     List<String> listarAerolineas();

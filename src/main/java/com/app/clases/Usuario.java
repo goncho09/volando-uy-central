@@ -50,7 +50,7 @@ public abstract class Usuario {
 
     @Override
     public String toString() {
-        return this.nombre;
+        return this.nickname;
     }
 }
 

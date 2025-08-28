@@ -1,10 +1,10 @@
 package com.app;
 
+import com.app.DAOs.CategoriaDao;
+import com.app.DAOs.CiudadDao;
 import com.app.DAOs.RutaDeVueloDao;
 import com.app.DAOs.UserDao;
-import com.app.clases.Aerolinea;
-import com.app.clases.RutaDeVuelo;
-import com.app.clases.Usuario;
+import com.app.clases.*;
 
 import javax.swing.*;
 import java.util.List;
@@ -14,14 +14,20 @@ public class auxiliarFunctions {
     private DefaultComboBoxModel<Usuario> comboUser = new DefaultComboBoxModel<>();
     private DefaultComboBoxModel<Aerolinea> comboAerolinea = new DefaultComboBoxModel<>();
     private DefaultComboBoxModel<RutaDeVuelo> comboRutaDeVuelo = new DefaultComboBoxModel<>();
+    private DefaultComboBoxModel<Ciudad> comboCiudadOrigen = new DefaultComboBoxModel<>();
+    private DefaultComboBoxModel<Ciudad> comboCiudadDestino = new DefaultComboBoxModel<>();
+    private DefaultComboBoxModel<Categoria> comboCategoria = new DefaultComboBoxModel<>();
     private UserDao userDao;
     private RutaDeVueloDao rutaDeVueloDao;
+    private CiudadDao ciudadDao;
+    private CategoriaDao categoriaDao;
 
-    public auxiliarFunctions(UserDao userDao,RutaDeVueloDao rutaDeVueloDao) {
+    public auxiliarFunctions(UserDao userDao, RutaDeVueloDao rutaDeVueloDao, CiudadDao ciudadDao,CategoriaDao categoriaDao) {
         this.userDao = userDao;
         this.rutaDeVueloDao = rutaDeVueloDao;
+        this.ciudadDao = ciudadDao;
+        this.categoriaDao = categoriaDao;
     }
-
 
     //Getters de los modelos
     public DefaultComboBoxModel<Usuario> getComboUserModel() {
@@ -34,6 +40,18 @@ public class auxiliarFunctions {
 
     public DefaultComboBoxModel<RutaDeVuelo> getComboRutaDeVueloModel() {
         return comboRutaDeVuelo;
+    }
+
+    public DefaultComboBoxModel<Ciudad> getComboCiudadOrigenModel() {
+        return comboCiudadOrigen;
+    }
+
+    public DefaultComboBoxModel<Ciudad> getComboCiudadDestinoModel() {
+        return comboCiudadDestino;
+    }
+
+    public DefaultComboBoxModel<Categoria> getComboCategoriaModel() {
+        return comboCategoria;
     }
 
     //Función para validar 1 o más "JComboBox"
@@ -54,6 +72,12 @@ public class auxiliarFunctions {
             }
         }
         return false;
+    }
+
+    public void limpiarJTextField(JTextField... fields) {
+        for (JTextField field : fields) {
+            field.setText("");
+        }
     }
 
     public void cargarUsuariosComboBox() {
@@ -98,6 +122,47 @@ public class auxiliarFunctions {
         } catch (Exception e) {
             comboRutaDeVuelo.removeAllElements();
             comboRutaDeVuelo.addElement(new RutaDeVuelo() {
+                @Override
+                public String toString() { return "N/A"; }
+            });
+        }
+    }
+
+    public void cargarCiudadesComboBox() {
+        comboCiudadOrigen.removeAllElements();
+        comboCiudadDestino.removeAllElements();
+        try {
+            List<Ciudad> c= ciudadDao.listarCiudades();
+            for (Ciudad ciudad : c) {
+                comboCiudadOrigen.addElement(ciudad);
+                comboCiudadDestino.addElement(ciudad);
+            }
+        } catch (Exception e) {
+            comboCiudadOrigen.removeAllElements();
+            comboCiudadOrigen.addElement(new Ciudad() {
+                @Override
+                public String toString() { return "N/A"; }
+            });
+            comboCiudadDestino.removeAllElements();
+            comboCiudadDestino.addElement(new Ciudad() {
+                @Override
+                public String toString() { return "N/A"; }
+            });
+        }
+    }
+
+
+
+    public void cargarCategoriaComboBox() {
+        comboCategoria.removeAllElements();
+        try {
+            List<Categoria> c= categoriaDao.listarCategorias();
+            for (Categoria categoria : c) {
+                comboCategoria.addElement(categoria);
+            }
+        } catch (Exception e) {
+            comboCategoria.removeAllElements();
+            comboCategoria.addElement(new Categoria() {
                 @Override
                 public String toString() { return "N/A"; }
             });
