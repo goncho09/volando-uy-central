@@ -40,6 +40,11 @@ public class Sistema implements ISistema {
     private DtAerolinea aerolineaTemporal;
     private Aerolinea aerolineaTemporalClase;
 
+    private DtVuelo vueloTemporal;
+    private RutaDeVuelo rutaTemporal;
+    private Aerolinea aerolineaTemp;
+
+
     private Sistema() {
         //Inicializar JPA
         this.emf = Persistence.createEntityManagerFactory("pepitoElLaburador");
@@ -53,6 +58,7 @@ public class Sistema implements ISistema {
         this.ciudades = new LinkedHashMap<>();
         this.usuarios = new LinkedHashMap<>();
         this.paquetes = new LinkedHashMap<>();
+        this.vuelos = new LinkedHashMap<>();
     }
 
     public static Sistema getInstancia() {
@@ -525,6 +531,70 @@ public class Sistema implements ISistema {
         Ciudad c = this.ciudadDao.buscar(nombre);
         if(c == null)  throw new IllegalArgumentException("Esta ciudad no existe.");
         return  c;
+    }
+
+    // ALTA DE VUELO
+    public void seleccionarAerolineaParaVuelo(String nickname) {
+        Aerolinea aerolinea = userDao.buscarAerolinea(nickname);
+        if (aerolinea == null) {
+            throw new IllegalArgumentException("La aerolínea no existe.");
+        }
+        this.aerolineaTemp = aerolinea;
+    }
+
+    public void seleccionarRuta(String nombre){
+        RutaDeVuelo ruta = null;
+        for (RutaDeVuelo r : this.aerolineaTemp.getRutasDeVuelo()) {
+            if (r.getNombre().equals(nombre)) {
+                ruta = r;
+                break;
+            }
+        }
+        if (ruta == null) {
+            throw new IllegalArgumentException("La ruta no existe en esta aerolínea.");
+        }
+
+        this.rutaTemporal = ruta;
+    }
+
+    public void ingresarDatosVuelo(DtVuelo datosVuelo) {
+        if (this.rutaTemporal == null) {
+            throw new IllegalArgumentException("Debe seleccionar una ruta primero.");
+        }
+        if (this.vuelos.containsKey(datosVuelo.getNombre())) {
+            throw new IllegalArgumentException("Ya existe un vuelo con ese nombre.");
+        }
+        this.vueloTemporal = datosVuelo;
+    }
+
+
+    public void confirmarAltaVuelo(){
+        if(this.vueloTemporal == null){
+            throw new IllegalArgumentException("Debe seleccionar un vuelo");
+        }
+        if(this.aerolineaTemp == null){
+            throw new IllegalArgumentException("Debe seleccionar una aerolinea");
+        }
+
+        if(this.rutaTemporal == null){
+            throw new IllegalArgumentException("Debe seleccionar una ruta");
+        }
+
+        Vuelo nuevo = new Vuelo(this.vueloTemporal);
+        nuevo.setRutaDeVuelo(this.rutaTemporal);
+
+        this.vuelos.put(nuevo.getNombre(), nuevo);
+        this.consultaVuelos.add(nuevo);
+
+        this.vueloTemporal = null;
+        this.rutaTemporal = null;
+        this.aerolineaTemp = null;
+    }
+
+    public void cancelarAlta(){
+        this.rutaTemporal = null;
+        this.aerolineaTemp = null;
+        this.vueloTemporal = null;
     }
 
 }
