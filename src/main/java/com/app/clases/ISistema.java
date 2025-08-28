@@ -2,6 +2,8 @@ package com.app.clases;
 
 import com.app.datatypes.*;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 public interface ISistema {
@@ -28,7 +30,7 @@ public interface ISistema {
     void altaPaquete(DtPaquete paquete);
     List<Categoria> getCategorias();
   
-  // Consulta de Ruta de Vuelo
+    // Consulta de Ruta de Vuelo
     List<String> listarAerolineas();
     List<String> listarRutasDeAerolinea(String nickname);
     DtRuta consultarRuta(String nombre);
@@ -46,4 +48,10 @@ public interface ISistema {
     List<DtReserva> mostrarReservas();
     List<DtPaquete> mostrarPaquetes();
     List<DtRuta> mostrarRutasDeVuelo();
+
+    //ALTA VUELO
+    Aerolinea buscarAerolinea(String nombreAerolinea);
+    RutaDeVuelo buscarRuta(Aerolinea aerolinea, String nombreRuta);
+    void existeVuelo(String nombreVuelo);
+    void altaVuelo(DtVuelo datosVuelo, String nombreAerolinea, String nombreRuta);
 }

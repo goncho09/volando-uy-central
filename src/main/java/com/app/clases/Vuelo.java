@@ -19,20 +19,20 @@ public class Vuelo {
     private int maxEjecutivos;
     private LocalDate fechaAlta;
 
-    @OneToMany
-    @JoinColumn(name="rutasDeVuelos_name", nullable = false)
-    private List<RutaDeVuelo> rutasDeVuelo;
+    @ManyToOne
+    @JoinColumn(name="rutaDeVuelo_name", nullable = false)
+    private RutaDeVuelo rutaDeVuelo;
 
     public DtVuelo getDatos() {return null;}
 
-    public Vuelo(DtVuelo vuelo) {
+    public Vuelo(DtVuelo vuelo, RutaDeVuelo rutaDeVuelo) {
         this.nombre = vuelo.getNombre();
         this.fecha = vuelo.getFecha();
         this.duracion = vuelo.getDuracion();
         this.maxTuristas = vuelo.getMaxTuristas();
         this.maxEjecutivos = vuelo.getMaxEjecutivos();
         this.fechaAlta = vuelo.getFechaAlta();
-        this.rutasDeVuelo = getRutasDeVuelo();
+        this.rutaDeVuelo = rutaDeVuelo;
     }
 
     public String getNombre() {
@@ -83,11 +83,7 @@ public class Vuelo {
         this.fechaAlta = fechaAlta;
     }
 
-    public List<RutaDeVuelo> getRutasDeVuelo() {
-        return rutasDeVuelo;
-    }
-
-    public void setRutasDeVuelo(List<RutaDeVuelo> rutasDeVuelo) {
-        this.rutasDeVuelo = rutasDeVuelo;
+    public void setRutaDeVuelo(RutaDeVuelo rutaDeVuelo) {
+        this.rutaDeVuelo = rutaDeVuelo;
     }
 }

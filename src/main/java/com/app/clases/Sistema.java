@@ -3,6 +3,8 @@ package com.app.clases;
 import com.app.datatypes.*;
 import com.app.enums.TipoAsiento;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -26,11 +28,13 @@ public class Sistema implements ISistema {
     private Cliente clienteTemporal;
     private Aerolinea aerolineaTemporal;
 
+
     private Sistema() {
         this.categorias = new LinkedHashMap<>();
         this.ciudades = new LinkedHashMap<>();
         this.usuarios = new LinkedHashMap<>();
         this.paquetes = new LinkedHashMap<>();
+        this.vuelos = new LinkedHashMap<>();
     }
 
     public static Sistema getInstancia() {
@@ -403,6 +407,7 @@ public class Sistema implements ISistema {
         }
     }
 
+    //ALTA USUARIO
     public void registrarCliente(DtCliente cliente){
         if(this.usuarios.containsKey(cliente.getNickname())) { throw new IllegalArgumentException("Este usuario ya existe.");}
 
@@ -471,5 +476,39 @@ public class Sistema implements ISistema {
     public void cancelarAltaUsuario(){
         this.clienteTemporal = null;
         this.aerolineaTemporal = null;
+    }
+
+    //ALTA VUELO
+    public Aerolinea buscarAerolinea(String nombreAerolinea){
+        for (Aerolinea a : aerolineas) {
+            if (a.getNickname().equals(nombreAerolinea)) {
+                return a;
+            }
+        }
+        throw new IllegalArgumentException("No existe la aerolínea: " + nombreAerolinea);
+    }
+
+    public RutaDeVuelo buscarRuta(Aerolinea aerolinea, String nombreRuta){
+        for (RutaDeVuelo r : aerolinea.getRutasDeVuelo()) {
+            if (r.getNombre().equals(nombreRuta)) {
+                return r;
+            }
+        }
+        throw new IllegalArgumentException("No existe la ruta: " + nombreRuta);
+    }
+
+    public void existeVuelo(String nombreVuelo){
+        if (vuelos.containsKey(nombreVuelo)) {
+            throw new IllegalArgumentException("El vuelo ya existe: " + nombreVuelo);
+        }
+    }
+
+    public void altaVuelo(DtVuelo datosVuelo, String nombreAerolinea, String nombreRuta) {
+        Aerolinea aerolinea = buscarAerolinea(nombreAerolinea);
+        RutaDeVuelo ruta = buscarRuta(aerolinea, nombreRuta);
+        existeVuelo(datosVuelo.getNombre());
+
+        Vuelo nuevo = new Vuelo(datosVuelo, ruta);
+        vuelos.put(nuevo.getNombre(), nuevo);
     }
 }
