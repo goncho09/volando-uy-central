@@ -4,6 +4,7 @@ import com.app.datatypes.DtRuta;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -31,13 +32,13 @@ public class RutaDeVuelo {
     @Column( nullable = false)
     private LocalDate fechaAlta;
 
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
             name = "ruta_categoria",
             joinColumns = @JoinColumn(name = "ruta_nombre"),
             inverseJoinColumns = @JoinColumn(name = "categoria_nombre")
     )
-    private List<Categoria> categorias;
+    private List<Categoria> categorias = new ArrayList<>();;
 
     @ManyToOne
     @JoinColumn(name = "ciudad_origen", nullable = false)
