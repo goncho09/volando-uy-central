@@ -5,6 +5,7 @@ import com.app.datatypes.*;
 import com.app.enums.*;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -72,13 +73,10 @@ public class Main extends JFrame {
     private JButton cancelarAltaAerolinea;
     private JButton confirmarAltaAerolinea;
     private JTabbedPane tabbedPane4;
-    //private JTextField textField3;
-    //private JComboBox comboBox6;
     private JComboBox JComboBoxCiudadDestino;
     private JSpinner SpinnerCostoTurista;
     private JSpinner SpínnerCostoEjecutivo;
     private JSpinner SpinnerCostoEquipaje;
-    private JComboBox JComboBoxCategoriaAltaRutaDeVuelo;
     private JComboBox userType;
     private JPanel reservaPanel;
     private JComboBox aerolineaReserva;
@@ -120,13 +118,13 @@ public class Main extends JFrame {
     private JSpinner fechaAnioRegistrarCliente;
     private JButton crearRutaDeVuelo;
     private JComboBox JComboBox;
-    //private JComboBox comboBox9;
     private JTextField nombreAltaRutaDeVuelo;
     private JTextField descripcionAltaRutaDeVuelo;
     private JComboBox JComboBoxCiudadOrigen;
     private JSpinner SpinnerMinutoAltaRutaDeVuelo;
     private JSpinner SpinnerHoraAltaRutaDeVuelo;
     private JComboBox JComboBoxAerolineaAltaRutaVuelo;
+    private JPanel JPanelCategorias;
 
 
     public Main() {
@@ -162,8 +160,16 @@ public class Main extends JFrame {
         JComboBoxRutaVueloAltaVuelo.setModel(auxiliar.getComboRutaDeVueloModel());
         JComboBoxCiudadOrigen.setModel(auxiliar.getComboCiudadOrigenModel());
         JComboBoxCiudadDestino.setModel(auxiliar.getComboCiudadDestinoModel());
-        JComboBoxCategoriaAltaRutaDeVuelo.setModel(auxiliar.getComboCategoriaModel());
         JComboBoxAerolineaAltaRutaVuelo.setModel(auxiliar.getComboAerolineaModel());
+
+        JPanelCategorias.setLayout(new GridLayout(0, 2, 5, 5));
+
+        List<JCheckBox> checkboxes = new ArrayList<>();
+        for (Categoria c : s.getCategorias()) {
+            JCheckBox check = new JCheckBox(c.getNombre());
+            JPanelCategorias.add(check);
+            checkboxes.add(check);
+        }
 
         //Settear no selección JComboBox
         JComboBoxSeleccionarUsuarioModificar.setSelectedIndex(-1);
@@ -540,7 +546,7 @@ public class Main extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    if (auxiliar.estanVaciosJTextField(nombreAltaRutaDeVuelo, descripcionAltaRutaDeVuelo) || auxiliar.estanVaciosJComboBox(JComboBoxAerolineaAltaRutaVuelo, JComboBoxCategoriaAltaRutaDeVuelo, JComboBoxCiudadOrigen, JComboBoxCiudadDestino)) {
+                    if (auxiliar.estanVaciosJTextField(nombreAltaRutaDeVuelo, descripcionAltaRutaDeVuelo) || auxiliar.estanVaciosJComboBox(JComboBoxAerolineaAltaRutaVuelo, JComboBoxCiudadOrigen, JComboBoxCiudadDestino)) {
                         new dialogMessage("Faltan argumentos");
                         return;
                     }
@@ -563,11 +569,24 @@ public class Main extends JFrame {
                     Integer costoEjecutivo = (Integer) SpínnerCostoEjecutivo.getValue();
                     Integer costoEquipaje = (Integer) SpinnerCostoEquipaje.getValue();
                     List<String> nombresCategorias = new ArrayList<String>();
-                    nombresCategorias.add(JComboBoxCategoriaAltaRutaDeVuelo.getSelectedItem().toString());
+                    List<Categoria> categorias = s.getCategorias();
+
+                    for (int i = 0; i < categorias.size(); i++) {
+                        if (checkboxes.get(i).isSelected()) {
+                            nombresCategorias.add(categorias.get(i).getNombre());
+                        }
+                    }
 
                     s.altaRutaDeVuelo(JComboBoxAerolineaAltaRutaVuelo.getSelectedItem().toString(), new DtRuta(nombreAltaRutaDeVuelo.getText(), descripcionAltaRutaDeVuelo.getText(), horaRuta, costoTurista, costoEjecutivo, costoEquipaje, LocalDate.now(), s.getCategoriasPorNombre(nombresCategorias), s.buscarCiudad(JComboBoxCiudadOrigen.getSelectedItem().toString()), s.buscarCiudad(JComboBoxCiudadDestino.getSelectedItem().toString())));
                     new dialogMessage("Ruta de vuelo creada correctamente.");
                     auxiliar.limpiarJTextField(nombreAltaRutaDeVuelo, descripcionAltaRutaDeVuelo);
+                    for (int i = 0; i < categorias.size(); i++) {
+                        if (checkboxes.get(i).isSelected()) {
+                            checkboxes.get(i).setSelected(false);
+                        }
+                    }
+
+
                 } catch (Exception ex) {
                     new dialogMessage(ex.getMessage());
                 }

@@ -1,6 +1,7 @@
 package com.app.DAOs;
 
 import com.app.clases.Aerolinea;
+import com.app.clases.Categoria;
 import com.app.clases.RutaDeVuelo;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
@@ -24,7 +25,6 @@ public class RutaDeVueloDao {
     }
 
     public void guardar(RutaDeVuelo rt, Aerolinea a) {
-        System.out.println("Guardando ruta de vuelo:" + rt);
         EntityTransaction tx = em.getTransaction();
         try{ //Se intenta "guardar"
             tx.begin();

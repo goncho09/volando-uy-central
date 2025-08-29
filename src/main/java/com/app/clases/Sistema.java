@@ -515,13 +515,17 @@ public class Sistema implements ISistema {
         }
     };
 
-    public List<Categoria> getCategoriasPorNombre(List<String> nombres){
-        List <Categoria> categorias = new ArrayList<>();
-        for(String nombreCategoria : nombres)
-        {
-            categorias.add(this.categorias.get(nombreCategoria));
+    public List<Categoria> getCategoriasPorNombre(List<String> nombres) {
+        List<Categoria> categoriasSeleccionadas = new ArrayList<>();
+        for (String nombreCategoria : nombres) {
+            for (Categoria c : this.getCategorias()) {
+                if (c.getNombre().equals(nombreCategoria)) {
+                    categoriasSeleccionadas.add(c);
+                    break; // salimos del loop interno
+                }
+            }
         }
-        return  categorias;
+        return categoriasSeleccionadas;
     }
 
     public void cancelarAltaUsuario(){
