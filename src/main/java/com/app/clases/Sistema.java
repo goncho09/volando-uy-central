@@ -263,7 +263,8 @@ public class Sistema implements ISistema {
                         paquete.getDescripcion(),
                         paquete.getValidezDias(),
                         paquete.getDescuento(),
-                        paquete.getCosto()
+                        paquete.getCosto(),
+                        paquete.getRutaEnPaquete()
                 ));
             }
         }
@@ -403,6 +404,7 @@ public class Sistema implements ISistema {
     public void altaPaquete(DtPaquete paquete){
         if(this.paquetes.containsKey(paquete.getNombre())) { throw new IllegalArgumentException("Ya existe un paquete con ese nombre.");}
         Paquete p = new Paquete(paquete);
+        paqueteDao.guardar(p);
         this.paquetes.put(p.getNombre(),p);
     }
 
@@ -414,9 +416,9 @@ public class Sistema implements ISistema {
     }
 
     public void altaCiudad(DtCiudad ciudad){
-        Ciudad existe = this.ciudades.get(ciudad.getNombre());
-        if(existe != null ) { throw new IllegalArgumentException("Ya existe una ciudad con ese nombre.");}
+        if(this.ciudades.containsKey(ciudad.getNombre())) { throw new IllegalArgumentException("Ya existe una ciudad con ese nombre.");}
         Ciudad c = new Ciudad(ciudad);
+        ciudadDao.guardar(c);
         this.ciudades.put(c.getNombre(),c);
     }
 

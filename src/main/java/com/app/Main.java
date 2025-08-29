@@ -42,7 +42,7 @@ public class Main extends JFrame {
     private JButton consultarVueloButton;
     private JTextField textField3;
     private JComboBox comboBox6;
-    private JTextField textField5;
+    private JTextField descripcionAltaPaquete;
     private JTextField textField6;
     private JTextField textField7;
     private JButton CANCELARButton;
@@ -88,9 +88,9 @@ public class Main extends JFrame {
     private JSpinner pasajesReserva;
     private JSpinner equipajeExtraReserva;
     private JButton hacerReservaButton;
-    private JSpinner spinner9;
-    private JSpinner spinner10;
-    private JTextField textField4;
+    private JSpinner JSpinnerPeriodoAltaPaquete;
+    private JSpinner JSpinnerDescuentoAltaPaquete;
+    private JTextField nombreAltaPaquete;
     private JComboBox comboBox9;
     private JComboBox comboBox10;
     private JButton CONFIRMARButton1;
@@ -127,6 +127,7 @@ public class Main extends JFrame {
     private JComboBox JComboBoxPaqueteConsultaPaqueteRutaVuelo;
     private JButton JButtonConsultarPaquete;
     private JPanel JPanelCategorias;
+    private JSpinner JSpinnerCostoAltaPaquete;
 
 
     public Main() {
@@ -191,65 +192,14 @@ public class Main extends JFrame {
         SpinnerCostoEquipaje.setModel(new SpinnerNumberModel(1,1,1000000,1));
         SpinnerHoraAltaRutaDeVuelo.setModel(new SpinnerNumberModel(0,0,200,1));
         SpinnerMinutoAltaRutaDeVuelo.setModel(new SpinnerNumberModel(0,0,59,1));
+        JSpinnerDescuentoAltaPaquete.setModel(new SpinnerNumberModel(0,0,100,1));
+        JSpinnerPeriodoAltaPaquete.setModel(new SpinnerNumberModel(1,1,1000000,1));
+        JSpinnerCostoAltaPaquete.setModel(new SpinnerNumberModel(1.0,1.0,1000000.0,1.0));
 
 //        s.registrarAerolinea(new DtAerolinea("aviones123","aviones america","avines@gmail.com","aerolinea famosa"));
 //        s.confirmarAltaUsuario();
 
-        LocalTime hora = LocalTime.of(10,0);
 
-        LocalDate fecha1 = LocalDate.of(2025,8,18);
-        LocalDate fecha2 = LocalDate.of(2025,8,19);
-        LocalTime hora1 = LocalTime.of(10, 30);
-
-        DtCategoria cat1 = new DtCategoria("Running");
-        DtCategoria cat2 = new DtCategoria("Salto Montaña");
-        DtCategoria cat3 = new DtCategoria("Tirolesa");
-
-        DtCiudad c1 = new DtCiudad("Montevideo","Uruguay","Aeropuerto de Carrasco","Mucha rambla","www.aeropuerto-carrasco.uy",fecha1);
-        DtCiudad c2 = new DtCiudad("Buenos Aires", "Argentina", "Aeropuerto Jorge Newbery", "Puerto Madero", "www.aeroparque.com.ar", fecha1);
-        DtCiudad c3 = new DtCiudad("Santiago", "Chile", "Aeropuerto Arturo Merino Benítez", "Cerro San Cristóbal", "www.aeropuertosantiago.cl", fecha1);
-
-        s.altaCiudad(c1);
-        s.altaCiudad(c2);
-        s.altaCiudad(c3);
-
-
-        RutaDeVuelo ruta1 = new RutaDeVuelo(new DtRuta("Vuelo A1", "Descripcion A1", hora, 100, 200, 20, fecha1,s.getCategorias(),s.getCiudades().get(0),s.getCiudades().get(1)));
-        RutaDeVuelo ruta2 = new RutaDeVuelo(new DtRuta("Vuelo A2", "Descripcion A2", hora, 120, 220, 25, fecha1, s.getCategorias(), s.getCiudades().get(1),s.getCiudades().get(2)));
-
-
-        List<RutaDeVuelo> rutasPaquete1 = new ArrayList<>();
-        rutasPaquete1.add(ruta1);
-        rutasPaquete1.add(ruta2);
-
-        RutaEnPaquete rep1 = new RutaEnPaquete(2, TipoAsiento.TURISTA, ruta1);
-        RutaEnPaquete rep2 = new RutaEnPaquete(1, TipoAsiento.EJECUTIVO, ruta2);
-
-        List<RutaEnPaquete> rutasEnPaquete1 = new ArrayList<>();
-        rutasEnPaquete1.add(rep1);
-        rutasEnPaquete1.add(rep2);
-
-        DtPaquete p1 = new DtPaquete("Paquete A", "Descripcion A", 10, 5, 100,rutasEnPaquete1);
-        DtPaquete p2 = new DtPaquete("Paquete B", "Descripcion B", 15, 10, 150,  rutasEnPaquete1);
-        DtPaquete p3 = new DtPaquete("Paquete C", "Descripcion C", 7, 3, 80, rutasEnPaquete1);
-
-        // TEMPORAL
-        s.altaPaquete(p1);
-        s.altaPaquete(p2);
-        s.altaPaquete(p3);
-
-        DtCliente cliente1 = new DtCliente("gonzalo95", "Gonzalo", "maria88@hotmail.com", "Larrica", fecha1, "Uruguay", TipoDocumento.CEDULA, 51234567);
-        DtCliente cliente2 = new DtCliente("gonzalo945", "María", "maria89@hotmail.com", "Fernández", fecha2, "Argentina", TipoDocumento.PASAPORTE, 98765432);
-        DtCliente cliente3 = new DtCliente("juan2000", "Juan", "juan2000@yahoo.com", "Pérez", fecha2, "Chile", TipoDocumento.CEDULA_EXTRANJERA, 45678901);
-
-        try {
-            s.registrarCliente(cliente1);
-            s.registrarCliente(cliente3);
-            s.registrarCliente(cliente2);
-        }catch(Exception e){
-            e.printStackTrace();
-            new dialogMessage(e.getMessage());
-        }
         //¡Cargar datitos!
         auxiliar.cargarUsuariosComboBox();
         auxiliar.cargarAerolineasComboBox();
@@ -260,9 +210,13 @@ public class Main extends JFrame {
         consultarVueloButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                // USAR DATOS VERDADEROS
                 LocalDate fechaPrueba = LocalDate.of(2025,12,3);
                 LocalTime horaPrueba = LocalTime.of(10, 30);
                 LocalDate fechaAltaPrueba = LocalDate.of(2025,8,18);
+                LocalTime hora = LocalTime.of(10,0);
+                LocalDate fecha1 = LocalDate.of(2025,8,18);
+                RutaDeVuelo ruta1 = new RutaDeVuelo(new DtRuta("Vuelo A1", "Descripcion A1", hora, 100, 200, 20, fecha1,s.getCategorias(),s.getCiudades().get(0),s.getCiudades().get(1)));
                 DtVuelo dataVuelo = new DtVuelo("A1", fechaPrueba, horaPrueba, 160, 40, fechaAltaPrueba, ruta1);
 
                 JFrame vuelo = new dataVuelo(dataVuelo);
@@ -403,7 +357,7 @@ public class Main extends JFrame {
                 DtUsuario dtUsuario = s.getUsuarioSeleccionado();
 
                 textField3.setText(dtUsuario.getNickname());
-                textField5.setText(dtUsuario.getNombre());
+                descripcionAltaPaquete.setText(dtUsuario.getNombre());
                 textField7.setText(dtUsuario.getEmail());
 
                 if (dtUsuario instanceof DtCliente) {
@@ -615,6 +569,34 @@ public class Main extends JFrame {
                     } catch (Exception ex){
                         new dialogMessage(ex.getMessage());
                     }
+            }
+        });
+        CONFIRMARButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(auxiliar.estanVaciosJTextField(nombreAltaPaquete,descripcionAltaPaquete)){
+                    new dialogMessage("Falta ingresar campos de texto");
+                    return;
+                }
+                try {
+                    Integer periodo = (Integer) JSpinnerPeriodoAltaPaquete.getValue();
+                    Integer descuento = (Integer) JSpinnerDescuentoAltaPaquete.getValue();
+                    float costo = ((Double) JSpinnerCostoAltaPaquete.getValue()).floatValue();
+
+                    if(periodo < 1){
+                        new dialogMessage("El período debe ser 1 o más.");
+                        return;
+                    }
+
+                    if(costo < 1){
+                        new dialogMessage("El costo debe ser 1 o más.");
+                        return;
+                    }
+
+                    s.altaPaquete(new DtPaquete(nombreAltaPaquete.getText(),descripcionAltaPaquete.getText(),periodo,descuento,costo, new ArrayList<>()));
+                } catch (Exception ex){
+                    new dialogMessage(ex.getMessage());
+                }
             }
         });
     }
