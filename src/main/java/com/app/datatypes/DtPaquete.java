@@ -4,6 +4,7 @@ import com.app.clases.RutaDeVuelo;
 import com.app.clases.RutaEnPaquete;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DtPaquete {
@@ -13,14 +14,6 @@ public class DtPaquete {
     private float descuento;
     private float costo;
     private List<RutaEnPaquete> rutaEnPaquete;
-
-    public DtPaquete(String nombre, String descripcion, int validezDias, float descuento, float costo) {
-        this.nombre = nombre;
-        this.descripcion = descripcion;
-        this.validezDias = validezDias;
-        this.descuento = descuento;
-        this.costo = costo;
-    }
 
     public DtPaquete(String nombre, String descripcion, int validezDias, float descuento, float costo, List<RutaEnPaquete> rutaEnPaquete) {
         this.nombre = nombre;

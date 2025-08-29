@@ -13,9 +13,16 @@ public class Paquete {
     @Column(nullable = false, length = 50)
     private String nombre;
 
+    @Column(nullable = false)
     private String descripcion;
+
+    @Column(nullable = false)
     private int validezDias;
+
+    @Column(nullable = false)
     private float descuento;
+
+    @Column(nullable = false)
     private float costo;
 
     @OneToMany
