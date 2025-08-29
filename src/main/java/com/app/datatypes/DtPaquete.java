@@ -31,6 +31,8 @@ public class DtPaquete {
         this.rutaEnPaquete = rutaEnPaquete;
     }
 
+
+
     public List<RutaEnPaquete> getRutaEnPaquete() {
         return rutaEnPaquete;
     }

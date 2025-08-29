@@ -22,6 +22,7 @@ public class Sistema implements ISistema {
     private RutaDeVueloDao rutaDeVueloDao;
     private CategoriaDao categoriaDao;
     private CiudadDao ciudadDao;
+    private PaqueteDao paqueteDao;
 
     private Map<String, Categoria> categorias;
     private Map<String, Ciudad> ciudades;
@@ -55,11 +56,12 @@ public class Sistema implements ISistema {
         this.rutaDeVueloDao = new RutaDeVueloDao(em);
         this.categoriaDao = new CategoriaDao(em);
         this.ciudadDao = new CiudadDao(em);
+        this.paqueteDao = new PaqueteDao(em);
 
-        this.categorias = new LinkedHashMap<>();
-        this.ciudades = new LinkedHashMap<>();
-        this.usuarios = new LinkedHashMap<>();
-        this.paquetes = new LinkedHashMap<>();
+        this.categorias = categoriaDao.obtenerCategorias();
+        this.ciudades = ciudadDao.obtenerCiudades();
+        this.usuarios = userDao.obtenerUsuarios();
+        this.paquetes = paqueteDao.obtenerPaquetes();
         this.vuelos = new LinkedHashMap<>();
     }
 
@@ -79,6 +81,8 @@ public class Sistema implements ISistema {
     public CategoriaDao getCategoriaDao(){ return this.categoriaDao;}
 
     public CiudadDao getCiudadDao() {return  this.ciudadDao;}
+
+    public PaqueteDao getPaqueteDao() {return this.paqueteDao;}
 
     public List<String> listarAerolineas() {
         List<String> nickname = new ArrayList<>();

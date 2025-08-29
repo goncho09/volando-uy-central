@@ -1,6 +1,6 @@
 package com.app.DAOs;
 
-import com.app.clases.Ciudad;
+import com.app.clases.Paquete;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 
@@ -8,34 +8,33 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class CiudadDao {
+public class PaqueteDao {
     private EntityManager em;
 
-    public CiudadDao(EntityManager em) {
+    public PaqueteDao(EntityManager em) {
         this.em = em;
     }
 
-    public List<Ciudad> listarCiudades(){
-        return em.createQuery("SELECT c FROM Ciudad c", Ciudad.class).getResultList();
+    public List<Paquete> listarPaquetes(){
+        return em.createQuery("SELECT p FROM Paquete p", Paquete.class).getResultList();
     }
 
-    public Map<String, Ciudad> obtenerCiudades() {
-        return em.createQuery("SELECT c FROM Ciudad c", Ciudad.class)
+    public Map<String, Paquete> obtenerPaquetes() {
+        return em.createQuery("SELECT p FROM Paquete p", Paquete.class)
                 .getResultList()
                 .stream()
-                .collect(Collectors.toMap(Ciudad::getNombre, c -> c));
+                .collect(Collectors.toMap(Paquete::getNombre, p -> p));
     }
 
-
-    public Ciudad buscar(String nombre){
-        return em.find(Ciudad.class, nombre);
+    public Paquete buscar(String nombre){
+        return em.find(Paquete.class, nombre);
     }
 
-    public void guardar(Ciudad c) {
+    public void guardar(Paquete p) {
         EntityTransaction tx = em.getTransaction();
         try{ //Se intenta "guardar"
             tx.begin();
-            em.persist(c);
+            em.persist(p);
             tx.commit();
         }catch(Exception e){ //Si llega a fallar se hace un rollback y se lanza el error a la capa de presentación
             if(tx.isActive()){
@@ -45,11 +44,11 @@ public class CiudadDao {
         }
     }
 
-    public void actualizar(Ciudad c) {
+    public void actualizar(Paquete p) {
         EntityTransaction tx = em.getTransaction();
         try{ //Se intenta "modificar"
             tx.begin();
-            em.merge(c);
+            em.merge(p);
             tx.commit();
         }catch(Exception e){ //Si llega a fallar se hace un rollback y se lanza el error a la capa de presentación
             if(tx.isActive()){
@@ -61,9 +60,9 @@ public class CiudadDao {
 
     public void eliminar(String nombre) {
         em.getTransaction().begin();
-        Ciudad c = em.find(Ciudad.class, nombre);
-        if (c != null) {
-            em.remove(c);
+        Paquete p = em.find(Paquete.class, nombre);
+        if (p != null) {
+            em.remove(p);
         }
         em.getTransaction().commit();
     }

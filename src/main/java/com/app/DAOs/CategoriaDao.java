@@ -5,6 +5,8 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class CategoriaDao {
     private EntityManager em;
@@ -15,6 +17,13 @@ public class CategoriaDao {
 
     public List<Categoria> listarCategorias(){
         return em.createQuery("SELECT c FROM Categoria c", Categoria.class).getResultList();
+    }
+
+    public Map<String, Categoria> obtenerCategorias() {
+        return em.createQuery("SELECT c FROM Categoria c", Categoria.class)
+                .getResultList()
+                .stream()
+                .collect(Collectors.toMap(Categoria::getNombre, c -> c));
     }
 
 

@@ -83,4 +83,9 @@ public class Paquete {
     public DtPaquete getDatos(){
         return new DtPaquete(this.getNombre(),this.getDescripcion(),this.getValidezDias(),this.getDescuento(),this.getCosto(),this.getRutaEnPaquete());
     }
+
+    @Override
+    public String toString(){
+        return this.nombre;
+    }
 }

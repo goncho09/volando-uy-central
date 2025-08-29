@@ -1,9 +1,6 @@
 package com.app;
 
-import com.app.DAOs.CategoriaDao;
-import com.app.DAOs.CiudadDao;
-import com.app.DAOs.RutaDeVueloDao;
-import com.app.DAOs.UserDao;
+import com.app.DAOs.*;
 import com.app.clases.*;
 
 import javax.swing.*;
@@ -17,16 +14,19 @@ public class auxiliarFunctions {
     private DefaultComboBoxModel<Ciudad> comboCiudadOrigen = new DefaultComboBoxModel<>();
     private DefaultComboBoxModel<Ciudad> comboCiudadDestino = new DefaultComboBoxModel<>();
     private DefaultComboBoxModel<Categoria> comboCategoria = new DefaultComboBoxModel<>();
+    private DefaultComboBoxModel<Paquete> comboPaquete = new DefaultComboBoxModel<>();
     private UserDao userDao;
     private RutaDeVueloDao rutaDeVueloDao;
     private CiudadDao ciudadDao;
     private CategoriaDao categoriaDao;
+    private PaqueteDao paqueteDao;
 
-    public auxiliarFunctions(UserDao userDao, RutaDeVueloDao rutaDeVueloDao, CiudadDao ciudadDao,CategoriaDao categoriaDao) {
+    public auxiliarFunctions(UserDao userDao, RutaDeVueloDao rutaDeVueloDao, CiudadDao ciudadDao, CategoriaDao categoriaDao, PaqueteDao paqueteDao) {
         this.userDao = userDao;
         this.rutaDeVueloDao = rutaDeVueloDao;
         this.ciudadDao = ciudadDao;
         this.categoriaDao = categoriaDao;
+        this.paqueteDao = paqueteDao;
     }
 
     //Getters de los modelos
@@ -52,6 +52,10 @@ public class auxiliarFunctions {
 
     public DefaultComboBoxModel<Categoria> getComboCategoriaModel() {
         return comboCategoria;
+    }
+
+    public DefaultComboBoxModel<Paquete> getComboPaqueteModel() {
+        return comboPaquete;
     }
 
     //Función para validar 1 o más "JComboBox"
@@ -153,16 +157,16 @@ public class auxiliarFunctions {
 
 
 
-    public void cargarCategoriaComboBox() {
-        comboCategoria.removeAllElements();
+    public void cargarPaqueteComboBox() {
+        comboPaquete.removeAllElements();
         try {
-            List<Categoria> c= categoriaDao.listarCategorias();
-            for (Categoria categoria : c) {
-                comboCategoria.addElement(categoria);
+            List<Paquete> p= paqueteDao.listarPaquetes();
+            for (Paquete paquete : p) {
+                comboPaquete.addElement(paquete);
             }
         } catch (Exception e) {
-            comboCategoria.removeAllElements();
-            comboCategoria.addElement(new Categoria() {
+            comboPaquete.removeAllElements();
+            comboPaquete.addElement(new Paquete() {
                 @Override
                 public String toString() { return "N/A"; }
             });
