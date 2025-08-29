@@ -1,12 +1,15 @@
 package com.app.DAOs;
 
 import com.app.clases.Aerolinea;
+import com.app.clases.Usuario;
 import com.app.clases.Cliente;
 import com.app.clases.Usuario;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class UserDao {
     private EntityManager em;
@@ -26,6 +29,13 @@ public class UserDao {
 
     public List<Aerolinea> listarAerolineas(){
         return em.createQuery("SELECT u FROM Aerolinea u", Aerolinea.class).getResultList(); // Retorna los usuarios con clase "Aerolínea" ñehehe.
+    }
+
+    public Map<String, Usuario> obtenerUsuarios() {
+        return em.createQuery("SELECT u FROM Usuario u", Usuario.class)
+                .getResultList()
+                .stream()
+                .collect(Collectors.toMap(Usuario::getNickname, u-> u));
     }
 
     public Usuario buscar(String nickname){

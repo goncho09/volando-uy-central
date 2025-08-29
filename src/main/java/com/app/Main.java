@@ -127,6 +127,8 @@ public class Main extends JFrame {
     private JSpinner SpinnerMinutoAltaRutaDeVuelo;
     private JSpinner SpinnerHoraAltaRutaDeVuelo;
     private JComboBox JComboBoxAerolineaAltaRutaVuelo;
+    private JComboBox JComboBoxPaqueteConsultaPaqueteRutaVuelo;
+    private JButton JButtonConsultarPaquete;
 
 
     public Main() {
@@ -135,7 +137,7 @@ public class Main extends JFrame {
         s = Factory.getSistema();
 
         //Inicializar Auxiliar
-        this.auxiliar = new auxiliarFunctions(s.getUserDao(),s.getRutaDeVueloDao(),s.getCiudadDao(),s.getCategoriaDao());
+        this.auxiliar = new auxiliarFunctions(s.getUserDao(),s.getRutaDeVueloDao(),s.getCiudadDao(),s.getCategoriaDao(),s.getPaqueteDao());
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(800, 600);
@@ -164,6 +166,7 @@ public class Main extends JFrame {
         JComboBoxCiudadDestino.setModel(auxiliar.getComboCiudadDestinoModel());
         JComboBoxCategoriaAltaRutaDeVuelo.setModel(auxiliar.getComboCategoriaModel());
         JComboBoxAerolineaAltaRutaVuelo.setModel(auxiliar.getComboAerolineaModel());
+        JComboBoxPaqueteConsultaPaqueteRutaVuelo.setModel(auxiliar.getComboPaqueteModel());
 
         //Settear no selección JComboBox
         JComboBoxSeleccionarUsuarioModificar.setSelectedIndex(-1);
@@ -246,8 +249,7 @@ public class Main extends JFrame {
         auxiliar.cargarAerolineasComboBox();
         auxiliar.cargarRutasDeVueloComboBox();
         auxiliar.cargarCiudadesComboBox();
-        auxiliar.cargarCategoriaComboBox();
-
+        auxiliar.cargarPaqueteComboBox();
 
         consultarVueloButton.addActionListener(new ActionListener() {
             @Override
@@ -571,6 +573,29 @@ public class Main extends JFrame {
                 } catch (Exception ex) {
                     new dialogMessage(ex.getMessage());
                 }
+            }
+        });
+        JButtonConsultarPaquete.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (auxiliar.estanVaciosJComboBox(JComboBoxPaqueteConsultaPaqueteRutaVuelo)) {
+                    new dialogMessage("Falta ingresar algún dato.");
+                    return;
+                }
+                    try{
+                        s.seleccionarPaquete(JComboBoxPaqueteConsultaPaqueteRutaVuelo.getSelectedItem().toString());
+                        JFrame paquete = new dataPaquete(s.getPaquete());
+                        setEnabled(false);
+
+                        paquete.addWindowListener(new WindowAdapter() {
+                            @Override
+                            public void windowClosing(WindowEvent e){
+                                setEnabled(true);
+                            };
+                        });
+                    } catch (Exception ex){
+                        new dialogMessage(ex.getMessage());
+                    }
             }
         });
     }

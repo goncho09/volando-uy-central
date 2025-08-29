@@ -1,9 +1,6 @@
 package com.app.clases;
 
-import com.app.DAOs.CategoriaDao;
-import com.app.DAOs.CiudadDao;
-import com.app.DAOs.RutaDeVueloDao;
-import com.app.DAOs.UserDao;
+import com.app.DAOs.*;
 import com.app.datatypes.*;
 
 import java.util.List;
@@ -14,6 +11,7 @@ public interface ISistema {
     RutaDeVueloDao getRutaDeVueloDao();
     CategoriaDao getCategoriaDao();
     CiudadDao getCiudadDao();
+    PaqueteDao getPaqueteDao();
 
     List<DtPaquete> listarPaquetes();
     void seleccionarPaquete(String nombre);
