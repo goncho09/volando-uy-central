@@ -52,9 +52,7 @@ public class Aerolinea extends Usuario {
     }
 
     public boolean existeRutaDeVuelo(String nombre){
-        System.out.println("tamaño" + this.rutasDeVuelo.size());
         for (RutaDeVuelo rt : this.getRutasDeVuelo()){
-            System.out.println("Ruta en lista: '" + rt.getNombre() + "'");
             if(rt.getNombre().equals(nombre)){
                 return true;
             }
