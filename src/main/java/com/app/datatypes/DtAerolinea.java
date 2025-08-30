@@ -10,6 +10,8 @@ public class DtAerolinea extends DtUsuario {
     private String linkWeb;
     private List<RutaDeVuelo> rutasDeVuelo;
 
+    public DtAerolinea() {}
+
     public DtAerolinea(String nickname, String nombre, String email, String descripcion) {
         super(nickname, nombre, email);
         this.descripcion = descripcion;
@@ -24,6 +26,13 @@ public class DtAerolinea extends DtUsuario {
         this.rutasDeVuelo = new ArrayList<>();
     }
 
+    public DtAerolinea(String nickname, String nombre, String email, String descripcion, String linkweb, List<RutaDeVuelo> rutasDeVuelo) {
+        super(nickname, nombre, email);
+        this.descripcion = descripcion;
+        this.linkWeb = linkweb;
+        this.rutasDeVuelo = rutasDeVuelo;
+    }
+
     public String getDescripcion() {
         return descripcion;
     }
@@ -35,6 +44,7 @@ public class DtAerolinea extends DtUsuario {
     public List<RutaDeVuelo> getRutasDeVuelo() {
         return rutasDeVuelo;
     }
+
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
@@ -43,8 +53,8 @@ public class DtAerolinea extends DtUsuario {
         this.linkWeb = linkWeb;
     }
 
-
     public void setRutasDeVuelo(List<RutaDeVuelo> rutasDeVuelo) {
         this.rutasDeVuelo = rutasDeVuelo;
     }
+
 }

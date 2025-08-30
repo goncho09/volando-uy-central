@@ -3,29 +3,35 @@ package com.app.datatypes;
 import com.app.clases.Categoria;
 import com.app.clases.Ciudad;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 public class DtRuta {
     private String nombre;
     private String descripcion;
-    private DtHora hora;
+    private LocalTime duracion;
     private float costoTurista;
     private float costoEjecutivo;
     private float equipajeExtra;
-    private DtFecha fechaAlta;
+    private LocalDate fechaAlta;
     private List<Categoria> categorias;
-    private List<Ciudad> ciudades;
+    private Ciudad ciudadOrigen;
+    private Ciudad ciudadDestino;
 
-    public DtRuta(String nombre, String descripcion, DtHora hora, float costoTurista, float costoEjecutivo, float equipajeExtra, DtFecha fechaAlta, List<Categoria> categorias, List<Ciudad> ciudades) {
+    public DtRuta() {}
+
+    public DtRuta(String nombre, String descripcion, LocalTime duracion, float costoTurista, float costoEjecutivo, float equipajeExtra, LocalDate fechaAlta, List<Categoria> categorias, Ciudad origen, Ciudad destino) {
         this.nombre = nombre;
         this.descripcion = descripcion;
-        this.hora = hora;
+        this.duracion = duracion;
         this.costoTurista = costoTurista;
         this.costoEjecutivo = costoEjecutivo;
         this.equipajeExtra = equipajeExtra;
         this.fechaAlta = fechaAlta;
         this.categorias = categorias;
-        this.ciudades = ciudades;
+        this.ciudadOrigen = origen;
+        this.ciudadDestino = destino;
     }
 
     public String getNombre() {
@@ -44,12 +50,12 @@ public class DtRuta {
         this.descripcion = descripcion;
     }
 
-    public DtHora getHora() {
-        return hora;
+    public LocalTime getDuracion() {
+        return duracion;
     }
 
-    public void setHora(DtHora hora) {
-        this.hora = hora;
+    public void setDuracion(LocalTime duracion) {
+        this.duracion = duracion;
     }
 
     public float getCostoTurista() {
@@ -76,11 +82,11 @@ public class DtRuta {
         this.equipajeExtra = equipajeExtra;
     }
 
-    public DtFecha getFechaAlta() {
+    public LocalDate getFechaAlta() {
         return fechaAlta;
     }
 
-    public void setFechaAlta(DtFecha fechaAlta) {
+    public void setFechaAlta(LocalDate fechaAlta) {
         this.fechaAlta = fechaAlta;
     }
 
@@ -92,11 +98,22 @@ public class DtRuta {
         this.categorias = categorias;
     }
 
-    public List<Ciudad> getCiudades() {
-        return ciudades;
+    public Ciudad getCiudadDestino() {
+        return ciudadDestino;
     }
 
-    public void setCiudades(List<Ciudad> ciudades) {
-        this.ciudades = ciudades;
+    public void setCiudadDestino(Ciudad ciudadDestino) {
+        this.ciudadDestino = ciudadDestino;
     }
+
+    public Ciudad getCiudadOrigen() {
+        return ciudadOrigen;
+    }
+
+    public void setCiudadOrigen(Ciudad ciudadOrigen) {
+        this.ciudadOrigen = ciudadOrigen;
+    }
+
+    @Override
+    public String toString() { return this.nombre; }
 }

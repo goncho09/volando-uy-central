@@ -1,12 +1,25 @@
 package com.app.clases;
 
 import com.app.enums.TipoAsiento;
+import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
+@Entity
+//@Table(name = "rutaEnPaquete")
 public class RutaEnPaquete {
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+
     private int cantidad;
     private TipoAsiento tipoAsiento;
+
+    @ManyToOne
+    @JoinColumn(name="rutaDeVuelo_name", nullable = false)
     private RutaDeVuelo rutaDeVuelo;
 
+    public RutaEnPaquete(){}
     public RutaEnPaquete(int cantidad, TipoAsiento tipoAsiento, RutaDeVuelo rutaDeVuelo) {
         this.cantidad = cantidad;
         this.tipoAsiento = tipoAsiento;

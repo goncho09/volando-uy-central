@@ -1,14 +1,18 @@
 package com.app.datatypes;
 
+import java.time.LocalDate;
+
 public class DtCiudad {
     private String nombre;
     private String pais;
     private String aeropuerto;
     private String descripcion;
     private String sitioWeb;
-    private DtFecha fechaAlta;
+    private LocalDate fechaAlta;
 
-    public DtCiudad(String nombre, String pais, String aeropuerto, String descripcion, String sitioWeb, DtFecha fechaAlta) {
+    public DtCiudad() {}
+
+    public DtCiudad(String nombre, String pais, String aeropuerto, String descripcion, String sitioWeb, LocalDate fechaAlta) {
         this.nombre = nombre;
         this.pais = pais;
         this.aeropuerto = aeropuerto;
@@ -57,11 +61,15 @@ public class DtCiudad {
         this.sitioWeb = sitioWeb;
     }
 
-    public DtFecha getFechaAlta() {
+    public LocalDate getFechaAlta() {
         return fechaAlta;
     }
 
-    public void setFechaAlta(DtFecha fechaAlta) {
+    public void setFechaAlta(LocalDate fechaAlta) {
         this.fechaAlta = fechaAlta;
     }
+
+    @Override
+    public String toString() { return this.nombre; }
+
 }

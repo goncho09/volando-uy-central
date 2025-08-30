@@ -5,10 +5,11 @@ import com.app.clases.Paquete;
 import com.app.clases.Vuelo;
 import com.app.enums.TipoAsiento;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class DtReserva {
-    private DtFecha fecha;
+    private LocalDate fecha;
     private TipoAsiento tipoAsiento;
     private int cantPasajes;
     private int equipajeExtra;
@@ -18,7 +19,7 @@ public class DtReserva {
     private Vuelo vuelo;
     private Paquete paquete;
 
-    public DtReserva(DtFecha fecha, TipoAsiento tipoAsiento, int cantPasajes, int equipajeExtra, float costo, List<DtPasajero> pasajeros, Cliente cliente, Vuelo vuelo, Paquete paquete) {
+    public DtReserva(LocalDate fecha, TipoAsiento tipoAsiento, int cantPasajes, int equipajeExtra, float costo, List<DtPasajero> pasajeros, Cliente cliente, Vuelo vuelo, Paquete paquete) {
         this.fecha = fecha;
         this.tipoAsiento = tipoAsiento;
         this.cantPasajes = cantPasajes;
@@ -30,11 +31,11 @@ public class DtReserva {
         this.paquete = paquete;
     }
 
-    public DtFecha getFecha() {
+    public LocalDate getFecha() {
         return fecha;
     }
 
-    public void setFecha(DtFecha fecha) {
+    public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
     }
 
@@ -101,6 +102,7 @@ public class DtReserva {
     public void setPaquete(Paquete paquete) {
         this.paquete = paquete;
     }
+
 
 
 }

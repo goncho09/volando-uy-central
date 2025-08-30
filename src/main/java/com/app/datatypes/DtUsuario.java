@@ -5,6 +5,7 @@ public class DtUsuario {
     protected String nombre;
     protected String email;
 
+    public DtUsuario() {}
     public DtUsuario(String nickname,String nombre, String email){
         this.nickname = nickname;
         this.nombre = nombre;
@@ -34,4 +35,8 @@ public class DtUsuario {
     public void setEmail(String email) {
         this.email = email;
     }
+
+
+    @Override
+    public String toString() { return this.nickname; }
 }

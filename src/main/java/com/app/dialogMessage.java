@@ -3,18 +3,17 @@ package com.app;
 import javax.swing.*;
 import java.awt.event.*;
 
-public class errorMessage extends JDialog {
+public class dialogMessage extends JDialog {
     private JPanel contentPane;
     private JButton buttonOK;
-    private JButton buttonCancel;
-    private JLabel errorMessage;
+    private JLabel message;
 
-    public errorMessage(String msg) {
+    public dialogMessage(String msg) {
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
 
-        errorMessage.setText("Error: " + msg);
+        message.setText(msg);
 
         buttonOK.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -22,11 +21,6 @@ public class errorMessage extends JDialog {
             }
         });
 
-        buttonCancel.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onCancel();
-            }
-        });
 
         // call onCancel() when cross is clicked
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);

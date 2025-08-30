@@ -4,6 +4,7 @@ import com.app.clases.RutaDeVuelo;
 import com.app.clases.RutaEnPaquete;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DtPaquete {
@@ -12,26 +13,20 @@ public class DtPaquete {
     private int validezDias;
     private float descuento;
     private float costo;
-    private List<RutaDeVuelo> rutasDeVuelo;
     private List<RutaEnPaquete> rutaEnPaquete;
 
-    public DtPaquete(String nombre, String descripcion, int validezDias, float descuento, float costo) {
-        this.nombre = nombre;
-        this.descripcion = descripcion;
-        this.validezDias = validezDias;
-        this.descuento = descuento;
-        this.costo = costo;
-    }
+    public  DtPaquete(){};
 
-    public DtPaquete(String nombre, String descripcion, int validezDias, float descuento, float costo, List<RutaDeVuelo> rutasDeVuelo, List<RutaEnPaquete> rutaEnPaquete) {
+    public DtPaquete(String nombre, String descripcion, int validezDias, float descuento, float costo, List<RutaEnPaquete> rutaEnPaquete) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.validezDias = validezDias;
         this.descuento = descuento;
         this.costo = costo;
-        this.rutasDeVuelo = rutasDeVuelo;
         this.rutaEnPaquete = rutaEnPaquete;
     }
+
+
 
     public List<RutaEnPaquete> getRutaEnPaquete() {
         return rutaEnPaquete;
@@ -39,14 +34,6 @@ public class DtPaquete {
 
     public void setRutaEnPaquete(List<RutaEnPaquete> rutaEnPaquete) {
         this.rutaEnPaquete = rutaEnPaquete;
-    }
-
-    public List<RutaDeVuelo> getRutasDeVuelo() {
-        return rutasDeVuelo;
-    }
-
-    public void setRutasDeVuelo(List<RutaDeVuelo> rutasDeVuelo) {
-        this.rutasDeVuelo = rutasDeVuelo;
     }
 
     public float getCosto() {
@@ -88,4 +75,7 @@ public class DtPaquete {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
+
+    @Override
+    public String toString() { return this.nombre; }
 }

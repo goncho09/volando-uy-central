@@ -1,32 +1,66 @@
 package com.app.clases;
 
-import com.app.datatypes.DtFecha;
-import com.app.datatypes.DtHora;
 import com.app.datatypes.DtRuta;
-
+import jakarta.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
+@Entity
+//@Table(name="rutaDeVuelo")
 public class RutaDeVuelo {
+    @Id
+    @Column(nullable = false, length = 50)
     private String nombre;
+
+    @Column( nullable = false)
     private String descripcion;
-    private DtHora hora;
+
+    @Column( nullable = false)
+    private LocalTime duracion;
+
+    @Column( nullable = false)
     private float costoTurista;
+
+    @Column( nullable = false)
     private float costoEjecutivo;
+
+    @Column( nullable = false)
     private float equipajeExtra;
-    private DtFecha fechaAlta;
-    private List<Categoria> categorias;
-    private List<Ciudad> ciudades;
+
+    @Column( nullable = false)
+    private LocalDate fechaAlta;
+
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(
+            name = "ruta_categoria",
+            joinColumns = @JoinColumn(name = "ruta_nombre"),
+            inverseJoinColumns = @JoinColumn(name = "categoria_nombre")
+    )
+    private List<Categoria> categorias = new ArrayList<>();;
+
+    @ManyToOne
+    @JoinColumn(name = "ciudad_origen", nullable = false)
+    private Ciudad ciudadOrigen;
+
+    @ManyToOne
+    @JoinColumn(name = "ciudad_destino", nullable = false)
+    private Ciudad ciudadDestino;
+
+    public RutaDeVuelo() {}
 
     public RutaDeVuelo(DtRuta ruta) {
         this.nombre = ruta.getNombre();
         this.descripcion = ruta.getDescripcion();
-        this.hora = ruta.getHora();
+        this.duracion = ruta.getDuracion();
         this.costoTurista = ruta.getCostoTurista();
         this.costoEjecutivo = ruta.getCostoEjecutivo();
         this.equipajeExtra = ruta.getEquipajeExtra();
         this.fechaAlta = ruta.getFechaAlta();
         this.categorias = ruta.getCategorias();
-        this.ciudades = ruta.getCiudades();
+        this.ciudadOrigen = ruta.getCiudadOrigen();
+        this.ciudadDestino = ruta.getCiudadDestino();
     }
 
     public String getNombre() {
@@ -45,12 +79,12 @@ public class RutaDeVuelo {
         this.descripcion = descripcion;
     }
 
-    public DtHora getHora() {
-        return hora;
+    public LocalTime getDuracion() {
+        return duracion;
     }
 
-    public void setHora(DtHora hora) {
-        this.hora = hora;
+    public void setDuracion(LocalTime duracion) {
+        this.duracion = duracion;
     }
 
     public float getCostoTurista() {
@@ -77,21 +111,29 @@ public class RutaDeVuelo {
         this.equipajeExtra = equipajeExtra;
     }
 
-    public DtFecha getFechaAlta() {
+    public LocalDate getFechaAlta() {
         return fechaAlta;
     }
 
-    public void setFechaAlta(DtFecha fechaAlta) {
+    public void setFechaAlta(LocalDate fechaAlta) {
         this.fechaAlta = fechaAlta;
     }
 
-    public List<Ciudad> getCiudades() {
-        return ciudades;
+    public DtRuta getDatos() {
+        return new DtRuta(
+                this.getNombre(),
+                this.getDescripcion(),
+                this.getDuracion(),
+                this.getCostoTurista(),
+                this.getCostoEjecutivo(),
+                this.getEquipajeExtra(),
+                this.getFechaAlta(),
+                this.getCategorias(),
+                this.getCiudadOrigen(),
+                this.getCiudadDestino()
+        );
     }
 
-    public void setCiudades(List<Ciudad> ciudades) {
-        this.ciudades = ciudades;
-    }
 
     public List<Categoria> getCategorias() {
         return categorias;
@@ -99,5 +141,26 @@ public class RutaDeVuelo {
 
     public void setCategorias(List<Categoria> categorias) {
         this.categorias = categorias;
+    }
+
+    public Ciudad getCiudadOrigen() {
+        return ciudadOrigen;
+    }
+
+    public void setCiudadOrigen(Ciudad ciudadOrigen) {
+        this.ciudadOrigen = ciudadOrigen;
+    }
+
+    public Ciudad getCiudadDestino() {
+        return ciudadDestino;
+    }
+
+    public void setCiudadDestino(Ciudad ciudadDestino) {
+        this.ciudadDestino = ciudadDestino;
+    }
+
+    @Override
+    public String toString() {
+        return this.nombre;
     }
 }

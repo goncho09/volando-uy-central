@@ -4,39 +4,45 @@ import com.app.clases.*;
 import com.app.datatypes.*;
 import com.app.enums.*;
 
-import jakarta.persistence.*;
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.*;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Main extends JFrame {
 
+    //Declaración de variables "importantes"
+    private ISistema s;
+    private auxiliarFunctions auxiliar;
+
+    //Declaració de JavaSwing
     private JPanel menuPrincipal;
     private JTabbedPane gestionUsuarios;
     private JTabbedPane tabbedPane1;
     private JTabbedPane tabbedPane2;
     private JTabbedPane tabbedPane3;
-    private JComboBox comboBox2;
-    private JTextField textField1;
-    private JTextField textField2;
-    private JSpinner spinner1;
-    private JSpinner spinner2;
-    private JSpinner spinner3;
-    private JSpinner spinner4;
-    private JSpinner spinner5;
-    private JComboBox comboBox1;
+    private JComboBox JComboBoxRutaVueloAltaVuelo;
+    private JTextField nombreAltaVuelo;
+    private JSpinner JSpinnerTuristasAltaVuelo;
+    private JSpinner JSpinnerEjecutivosAltaVuelo;
+    private JSpinner JSpinnerDiaAltaVuelo;
+    private JSpinner JSpinnerAñoAltaVuelo;
+    private JSpinner JSpinnerMesAltaVuelo;
+    private JComboBox JComboBoxAerolineaAltaVuelo;
     private JPanel formVuelo;
     private JPanel fechaField;
     private JButton crearVueloButton;
     private JPanel vueloPanel;
-    private JComboBox comboBox3;
+    private JComboBox JComboBoxAerolineaConsultaVuelo;
     private JComboBox comboBox4;
     private JComboBox comboBox5;
     private JButton consultarVueloButton;
     private JTextField textField3;
     private JComboBox comboBox6;
-    private JTextField textField5;
+    private JTextField descripcionAltaPaquete;
     private JTextField textField6;
     private JTextField textField7;
     private JButton CANCELARButton;
@@ -48,35 +54,29 @@ public class Main extends JFrame {
     private JTextField paisAltaCiudad;
     private JTextField aeropuertoAltaCiudad;
     private JTextField descripcionAltaCiudad;
-    private JSpinner diaAltaciudad;
-    private JSpinner mesAltaCiudad;
-    private JSpinner añoAltaCiudad;
     private JPanel JPanelRegistrarCliente;
     private JPanel JPanelRegistrarAerolinea;
-    private JTextField nickname;
-    private JTextField nombre;
-    private JTextField correoElectronico;
-    private JTextField Apellido;
-    private JTextField nacionalidad;
-    private JComboBox tipoDocumento;
-    private JTextField documento;
+    private JTextField nicknameRegistrarCliente;
+    private JTextField nombreRegistrarCliente;
+    private JTextField correoElectronicoRegistrarCliente;
+    private JTextField apellidoRegistrarCliente;
+    private JTextField nacionalidadRegistrarCliente;
+    private JComboBox tipoDocumentoRegistrarCliente;
+    private JTextField documentoRegistrarCliente;
     private JButton confirmarAltaCliente;
     private JButton cancelarAltaCliente;
-    private JTextField nicknameAerolinea;
-    private JTextField nombreAerolinea;
-    private JTextField correoAerolinea;
-    private JTextField sitioWebAerolinea;
-    private JTextField descripcion;
+    private JTextField nicknameRegistrarAerolinea;
+    private JTextField nombreRegistrarAerolinea;
+    private JTextField correoRegistrarAerolinea;
+    private JTextField sitioWebRegistrarAerolinea;
+    private JTextField descripcionRegistrarAerolinea;
     private JButton cancelarAltaAerolinea;
     private JButton confirmarAltaAerolinea;
     private JTabbedPane tabbedPane4;
-    //private JTextField textField3;
-    //private JComboBox comboBox6;
-    private JComboBox comboBox7;
-    private JSpinner spinner6;
-    private JSpinner spinner7;
-    private JSpinner spinner8;
-    private JComboBox comboBox8;
+    private JComboBox JComboBoxCiudadDestino;
+    private JSpinner SpinnerCostoTurista;
+    private JSpinner SpínnerCostoEjecutivo;
+    private JSpinner SpinnerCostoEquipaje;
     private JComboBox userType;
     private JPanel reservaPanel;
     private JComboBox aerolineaReserva;
@@ -88,121 +88,137 @@ public class Main extends JFrame {
     private JSpinner pasajesReserva;
     private JSpinner equipajeExtraReserva;
     private JButton hacerReservaButton;
-    private JSpinner spinner9;
-    private JSpinner spinner10;
-    private JTextField textField4;
-    private JComboBox comboBox9;
+    private JSpinner JSpinnerPeriodoAltaPaquete;
+    private JSpinner JSpinnerDescuentoAltaPaquete;
+    private JTextField nombreAltaPaquete;
+    private JComboBox JComboBoxPaqueteComprarPaquete;
     private JComboBox comboBox10;
     private JButton CONFIRMARButton1;
     private JButton CANCELARButton1;
-    //private JComboBox comboBox9;
-    private ISistema s;
+    private JPanel JPanelModificarAerolinea;
+    private JButton JButtonModificarAerolinea;
+    private JTextField nicknameModificarAerolinea;
+    private JPanel JPanelModificarCliente;
+    private JTextField nicknameModificarCliente;
+    private JComboBox JComboBoxSeleccionarUsuarioModificar;
+    private JTextField nombreClienteModificar;
+    private JTextField correoClienteModificar;
+    private JTextField apellidoClienteModificar;
+    private JSpinner fechaDiaClienteModificar;
+    private JSpinner fechaMesClienteModificar;
+    private JSpinner fechaAnioClienteModificar;
+    private JTextField nacionalidadClienteModificar;
+    private JComboBox tipoDocumentoClienteModificar;
+    private JComboBox JComboBoxSeleccionarUsuarioConsultar;
+    private JSpinner JSpinnerDuracionAltaVuelo;
+    private JTextField nombreAltaCategoría;
+    private JButton confirmarAltaCategoria;
+    private JSpinner fechaDiaRegistrarCliente;
+    private JSpinner fechaMesRegistrarCliente;
+    private JSpinner fechaAnioRegistrarCliente;
+    private JButton crearRutaDeVuelo;
+    private JComboBox JComboBox;
+    private JTextField nombreAltaRutaDeVuelo;
+    private JTextField descripcionAltaRutaDeVuelo;
+    private JComboBox JComboBoxCiudadOrigen;
+    private JSpinner SpinnerMinutoAltaRutaDeVuelo;
+    private JSpinner SpinnerHoraAltaRutaDeVuelo;
+    private JComboBox JComboBoxAerolineaAltaRutaVuelo;
+    private JComboBox JComboBoxPaqueteConsultaPaqueteRutaVuelo;
+    private JButton JButtonConsultarPaquete;
+    private JPanel JPanelCategorias;
+    private JSpinner JSpinnerCostoAltaPaquete;
 
 
     public Main() {
 
+        //Inicializar Sistema
+        s = Factory.getSistema();
+
+        //Inicializar Auxiliar
+        this.auxiliar = new auxiliarFunctions(s);
+
+        //Settear JFrame principal
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(800, 600);
-        setVisible(true);
         setResizable(false);
         setLocationRelativeTo(null);
         setTitle("Admin Dashboard");
         add(menuPrincipal);
+        setVisible(true);
 
-        //Settear visibles false
+        //Settear swing elements visibles false
         JPanelRegistrarAerolinea.setVisible(false);
-
-        // Limitar Spinners
-        diaAltaciudad.setModel(new SpinnerNumberModel(1, 1, 31, 1));
-        mesAltaCiudad.setModel(new SpinnerNumberModel(1, 1, 12, 1));
-        añoAltaCiudad.setModel(new SpinnerNumberModel(2025, 1900, 2100, 1));
-        // Que no se puedan editar
-        ((JSpinner.DefaultEditor) diaAltaciudad.getEditor()).getTextField().setEditable(false);
-        ((JSpinner.DefaultEditor) mesAltaCiudad.getEditor()).getTextField().setEditable(false);
-        ((JSpinner.DefaultEditor) añoAltaCiudad.getEditor()).getTextField().setEditable(false);
-
-        s = Factory.getSistema();
+        JPanelModificarAerolinea.setVisible(false);
+        JPanelModificarCliente.setVisible(false);
 
 
-        DtCategoria cat1 = new DtCategoria("Running");
-        DtCategoria cat2 = new DtCategoria("Salto Montaña");
-        DtCategoria cat3 = new DtCategoria("Tirolesa");
+        //Settear swing elements isEditable false
+        nicknameModificarAerolinea.setEditable(false);
+        nicknameModificarCliente.setEditable(false);
 
-        DtFecha fecha1 = new DtFecha(18,8,2025);
-        DtFecha fecha2 = new DtFecha(19,8,2025);
-        DtHora hora1 = new DtHora(10, 30);
+        //Settear modelos JComboBox
+        JComboBoxSeleccionarUsuarioModificar.setModel(auxiliar.getComboUserModel());
+        JComboBoxSeleccionarUsuarioConsultar.setModel(auxiliar.getComboUserModel());
+        JComboBoxAerolineaAltaVuelo.setModel(auxiliar.getComboAerolineaModel());
+        JComboBoxRutaVueloAltaVuelo.setModel(auxiliar.getComboRutaDeVueloModel());
+        JComboBoxCiudadOrigen.setModel(auxiliar.getComboCiudadOrigenModel());
+        JComboBoxCiudadDestino.setModel(auxiliar.getComboCiudadDestinoModel());
+        JComboBoxAerolineaAltaRutaVuelo.setModel(auxiliar.getComboAerolineaModel());
+        JComboBoxPaqueteConsultaPaqueteRutaVuelo.setModel(auxiliar.getComboPaqueteModel());
+        JComboBoxPaqueteComprarPaquete.setModel(auxiliar.getComboPaqueteModel());
+        JComboBoxAerolineaConsultaVuelo.setModel(auxiliar.getComboAerolineaModel());
 
-        DtCiudad c1 = new DtCiudad("Montevideo","Uruguay","Aeropuerto de Carrasco","Mucha rambla","www.aeropuerto-carrasco.uy",fecha1);
-        DtCiudad c2 = new DtCiudad("Buenos Aires", "Argentina", "Aeropuerto Jorge Newbery", "Puerto Madero", "www.aeroparque.com.ar", fecha1);
-        DtCiudad c3 = new DtCiudad("Santiago", "Chile", "Aeropuerto Arturo Merino Benítez", "Cerro San Cristóbal", "www.aeropuertosantiago.cl", fecha1);
+        JPanelCategorias.setLayout(new GridLayout(0, 2, 5, 5));
 
-        /*
-        DtVuelo vuelo1 = new DtVuelo("Vuelo1", fecha1, hora1, 45, 15, fecha2);
-        DtVuelo vuelo2 = new DtVuelo("Vuelo2", fecha1, hora1, 60, 20, fecha2);
-        DtVuelo vuelo3 = new DtVuelo("Vuelo3", fecha1, hora1, 30, 10, fecha2);
-         */
-
-        s.altaCategoria(cat1);
-//        s.altaCategoria(cat1);
-        s.altaCategoria(cat2);
-        s.altaCategoria(cat3);
-
-        s.altaCiudad(c1);
-        s.altaCiudad(c2);
-        s.altaCiudad(c3);
-
-        DtHora hora = new DtHora(10,0);
-
-        RutaDeVuelo ruta1 = new RutaDeVuelo(new DtRuta("Vuelo A1", "Descripcion A1", hora, 100, 200, 20, fecha1,s.getCategorias(), s.getCiudades()));
-        RutaDeVuelo ruta2 = new RutaDeVuelo(new DtRuta("Vuelo A2", "Descripcion A2", hora, 120, 220, 25, fecha1, s.getCategorias(), s.getCiudades()));
-
-        List<RutaDeVuelo> rutasPaquete1 = new ArrayList<>();
-        rutasPaquete1.add(ruta1);
-        rutasPaquete1.add(ruta2);
-
-        RutaEnPaquete rep1 = new RutaEnPaquete(2, TipoAsiento.TURISTA, ruta1);
-        RutaEnPaquete rep2 = new RutaEnPaquete(1, TipoAsiento.EJECUTIVO, ruta2);
-
-        List<RutaEnPaquete> rutasEnPaquete1 = new ArrayList<>();
-        rutasEnPaquete1.add(rep1);
-        rutasEnPaquete1.add(rep2);
-
-        DtPaquete p1 = new DtPaquete("Paquete A", "Descripcion A", 10, 5, 100,rutasPaquete1,rutasEnPaquete1);
-        DtPaquete p2 = new DtPaquete("Paquete B", "Descripcion B", 15, 10, 150, rutasPaquete1, rutasEnPaquete1);
-        DtPaquete p3 = new DtPaquete("Paquete C", "Descripcion C", 7, 3, 80, rutasPaquete1, rutasEnPaquete1);
-
-        // TEMPORAL
-        s.altaPaquete(p1);
-        s.altaPaquete(p2);
-        s.altaPaquete(p3);
-        List<DtPaquete> paquetes = s.listarPaquetes();
-
-        for (int i = 0; i < paquetes.size(); i++) {
-            DtPaquete p = paquetes.get(i);
-            System.out.println(p.getNombre() + " " + p.getDescripcion() + " " + p.getValidezDias() + " " + p.getDescuento() + " " + p.getCosto());
+        // Es para mostrar las categorias en alta ruta vuelo
+        List<JCheckBox> checkboxes = new ArrayList<>();
+        for (Categoria c : s.getCategorias()) {
+            JCheckBox check = new JCheckBox(c.getNombre());
+            JPanelCategorias.add(check);
+            checkboxes.add(check);
         }
 
-        DtCliente cliente1 = new DtCliente("gonzalo95", "Gonzalo", "maria88@hotmail.com", "Larrica", fecha1, "Uruguay", TipoDocumento.CEDULA, 51234567);
-        DtCliente cliente2 = new DtCliente("gonzalo945", "María", "maria88@hotmail.com", "Fernández", fecha2, "Argentina", TipoDocumento.PASAPORTE, 98765432);
-        DtCliente cliente3 = new DtCliente("juan2000", "Juan", "juan2000@yahoo.com", "Pérez", fecha2, "Chile", TipoDocumento.CEDULA_EXTRANJERA, 45678901);
+        //Settear no selección JComboBox
+        JComboBoxSeleccionarUsuarioModificar.setSelectedIndex(-1);
+        JComboBoxAerolineaAltaVuelo.setSelectedIndex(-1);
+        JComboBoxRutaVueloAltaVuelo.setSelectedIndex(-1);
 
-        s.registrarCliente(cliente1);
-        s.registrarCliente(cliente3);
-        s.registrarCliente(cliente2);
 
-         /*Consulta de vuelos esto no va funciona porque no estan las rutas de vuelo
-        s1.consultaVuelo(vuelo1);
-        s1.consultaVuelo(vuelo2);
-        s1.consultaVuelo(vuelo3);
-        */
+        // Configurar JSpinner
+        JSpinnerDiaAltaVuelo.setModel(new SpinnerNumberModel(1, 1, 31, 1));
+        JSpinnerMesAltaVuelo.setModel(new SpinnerNumberModel(1, 1, 12, 1));
+        JSpinnerAñoAltaVuelo.setModel(new SpinnerNumberModel(2025, 2025, 2030, 1));
+        JSpinnerDuracionAltaVuelo.setModel(new SpinnerNumberModel(1, 1, 12, 1));
+        JSpinnerEjecutivosAltaVuelo.setModel(new SpinnerNumberModel(1, 1, 100, 1));
+        JSpinnerTuristasAltaVuelo.setModel(new SpinnerNumberModel(1, 1, 100, 1));
+        SpinnerCostoTurista.setModel(new SpinnerNumberModel(1,1,1000000,1));
+        SpínnerCostoEjecutivo.setModel(new SpinnerNumberModel(1,1,1000000,1));
+        SpinnerCostoEquipaje.setModel(new SpinnerNumberModel(1,1,1000000,1));
+        SpinnerHoraAltaRutaDeVuelo.setModel(new SpinnerNumberModel(0,0,200,1));
+        SpinnerMinutoAltaRutaDeVuelo.setModel(new SpinnerNumberModel(0,0,59,1));
+        JSpinnerDescuentoAltaPaquete.setModel(new SpinnerNumberModel(0,0,100,1));
+        JSpinnerPeriodoAltaPaquete.setModel(new SpinnerNumberModel(1,1,1000000,1));
+        JSpinnerCostoAltaPaquete.setModel(new SpinnerNumberModel(1.0,1.0,1000000.0,1.0));
+
+        //¡Cargar datitos!
+        auxiliar.cargarUsuariosComboBox();
+        auxiliar.cargarAerolineasComboBox();
+        auxiliar.cargarRutasDeVueloComboBox();
+        auxiliar.cargarCiudadesComboBox();
+        auxiliar.cargarPaqueteComboBox();
 
         consultarVueloButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                DtFecha fechaPrueba = new DtFecha(3,12,2025);
-                DtHora horaPrueba = new DtHora(10, 30);
-                DtFecha fechaAltaPrueba = new DtFecha(18,8,2025);
-                DtVuelo dataVuelo = new DtVuelo("A1", fechaPrueba, horaPrueba, 160, 40, fechaAltaPrueba);
+                // USAR DATOS VERDADEROS
+                LocalDate fechaPrueba = LocalDate.of(2025,12,3);
+                LocalTime horaPrueba = LocalTime.of(10, 30);
+                LocalDate fechaAltaPrueba = LocalDate.of(2025,8,18);
+                LocalTime hora = LocalTime.of(10,0);
+                LocalDate fecha1 = LocalDate.of(2025,8,18);
+                RutaDeVuelo ruta1 = new RutaDeVuelo(new DtRuta("Vuelo A1", "Descripcion A1", hora, 100, 200, 20, fecha1,s.getCategorias(),s.getCiudades().get(0),s.getCiudades().get(1)));
+                DtVuelo dataVuelo = new DtVuelo("A1", fechaPrueba, horaPrueba, 160, 40, fechaAltaPrueba, ruta1);
 
                 JFrame vuelo = new dataVuelo(dataVuelo);
                 setEnabled(false);
@@ -220,15 +236,12 @@ public class Main extends JFrame {
         btnConfirmarAltaCiudad.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String sitioWeb = webAltaCiudad.getText();
-                int dia = (Integer) diaAltaciudad.getValue();
-                int mes = (Integer) mesAltaCiudad.getValue();
-                int año = (Integer) añoAltaCiudad.getValue();
-                if(nombreAltaCiudad.getText().isEmpty() && paisAltaCiudad.getText().isEmpty() && aeropuertoAltaCiudad.getText().isEmpty() && descripcionAltaCiudad.getText().isEmpty() && dia != 0 && mes != 0 && año != 0){
-                    System.out.println("faltan argumentos");
-                }else{
-                    s.altaCiudad(new DtCiudad(nombreAltaCiudad.getText(), paisAltaCiudad.getText(),aeropuertoAltaCiudad.getText(),descripcionAltaCiudad.getText(),sitioWeb,new DtFecha(dia,mes,año)));
+                if(auxiliar.estanVaciosJTextField(nombreAltaCiudad, paisAltaCiudad, aeropuertoAltaCiudad, descripcionAltaCiudad)){
+                    new dialogMessage("Faltan argumentos");
+                    return;
                 }
+                s.altaCiudad(new DtCiudad(nombreAltaCiudad.getText(), paisAltaCiudad.getText(),aeropuertoAltaCiudad.getText(),descripcionAltaCiudad.getText(),webAltaCiudad.getText(),LocalDate.now()));
+
             }
         });
 
@@ -236,9 +249,8 @@ public class Main extends JFrame {
         hacerReservaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(auxiliarFunctions.estanVaciosJComboBox(aerolineaReserva, rutaDeVueloReserva, vueloReserva, clienteReserva, tipoAsientoReserva)){
-                    System.out.println("Faltan argumentos");
-                    JDialog err = new errorMessage("Faltan argumentos");
+                if(auxiliar.estanVaciosJComboBox(aerolineaReserva, rutaDeVueloReserva, vueloReserva, clienteReserva, tipoAsientoReserva)){
+                    new dialogMessage("Faltan argumentos");
                     return;
                 }
                 // Valores que maneja la reserva
@@ -251,7 +263,7 @@ public class Main extends JFrame {
                 int equipajeExtra = (Integer) equipajeExtraReserva.getValue();
 
                 if(pasajes <= 0){
-                    JDialog err = new errorMessage("Pasajes de reservas debe ser mayor a 0");
+                    new dialogMessage("Pasajes de reservas debe ser mayor a 0");
                     return;
                 }
 
@@ -287,7 +299,6 @@ public class Main extends JFrame {
                         JPanelRegistrarAerolinea.setVisible(true);
                         JPanelRegistrarCliente.setVisible(false);
                     }
-
                 }
             }
         });
@@ -299,53 +310,34 @@ public class Main extends JFrame {
                 try {
                     String tipoUsuario = userType.getSelectedItem().toString();
                     if (tipoUsuario.equals("Cliente")) {
-                        if (nickname.getText().isEmpty() || nombre.getText().isEmpty() ||
-                                correoElectronico.getText().isEmpty() || Apellido.getText().isEmpty() ||
-                                nacionalidad.getText().isEmpty() ||// tipoDocumento.getSelectedItem() == null ||
-                                documento.getText().isEmpty()) {
-
-                            errorMessage errorDialog = new errorMessage("Faltan argumentos");
+                        if (auxiliar.estanVaciosJTextField(nicknameRegistrarCliente, nombreRegistrarCliente, correoElectronicoRegistrarCliente, apellidoRegistrarCliente, nacionalidadRegistrarCliente, documentoRegistrarCliente) || auxiliar.estanVaciosJComboBox(tipoDocumentoRegistrarCliente)){
+                            new dialogMessage("Faltan argumentos");
                             return;
                         }
                         // Crear DtCliente
-                        DtFecha fecha1 = new DtFecha(18, 8, 2025);
-                        TipoDocumento documentoT = tipoDocumento.getSelectedItem().toString().equals("cedula") ?
+                        LocalDate fecha1 = LocalDate.of(2025, 8, 25);
+                        TipoDocumento documentoT = tipoDocumentoRegistrarCliente.getSelectedItem().toString().equals("Cedula") ?
                                 TipoDocumento.CEDULA : TipoDocumento.PASAPORTE;
 
                         DtCliente cliente = new DtCliente(
-                                nickname.getText(), nombre.getText(), correoElectronico.getText(),
-                                Apellido.getText(), fecha1, nacionalidad.getText(),
-                                documentoT, Integer.parseInt(documento.getText())
+                                nicknameRegistrarCliente.getText(), nombreRegistrarCliente.getText(), correoElectronicoRegistrarCliente.getText(),
+                                apellidoRegistrarCliente.getText(), fecha1, nacionalidadRegistrarCliente.getText(),
+                                documentoT, Integer.parseInt(documentoRegistrarCliente.getText())
                         );
-                        s.registrarCliente(cliente);
-                        System.out.println("Cliente registrado: " + nickname.getText());
-
-                    } else if (tipoUsuario.equals("Aerolinea")) {
-                        if (nickname.getText().isEmpty() || nombre.getText().isEmpty() ||
-                                correoElectronico.getText().isEmpty() || descripcion.getText().isEmpty() ||
-                                sitioWebAerolinea.getText().isEmpty()) {
-
-                            errorMessage errorDialog = new errorMessage("Faltan argumentos");
-                            return;
+                        try {
+                            s.registrarCliente(cliente);
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
+                            s.cancelarAltaUsuario();
+                            new dialogMessage(ex.getMessage());
                         }
-                        // Crear DtAerolinea
-                        DtAerolinea aerolinea = new DtAerolinea(
-                                nickname.getText(), nombre.getText(), correoElectronico.getText(),
-                                descripcion.getText(), sitioWebAerolinea.getText()
-                        );
-                        s.registrarAerolinea(aerolinea);
-                        System.out.println("Aerolínea registrada: " + nickname.getText());
+                        System.out.println("Cliente registrado: " + nicknameRegistrarCliente.getText());
+                        auxiliar.cargarUsuariosComboBox();
                     }
-                    // Actualizar ComboBox de consulta
-                    comboBox6.removeAllItems();
-                    java.util.List<DtUsuario> usuarios = s.listarUsuarios();
-                    for (DtUsuario usuario : usuarios) {
-                        comboBox6.addItem(usuario.getNickname());
-                    }
+
                 } catch (Exception ex) {
-                        errorMessage errorDialog = new errorMessage("Error al registrar: " + ex.getMessage());
-                        errorDialog.setVisible(true);
                         ex.printStackTrace();
+                        new dialogMessage(ex.getMessage());
                     }
                 }
             });
@@ -355,7 +347,7 @@ public class Main extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (comboBox6.getSelectedItem() == null) {
-                    errorMessage errorDialog = new errorMessage("Seleccione un usuario");
+                    dialogMessage errorDialog = new dialogMessage("Seleccione un usuario");
                     errorDialog.setVisible(true);
                     return;
                 }
@@ -365,7 +357,7 @@ public class Main extends JFrame {
                 DtUsuario dtUsuario = s.getUsuarioSeleccionado();
 
                 textField3.setText(dtUsuario.getNickname());
-                textField5.setText(dtUsuario.getNombre());
+                descripcionAltaPaquete.setText(dtUsuario.getNombre());
                 textField7.setText(dtUsuario.getEmail());
 
                 if (dtUsuario instanceof DtCliente) {
@@ -377,24 +369,244 @@ public class Main extends JFrame {
                 }
             }
         });
+        JComboBoxSeleccionarUsuarioModificar.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if(e.getStateChange() == ItemEvent.SELECTED){
+                    Usuario user = (Usuario)JComboBoxSeleccionarUsuarioModificar.getSelectedItem();
+                    if(user instanceof Cliente){ // Pregunta si mi usuario es un cliente
+                        Cliente cliente = (Cliente) user;
+                        LocalDate fechaCliente = cliente.getFechaNacimiento();
+                        JPanelModificarCliente.setVisible(true);
+                        JPanelModificarAerolinea.setVisible(false);
+                        nicknameModificarCliente.setText(cliente.getNickname());
+                        nombreClienteModificar.setText(cliente.getNombre());
+                        apellidoClienteModificar.setText(cliente.getApellido());
+                        correoClienteModificar.setText(cliente.getEmail());
+                        fechaDiaClienteModificar.setValue(fechaCliente.getDayOfMonth());
+                        fechaMesClienteModificar.setValue(fechaCliente.getMonthValue());
+                        fechaAnioClienteModificar.setValue(fechaCliente.getYear());
+                        nacionalidadClienteModificar.setText(cliente.getNacionalidad());
+                        //tipoDocumentoClienteModificar.setSelectedItem(cliente.getTipoDocumento()); <- Investigar este wey
+
+                    }else if(user instanceof Aerolinea){
+                        Aerolinea aerolinea = (Aerolinea) user;
+                        JPanelModificarCliente.setVisible(false);
+                        JPanelModificarAerolinea.setVisible(true);
+                    }else{
+                        JPanelModificarAerolinea.setVisible(false);
+                        JPanelModificarCliente.setVisible(false);
+                    }
+                }
+            }
+        });
+        crearVueloButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    if(auxiliar.estanVaciosJComboBox(JComboBoxAerolineaAltaVuelo,JComboBoxRutaVueloAltaVuelo) || auxiliar.estanVaciosJTextField(nombreAltaVuelo)){
+                        new dialogMessage("Faltan argumentos");
+                        return;
+                    }
+
+                    String aerolinea = JComboBoxAerolineaAltaVuelo.getSelectedItem().toString();
+                    String ruta = JComboBoxRutaVueloAltaVuelo.getSelectedItem().toString();
+                    String nombre = nombreAltaVuelo.getText();
+
+                    LocalDate fecha = LocalDate.of((Integer)JSpinnerAñoAltaVuelo.getValue(), (Integer)JSpinnerMesAltaVuelo.getValue(), (Integer)JSpinnerDiaAltaVuelo.getValue());
+                    LocalTime hora = LocalTime.of(10, 0);
+
+                    DtVuelo dtVuelo = new DtVuelo(nombre, fecha, hora, (Integer)JSpinnerTuristasAltaVuelo.getValue(), (Integer)JSpinnerEjecutivosAltaVuelo.getValue(), LocalDate.now(), null);
+
+                    s.seleccionarAerolineaParaVuelo(aerolinea);
+                    s.seleccionarRuta(ruta);
+                    s.ingresarDatosVuelo(dtVuelo);
+                    s.confirmarAltaVuelo();
+
+                    //pa verificar que se creo
+                    try {
+                        s.consultaVuelo(dtVuelo);
+                        new dialogMessage("Vuelo creado y verificado correctamente");
+                    } catch (IllegalArgumentException ex) {
+                        new dialogMessage("Error: el vuelo no se registró correctamente");
+                    }
+
+                    new dialogMessage("Vuelo creado correctamente");
+                    auxiliar.limpiarJTextField(nombreAltaVuelo);
+
+                } catch (Exception ex) {
+                    new dialogMessage(ex.getMessage());
+                }
+            }
+        });
+
+
+        confirmarAltaCategoria.addActionListener(e -> {
+            try{
+                if(auxiliar.estanVaciosJTextField(nombreAltaCategoría)){
+                    new dialogMessage("Ingrese un nombre de categoría");
+                    return;
+                }
+                s.altaCategoria(new DtCategoria(nombreAltaCategoría.getText()));
+                new dialogMessage("Categoria creada correctamente");
+                nombreAltaCategoría.setText("");
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                new dialogMessage(ex.getMessage());
+            }
+        });
+        confirmarAltaAerolinea.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    if(auxiliar.estanVaciosJComboBox(userType)){
+                        System.out.println("Ta vacio");
+                        return;
+                    }
+                    String tipoUsuario = userType.getSelectedItem().toString();
+                    if (tipoUsuario.equals("Aerolinea")) {
+                        if (auxiliar.estanVaciosJTextField(nombreRegistrarAerolinea)) {
+
+                            new dialogMessage("Faltan argumentos");
+                            return;
+                        }
+                        // Crear DtAerolinea
+                        DtAerolinea aerolinea = new DtAerolinea(
+                                nicknameRegistrarAerolinea.getText(), nombreRegistrarAerolinea.getText(), correoRegistrarAerolinea.getText(),
+                                descripcionRegistrarAerolinea.getText(), sitioWebRegistrarAerolinea.getText()
+                        );
+                        try{
+                            s.registrarAerolinea(aerolinea);
+                        }catch (Exception ex){
+                            ex.printStackTrace();
+                            s.cancelarAltaUsuario();
+                            new dialogMessage(ex.getMessage());
+                        }
+                        System.out.println("Aerolínea registrada: " + nicknameRegistrarCliente.getText());
+                    }
+                    auxiliar.cargarUsuariosComboBox();
+            }catch (Exception ex) {
+                    ex.printStackTrace();
+                    new dialogMessage(ex.getMessage());
+                }
+            }
+        });
+        cancelarAltaCliente.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                //new dialogMessage(ex.getMessage());
+            }
+        });
+        crearRutaDeVuelo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    if (auxiliar.estanVaciosJTextField(nombreAltaRutaDeVuelo, descripcionAltaRutaDeVuelo) || auxiliar.estanVaciosJComboBox(JComboBoxAerolineaAltaRutaVuelo, JComboBoxCiudadOrigen, JComboBoxCiudadDestino)) {
+                        new dialogMessage("Faltan argumentos");
+                        return;
+                    }
+
+                    if (JComboBoxCiudadOrigen.getSelectedItem().toString().equals(JComboBoxCiudadDestino.getSelectedItem().toString())) {
+                        new dialogMessage("La ciudad de origen no puede ser igual a la ciudad de destino");
+                        return;
+                    }
+
+                    Integer hora = (Integer) SpinnerHoraAltaRutaDeVuelo.getValue();
+                    Integer minuto = (Integer) SpinnerMinutoAltaRutaDeVuelo.getValue();
+
+                    if (hora == 0 && minuto == 0) {
+                        new dialogMessage("La ruta de vuelo no puede durar 0 horas y 0 minutos");
+                        return;
+                    }
+
+                    LocalTime horaRuta = LocalTime.of(hora, minuto);
+                    Integer costoTurista = (Integer) SpinnerCostoTurista.getValue();
+                    Integer costoEjecutivo = (Integer) SpínnerCostoEjecutivo.getValue();
+                    Integer costoEquipaje = (Integer) SpinnerCostoEquipaje.getValue();
+                    List<String> nombresCategorias = new ArrayList<String>();
+                    List<Categoria> categorias = s.getCategorias();
+
+                    for (int i = 0; i < categorias.size(); i++) {
+                        if (checkboxes.get(i).isSelected()) {
+                            nombresCategorias.add(categorias.get(i).getNombre());
+                        }
+                    }
+
+                    try {
+                        s.altaRutaDeVuelo(JComboBoxAerolineaAltaRutaVuelo.getSelectedItem().toString(), new DtRuta(nombreAltaRutaDeVuelo.getText(), descripcionAltaRutaDeVuelo.getText(), horaRuta, costoTurista, costoEjecutivo, costoEquipaje, LocalDate.now(), s.getCategoriasPorNombre(nombresCategorias), s.buscarCiudad(JComboBoxCiudadOrigen.getSelectedItem().toString()), s.buscarCiudad(JComboBoxCiudadDestino.getSelectedItem().toString())));
+                    }catch (Exception ex){
+                        new dialogMessage(ex.getMessage());
+                    }
+                    new dialogMessage("Ruta de vuelo creada correctamente.");
+                    auxiliar.limpiarJTextField(nombreAltaRutaDeVuelo, descripcionAltaRutaDeVuelo);
+                    for (int i = 0; i < categorias.size(); i++) {
+                        if (checkboxes.get(i).isSelected()) {
+                            checkboxes.get(i).setSelected(false);
+                        }
+                    }
+
+                } catch (Exception ex) {
+                    new dialogMessage(ex.getMessage());
+                }
+            }
+        });
+        JButtonConsultarPaquete.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (auxiliar.estanVaciosJComboBox(JComboBoxPaqueteConsultaPaqueteRutaVuelo)) {
+                    new dialogMessage("Falta ingresar algún dato.");
+                    return;
+                }
+                    try{
+                        s.seleccionarPaquete(JComboBoxPaqueteConsultaPaqueteRutaVuelo.getSelectedItem().toString());
+                        JFrame paquete = new dataPaquete(s.getPaquete());
+                        setEnabled(false);
+
+                        paquete.addWindowListener(new WindowAdapter() {
+                            @Override
+                            public void windowClosing(WindowEvent e){
+                                setEnabled(true);
+                            };
+                        });
+                    } catch (Exception ex){
+                        new dialogMessage(ex.getMessage());
+                    }
+            }
+        });
+        CONFIRMARButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(auxiliar.estanVaciosJTextField(nombreAltaPaquete,descripcionAltaPaquete)){
+                    new dialogMessage("Falta ingresar campos de texto");
+                    return;
+                }
+                try {
+                    Integer periodo = (Integer) JSpinnerPeriodoAltaPaquete.getValue();
+                    Integer descuento = (Integer) JSpinnerDescuentoAltaPaquete.getValue();
+                    float costo = ((Double) JSpinnerCostoAltaPaquete.getValue()).floatValue();
+
+                    if(periodo < 1){
+                        new dialogMessage("El período debe ser 1 o más.");
+                        return;
+                    }
+
+                    if(costo < 1){
+                        new dialogMessage("El costo debe ser 1 o más.");
+                        return;
+                    }
+
+                    s.altaPaquete(new DtPaquete(nombreAltaPaquete.getText(),descripcionAltaPaquete.getText(),periodo,descuento,costo, new ArrayList<>()));
+                } catch (Exception ex){
+                    new dialogMessage(ex.getMessage());
+                }
+            }
+        });
     }
+
+
 
     public static void main(String[] args) {
         new Main();
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("MiUnidadPersistencia");
-        EntityManager em = emf.createEntityManager();
-
-        em.getTransaction().begin();
-        Query q = em.createNativeQuery("SELECT 1");
-        Object result = q.getSingleResult();
-        System.out.println("Conexión OK, resultado: " + result);
-        em.getTransaction().commit();
-
-        em.close();
-        emf.close();
-    }
-
-    private void createUIComponents() {
-        // TODO: place custom component creation code here
     }
 }

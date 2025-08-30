@@ -1,22 +1,38 @@
 package com.app.clases;
 
-import com.app.datatypes.DtFecha;
-import com.app.datatypes.DtHora;
 import com.app.datatypes.DtVuelo;
+import jakarta.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
-import java.util.List;
-
+@Entity
+//@Table(name="vuelo")
 public class Vuelo {
+    @Id
+    @Column(nullable = false, length = 50)
     private String nombre;
-    private DtFecha fecha;
-    private DtHora duracion;
+
+    @Column(nullable = false)
+    private LocalDate fecha;
+
+    @Column(nullable = false)
+    private LocalTime duracion;
+
+    @Column(nullable = false)
     private int maxTuristas;
+
+    @Column(nullable = false)
     private int maxEjecutivos;
-    private DtFecha fechaAlta;
-    private List<RutaDeVuelo> rutasDeVuelo;
+
+    @Column(nullable = false)
+    private LocalDate fechaAlta;
+
+    @ManyToOne(optional = false)
+    private RutaDeVuelo rutaDeVuelo;
 
     public DtVuelo getDatos() {return null;}
 
+    public Vuelo() {}
     public Vuelo(DtVuelo vuelo) {
         this.nombre = vuelo.getNombre();
         this.fecha = vuelo.getFecha();
@@ -24,7 +40,7 @@ public class Vuelo {
         this.maxTuristas = vuelo.getMaxTuristas();
         this.maxEjecutivos = vuelo.getMaxEjecutivos();
         this.fechaAlta = vuelo.getFechaAlta();
-        this.rutasDeVuelo = getRutasDeVuelo();
+        this.rutaDeVuelo = vuelo.getRutaDeVuelo();
     }
 
     public String getNombre() {
@@ -35,19 +51,19 @@ public class Vuelo {
         this.nombre = nombre;
     }
 
-    public DtFecha getFecha() {
+    public LocalDate getFecha() {
         return fecha;
     }
 
-    public void setFecha(DtFecha fecha) {
+    public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
     }
 
-    public DtHora getDuracion() {
+    public LocalTime getDuracion() {
         return duracion;
     }
 
-    public void setDuracion(DtHora duracion) {
+    public void setDuracion(LocalTime duracion) {
         this.duracion = duracion;
     }
 
@@ -67,19 +83,19 @@ public class Vuelo {
         this.maxEjecutivos = maxEjecutivos;
     }
 
-    public DtFecha getFechaAlta() {
+    public LocalDate getFechaAlta() {
         return fechaAlta;
     }
 
-    public void setFechaAlta(DtFecha fechaAlta) {
+    public void setFechaAlta(LocalDate fechaAlta) {
         this.fechaAlta = fechaAlta;
     }
 
-    public List<RutaDeVuelo> getRutasDeVuelo() {
-        return rutasDeVuelo;
+    public RutaDeVuelo getRutaDeVuelo() {
+        return rutaDeVuelo;
     }
 
-    public void setRutasDeVuelo(List<RutaDeVuelo> rutasDeVuelo) {
-        this.rutasDeVuelo = rutasDeVuelo;
+    public void setRutaDeVuelo(RutaDeVuelo rutaDeVuelo) {
+        this.rutaDeVuelo = rutaDeVuelo;
     }
 }

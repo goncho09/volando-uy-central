@@ -2,29 +2,39 @@ package com.app.clases;
 
 import com.app.datatypes.*;
 import com.app.enums.*;
+import jakarta.persistence.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import java.util.List;
 
+@Entity
+@DiscriminatorValue("Cliente") // Cuando se haga la tabla de usuarios, éste en particular será "userType" Cliente
 public class Cliente extends Usuario{
     private String apellido;
-    private DtFecha fechaNacimiento;
+    private LocalDate fechaNacimiento;
     private String nacionalidad;
     private TipoDocumento tipoDocumento;
     private int numeroDocumento;
-    private List<CompraPaquete> comprasPaquetes;
+
+    @OneToMany(mappedBy = "cliente") // 1 - N (un cliente tiene muchas "compras"
+    private List<CompraPaquete> comprasPaquetes = new ArrayList<>();
+
+    @OneToMany(mappedBy = "cliente") // 1 - N (un cliente tiene muchas "reservas"
     private List<Reserva> reservas = new ArrayList<>();
 
-
+    public Cliente(){}
     public Cliente(DtCliente cliente) {
         super(new DtUsuario(cliente.getNickname(), cliente.getNombre(), cliente.getEmail()));
-        this.apellido = apellido;
-        this.fechaNacimiento = fechaNacimiento;
-        this.nacionalidad = nacionalidad;
-        this.tipoDocumento = tipoDocumento;
-        this.numeroDocumento = numeroDocumento;
-        this.comprasPaquetes = comprasPaquetes;
+        this.apellido = cliente.getApellido();
+        this.fechaNacimiento = cliente.getFechaNacimiento();
+        this.nacionalidad = cliente.getNacionalidad();
+        this.tipoDocumento = cliente.getTipoDocumento();
+        this.numeroDocumento = cliente.getNumeroDocumento();
+        this.comprasPaquetes = new ArrayList<>();
+        this.reservas = new ArrayList<>();
+        //System.out.println("Creando datatype: " + nickname + " - " + nombre + " - " + email + " - " + apellido + " - " + fechaNacimiento + " - " + nacionalidad + " - " + tipoDocumento + " - " + numeroDocumento);
     }
 
     public String getApellido() {
@@ -35,11 +45,11 @@ public class Cliente extends Usuario{
         this.apellido = apellido;
     }
 
-    public DtFecha getFechaNacimiento() {
+    public LocalDate getFechaNacimiento() {
         return fechaNacimiento;
     }
 
-    public void setFechaNacimiento(DtFecha fechaNacimiento) {
+    public void setFechaNacimiento(LocalDate fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
 
@@ -103,11 +113,18 @@ public class Cliente extends Usuario{
                         paquete.getDescripcion(),
                         paquete.getValidezDias(),
                         paquete.getDescuento(),
-                        paquete.getCosto()
+                        paquete.getCosto(),
+                        paquete.getRutaEnPaquete()
                 ));
             }
         }
         return dtPaquetes;
+    }
+
+    public void mostrarDatos() {
+        System.out.println("Datos Usuario: " +
+                nickname + " - " + nombre + " - " + apellido + " - " +
+                email + " - " + fechaNacimiento + " - " + nacionalidad);
     }
 }
 

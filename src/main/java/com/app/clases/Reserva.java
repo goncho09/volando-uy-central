@@ -1,23 +1,53 @@
 package com.app.clases;
 
-import com.app.datatypes.DtFecha;
 import com.app.datatypes.DtPasajero;
 import com.app.datatypes.DtReserva;
 import com.app.enums.TipoAsiento;
+import jakarta.persistence.*;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
+@Entity
+//@Table(name="reserva")
 public class Reserva {
-    private DtFecha fecha;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+
+    private LocalDate fecha;
     private TipoAsiento tipoAsiento;
     private int cantPasajes;
     private int equipajeExtra;
     private float costo;
-    private List<DtPasajero> pasajeros;
+
+    @OneToMany // Una reserva "puede" tener 1 o más pasajeros (1-N)
+    @JoinColumn(name="reserva_id", nullable = false) // nullable = false indica que debe existir obligatoriamente 1 pasaje.
+    private List<DtPasajero> pasajeros = new ArrayList<>();
+
+    @ManyToOne(optional = false) // Muchas reserva es contenida por un cliente, el optional indica que debe existir un cliente sí o sí
+    @JoinColumn(name="cliente_nickName")
     private Cliente cliente;
-    private Vuelo vuelo;
+
+    @ManyToOne(optional = true) // Muchas reservas pueden tener 1 único vuelo asociado (N-1)
+    @JoinColumn(name = "paquete_id")
     private Paquete paquete;
 
+    // Relación opcional con Vuelo
+    @ManyToOne(optional = true) // (N-1)
+    @JoinColumn(name = "vuelo_id")
+    private Vuelo vuelo;
+
+    @PrePersist
+    @PreUpdate
+    private void validarXor() { // Valida que la reserva tenga un vuelo ó una reserva, no ambas.
+        if ((paquete == null && vuelo == null) || (paquete != null && vuelo != null)) {
+            throw new IllegalStateException("Reserva debe tener exactamente un Paquete o un Vuelo");
+        }
+    }
+
+    public Reserva() {}
     public Reserva(DtReserva reserva) {
         this.fecha = reserva.getFecha();
         this.tipoAsiento = reserva.getTipoAsiento();
@@ -30,11 +60,11 @@ public class Reserva {
         this.paquete = reserva.getPaquete();
     }
 
-    public DtFecha getFecha() {
+    public LocalDate getFecha() {
         return fecha;
     }
 
-    public void setFecha(DtFecha fecha) {
+    public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
     }
 
