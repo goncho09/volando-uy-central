@@ -113,4 +113,7 @@ public class DtRuta {
     public void setCiudadOrigen(Ciudad ciudadOrigen) {
         this.ciudadOrigen = ciudadOrigen;
     }
+
+    @Override
+    public String toString() { return this.nombre; }
 }

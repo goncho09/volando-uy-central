@@ -35,4 +35,8 @@ public class DtUsuario {
     public void setEmail(String email) {
         this.email = email;
     }
+
+
+    @Override
+    public String toString() { return this.nickname; }
 }

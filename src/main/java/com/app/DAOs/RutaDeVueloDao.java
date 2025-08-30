@@ -1,6 +1,5 @@
 package com.app.DAOs;
 
-import com.app.clases.Aerolinea;
 import com.app.clases.Categoria;
 import com.app.clases.Ciudad;
 import com.app.clases.RutaDeVuelo;
@@ -8,6 +7,8 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class RutaDeVueloDao {
     private EntityManager em;
@@ -18,6 +19,13 @@ public class RutaDeVueloDao {
 
     public List<RutaDeVuelo> listarRutasDeVuelo(){
         return em.createQuery("SELECT rt FROM RutaDeVuelo rt", RutaDeVuelo.class).getResultList();
+    }
+
+    public Map<String, RutaDeVuelo> obtenerRutasDeVuelo() {
+        return em.createQuery("SELECT r FROM RutaDeVuelo r", RutaDeVuelo.class)
+                .getResultList()
+                .stream()
+                .collect(Collectors.toMap(RutaDeVuelo::getNombre, r -> r));
     }
 
     public RutaDeVuelo buscar(String nombre){

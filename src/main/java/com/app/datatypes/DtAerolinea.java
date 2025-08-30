@@ -56,4 +56,5 @@ public class DtAerolinea extends DtUsuario {
     public void setRutasDeVuelo(List<RutaDeVuelo> rutasDeVuelo) {
         this.rutasDeVuelo = rutasDeVuelo;
     }
+
 }

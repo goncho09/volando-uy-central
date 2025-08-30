@@ -1,6 +1,5 @@
 package com.app;
 
-import com.app.DAOs.*;
 import com.app.clases.*;
 import com.app.datatypes.*;
 
@@ -15,7 +14,6 @@ public class auxiliarFunctions {
     private DefaultComboBoxModel<DtRuta> comboRutaDeVuelo = new DefaultComboBoxModel<>();
     private DefaultComboBoxModel<DtCiudad> comboCiudadOrigen = new DefaultComboBoxModel<>();
     private DefaultComboBoxModel<DtCiudad> comboCiudadDestino = new DefaultComboBoxModel<>();
-    private DefaultComboBoxModel<DtCategoria> comboCategoria = new DefaultComboBoxModel<>();
     private DefaultComboBoxModel<DtPaquete> comboPaquete = new DefaultComboBoxModel<>();
 
     public auxiliarFunctions(ISistema s) {
@@ -41,10 +39,6 @@ public class auxiliarFunctions {
 
     public DefaultComboBoxModel<DtCiudad> getComboCiudadDestinoModel() {
         return comboCiudadDestino;
-    }
-
-    public DefaultComboBoxModel<DtCategoria> getComboCategoriaModel() {
-        return comboCategoria;
     }
 
     public DefaultComboBoxModel<DtPaquete> getComboPaqueteModel() {
@@ -95,18 +89,19 @@ public class auxiliarFunctions {
 
     public void cargarAerolineasComboBox() {
         comboAerolinea.removeAllElements();
-        try {
             List<DtAerolinea> aerolineas = sistema.listarAerolineas();
-            for (DtAerolinea a : aerolineas) {
-                comboAerolinea.addElement(a);
+            if(aerolineas != null){
+                for (DtAerolinea a : aerolineas) {
+                    comboAerolinea.addElement(a);
+                }
             }
-        } catch (Exception e) {
-            comboAerolinea.removeAllElements();
-            comboAerolinea.addElement(new DtAerolinea() {
+            else {
+                comboAerolinea.removeAllElements();
+                comboAerolinea.addElement(new DtAerolinea() {
                 @Override
                 public String toString() { return "N/A"; }
             });
-        }
+            }
     }
 
     public void cargarRutasDeVueloComboBox() {
@@ -153,12 +148,13 @@ public class auxiliarFunctions {
 
     public void cargarPaqueteComboBox() {
         comboPaquete.removeAllElements();
-        try {
-            List<DtPaquete> p = sistema.listarPaquetes();
-            for (DtPaquete paquete : p) {
-                comboPaquete.addElement(paquete);
+        List<DtPaquete> p = sistema.listarPaquetes();
+        if(p != null) {
+            for (DtPaquete pqt : p) {
+                System.out.println(pqt.getNombre());
+                comboPaquete.addElement(pqt);
             }
-        } catch (Exception e) {
+        }else{
             comboPaquete.removeAllElements();
             comboPaquete.addElement(new DtPaquete() {
                 @Override
@@ -166,7 +162,4 @@ public class auxiliarFunctions {
             });
         }
     }
-
-
-
 }

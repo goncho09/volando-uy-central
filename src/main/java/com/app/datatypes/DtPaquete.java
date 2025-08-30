@@ -15,6 +15,8 @@ public class DtPaquete {
     private float costo;
     private List<RutaEnPaquete> rutaEnPaquete;
 
+    public  DtPaquete(){};
+
     public DtPaquete(String nombre, String descripcion, int validezDias, float descuento, float costo, List<RutaEnPaquete> rutaEnPaquete) {
         this.nombre = nombre;
         this.descripcion = descripcion;
@@ -73,4 +75,7 @@ public class DtPaquete {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
+
+    @Override
+    public String toString() { return this.nombre; }
 }
