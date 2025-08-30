@@ -1,60 +1,47 @@
 package com.app;
 
-import com.app.DAOs.*;
 import com.app.clases.*;
+import com.app.datatypes.*;
 
 import javax.swing.*;
 import java.util.List;
 
 public class auxiliarFunctions {
 
-    private DefaultComboBoxModel<Usuario> comboUser = new DefaultComboBoxModel<>();
-    private DefaultComboBoxModel<Aerolinea> comboAerolinea = new DefaultComboBoxModel<>();
-    private DefaultComboBoxModel<RutaDeVuelo> comboRutaDeVuelo = new DefaultComboBoxModel<>();
-    private DefaultComboBoxModel<Ciudad> comboCiudadOrigen = new DefaultComboBoxModel<>();
-    private DefaultComboBoxModel<Ciudad> comboCiudadDestino = new DefaultComboBoxModel<>();
-    private DefaultComboBoxModel<Categoria> comboCategoria = new DefaultComboBoxModel<>();
-    private DefaultComboBoxModel<Paquete> comboPaquete = new DefaultComboBoxModel<>();
-    private UserDao userDao;
-    private RutaDeVueloDao rutaDeVueloDao;
-    private CiudadDao ciudadDao;
-    private CategoriaDao categoriaDao;
-    private PaqueteDao paqueteDao;
+    private ISistema sistema;
+    private DefaultComboBoxModel<DtUsuario> comboUser = new DefaultComboBoxModel<>();
+    private DefaultComboBoxModel<DtAerolinea> comboAerolinea = new DefaultComboBoxModel<>();
+    private DefaultComboBoxModel<DtRuta> comboRutaDeVuelo = new DefaultComboBoxModel<>();
+    private DefaultComboBoxModel<DtCiudad> comboCiudadOrigen = new DefaultComboBoxModel<>();
+    private DefaultComboBoxModel<DtCiudad> comboCiudadDestino = new DefaultComboBoxModel<>();
+    private DefaultComboBoxModel<DtPaquete> comboPaquete = new DefaultComboBoxModel<>();
 
-    public auxiliarFunctions(UserDao userDao, RutaDeVueloDao rutaDeVueloDao, CiudadDao ciudadDao, CategoriaDao categoriaDao, PaqueteDao paqueteDao) {
-        this.userDao = userDao;
-        this.rutaDeVueloDao = rutaDeVueloDao;
-        this.ciudadDao = ciudadDao;
-        this.categoriaDao = categoriaDao;
-        this.paqueteDao = paqueteDao;
+    public auxiliarFunctions(ISistema s) {
+        this.sistema = s;
     }
 
     //Getters de los modelos
-    public DefaultComboBoxModel<Usuario> getComboUserModel() {
+    public DefaultComboBoxModel<DtUsuario> getComboUserModel() {
         return comboUser;
     }
 
-    public DefaultComboBoxModel<Aerolinea> getComboAerolineaModel() {
+    public DefaultComboBoxModel<DtAerolinea> getComboAerolineaModel() {
         return comboAerolinea;
     }
 
-    public DefaultComboBoxModel<RutaDeVuelo> getComboRutaDeVueloModel() {
+    public DefaultComboBoxModel<DtRuta> getComboRutaDeVueloModel() {
         return comboRutaDeVuelo;
     }
 
-    public DefaultComboBoxModel<Ciudad> getComboCiudadOrigenModel() {
+    public DefaultComboBoxModel<DtCiudad> getComboCiudadOrigenModel() {
         return comboCiudadOrigen;
     }
 
-    public DefaultComboBoxModel<Ciudad> getComboCiudadDestinoModel() {
+    public DefaultComboBoxModel<DtCiudad> getComboCiudadDestinoModel() {
         return comboCiudadDestino;
     }
 
-    public DefaultComboBoxModel<Categoria> getComboCategoriaModel() {
-        return comboCategoria;
-    }
-
-    public DefaultComboBoxModel<Paquete> getComboPaqueteModel() {
+    public DefaultComboBoxModel<DtPaquete> getComboPaqueteModel() {
         return comboPaquete;
     }
 
@@ -86,14 +73,14 @@ public class auxiliarFunctions {
 
     public void cargarUsuariosComboBox() {
         comboUser.removeAllElements();
-        try {
-            List<Usuario> usuarios = userDao.listarUsuarios();
-            for (Usuario u : usuarios) {
+        List<DtUsuario> usuarios = sistema.listarUsuarios();
+        if(usuarios != null){
+            for (DtUsuario u : usuarios) {
                 comboUser.addElement(u);
             }
-        } catch (Exception e) {
+        }else{
             comboUser.removeAllElements();
-            comboUser.addElement(new Usuario() {
+            comboUser.addElement(new DtUsuario() {
                 @Override
                 public String toString() { return "N/A"; }
             });
@@ -102,30 +89,31 @@ public class auxiliarFunctions {
 
     public void cargarAerolineasComboBox() {
         comboAerolinea.removeAllElements();
-        try {
-            List<Aerolinea> aerolineas = userDao.listarAerolineas();
-            for (Aerolinea a : aerolineas) {
-                comboAerolinea.addElement(a);
+            List<DtAerolinea> aerolineas = sistema.listarAerolineas();
+            if(aerolineas != null){
+                for (DtAerolinea a : aerolineas) {
+                    comboAerolinea.addElement(a);
+                }
             }
-        } catch (Exception e) {
-            comboAerolinea.removeAllElements();
-            comboAerolinea.addElement(new Aerolinea() {
+            else {
+                comboAerolinea.removeAllElements();
+                comboAerolinea.addElement(new DtAerolinea() {
                 @Override
                 public String toString() { return "N/A"; }
             });
-        }
+            }
     }
 
     public void cargarRutasDeVueloComboBox() {
         comboRutaDeVuelo.removeAllElements();
-        try {
-            List<RutaDeVuelo> rt = rutaDeVueloDao.listarRutasDeVuelo();
-            for (RutaDeVuelo rtv : rt) {
+        List<DtRuta> rt = sistema.listarRutasDeVuelo();
+        if(rt != null) {
+            for (DtRuta rtv : rt) {
                 comboRutaDeVuelo.addElement(rtv);
             }
-        } catch (Exception e) {
+        }else{
             comboRutaDeVuelo.removeAllElements();
-            comboRutaDeVuelo.addElement(new RutaDeVuelo() {
+            comboRutaDeVuelo.addElement(new DtRuta() {
                 @Override
                 public String toString() { return "N/A"; }
             });
@@ -135,20 +123,21 @@ public class auxiliarFunctions {
     public void cargarCiudadesComboBox() {
         comboCiudadOrigen.removeAllElements();
         comboCiudadDestino.removeAllElements();
-        try {
-            List<Ciudad> c= ciudadDao.listarCiudades();
-            for (Ciudad ciudad : c) {
+
+        List<DtCiudad> c = sistema.listarCiudades();
+        if(c != null) {
+            for (DtCiudad ciudad : c) {
                 comboCiudadOrigen.addElement(ciudad);
                 comboCiudadDestino.addElement(ciudad);
             }
-        } catch (Exception e) {
+        }else{
             comboCiudadOrigen.removeAllElements();
-            comboCiudadOrigen.addElement(new Ciudad() {
+            comboCiudadOrigen.addElement(new DtCiudad() {
                 @Override
                 public String toString() { return "N/A"; }
             });
             comboCiudadDestino.removeAllElements();
-            comboCiudadDestino.addElement(new Ciudad() {
+            comboCiudadDestino.addElement(new DtCiudad() {
                 @Override
                 public String toString() { return "N/A"; }
             });
@@ -159,20 +148,18 @@ public class auxiliarFunctions {
 
     public void cargarPaqueteComboBox() {
         comboPaquete.removeAllElements();
-        try {
-            List<Paquete> p= paqueteDao.listarPaquetes();
-            for (Paquete paquete : p) {
-                comboPaquete.addElement(paquete);
+        List<DtPaquete> p = sistema.listarPaquetes();
+        if(p != null) {
+            for (DtPaquete pqt : p) {
+                System.out.println(pqt.getNombre());
+                comboPaquete.addElement(pqt);
             }
-        } catch (Exception e) {
+        }else{
             comboPaquete.removeAllElements();
-            comboPaquete.addElement(new Paquete() {
+            comboPaquete.addElement(new DtPaquete() {
                 @Override
                 public String toString() { return "N/A"; }
             });
         }
     }
-
-
-
 }

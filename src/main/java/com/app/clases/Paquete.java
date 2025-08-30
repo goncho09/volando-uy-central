@@ -92,7 +92,7 @@ public class Paquete {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return this.nombre;
     }
 }

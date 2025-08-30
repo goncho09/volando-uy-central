@@ -48,6 +48,14 @@ public abstract class Usuario {
         this.email = email;
     }
 
+    public DtUsuario getDatos() {
+        return new DtUsuario(
+                this.nickname,
+                this.nombre,
+                this.email
+        );
+    }
+
     @Override
     public String toString() {
         return this.nickname;

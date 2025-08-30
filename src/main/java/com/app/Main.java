@@ -36,7 +36,7 @@ public class Main extends JFrame {
     private JPanel fechaField;
     private JButton crearVueloButton;
     private JPanel vueloPanel;
-    private JComboBox comboBox3;
+    private JComboBox JComboBoxAerolineaConsultaVuelo;
     private JComboBox comboBox4;
     private JComboBox comboBox5;
     private JButton consultarVueloButton;
@@ -91,7 +91,7 @@ public class Main extends JFrame {
     private JSpinner JSpinnerPeriodoAltaPaquete;
     private JSpinner JSpinnerDescuentoAltaPaquete;
     private JTextField nombreAltaPaquete;
-    private JComboBox comboBox9;
+    private JComboBox JComboBoxPaqueteComprarPaquete;
     private JComboBox comboBox10;
     private JButton CONFIRMARButton1;
     private JButton CANCELARButton1;
@@ -136,8 +136,9 @@ public class Main extends JFrame {
         s = Factory.getSistema();
 
         //Inicializar Auxiliar
-        this.auxiliar = new auxiliarFunctions(s.getUserDao(),s.getRutaDeVueloDao(),s.getCiudadDao(),s.getCategoriaDao(),s.getPaqueteDao());
+        this.auxiliar = new auxiliarFunctions(s);
 
+        //Settear JFrame principal
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(800, 600);
         setResizable(false);
@@ -165,9 +166,12 @@ public class Main extends JFrame {
         JComboBoxCiudadDestino.setModel(auxiliar.getComboCiudadDestinoModel());
         JComboBoxAerolineaAltaRutaVuelo.setModel(auxiliar.getComboAerolineaModel());
         JComboBoxPaqueteConsultaPaqueteRutaVuelo.setModel(auxiliar.getComboPaqueteModel());
+        JComboBoxPaqueteComprarPaquete.setModel(auxiliar.getComboPaqueteModel());
+        JComboBoxAerolineaConsultaVuelo.setModel(auxiliar.getComboAerolineaModel());
 
         JPanelCategorias.setLayout(new GridLayout(0, 2, 5, 5));
 
+        // Es para mostrar las categorias en alta ruta vuelo
         List<JCheckBox> checkboxes = new ArrayList<>();
         for (Categoria c : s.getCategorias()) {
             JCheckBox check = new JCheckBox(c.getNombre());
@@ -181,6 +185,7 @@ public class Main extends JFrame {
         JComboBoxRutaVueloAltaVuelo.setSelectedIndex(-1);
 
 
+        // Configurar JSpinner
         JSpinnerDiaAltaVuelo.setModel(new SpinnerNumberModel(1, 1, 31, 1));
         JSpinnerMesAltaVuelo.setModel(new SpinnerNumberModel(1, 1, 12, 1));
         JSpinnerAñoAltaVuelo.setModel(new SpinnerNumberModel(2025, 2025, 2030, 1));
@@ -195,10 +200,6 @@ public class Main extends JFrame {
         JSpinnerDescuentoAltaPaquete.setModel(new SpinnerNumberModel(0,0,100,1));
         JSpinnerPeriodoAltaPaquete.setModel(new SpinnerNumberModel(1,1,1000000,1));
         JSpinnerCostoAltaPaquete.setModel(new SpinnerNumberModel(1.0,1.0,1000000.0,1.0));
-
-//        s.registrarAerolinea(new DtAerolinea("aviones123","aviones america","avines@gmail.com","aerolinea famosa"));
-//        s.confirmarAltaUsuario();
-
 
         //¡Cargar datitos!
         auxiliar.cargarUsuariosComboBox();
@@ -249,7 +250,6 @@ public class Main extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(auxiliar.estanVaciosJComboBox(aerolineaReserva, rutaDeVueloReserva, vueloReserva, clienteReserva, tipoAsientoReserva)){
-                    System.out.println("Faltan argumentos");
                     new dialogMessage("Faltan argumentos");
                     return;
                 }
@@ -533,7 +533,11 @@ public class Main extends JFrame {
                         }
                     }
 
-                    s.altaRutaDeVuelo(JComboBoxAerolineaAltaRutaVuelo.getSelectedItem().toString(), new DtRuta(nombreAltaRutaDeVuelo.getText(), descripcionAltaRutaDeVuelo.getText(), horaRuta, costoTurista, costoEjecutivo, costoEquipaje, LocalDate.now(), s.getCategoriasPorNombre(nombresCategorias), s.buscarCiudad(JComboBoxCiudadOrigen.getSelectedItem().toString()), s.buscarCiudad(JComboBoxCiudadDestino.getSelectedItem().toString())));
+                    try {
+                        s.altaRutaDeVuelo(JComboBoxAerolineaAltaRutaVuelo.getSelectedItem().toString(), new DtRuta(nombreAltaRutaDeVuelo.getText(), descripcionAltaRutaDeVuelo.getText(), horaRuta, costoTurista, costoEjecutivo, costoEquipaje, LocalDate.now(), s.getCategoriasPorNombre(nombresCategorias), s.buscarCiudad(JComboBoxCiudadOrigen.getSelectedItem().toString()), s.buscarCiudad(JComboBoxCiudadDestino.getSelectedItem().toString())));
+                    }catch (Exception ex){
+                        new dialogMessage(ex.getMessage());
+                    }
                     new dialogMessage("Ruta de vuelo creada correctamente.");
                     auxiliar.limpiarJTextField(nombreAltaRutaDeVuelo, descripcionAltaRutaDeVuelo);
                     for (int i = 0; i < categorias.size(); i++) {
@@ -541,7 +545,6 @@ public class Main extends JFrame {
                             checkboxes.get(i).setSelected(false);
                         }
                     }
-
 
                 } catch (Exception ex) {
                     new dialogMessage(ex.getMessage());

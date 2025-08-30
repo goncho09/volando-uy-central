@@ -19,6 +19,8 @@ public class DtRuta {
     private Ciudad ciudadOrigen;
     private Ciudad ciudadDestino;
 
+    public DtRuta() {}
+
     public DtRuta(String nombre, String descripcion, LocalTime duracion, float costoTurista, float costoEjecutivo, float equipajeExtra, LocalDate fechaAlta, List<Categoria> categorias, Ciudad origen, Ciudad destino) {
         this.nombre = nombre;
         this.descripcion = descripcion;
@@ -111,4 +113,7 @@ public class DtRuta {
     public void setCiudadOrigen(Ciudad ciudadOrigen) {
         this.ciudadOrigen = ciudadOrigen;
     }
+
+    @Override
+    public String toString() { return this.nombre; }
 }

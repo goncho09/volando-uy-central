@@ -10,6 +10,8 @@ public class DtCiudad {
     private String sitioWeb;
     private LocalDate fechaAlta;
 
+    public DtCiudad() {}
+
     public DtCiudad(String nombre, String pais, String aeropuerto, String descripcion, String sitioWeb, LocalDate fechaAlta) {
         this.nombre = nombre;
         this.pais = pais;
@@ -66,4 +68,8 @@ public class DtCiudad {
     public void setFechaAlta(LocalDate fechaAlta) {
         this.fechaAlta = fechaAlta;
     }
+
+    @Override
+    public String toString() { return this.nombre; }
+
 }

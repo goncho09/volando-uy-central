@@ -12,6 +12,7 @@ public interface ISistema {
     CategoriaDao getCategoriaDao();
     CiudadDao getCiudadDao();
     PaqueteDao getPaqueteDao();
+    AerolineaDao getAerolineaDao();
 
     List<DtPaquete> listarPaquetes();
     void seleccionarPaquete(String nombre);
@@ -23,6 +24,10 @@ public interface ISistema {
 
     void consultaVuelo(DtVuelo vuelo);
 
+    List<DtCiudad> listarCiudades();
+
+    List<DtRuta> listarRutasDeVuelo(); //Lista todas las rutas de vuelo
+    List<DtRuta> listarRutasDeVueloAerolinea(String nickname); //Lista las rutas de vuelos asociadas a una aerolinea específica
     void registrarCliente(DtCliente cliente);
     void modificarCliente(DtCliente cliente);
     void registrarAerolinea(DtAerolinea aerolinea);
@@ -30,17 +35,17 @@ public interface ISistema {
     void cancelarAltaUsuario();
     void confirmarAltaUsuario(DtUsuario user);
 
-    // TEMPORAL
-    List<Ciudad> getCiudades();
     void altaPaquete(DtPaquete paquete);
+    List<Ciudad> getCiudades();
     List<Categoria> getCategorias();
+    List <Aerolinea> getAerolineas();
+    List <RutaDeVuelo> getRutasDeVuelo();
 
     List<Categoria> getCategoriasPorNombre(List<String> nombres);
     Ciudad buscarCiudad (String nombre);
   
   // Consulta de Ruta de Vuelo
-    List<String> listarAerolineas();
-    List<String> listarRutasDeAerolinea(String nickname);
+    List<DtAerolinea> listarAerolineas();
     DtRuta consultarRuta(String nombre);
     DtVuelo consultarVuelo(String nombre);
 

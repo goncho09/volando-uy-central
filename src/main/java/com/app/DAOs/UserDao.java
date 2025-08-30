@@ -1,8 +1,6 @@
 package com.app.DAOs;
 
-import com.app.clases.Aerolinea;
-import com.app.clases.Usuario;
-import com.app.clases.Cliente;
+import com.app.clases.*;
 import com.app.clases.Usuario;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
@@ -89,6 +87,11 @@ public class UserDao {
             em.remove(usuario);
         }
         em.getTransaction().commit();
+    }
+
+    public void addRutaDeVuelo(Aerolinea aerolinea, RutaDeVuelo ruta){
+        aerolinea.getRutasDeVuelo().add(ruta);
+        actualizar(aerolinea);
     }
 
 }
