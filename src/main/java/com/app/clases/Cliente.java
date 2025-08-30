@@ -34,7 +34,6 @@ public class Cliente extends Usuario{
         this.numeroDocumento = cliente.getNumeroDocumento();
         this.comprasPaquetes = new ArrayList<>();
         this.reservas = new ArrayList<>();
-        //System.out.println("Creando datatype: " + nickname + " - " + nombre + " - " + email + " - " + apellido + " - " + fechaNacimiento + " - " + nacionalidad + " - " + tipoDocumento + " - " + numeroDocumento);
     }
 
     public String getApellido() {
@@ -119,6 +118,19 @@ public class Cliente extends Usuario{
             }
         }
         return dtPaquetes;
+    }
+
+    public DtCliente getDatos() {
+        return new DtCliente(
+                this.getNickname(),
+                this.getNombre(),
+                this.getEmail(),
+                this.getApellido(),
+                this.getFechaNacimiento(),
+                this.getNacionalidad(),
+                this.getTipoDocumento(),
+                this.getNumeroDocumento()
+        );
     }
 
     public void mostrarDatos() {

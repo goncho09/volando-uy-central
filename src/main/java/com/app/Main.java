@@ -425,7 +425,7 @@ public class Main extends JFrame {
 
                     //pa verificar que se creo
                     try {
-                        s.consultaVuelo(dtVuelo);
+                        s.consultarVuelo(dtVuelo.getNombre());
                         new dialogMessage("Vuelo creado y verificado correctamente");
                     } catch (IllegalArgumentException ex) {
                         new dialogMessage("Error: el vuelo no se registró correctamente");

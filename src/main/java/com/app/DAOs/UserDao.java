@@ -36,6 +36,13 @@ public class UserDao {
                 .collect(Collectors.toMap(Usuario::getNickname, u-> u));
     }
 
+    public Map<String, Aerolinea> obtenerAerolineas() {
+        return em.createQuery("SELECT a FROM Aerolinea a", Aerolinea.class)
+                .getResultList()
+                .stream()
+                .collect(Collectors.toMap(Aerolinea::getNickname, r -> r));
+    }
+
     public Usuario buscar(String nickname){
         return em.find(Usuario.class, nickname); // Saldrá a buscar a ese usuario en AMBAS clases.
     }

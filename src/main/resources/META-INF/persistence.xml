@@ -18,7 +18,7 @@
 
         <properties>
             <property name="jakarta.persistence.jdbc.driver" value="org.postgresql.Driver"/>
-            <property name="jakarta.persistence.jdbc.url" value="jdbc:postgresql://db.aohwkfxqjfzinzgpjvgv.supabase.co:5432/postgres"/>
+            <property name="jakarta.persistence.jdbc.url" value="jdbc:postgresql://db.aohwkfxqjfzinzgpjvgv.supabase.co:5432/postgres?sslmode=require"/>
             <property name="jakarta.persistence.jdbc.user" value="postgres"/>
             <property name="jakarta.persistence.jdbc.password" value="2ImPt2FLtHmQIiSi"/>
 

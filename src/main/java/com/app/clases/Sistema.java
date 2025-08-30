@@ -23,7 +23,6 @@ public class Sistema implements ISistema {
     private CategoriaDao categoriaDao;
     private CiudadDao ciudadDao;
     private PaqueteDao paqueteDao;
-    private AerolineaDao aerolineaDao;
 
     private Map<String, Categoria> categorias;
     private Map<String, Ciudad> ciudades;
@@ -31,23 +30,21 @@ public class Sistema implements ISistema {
     private Map<String, Paquete> paquetes;
     private Map<String, Vuelo> vuelos;
     private Map<String, RutaDeVuelo> rutasDeVuelo;
-    private Map<String, Aerolinea> aerolineas;
-    private Map<String, Cliente> clientes;
+    private Map<String, CompraPaquete> compraPaquetes;
+    private Map<String, DtPasajero> pasajes;
+    private Map<String, Reserva> reservas;
 
     private List<Vuelo> consultaVuelos = new ArrayList<>();
     private List<Usuario> consultaUsuarios = new ArrayList<>();
-
 
     private Usuario usuarioSeleccionado; // Guarda selección actual
     private Paquete paqueteSeleccionado;
     private DtCliente clienteTemporal;
     private DtAerolinea aerolineaTemporal;
     private Aerolinea aerolineaTemporalClase;
-
     private DtVuelo vueloTemporal;
     private RutaDeVuelo rutaTemporal;
     private Aerolinea aerolineaTemp;
-
     private Cliente clienteTemp;
 
 
@@ -60,16 +57,14 @@ public class Sistema implements ISistema {
         this.categoriaDao = new CategoriaDao(em);
         this.ciudadDao = new CiudadDao(em);
         this.paqueteDao = new PaqueteDao(em);
-        this.aerolineaDao = new AerolineaDao(em);
 
         this.categorias = categoriaDao.obtenerCategorias();
         this.ciudades = ciudadDao.obtenerCiudades();
         this.usuarios = userDao.obtenerUsuarios();
         this.paquetes = paqueteDao.obtenerPaquetes();
         this.rutasDeVuelo = rutaDeVueloDao.obtenerRutasDeVuelo();
-        this.aerolineas = aerolineaDao.obtenerAerolineas();
         this.vuelos = new LinkedHashMap<>();
-        this.clientes = new LinkedHashMap<>();
+
     }
 
     public static Sistema getInstancia() {
@@ -91,8 +86,6 @@ public class Sistema implements ISistema {
 
     public PaqueteDao getPaqueteDao() {return this.paqueteDao;}
 
-    public  AerolineaDao getAerolineaDao() {return this.aerolineaDao;}
-
     public List<DtAerolinea> listarAerolineas() {
         List <DtAerolinea> nuevaLista = new ArrayList<>();
         for (Aerolinea a : this.getAerolineas()) {
@@ -101,7 +94,15 @@ public class Sistema implements ISistema {
         return nuevaLista;
     }
 
-    public List<DtRuta> listarRutasDeVueloAerolinea(String nickname) {
+    public List<DtCliente> listarClientes(){
+        List <DtCliente> listaCliente = new ArrayList<>();
+        for (Cliente c : this.getClientes()) {
+            listaCliente.add(c.getDatos());
+        }
+        return listaCliente;
+    }
+
+    public List<DtRuta> listarRutasDeVuelo(String nickname) {
         List<DtRuta> listaRutas = new ArrayList<>();
         Aerolinea a = (Aerolinea)this.usuarios.get(nickname);
         for (RutaDeVuelo r : a.getRutasDeVuelo()) {
@@ -119,9 +120,9 @@ public class Sistema implements ISistema {
         return null;
     }
 
-    public DtVuelo consultarVuelo(String nickname) {
+    public DtVuelo consultarVuelo(String nombre) {
         for (Vuelo v : consultaVuelos) {
-            if (v.getNombre().equals(nickname)) {
+            if (v.getNombre().equals(nombre)) {
                 return v.getDatos();
             }
         }
@@ -301,17 +302,33 @@ public class Sistema implements ISistema {
         return new ArrayList<>(this.rutasDeVuelo.values());
     }
 
-    public List <Aerolinea> getAerolineas() {
-        return new ArrayList<>(this.aerolineas.values());
-    };
-
     public List <Usuario> getUsuarios() {
         return new ArrayList<>(this.usuarios.values());
     };
 
     public List <Cliente> getClientes() {
-        return new ArrayList<>(this.clientes.values());
+        List<Cliente> listaClientes = new ArrayList<>();
+        List <Usuario> listaUsuarios = this.getUsuarios();
+        for(Usuario u : listaUsuarios){
+            if(u instanceof Cliente){
+                Cliente c =  (Cliente) u;
+                listaClientes.add(c);
+            }
+        }
+        return listaClientes;
     };
+
+    public List<Aerolinea> getAerolineas() {
+        List<Aerolinea> listaAerolineas = new ArrayList<>();
+        List <Usuario> listaUsuarios = this.getUsuarios();
+        for(Usuario u : listaUsuarios){
+            if(u instanceof Aerolinea){
+                Aerolinea a =  (Aerolinea) u;
+                listaAerolineas.add(a);
+            }
+        }
+        return listaAerolineas;
+    }
 
     public void seleccionarPaquete(String nombre) {
         Paquete paquete = this.paquetes.get(nombre);
