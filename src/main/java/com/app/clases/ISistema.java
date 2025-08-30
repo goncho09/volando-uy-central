@@ -23,6 +23,10 @@ public interface ISistema {
 
     void consultaVuelo(DtVuelo vuelo);
 
+    List<DtCiudad> listarCiudades();
+
+    List<DtRuta> listarRutasDeVuelo(); //Lista todas las rutas de vuelo
+    List<DtRuta> listarRutasDeVuelo(String nickname); //Lista las rutas de vuelos asociadas a una aerolinea específica
     void registrarCliente(DtCliente cliente);
     void modificarCliente(DtCliente cliente);
     void registrarAerolinea(DtAerolinea aerolinea);
@@ -39,8 +43,7 @@ public interface ISistema {
     Ciudad buscarCiudad (String nombre);
   
   // Consulta de Ruta de Vuelo
-    List<String> listarAerolineas();
-    List<String> listarRutasDeAerolinea(String nickname);
+    List<DtAerolinea> listarAerolineas();
     DtRuta consultarRuta(String nombre);
     DtVuelo consultarVuelo(String nombre);
 

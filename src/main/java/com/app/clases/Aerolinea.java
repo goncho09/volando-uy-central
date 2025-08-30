@@ -44,14 +44,18 @@ public class Aerolinea extends Usuario {
     }
 
     public List<RutaDeVuelo> getRutasDeVuelo() {
-        return rutasDeVuelo;
+        return this.rutasDeVuelo;
     }
 
     public void agregarRuta(RutaDeVuelo ruta) {
         this.rutasDeVuelo.add(ruta);
     }
 
-    public boolean existeRutaDeVuelo(String nombre){
+    public DtAerolinea getDatos(){
+        return new DtAerolinea(this.getNickname(), this.getNombre(), this.getEmail(), this.getDescripcion(), this.getLinkWeb(), this.getRutasDeVuelo());
+    }
+
+    public boolean buscarRutaDeVuelo(String nombre){
         for (RutaDeVuelo rt : this.getRutasDeVuelo()){
             if(rt.getNombre().equals(nombre)){
                 return true;
@@ -60,7 +64,9 @@ public class Aerolinea extends Usuario {
         return false;
     }
 
-    public void añadirRuta(RutaDeVuelo ruta) {this.rutasDeVuelo.add(ruta);}
+    public void addRuta(RutaDeVuelo ruta) {
+        this.rutasDeVuelo.add(ruta);
+    }
 
     public void mostrarDatos() {
         System.out.println("Datos: " + nickname + " - " + nombre + " - " +

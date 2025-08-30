@@ -5,6 +5,7 @@ public class DtUsuario {
     protected String nombre;
     protected String email;
 
+    public DtUsuario() {}
     public DtUsuario(String nickname,String nombre, String email){
         this.nickname = nickname;
         this.nombre = nombre;

@@ -77,6 +77,10 @@ public class Ciudad {
         this.fechaAlta = fechaAlta;
     }
 
+    public DtCiudad getDatos(){
+        return new DtCiudad(this.getNombre(), this.getPais(), this.getAeropuerto(), this.getDescripcion(), this.getSitioWeb(), this.getFechaAlta());
+    }
+
     @Override
     public String toString() {
         return this.nombre;

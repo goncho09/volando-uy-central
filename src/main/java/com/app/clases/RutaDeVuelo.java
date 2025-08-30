@@ -119,6 +119,21 @@ public class RutaDeVuelo {
         this.fechaAlta = fechaAlta;
     }
 
+    public DtRuta getDatos() {
+        return new DtRuta(
+                this.getNombre(),
+                this.getDescripcion(),
+                this.getDuracion(),
+                this.getCostoTurista(),
+                this.getCostoEjecutivo(),
+                this.getEquipajeExtra(),
+                this.getFechaAlta(),
+                this.getCategorias(),
+                this.getCiudadOrigen(),
+                this.getCiudadDestino()
+        );
+    }
+
 
     public List<Categoria> getCategorias() {
         return categorias;

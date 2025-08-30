@@ -10,6 +10,8 @@ public class DtCiudad {
     private String sitioWeb;
     private LocalDate fechaAlta;
 
+    public DtCiudad() {}
+
     public DtCiudad(String nombre, String pais, String aeropuerto, String descripcion, String sitioWeb, LocalDate fechaAlta) {
         this.nombre = nombre;
         this.pais = pais;
