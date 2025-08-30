@@ -153,9 +153,10 @@ public class Sistema implements ISistema {
 
         RutaDeVuelo nuevaRuta = new RutaDeVuelo(datosRuta);
 
-        this.rutas.add(nuevaRuta);
-        aerolinea.añadirRuta(nuevaRuta);
-        this.rutaDeVueloDao.guardar(nuevaRuta,aerolinea);
+        this.rutas.add(nuevaRuta); // Guardas la ruta en el sistema
+        aerolinea.añadirRuta(nuevaRuta); // Dicha ruta la asocia con aerolinea
+        this.rutaDeVueloDao.guardar(nuevaRuta); // Persistimos la nuevaRuta
+        this.userDao.addRutaDeVuelo(aerolinea, nuevaRuta); // La agregamos a su aerolinea
     }
 
 
