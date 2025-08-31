@@ -8,25 +8,26 @@ public interface ISistema {
 
     // ---------- USUARIOS ---------- //
     List<DtUsuario> listarUsuarios();
-    List<DtAerolinea> listarAerolineas();
-    List<DtCliente> listarClientes();
     void elegirUsuario(String nickname);
     DtUsuario getUsuarioSeleccionado();
 
+    List<DtCliente> listarClientes();
+    List<Cliente> getClientes();
     void registrarCliente(DtCliente cliente);
     void modificarCliente(DtCliente cliente);
 
+    List<DtAerolinea> listarAerolineas();
+    List<Aerolinea> getAerolineas();
     void registrarAerolinea(DtAerolinea aerolinea);
     void modificarAerolinea(DtAerolinea aerolinea);
 
     void cancelarAltaUsuario();
     void confirmarAltaUsuario(DtUsuario user);
 
+    // ------------ RESERVAS ----------- //
 
-    // ----------- Reservas ------------ //
     List<DtReserva> mostrarReservas();
     List<DtPaquete> mostrarPaquetes();
-    List<DtRuta> mostrarRutasDeVuelo();
 
 
     // ---------- RUTAS DE VUELO ---------- //
@@ -64,13 +65,12 @@ public interface ISistema {
     Ciudad buscarCiudad(String nombre);
     List<Ciudad> getCiudades();
 
-    // ---------- INFRAESTRUCTURA (Daos y Acceso Directo) ---------- //
+    // ---------- INFRAESTRUCTURA ---------- //
     UserDao getUserDao();
     RutaDeVueloDao getRutaDeVueloDao();
     CategoriaDao getCategoriaDao();
     CiudadDao getCiudadDao();
     PaqueteDao getPaqueteDao();
 
-    List<Aerolinea> getAerolineas();
     List<RutaDeVuelo> getRutasDeVuelo();
 }

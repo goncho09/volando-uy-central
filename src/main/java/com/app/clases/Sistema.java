@@ -31,8 +31,8 @@ public class Sistema implements ISistema {
     private Map<String, Vuelo> vuelos;
     private Map<String, RutaDeVuelo> rutasDeVuelo;
     private Map<String, CompraPaquete> compraPaquetes;
-    private Map<String, DtPasajero> pasajes;
     private Map<String, Reserva> reservas;
+    private List<DtPasajero> pasajes;
 
     private List<Vuelo> consultaVuelos = new ArrayList<>();
     private List<Usuario> consultaUsuarios = new ArrayList<>();
@@ -64,7 +64,8 @@ public class Sistema implements ISistema {
         this.paquetes = paqueteDao.obtenerPaquetes();
         this.rutasDeVuelo = rutaDeVueloDao.obtenerRutasDeVuelo();
         this.vuelos = new LinkedHashMap<>();
-
+        this.reservas = new LinkedHashMap<>();
+        this.pasajes = new ArrayList<>();
     }
 
     public static Sistema getInstancia() {
@@ -92,14 +93,6 @@ public class Sistema implements ISistema {
             nuevaLista.add(a.getDatos());
         }
         return nuevaLista;
-    }
-
-    public List<DtCliente> listarClientes(){
-        List <DtCliente> listaCliente = new ArrayList<>();
-        for (Cliente c : this.getClientes()) {
-            listaCliente.add(c.getDatos());
-        }
-        return listaCliente;
     }
 
     public List<DtRuta> listarRutasDeVuelo(String nickname) {
@@ -139,7 +132,7 @@ public class Sistema implements ISistema {
     }
 
     public void altaRutaDeVuelo(String nombreAerolinea, DtRuta datosRuta) {
-        Aerolinea aerolinea = userDao.buscarAerolinea(nombreAerolinea);
+        Aerolinea aerolinea = (Aerolinea) userDao.buscar(nombreAerolinea);
 
         if (aerolinea == null) throw new IllegalArgumentException("Aerolinea no existe");
 
@@ -215,7 +208,7 @@ public class Sistema implements ISistema {
             Cliente c = (Cliente) usuarioSeleccionado;
             List<DtReserva> dtReservas = new ArrayList<>();
 
-            for (DtReserva r : c.getReservas()) {
+            for (DtReserva r : c.getDtReservas()) {
                 dtReservas.add(new DtReserva(
                         r.getFecha(),
                         r.getTipoAsiento(),
@@ -290,6 +283,14 @@ public class Sistema implements ISistema {
 
     }
 
+    public List<DtCliente> listarClientes(){
+        List<DtCliente> listaClientes = new ArrayList<>();
+        for(Cliente c : this.getClientes()){
+            listaClientes.add(c.getDatos());
+        }
+        return listaClientes;
+    }
+
     public List<Ciudad> getCiudades(){
         return new ArrayList<>(this.ciudades.values());
     }
@@ -302,20 +303,19 @@ public class Sistema implements ISistema {
         return new ArrayList<>(this.rutasDeVuelo.values());
     }
 
-    public List <Usuario> getUsuarios() {
+    public List<Usuario> getUsuarios() {
         return new ArrayList<>(this.usuarios.values());
     };
 
-    public List <Cliente> getClientes() {
-        List<Cliente> listaClientes = new ArrayList<>();
-        List <Usuario> listaUsuarios = this.getUsuarios();
-        for(Usuario u : listaUsuarios){
+    public List<Cliente> getClientes() {
+        List<Usuario> usuarios = this.getUsuarios();
+        List<Cliente> clientes = new ArrayList<>();
+        for(Usuario u : usuarios){
             if(u instanceof Cliente){
-                Cliente c =  (Cliente) u;
-                listaClientes.add(c);
+                clientes.add((Cliente) u);
             }
         }
-        return listaClientes;
+        return clientes;
     };
 
     public List<Aerolinea> getAerolineas() {
@@ -549,7 +549,7 @@ public class Sistema implements ISistema {
 
     // ---------- ALTA DE VUELO ---------- //
     public void seleccionarAerolineaParaVuelo(String nickname) {
-        Aerolinea aerolinea = userDao.buscarAerolinea(nickname);
+        Aerolinea aerolinea = (Aerolinea) userDao.buscar(nickname);
         if (aerolinea == null) {
             throw new IllegalArgumentException("La aerolínea no existe.");
         }
