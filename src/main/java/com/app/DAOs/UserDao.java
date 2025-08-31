@@ -21,14 +21,6 @@ public class UserDao {
         return em.createQuery("SELECT u FROM Usuario u", Usuario.class).getResultList(); //Nos devuelve todos los usuarios, independientemente de su clase. (Clientes y Aerolineas)
     }
 
-    public List<Cliente> listarClientes(){
-        return em.createQuery("SELECT u FROM Cliente u", Cliente.class).getResultList(); // Retorna los usuarios con clase "Cliente".
-    }
-
-    public List<Aerolinea> listarAerolineas(){
-        return em.createQuery("SELECT u FROM Aerolinea u", Aerolinea.class).getResultList(); // Retorna los usuarios con clase "Aerolínea" ñehehe.
-    }
-
     public Map<String, Usuario> obtenerUsuarios() {
         return em.createQuery("SELECT u FROM Usuario u", Usuario.class)
                 .getResultList()
@@ -38,10 +30,6 @@ public class UserDao {
 
     public Usuario buscar(String nickname){
         return em.find(Usuario.class, nickname); // Saldrá a buscar a ese usuario en AMBAS clases.
-    }
-
-    public Aerolinea buscarAerolinea(String nickname){
-        return em.find(Aerolinea.class, nickname); // Saldrá a buscar a ese usuario en AMBAS clases.
     }
 
     public void guardar(Usuario usuario) {
@@ -92,6 +80,16 @@ public class UserDao {
     public void addRutaDeVuelo(Aerolinea aerolinea, RutaDeVuelo ruta){
         aerolinea.getRutasDeVuelo().add(ruta);
         actualizar(aerolinea);
+    }
+
+    public void addCompraPaquete(Cliente cliente, CompraPaquete cp){
+        cliente.getComprasPaquetes().add(cp);
+        actualizar(cliente);
+    }
+
+    public void addReserva(Cliente cliente, Reserva reserva){
+        cliente.getReservas().add(reserva);
+        actualizar(cliente);
     }
 
 }

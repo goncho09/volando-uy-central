@@ -121,6 +121,19 @@ public class Cliente extends Usuario{
         return dtPaquetes;
     }
 
+    public DtCliente getDatos(){
+        return new DtCliente(
+                this.getNickname(),
+                this.getNombre(),
+                this.getEmail(),
+                this.getApellido(),
+                this.getFechaNacimiento(),
+                this.getNacionalidad(),
+                this.getTipoDocumento(),
+                this.getNumeroDocumento()
+        );
+    }
+
     public void mostrarDatos() {
         System.out.println("Datos Usuario: " +
                 nickname + " - " + nombre + " - " + apellido + " - " +

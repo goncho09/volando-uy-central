@@ -101,7 +101,7 @@ public class Sistema implements ISistema {
         return nuevaLista;
     }
 
-    public List<DtRuta> listarRutasDeVueloAerolinea(String nickname) {
+    public List<DtRuta> listarRutasDeVuelo(String nickname) {
         List<DtRuta> listaRutas = new ArrayList<>();
         Aerolinea a = (Aerolinea)this.usuarios.get(nickname);
         for (RutaDeVuelo r : a.getRutasDeVuelo()) {
@@ -138,7 +138,7 @@ public class Sistema implements ISistema {
     }
 
     public void altaRutaDeVuelo(String nombreAerolinea, DtRuta datosRuta) {
-        Aerolinea aerolinea = userDao.buscarAerolinea(nombreAerolinea);
+        Aerolinea aerolinea = (Aerolinea) userDao.buscar(nombreAerolinea);
 
         if (aerolinea == null) throw new IllegalArgumentException("Aerolinea no existe");
 
@@ -289,6 +289,14 @@ public class Sistema implements ISistema {
 
     }
 
+    public List<DtCliente> listarClientes(){
+        List<DtCliente> listaClientes = new ArrayList<>();
+        for(Cliente c : this.getClientes()){
+            listaClientes.add(c.getDatos());
+        }
+        return listaClientes;
+    }
+
     public List<Ciudad> getCiudades(){
         return new ArrayList<>(this.ciudades.values());
     }
@@ -305,11 +313,11 @@ public class Sistema implements ISistema {
         return new ArrayList<>(this.aerolineas.values());
     };
 
-    public List <Usuario> getUsuarios() {
+    public List<Usuario> getUsuarios() {
         return new ArrayList<>(this.usuarios.values());
     };
 
-    public List <Cliente> getClientes() {
+    public List<Cliente> getClientes() {
         return new ArrayList<>(this.clientes.values());
     };
 
@@ -532,7 +540,7 @@ public class Sistema implements ISistema {
 
     // ---------- ALTA DE VUELO ---------- //
     public void seleccionarAerolineaParaVuelo(String nickname) {
-        Aerolinea aerolinea = userDao.buscarAerolinea(nickname);
+        Aerolinea aerolinea = (Aerolinea) userDao.buscar(nickname);
         if (aerolinea == null) {
             throw new IllegalArgumentException("La aerolínea no existe.");
         }
