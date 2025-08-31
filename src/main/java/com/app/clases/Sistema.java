@@ -23,7 +23,6 @@ public class Sistema implements ISistema {
     private CategoriaDao categoriaDao;
     private CiudadDao ciudadDao;
     private PaqueteDao paqueteDao;
-    private AerolineaDao aerolineaDao;
 
     private Map<String, Categoria> categorias;
     private Map<String, Ciudad> ciudades;
@@ -31,8 +30,8 @@ public class Sistema implements ISistema {
     private Map<String, Paquete> paquetes;
     private Map<String, Vuelo> vuelos;
     private Map<String, RutaDeVuelo> rutasDeVuelo;
-    private Map<String, Aerolinea> aerolineas;
-    private Map<String, Cliente> clientes;
+    private Map<String, Reserva> reservas;
+    private List<DtPasajero> pasajes;
 
     private List<Vuelo> consultaVuelos = new ArrayList<>();
     private List<Usuario> consultaUsuarios = new ArrayList<>();
@@ -60,16 +59,15 @@ public class Sistema implements ISistema {
         this.categoriaDao = new CategoriaDao(em);
         this.ciudadDao = new CiudadDao(em);
         this.paqueteDao = new PaqueteDao(em);
-        this.aerolineaDao = new AerolineaDao(em);
 
         this.categorias = categoriaDao.obtenerCategorias();
         this.ciudades = ciudadDao.obtenerCiudades();
         this.usuarios = userDao.obtenerUsuarios();
         this.paquetes = paqueteDao.obtenerPaquetes();
         this.rutasDeVuelo = rutaDeVueloDao.obtenerRutasDeVuelo();
-        this.aerolineas = aerolineaDao.obtenerAerolineas();
         this.vuelos = new LinkedHashMap<>();
-        this.clientes = new LinkedHashMap<>();
+        this.reservas = new LinkedHashMap<>();
+        this.pasajes = new ArrayList<>();
     }
 
     public static Sistema getInstancia() {
@@ -90,8 +88,6 @@ public class Sistema implements ISistema {
     public CiudadDao getCiudadDao() {return  this.ciudadDao;}
 
     public PaqueteDao getPaqueteDao() {return this.paqueteDao;}
-
-    public  AerolineaDao getAerolineaDao() {return this.aerolineaDao;}
 
     public List<DtAerolinea> listarAerolineas() {
         List <DtAerolinea> nuevaLista = new ArrayList<>();
@@ -214,7 +210,7 @@ public class Sistema implements ISistema {
             Cliente c = (Cliente) usuarioSeleccionado;
             List<DtReserva> dtReservas = new ArrayList<>();
 
-            for (DtReserva r : c.getReservas()) {
+            for (DtReserva r : c.getDtReservas()) {
                 dtReservas.add(new DtReserva(
                         r.getFecha(),
                         r.getTipoAsiento(),
@@ -310,7 +306,14 @@ public class Sistema implements ISistema {
     }
 
     public List <Aerolinea> getAerolineas() {
-        return new ArrayList<>(this.aerolineas.values());
+        List<Usuario> usuarios = this.getUsuarios();
+        List<Aerolinea> aerolineas = new ArrayList<>();
+        for(Usuario u : usuarios){
+            if(u instanceof Aerolinea){
+                aerolineas.add((Aerolinea) u);
+            }
+        }
+        return aerolineas;
     };
 
     public List<Usuario> getUsuarios() {
@@ -318,7 +321,14 @@ public class Sistema implements ISistema {
     };
 
     public List<Cliente> getClientes() {
-        return new ArrayList<>(this.clientes.values());
+        List<Usuario> usuarios = this.getUsuarios();
+        List<Cliente> clientes = new ArrayList<>();
+        for(Usuario u : usuarios){
+            if(u instanceof Cliente){
+                clientes.add((Cliente) u);
+            }
+        }
+        return clientes;
     };
 
     public void seleccionarPaquete(String nombre) {

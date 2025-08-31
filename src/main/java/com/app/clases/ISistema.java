@@ -65,7 +65,7 @@ public interface ISistema {
     Ciudad buscarCiudad(String nombre);
     List<Ciudad> getCiudades();
 
-    // ---------- INFRAESTRUCTURA (Daos y Acceso Directo) ---------- //
+    // ---------- INFRAESTRUCTURA ---------- //
     UserDao getUserDao();
     RutaDeVueloDao getRutaDeVueloDao();
     CategoriaDao getCategoriaDao();

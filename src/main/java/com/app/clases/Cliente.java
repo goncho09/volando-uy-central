@@ -85,7 +85,10 @@ public class Cliente extends Usuario{
         this.comprasPaquetes = comprasPaquetes;
     }
 
-    public List<DtReserva> getReservas() {
+    public List<Reserva> getReservas(){
+        return this.reservas;
+    }
+    public List<DtReserva> getDtReservas() {
         List<DtReserva> dtReservas = new ArrayList<>();
         for (Reserva reserva : this.reservas) {
             dtReservas.add(new DtReserva(
