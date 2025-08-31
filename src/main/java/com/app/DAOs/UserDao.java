@@ -77,18 +77,37 @@ public class UserDao {
         em.getTransaction().commit();
     }
 
+    // ----------- AEROLINEAS ----------- //
+
     public void addRutaDeVuelo(Aerolinea aerolinea, RutaDeVuelo ruta){
         aerolinea.getRutasDeVuelo().add(ruta);
         actualizar(aerolinea);
     }
+
+    public void removeRutaDeVuelo(Aerolinea aerolinea, RutaDeVuelo ruta){
+        aerolinea.getRutasDeVuelo().remove(ruta);
+        actualizar(aerolinea);
+    }
+
+    // ------------ CLIENTES ----------- //
 
     public void addCompraPaquete(Cliente cliente, CompraPaquete cp){
         cliente.getComprasPaquetes().add(cp);
         actualizar(cliente);
     }
 
+    public void removeCompraPaquete(Cliente cliente, CompraPaquete cp){
+        cliente.getComprasPaquetes().remove(cp);
+        actualizar(cliente);
+    }
+
     public void addReserva(Cliente cliente, Reserva reserva){
         cliente.getReservas().add(reserva);
+        actualizar(cliente);
+    }
+
+    public void removeReserva(Cliente cliente, Reserva reserva){
+        cliente.getReservas().remove(reserva);
         actualizar(cliente);
     }
 

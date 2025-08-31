@@ -1,6 +1,7 @@
 package com.app.DAOs;
 
 import com.app.clases.Paquete;
+import com.app.clases.RutaEnPaquete;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 
@@ -66,4 +67,15 @@ public class PaqueteDao {
         }
         em.getTransaction().commit();
     }
+
+    public void addRutaEnPaquete(Paquete p, RutaEnPaquete rp){
+        p.getRutaEnPaquete().add(rp);
+        actualizar(p);
+    }
+
+    public void removeRutaEnPaquete(Paquete p, RutaEnPaquete rp){
+        p.getRutaEnPaquete().remove(rp);
+        actualizar(p);
+    }
+
 }

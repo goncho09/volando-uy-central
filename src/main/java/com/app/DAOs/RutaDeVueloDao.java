@@ -69,16 +69,6 @@ public class RutaDeVueloDao {
         em.getTransaction().commit();
     }
 
-    public void setCiudadOrigen(RutaDeVuelo rt, Ciudad ciudad) {
-        rt.setCiudadOrigen(ciudad);
-        actualizar(rt);
-    }
-
-    public void setCiudadDestino(RutaDeVuelo rt, Ciudad ciudad) {
-        rt.setCiudadDestino(ciudad);
-        actualizar(rt);
-    }
-
     public void addCategoria(RutaDeVuelo rt, Categoria categoria) {
         rt.getCategorias().add(categoria);
         actualizar(rt);
