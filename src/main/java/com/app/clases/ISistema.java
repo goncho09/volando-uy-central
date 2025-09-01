@@ -2,6 +2,8 @@ package com.app.clases;
 
 import com.app.DAOs.*;
 import com.app.datatypes.*;
+import com.app.enums.TipoAsiento;
+
 import java.util.List;
 
 public interface ISistema {
@@ -49,6 +51,8 @@ public interface ISistema {
 
     // ---------- PAQUETES ---------- //
     List<DtPaquete> listarPaquetes();
+    List<DtPaquete> listarPaquetesNoComprados();
+    void agregarRutaAPaquete(String nombrePaquete, String nombreRuta,int cantidad, TipoAsiento tipoAsiento);
     void seleccionarPaquete(String nombre);
     DtPaquete getPaquete();
 

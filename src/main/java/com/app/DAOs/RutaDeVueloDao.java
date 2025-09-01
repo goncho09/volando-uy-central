@@ -32,6 +32,8 @@ public class RutaDeVueloDao {
         return em.find(RutaDeVuelo.class, nombre);
     }
 
+
+
     public void guardar(RutaDeVuelo rt) {
         EntityTransaction tx = em.getTransaction();
         try{ //Se intenta "guardar"

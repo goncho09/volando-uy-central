@@ -283,6 +283,17 @@ public class Sistema implements ISistema {
 
     }
 
+    public List<DtPaquete> listarPaquetesNoComprados() {
+        List<DtPaquete> listaPaquetes = new ArrayList<>();
+        for(Paquete p : this.getPaquetes()){
+            if(p.getRutaEnPaquete().isEmpty()) {
+                listaPaquetes.add(p.getDatos());
+            }
+        }
+        return listaPaquetes;
+
+    }
+
     public List<DtCliente> listarClientes(){
         List<DtCliente> listaClientes = new ArrayList<>();
         for(Cliente c : this.getClientes()){
@@ -619,5 +630,22 @@ public class Sistema implements ISistema {
 
     public void seleccionarCliente(){
 
+    }
+
+    public void agregarRutaAPaquete(String nombrePaquete, String nombreRuta,int cantidad, TipoAsiento tipoAsiento){
+        if(!this.paquetes.containsKey(nombrePaquete)){
+            throw new IllegalArgumentException("No existe este paquete");
+        }
+        if(!this.rutasDeVuelo.containsKey(nombreRuta)){
+            throw new IllegalArgumentException("No existe esa ruta de vuelo");
+        }
+
+        Paquete p = this.paquetes.get(nombrePaquete);
+        RutaDeVuelo ruta = this.rutasDeVuelo.get(nombreRuta);
+
+        RutaEnPaquete rp = new RutaEnPaquete(cantidad,tipoAsiento,ruta);
+
+        p.addRutaEnPaquete(rp);
+        paqueteDao.guardarRutaEnPaquete(rp);
     }
 }

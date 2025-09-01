@@ -1,6 +1,8 @@
 package com.app.DAOs;
 
+import com.app.clases.Aerolinea;
 import com.app.clases.Paquete;
+import com.app.clases.RutaDeVuelo;
 import com.app.clases.RutaEnPaquete;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
@@ -17,6 +19,11 @@ public class PaqueteDao {
     }
 
     public List<Paquete> listarPaquetes(){
+        return em.createQuery("SELECT p FROM Paquete p", Paquete.class).getResultList();
+    }
+
+
+    public List<Paquete> listarRutasVueloPaquete(Paquete p){
         return em.createQuery("SELECT p FROM Paquete p", Paquete.class).getResultList();
     }
 
@@ -50,6 +57,20 @@ public class PaqueteDao {
         try{ //Se intenta "modificar"
             tx.begin();
             em.merge(p);
+            tx.commit();
+        }catch(Exception e){ //Si llega a fallar se hace un rollback y se lanza el error a la capa de presentación
+            if(tx.isActive()){
+                tx.rollback();
+            }
+            throw e;
+        }
+    }
+
+    public void guardarRutaEnPaquete(RutaEnPaquete rp){
+        EntityTransaction tx = em.getTransaction();
+        try{ //Se intenta "guardar"
+            tx.begin();
+            em.persist(rp);
             tx.commit();
         }catch(Exception e){ //Si llega a fallar se hace un rollback y se lanza el error a la capa de presentación
             if(tx.isActive()){
