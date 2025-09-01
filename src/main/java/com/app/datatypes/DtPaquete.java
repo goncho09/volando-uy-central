@@ -26,6 +26,14 @@ public class DtPaquete {
         this.rutaEnPaquete = rutaEnPaquete;
     }
 
+    public RutaDeVuelo getRutaDeVuelo(String nombre){
+        for (RutaEnPaquete rp : this.rutaEnPaquete) {
+            if (rp.getRutaDeVuelo().getNombre().equals(nombre)){
+                return  rp.getRutaDeVuelo();
+            }
+        }
+        return  null;
+    }
 
 
     public List<RutaEnPaquete> getRutaEnPaquete() {

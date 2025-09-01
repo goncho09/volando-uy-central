@@ -91,6 +91,8 @@ public class Paquete {
         return new DtPaquete(this.getNombre(),this.getDescripcion(),this.getValidezDias(),this.getDescuento(),this.getCosto(),this.getRutaEnPaquete());
     }
 
+    public void addRutaEnPaquete(RutaEnPaquete rp) {this.rutaEnPaquete.add(rp);}
+
     @Override
     public String toString() {
         return this.nombre;
