@@ -399,9 +399,9 @@ public class Main extends JFrame {
             @Override
             public void itemStateChanged(ItemEvent e) {
                 if(e.getStateChange() == ItemEvent.SELECTED){
-                    Usuario user = (Usuario)JComboBoxSeleccionarUsuarioModificar.getSelectedItem();
-                    if(user instanceof Cliente){ // Pregunta si mi usuario es un cliente
-                        Cliente cliente = (Cliente) user;
+                    DtUsuario user = (DtUsuario)JComboBoxSeleccionarUsuarioModificar.getSelectedItem();
+                    if(user instanceof DtCliente){ // Pregunta si mi usuario es un cliente
+                        DtCliente cliente = (DtCliente) user;
                         LocalDate fechaCliente = cliente.getFechaNacimiento();
                         JPanelModificarCliente.setVisible(true);
                         JPanelModificarAerolinea.setVisible(false);
@@ -415,8 +415,8 @@ public class Main extends JFrame {
                         nacionalidadClienteModificar.setText(cliente.getNacionalidad());
                         //tipoDocumentoClienteModificar.setSelectedItem(cliente.getTipoDocumento()); <- Investigar este wey
 
-                    }else if(user instanceof Aerolinea){
-                        Aerolinea aerolinea = (Aerolinea) user;
+                    }else if(user instanceof DtAerolinea){
+                        DtAerolinea aerolinea = (DtAerolinea) user;
                         JPanelModificarCliente.setVisible(false);
                         JPanelModificarAerolinea.setVisible(true);
                     }else{
