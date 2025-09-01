@@ -23,18 +23,19 @@ public class dataUsuario extends JFrame {
     private JLabel nombreAerlineaConsultaUsuario;
     private JLabel nicknameAerlineaConsultaUsuario;
     private JLabel sitioAerolineaConsultaUsuario;
+    private JButton cancelarAerolinea;
+    private JPanel PanelUsuario;
 
     public dataUsuario(DtUsuario usuario) {
+        setContentPane(panel1);
         setTitle("Datos de Usuario: " + usuario.getNickname());
         setResizable(false);
         setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         setSize(275, 300);
         setLocationRelativeTo(null);
-        setVisible(true);
 
         cancelarButton.addActionListener(e -> dispose());
-
-        setVisible(true);
+        cancelarAerolinea.addActionListener(e -> dispose());
 
         nicknameConsultaUsuario.setText(usuario.getNickname());
         nombreConsultaUsuario.setText(usuario.getNombre());
@@ -51,7 +52,10 @@ public class dataUsuario extends JFrame {
 
         } else if (usuario instanceof DtAerolinea) {
             DtAerolinea aerolinea = (DtAerolinea) usuario;
+
             PanelAerolinea.setVisible(true);
+
+            PanelUsuario.setVisible(false);
 
             apellidoConsultaUsuario.setVisible(false);
             nacionalidadConsultaUsuario.setVisible(false);
@@ -59,11 +63,14 @@ public class dataUsuario extends JFrame {
             numDocumentoConsultaCliente.setVisible(false);
             fechaNacConsultaUsuario.setVisible(false);
 
+            PanelAerolinea.setVisible(true);
+
             descripcionAerolineaConsultaUsuario.setText(aerolinea.getDescripcion());
             sitioAerolineaConsultaUsuario.setText(aerolinea.getLinkWeb());
-            nombreAerlineaConsultaUsuario.setText(usuario.getNombre());
-            nicknameAerlineaConsultaUsuario.setText(usuario.getNickname());
+            nombreAerlineaConsultaUsuario.setText(aerolinea.getNombre());
+            nicknameAerlineaConsultaUsuario.setText(aerolinea.getNickname());
         }
+        setVisible(true);
     }
 
 
