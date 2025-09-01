@@ -128,6 +128,13 @@ public class Main extends JFrame {
     private JButton JButtonConsultarPaquete;
     private JPanel JPanelCategorias;
     private JSpinner JSpinnerCostoAltaPaquete;
+    private JComboBox JComboBoxAerolineaConsultaRuta;
+    private JComboBox JComboBoxRutaVueloAgregarRuta;
+    private JButton ButtonConfirmarAgregarRutaPaquete;
+    private JSpinner JSpinnerCantidadAgregarRuta;
+    private JComboBox JComboBoxTipoAsientoAgregarRutaPaquete;
+    private JComboBox JComboBoxPaqueteAgregarRuta;
+    private JComboBox JComboBoxAerolineaAgregarRuta;
 
 
     public Main() {
@@ -168,6 +175,10 @@ public class Main extends JFrame {
         JComboBoxPaqueteConsultaPaqueteRutaVuelo.setModel(auxiliar.getComboPaqueteModel());
         JComboBoxPaqueteComprarPaquete.setModel(auxiliar.getComboPaqueteModel());
         JComboBoxAerolineaConsultaVuelo.setModel(auxiliar.getComboAerolineaModel());
+        JComboBoxAerolineaConsultaRuta.setModel(auxiliar.getComboAerolineaModel());
+        JComboBoxPaqueteAgregarRuta.setModel(auxiliar.getComboPaqueteNoCompradoModel());
+        JComboBoxAerolineaAgregarRuta.setModel(auxiliar.getComboAerolineaModel());
+        JComboBoxRutaVueloAgregarRuta.setModel(auxiliar.getComboRutaDeVueloAerolineaModel());
 
         JPanelCategorias.setLayout(new GridLayout(0, 2, 5, 5));
 
@@ -178,11 +189,6 @@ public class Main extends JFrame {
             JPanelCategorias.add(check);
             checkboxes.add(check);
         }
-
-        //Settear no selección JComboBox
-        JComboBoxSeleccionarUsuarioModificar.setSelectedIndex(-1);
-        JComboBoxAerolineaAltaVuelo.setSelectedIndex(-1);
-        JComboBoxRutaVueloAltaVuelo.setSelectedIndex(-1);
 
 
         // Configurar JSpinner
@@ -200,6 +206,7 @@ public class Main extends JFrame {
         JSpinnerDescuentoAltaPaquete.setModel(new SpinnerNumberModel(0,0,100,1));
         JSpinnerPeriodoAltaPaquete.setModel(new SpinnerNumberModel(1,1,1000000,1));
         JSpinnerCostoAltaPaquete.setModel(new SpinnerNumberModel(1.0,1.0,1000000.0,1.0));
+        JSpinnerCantidadAgregarRuta.setModel(new SpinnerNumberModel(1,1,1000000,1));
 
         //¡Cargar datitos!
         auxiliar.cargarUsuariosComboBox();
@@ -207,6 +214,22 @@ public class Main extends JFrame {
         auxiliar.cargarRutasDeVueloComboBox();
         auxiliar.cargarCiudadesComboBox();
         auxiliar.cargarPaqueteComboBox();
+        auxiliar.cargarPaqueteNoCompradoComboBox();
+
+        JComboBoxSeleccionarUsuarioModificar.setSelectedIndex(-1);
+        JComboBoxSeleccionarUsuarioConsultar.setSelectedIndex(-1);
+        JComboBoxAerolineaAltaVuelo.setSelectedIndex(-1);
+        JComboBoxRutaVueloAltaVuelo.setSelectedIndex(-1);
+        JComboBoxCiudadOrigen.setSelectedIndex(-1);
+        JComboBoxCiudadDestino.setSelectedIndex(-1);
+        JComboBoxAerolineaAltaRutaVuelo.setSelectedIndex(-1);
+        JComboBoxPaqueteConsultaPaqueteRutaVuelo.setSelectedIndex(-1);
+        JComboBoxPaqueteComprarPaquete.setSelectedIndex(-1);
+        JComboBoxAerolineaConsultaVuelo.setSelectedIndex(-1);
+        JComboBoxAerolineaConsultaRuta.setSelectedIndex(-1);
+        JComboBoxPaqueteAgregarRuta.setSelectedIndex(-1);
+        JComboBoxAerolineaAgregarRuta.setSelectedIndex(-1);
+        JComboBoxRutaVueloAgregarRuta.setSelectedIndex(-1);
 
         consultarVueloButton.addActionListener(new ActionListener() {
             @Override
@@ -425,7 +448,7 @@ public class Main extends JFrame {
 
                     //pa verificar que se creo
                     try {
-                        s.consultaVuelo(dtVuelo);
+                        s.consultarVuelo(dtVuelo.getNombre());
                         new dialogMessage("Vuelo creado y verificado correctamente");
                     } catch (IllegalArgumentException ex) {
                         new dialogMessage("Error: el vuelo no se registró correctamente");
@@ -597,9 +620,39 @@ public class Main extends JFrame {
                     }
 
                     s.altaPaquete(new DtPaquete(nombreAltaPaquete.getText(),descripcionAltaPaquete.getText(),periodo,descuento,costo, new ArrayList<>()));
+
+                    new dialogMessage("Paquete creado correctamente.");
+                    return;
                 } catch (Exception ex){
                     new dialogMessage(ex.getMessage());
                 }
+            }
+        });
+
+        ButtonConfirmarAgregarRutaPaquete.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(auxiliar.estanVaciosJComboBox(JComboBoxPaqueteAgregarRuta,JComboBoxAerolineaAgregarRuta,JComboBoxRutaVueloAgregarRuta,JComboBoxTipoAsientoAgregarRutaPaquete)){
+                    new dialogMessage("Falta ingresar campos de texto");
+                    return;
+                }
+
+                try{
+                    Integer cantidad = (Integer) JSpinnerCantidadAgregarRuta.getValue();
+                    s.agregarRutaAPaquete(JComboBoxPaqueteAgregarRuta.getSelectedItem().toString(),JComboBoxRutaVueloAgregarRuta.getSelectedItem().toString(),cantidad, TipoAsiento.valueOf(JComboBoxTipoAsientoAgregarRutaPaquete.getSelectedItem().toString()));
+
+                    new dialogMessage("Ruta de vuelo agregada a paquete correctamente.");
+                    return;
+                } catch (Exception ex) {
+                    new dialogMessage(ex.getMessage());
+                }
+            }
+        });
+
+        JComboBoxAerolineaAgregarRuta.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                auxiliar.cargarRutasDeVueloComboBoxAerolinea(JComboBoxAerolineaAgregarRuta.getSelectedItem().toString());
             }
         });
     }

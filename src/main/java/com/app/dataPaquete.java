@@ -1,8 +1,12 @@
 package com.app;
 
+import com.app.clases.RutaDeVuelo;
+import com.app.clases.RutaEnPaquete;
 import com.app.datatypes.DtPaquete;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class dataPaquete extends JFrame {
     private JLabel nombre;
@@ -11,8 +15,9 @@ public class dataPaquete extends JFrame {
     private JLabel descuento;
     private JLabel costo;
     private JLabel cantidadRutas;
-    private JComboBox ComboBoxRutas;
+    private JComboBox JComboBoxRutasVuelo;
     private JPanel dataPaquetePanel;
+    private JButton ButtonVerRutaDeVuelo;
     private JPanel dataPaqueteDisplay;
 
     public dataPaquete(DtPaquete paquete) {
@@ -30,5 +35,30 @@ public class dataPaquete extends JFrame {
             descuento.setText(Float.toString(paquete.getDescuento()));
             costo.setText(Float.toString(paquete.getCosto()));
             cantidadRutas.setText(Integer.toString(paquete.getRutaEnPaquete().size()));
-        }
+
+
+            DefaultComboBoxModel<RutaEnPaquete> model = new DefaultComboBoxModel<>();
+            for (RutaEnPaquete rp : paquete.getRutaEnPaquete()) {
+                model.addElement(rp);
+            }
+
+            JComboBoxRutasVuelo.setModel(model);
+            JComboBoxRutasVuelo.setSelectedIndex(-1);
+
+
+        ButtonVerRutaDeVuelo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(JComboBoxRutasVuelo.getSelectedItem() == null){
+                    new dialogMessage("Debe seleccionar una ruta de vuelo para ver su información");
+                }
+
+                RutaDeVuelo ruta = paquete.getRutaDeVuelo(JComboBoxRutasVuelo.getSelectedItem().toString());
+                if (ruta == null){
+                    new dialogMessage("No existe esa ruta de vuelo en este paquete");
+                }
+                new dataRutaDeVuelo(ruta.getDatos());
+            }
+        });
+    }
 }

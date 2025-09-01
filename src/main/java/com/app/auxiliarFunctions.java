@@ -15,6 +15,8 @@ public class auxiliarFunctions {
     private DefaultComboBoxModel<DtCiudad> comboCiudadOrigen = new DefaultComboBoxModel<>();
     private DefaultComboBoxModel<DtCiudad> comboCiudadDestino = new DefaultComboBoxModel<>();
     private DefaultComboBoxModel<DtPaquete> comboPaquete = new DefaultComboBoxModel<>();
+    private DefaultComboBoxModel<DtPaquete> comboPaqueteNoComprado = new DefaultComboBoxModel<>();
+    private DefaultComboBoxModel<DtRuta> comboRutaDeVueloAerolinea = new DefaultComboBoxModel<>();
 
     public auxiliarFunctions(ISistema s) {
         this.sistema = s;
@@ -27,6 +29,10 @@ public class auxiliarFunctions {
 
     public DefaultComboBoxModel<DtAerolinea> getComboAerolineaModel() {
         return comboAerolinea;
+    }
+
+    public DefaultComboBoxModel<DtRuta> getComboRutaDeVueloAerolineaModel() {
+        return comboRutaDeVueloAerolinea;
     }
 
     public DefaultComboBoxModel<DtRuta> getComboRutaDeVueloModel() {
@@ -43,6 +49,10 @@ public class auxiliarFunctions {
 
     public DefaultComboBoxModel<DtPaquete> getComboPaqueteModel() {
         return comboPaquete;
+    }
+
+    public DefaultComboBoxModel<DtPaquete> getComboPaqueteNoCompradoModel() {
+        return comboPaqueteNoComprado;
     }
 
     //Función para validar 1 o más "JComboBox"
@@ -120,6 +130,22 @@ public class auxiliarFunctions {
         }
     }
 
+    public void cargarRutasDeVueloComboBoxAerolinea(String nickname) {
+        comboRutaDeVueloAerolinea.removeAllElements();
+        List<DtRuta> rt = sistema.listarRutasDeVuelo(nickname);
+        if(rt != null) {
+            for (DtRuta rtv : rt) {
+                comboRutaDeVueloAerolinea.addElement(rtv);
+            }
+        }else{
+            comboRutaDeVueloAerolinea.removeAllElements();
+            comboRutaDeVueloAerolinea.addElement(new DtRuta() {
+                @Override
+                public String toString() { return "N/A"; }
+            });
+        }
+    }
+
     public void cargarCiudadesComboBox() {
         comboCiudadOrigen.removeAllElements();
         comboCiudadDestino.removeAllElements();
@@ -151,12 +177,27 @@ public class auxiliarFunctions {
         List<DtPaquete> p = sistema.listarPaquetes();
         if(p != null) {
             for (DtPaquete pqt : p) {
-                System.out.println(pqt.getNombre());
                 comboPaquete.addElement(pqt);
             }
         }else{
             comboPaquete.removeAllElements();
             comboPaquete.addElement(new DtPaquete() {
+                @Override
+                public String toString() { return "N/A"; }
+            });
+        }
+    }
+
+    public void cargarPaqueteNoCompradoComboBox() {
+        comboPaqueteNoComprado.removeAllElements();
+        List<DtPaquete> p = sistema.listarPaquetesNoComprados();
+        if(p != null) {
+            for (DtPaquete pqt : p) {
+                comboPaqueteNoComprado.addElement(pqt);
+            }
+        }else{
+            comboPaqueteNoComprado.removeAllElements();
+            comboPaqueteNoComprado.addElement(new DtPaquete() {
                 @Override
                 public String toString() { return "N/A"; }
             });

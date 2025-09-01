@@ -34,7 +34,6 @@ public class Cliente extends Usuario{
         this.numeroDocumento = cliente.getNumeroDocumento();
         this.comprasPaquetes = new ArrayList<>();
         this.reservas = new ArrayList<>();
-        //System.out.println("Creando datatype: " + nickname + " - " + nombre + " - " + email + " - " + apellido + " - " + fechaNacimiento + " - " + nacionalidad + " - " + tipoDocumento + " - " + numeroDocumento);
     }
 
     public String getApellido() {
@@ -85,7 +84,11 @@ public class Cliente extends Usuario{
         this.comprasPaquetes = comprasPaquetes;
     }
 
-    public List<DtReserva> getReservas() {
+    public List<Reserva> getReservas(){
+        return this.reservas;
+    }
+
+    public List<DtReserva> getDtReservas() {
         List<DtReserva> dtReservas = new ArrayList<>();
         for (Reserva reserva : this.reservas) {
             dtReservas.add(new DtReserva(
@@ -119,6 +122,19 @@ public class Cliente extends Usuario{
             }
         }
         return dtPaquetes;
+    }
+
+    public DtCliente getDatos(){
+        return new DtCliente(
+                this.getNickname(),
+                this.getNombre(),
+                this.getEmail(),
+                this.getApellido(),
+                this.getFechaNacimiento(),
+                this.getNacionalidad(),
+                this.getTipoDocumento(),
+                this.getNumeroDocumento()
+        );
     }
 
     public void mostrarDatos() {

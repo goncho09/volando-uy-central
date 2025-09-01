@@ -49,4 +49,8 @@ public class RutaEnPaquete {
     public void setRutaDeVuelo(RutaDeVuelo rutaDeVuelo) {
         this.rutaDeVuelo = rutaDeVuelo;
     }
+
+
+    @Override
+    public String toString() {return this.rutaDeVuelo.getNombre();}
 }

@@ -32,6 +32,8 @@ public class RutaDeVueloDao {
         return em.find(RutaDeVuelo.class, nombre);
     }
 
+
+
     public void guardar(RutaDeVuelo rt) {
         EntityTransaction tx = em.getTransaction();
         try{ //Se intenta "guardar"
@@ -67,16 +69,6 @@ public class RutaDeVueloDao {
             em.remove(rt);
         }
         em.getTransaction().commit();
-    }
-
-    public void setCiudadOrigen(RutaDeVuelo rt, Ciudad ciudad) {
-        rt.setCiudadOrigen(ciudad);
-        actualizar(rt);
-    }
-
-    public void setCiudadDestino(RutaDeVuelo rt, Ciudad ciudad) {
-        rt.setCiudadDestino(ciudad);
-        actualizar(rt);
     }
 
     public void addCategoria(RutaDeVuelo rt, Categoria categoria) {
