@@ -372,28 +372,28 @@ public class Main extends JFrame {
         consultarUsuarioButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (comboBox6.getSelectedItem() == null) {
-                    dialogMessage errorDialog = new dialogMessage("Seleccione un usuario");
-                    errorDialog.setVisible(true);
+            try {
+                if (JComboBoxSeleccionarUsuarioConsultar.getSelectedItem() == null) {
+                    new dialogMessage("Seleccione un usuario");
                     return;
                 }
-                String nicknameSeleccionado = comboBox6.getSelectedItem().toString();
+                String nickname = JComboBoxSeleccionarUsuarioConsultar.getSelectedItem().toString();
 
-                s.elegirUsuario(nicknameSeleccionado);
+                s.elegirUsuario(nickname);
                 DtUsuario dtUsuario = s.getUsuarioSeleccionado();
 
-                textField3.setText(dtUsuario.getNickname());
-                descripcionAltaPaquete.setText(dtUsuario.getNombre());
-                textField7.setText(dtUsuario.getEmail());
-
-                if (dtUsuario instanceof DtCliente) {
-                    DtCliente cliente = (DtCliente) dtUsuario;
-                    textField6.setText(cliente.getApellido());
-                } else if (dtUsuario instanceof DtAerolinea) {
-                    DtAerolinea aerolinea = (DtAerolinea) dtUsuario;
-
+                if (dtUsuario == null) {
+                    new dialogMessage("Usuario no encontrado");
+                    return;
                 }
+
+                new dataUsuario(dtUsuario);
+            }catch (Exception ex) {
+                new dialogMessage("Error al consultar: " + ex.getMessage());
+                ex.printStackTrace();
             }
+            }
+
         });
         JComboBoxSeleccionarUsuarioModificar.addItemListener(new ItemListener() {
             @Override
