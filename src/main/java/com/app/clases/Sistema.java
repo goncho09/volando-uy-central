@@ -24,6 +24,8 @@ public class Sistema implements ISistema {
     private CiudadDao ciudadDao;
     private PaqueteDao paqueteDao;
     private VueloDao vueloDao;
+    private ReservaDao reservaDao;
+    private PasajerosDao pasajeroDao;
 
     private Map<String, Categoria> categorias;
     private Map<String, Ciudad> ciudades;
@@ -32,7 +34,7 @@ public class Sistema implements ISistema {
     private Map<String, Vuelo> vuelos;
     private Map<String, RutaDeVuelo> rutasDeVuelo;
     private Map<String, CompraPaquete> compraPaquetes;
-    private Map<String, Reserva> reservas;
+    private List<Reserva> reservas;
     private List<DtPasajero> pasajes;
 
     private List<Vuelo> consultaVuelos = new ArrayList<>();
@@ -59,6 +61,8 @@ public class Sistema implements ISistema {
         this.ciudadDao = new CiudadDao(em);
         this.paqueteDao = new PaqueteDao(em);
         this.vueloDao = new VueloDao(em);
+        this.reservaDao = new ReservaDao(em);
+        this.pasajeroDao = new PasajerosDao(em);
 
         this.categorias = categoriaDao.obtenerCategorias();
         this.ciudades = ciudadDao.obtenerCiudades();
@@ -66,8 +70,8 @@ public class Sistema implements ISistema {
         this.paquetes = paqueteDao.obtenerPaquetes();
         this.rutasDeVuelo = rutaDeVueloDao.obtenerRutasDeVuelo();
         this.vuelos = vueloDao.obtenerVuelos();
-        this.reservas = new LinkedHashMap<>();
-        this.pasajes = new ArrayList<>();
+        this.reservas = reservaDao.listar();
+        this.pasajes = pasajeroDao.listar();
     }
 
     public static Sistema getInstancia() {
@@ -520,10 +524,12 @@ public class Sistema implements ISistema {
             Cliente newUser = new Cliente((DtCliente) usuario);
             this.usuarios.put(newUser.getNickname(),newUser);
             userDao.guardar(newUser);
+            //newUser.mostrarDatos(); //Debug
         }else if (usuario instanceof DtAerolinea) {
             Aerolinea newUser = new Aerolinea((DtAerolinea) usuario);
             this.usuarios.put(newUser.getNickname(), newUser);
             userDao.guardar(newUser);
+            //newUser.mostrarDatos(); //Debug
         }
     }
 

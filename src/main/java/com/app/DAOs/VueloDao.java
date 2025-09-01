@@ -12,7 +12,6 @@ import java.util.Map;
             super(em, Vuelo.class);
         }
 
-
         public Map<String, Vuelo> obtenerVuelos() {
             return super.obtener(Vuelo::getNombre);
         }

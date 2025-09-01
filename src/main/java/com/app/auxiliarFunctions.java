@@ -84,6 +84,15 @@ public class auxiliarFunctions {
         }
     }
 
+    public void cargarTodosLosDatos(){
+        cargarUsuariosComboBox();
+        cargarCiudadesComboBox();
+        cargarAerolineasComboBox();
+        cargarRutasDeVueloComboBox();
+        cargarPaqueteComboBox();
+        cargarPaqueteNoCompradoComboBox();
+    }
+
     public void cargarUsuariosComboBox() {
         comboUser.removeAllElements();
         List<DtUsuario> usuarios = sistema.listarUsuarios();
@@ -172,8 +181,6 @@ public class auxiliarFunctions {
             });
         }
     }
-
-
 
     public void cargarPaqueteComboBox() {
         comboPaquete.removeAllElements();

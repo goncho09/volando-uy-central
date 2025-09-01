@@ -137,6 +137,10 @@ public class Main extends JFrame {
     private JComboBox JComboBoxAerolineaAgregarRuta;
     private JComboBox JComboBoxRutaVueloConsultaRuta;
     private JButton ButtonConsultarRutaVuelo;
+    private JTextField nombreModificarAerolinea;
+    private JTextField correoModificarAerolinea;
+    private JTextField linkWebModificarAerolinea;
+    private JTextField descripcionModificarAerolinea;
 
 
     public Main() {
@@ -352,15 +356,14 @@ public class Main extends JFrame {
                         );
                         try {
                             s.registrarCliente(cliente);
+                            auxiliar.cargarTodosLosDatos();
                         } catch (Exception ex) {
                             ex.printStackTrace();
                             s.cancelarAltaUsuario();
                             new dialogMessage(ex.getMessage());
                         }
-                        System.out.println("Cliente registrado: " + nicknameRegistrarCliente.getText());
                         auxiliar.cargarUsuariosComboBox();
                     }
-
                 } catch (Exception ex) {
                         ex.printStackTrace();
                         new dialogMessage(ex.getMessage());
@@ -419,6 +422,11 @@ public class Main extends JFrame {
                         DtAerolinea aerolinea = (DtAerolinea) user;
                         JPanelModificarCliente.setVisible(false);
                         JPanelModificarAerolinea.setVisible(true);
+                        nicknameModificarAerolinea.setText(aerolinea.getNickname());
+                        nombreModificarAerolinea.setText(aerolinea.getNombre());
+                        correoModificarAerolinea.setText(aerolinea.getEmail());
+                        linkWebModificarAerolinea.setText(aerolinea.getLinkWeb());
+                        descripcionModificarAerolinea.setText(aerolinea.getLinkWeb());
                     }else{
                         JPanelModificarAerolinea.setVisible(false);
                         JPanelModificarCliente.setVisible(false);
@@ -509,7 +517,6 @@ public class Main extends JFrame {
                             s.cancelarAltaUsuario();
                             new dialogMessage(ex.getMessage());
                         }
-                        System.out.println("Aerolínea registrada: " + nicknameRegistrarCliente.getText());
                     }
                     auxiliar.cargarUsuariosComboBox();
             }catch (Exception ex) {
