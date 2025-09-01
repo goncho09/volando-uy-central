@@ -48,6 +48,7 @@ public interface ISistema {
     void ingresarDatosVuelo(DtVuelo datosVuelo);
     void confirmarAltaVuelo();
     void cancelarAlta();
+    List <DtVuelo> getVuelosRutaDeVuelo(String nombre);
 
     // ---------- PAQUETES ---------- //
     List<DtPaquete> listarPaquetes();
@@ -75,6 +76,7 @@ public interface ISistema {
     CategoriaDao getCategoriaDao();
     CiudadDao getCiudadDao();
     PaqueteDao getPaqueteDao();
+    VueloDao getVueloDao();
 
     List<RutaDeVuelo> getRutasDeVuelo();
 }

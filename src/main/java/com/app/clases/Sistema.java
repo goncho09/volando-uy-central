@@ -23,6 +23,7 @@ public class Sistema implements ISistema {
     private CategoriaDao categoriaDao;
     private CiudadDao ciudadDao;
     private PaqueteDao paqueteDao;
+    private VueloDao vueloDao;
 
     private Map<String, Categoria> categorias;
     private Map<String, Ciudad> ciudades;
@@ -57,13 +58,14 @@ public class Sistema implements ISistema {
         this.categoriaDao = new CategoriaDao(em);
         this.ciudadDao = new CiudadDao(em);
         this.paqueteDao = new PaqueteDao(em);
+        this.vueloDao = new VueloDao(em);
 
         this.categorias = categoriaDao.obtenerCategorias();
         this.ciudades = ciudadDao.obtenerCiudades();
         this.usuarios = userDao.obtenerUsuarios();
         this.paquetes = paqueteDao.obtenerPaquetes();
         this.rutasDeVuelo = rutaDeVueloDao.obtenerRutasDeVuelo();
-        this.vuelos = new LinkedHashMap<>();
+        this.vuelos = vueloDao.obtenerVuelos();
         this.reservas = new LinkedHashMap<>();
         this.pasajes = new ArrayList<>();
     }
@@ -87,6 +89,8 @@ public class Sistema implements ISistema {
 
     public PaqueteDao getPaqueteDao() {return this.paqueteDao;}
 
+    public VueloDao getVueloDao() {return this.vueloDao;}
+
     public List<DtAerolinea> listarAerolineas() {
         List <DtAerolinea> nuevaLista = new ArrayList<>();
         for (Aerolinea a : this.getAerolineas()) {
@@ -105,12 +109,8 @@ public class Sistema implements ISistema {
     }
 
     public DtRuta consultarRuta(String nombre) {
-        for (RutaDeVuelo r : this.getRutasDeVuelo()) {
-            if (r.getNombre().equals(nombre)) {
-                return r.getDatos();
-            }
-        }
-        return null;
+        if(!this.rutasDeVuelo.containsKey(nombre)) throw new IllegalArgumentException("No existe esta ruta");
+        return  (this.rutasDeVuelo.get(nombre).getDatos());
     }
 
     public DtVuelo consultarVuelo(String nombre) {
@@ -308,6 +308,10 @@ public class Sistema implements ISistema {
 
     public List<Paquete> getPaquetes() {
         return new ArrayList<>(this.paquetes.values());
+    }
+
+    public List<Vuelo> getVuelos() {
+        return new ArrayList<>(this.vuelos.values());
     }
 
     public List<RutaDeVuelo> getRutasDeVuelo() {
@@ -647,5 +651,16 @@ public class Sistema implements ISistema {
 
         p.addRutaEnPaquete(rp);
         paqueteDao.guardarRutaEnPaquete(rp);
+    }
+
+    public List <DtVuelo> getVuelosRutaDeVuelo(String nombre){
+        List <DtVuelo> vuelos = new ArrayList<>();
+
+        for(Vuelo v : this.getVuelos()){
+            if(v.getRutaDeVuelo().getNombre().equals(nombre)){
+                vuelos.add(v.getDatos());
+            }
+        }
+        return  vuelos;
     }
 }
