@@ -2,9 +2,12 @@ package com.app;
 
 import com.app.clases.Categoria;
 import com.app.datatypes.DtRuta;
-
+import com.app.datatypes.DtVuelo;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.List;
 
 public class dataRutaDeVuelo extends JFrame{
     private JPanel panel1;
@@ -19,15 +22,25 @@ public class dataRutaDeVuelo extends JFrame{
     private JLabel ciudadDestino;
     private JPanel dataRutaPanel;
     private JPanel categoriasPanel;
+    private JComboBox JComboBoxVuelos;
+    private JButton ButtonVerVuelo;
 
-    public dataRutaDeVuelo(DtRuta ruta){
+    public dataRutaDeVuelo(DtRuta ruta, List<DtVuelo> vuelosAsociados){
         setTitle("Datos de la ruta: " + ruta.getNombre());
         setResizable(false);
         setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-        setSize(275, 300);
+        setSize(500, 400);
         setLocationRelativeTo(null);
         setVisible(true);
         add(dataRutaPanel);
+
+        DefaultComboBoxModel<DtVuelo> model = new DefaultComboBoxModel<>();
+        for (DtVuelo v : vuelosAsociados) {
+            model.addElement(v);
+        }
+
+        JComboBoxVuelos.setModel(model);
+        JComboBoxVuelos.setSelectedIndex(-1);
 
         nombre.setText(ruta.getNombre());
         descripcion.setText(ruta.getDescripcion());
@@ -51,5 +64,21 @@ public class dataRutaDeVuelo extends JFrame{
         }
 
 
+        ButtonVerVuelo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(JComboBoxVuelos.getSelectedItem() == null){
+                    new dialogMessage("Seleccione un vuelo para poder verlo.");
+                }
+
+                for (DtVuelo v : vuelosAsociados) {
+                    if(v.getNombre().equals(JComboBoxVuelos.getSelectedItem().toString())){
+                        new dataVuelo(v.getDatos());
+                        break;
+                    }
+                }
+
+            }
+        });
     }
 }

@@ -14,6 +14,8 @@ public class DtVuelo {
     private LocalDate fechaAlta;
     private RutaDeVuelo rutaDeVuelo;
 
+    public DtVuelo(){};
+
     public DtVuelo(String nombre, LocalDate fecha, LocalTime duracion, int maxTuristas, int maxEjecutivos, LocalDate fechaAlta,RutaDeVuelo rutaDeVuelo) {
         this.nombre = nombre;
         this.fecha = fecha;
@@ -22,6 +24,10 @@ public class DtVuelo {
         this.maxEjecutivos = maxEjecutivos;
         this.fechaAlta = fechaAlta;
         this.rutaDeVuelo = rutaDeVuelo;
+    }
+
+    public DtVuelo getDatos() {
+        return new DtVuelo(this.nombre,this.fecha,this.duracion,this.maxTuristas,this.maxEjecutivos,this.fechaAlta,this.rutaDeVuelo);
     }
 
     public String getNombre() {
@@ -79,4 +85,7 @@ public class DtVuelo {
     public void setRutaDeVuelo(RutaDeVuelo rutaDeVuelo) {
         this.rutaDeVuelo = rutaDeVuelo;
     }
+
+    @Override
+    public String toString() {return this.nombre;}
 }

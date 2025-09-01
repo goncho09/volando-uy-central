@@ -52,12 +52,12 @@ public class dataPaquete extends JFrame {
                 if(JComboBoxRutasVuelo.getSelectedItem() == null){
                     new dialogMessage("Debe seleccionar una ruta de vuelo para ver su información");
                 }
-
-                RutaDeVuelo ruta = paquete.getRutaDeVuelo(JComboBoxRutasVuelo.getSelectedItem().toString());
-                if (ruta == null){
-                    new dialogMessage("No existe esa ruta de vuelo en este paquete");
+                try{
+                    //new dataRutaDeVuelo(paquete.getRutaDeVuelo(JComboBoxRutasVuelo.getSelectedItem().toString()).getDatos());
+                } catch (Exception ex) {
+                    new dialogMessage(ex.getMessage());
                 }
-                new dataRutaDeVuelo(ruta.getDatos());
+
             }
         });
     }

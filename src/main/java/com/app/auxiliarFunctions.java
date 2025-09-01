@@ -17,6 +17,7 @@ public class auxiliarFunctions {
     private DefaultComboBoxModel<DtPaquete> comboPaquete = new DefaultComboBoxModel<>();
     private DefaultComboBoxModel<DtPaquete> comboPaqueteNoComprado = new DefaultComboBoxModel<>();
     private DefaultComboBoxModel<DtRuta> comboRutaDeVueloAerolinea = new DefaultComboBoxModel<>();
+    private DefaultComboBoxModel<DtVuelo> comboVueloRutaDeVuelo = new DefaultComboBoxModel<>();
 
     public auxiliarFunctions(ISistema s) {
         this.sistema = s;
@@ -54,6 +55,8 @@ public class auxiliarFunctions {
     public DefaultComboBoxModel<DtPaquete> getComboPaqueteNoCompradoModel() {
         return comboPaqueteNoComprado;
     }
+
+    public DefaultComboBoxModel<DtVuelo> getComboVueloRutaDeVueloModel() {return  comboVueloRutaDeVuelo;}
 
     //Función para validar 1 o más "JComboBox"
     public boolean estanVaciosJComboBox(JComboBox<?>... combos) {
@@ -203,4 +206,5 @@ public class auxiliarFunctions {
             });
         }
     }
+
 }

@@ -135,6 +135,8 @@ public class Main extends JFrame {
     private JComboBox JComboBoxTipoAsientoAgregarRutaPaquete;
     private JComboBox JComboBoxPaqueteAgregarRuta;
     private JComboBox JComboBoxAerolineaAgregarRuta;
+    private JComboBox JComboBoxRutaVueloConsultaRuta;
+    private JButton ButtonConsultarRutaVuelo;
 
 
     public Main() {
@@ -179,6 +181,7 @@ public class Main extends JFrame {
         JComboBoxPaqueteAgregarRuta.setModel(auxiliar.getComboPaqueteNoCompradoModel());
         JComboBoxAerolineaAgregarRuta.setModel(auxiliar.getComboAerolineaModel());
         JComboBoxRutaVueloAgregarRuta.setModel(auxiliar.getComboRutaDeVueloAerolineaModel());
+        JComboBoxRutaVueloConsultaRuta.setModel(auxiliar.getComboRutaDeVueloAerolineaModel());
 
         JPanelCategorias.setLayout(new GridLayout(0, 2, 5, 5));
 
@@ -450,6 +453,7 @@ public class Main extends JFrame {
                     try {
                         s.consultarVuelo(dtVuelo.getNombre());
                         new dialogMessage("Vuelo creado y verificado correctamente");
+                        new dialogMessage("No se guarda en la BD");
                     } catch (IllegalArgumentException ex) {
                         new dialogMessage("Error: el vuelo no se registró correctamente");
                     }
@@ -653,6 +657,32 @@ public class Main extends JFrame {
             @Override
             public void itemStateChanged(ItemEvent e) {
                 auxiliar.cargarRutasDeVueloComboBoxAerolinea(JComboBoxAerolineaAgregarRuta.getSelectedItem().toString());
+            }
+        });
+
+        JComboBoxAerolineaConsultaRuta.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                    auxiliar.cargarRutasDeVueloComboBoxAerolinea(JComboBoxAerolineaAgregarRuta.getSelectedItem().toString());
+            }
+        });
+
+        ButtonConsultarRutaVuelo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(auxiliar.estanVaciosJComboBox(JComboBoxAerolineaConsultaRuta,JComboBoxRutaVueloConsultaRuta)){
+                    new dialogMessage("Seleccione todos los campos");
+                    return;
+                }
+
+                try{
+                    String nombreRuta = JComboBoxRutaVueloConsultaRuta.getSelectedItem().toString();
+                    new dataRutaDeVuelo(s.consultarRuta(nombreRuta),s.getVuelosRutaDeVuelo(nombreRuta));
+                } catch (Exception ex) {
+                    new dialogMessage(ex.getMessage());
+                }
+
+
             }
         });
     }
