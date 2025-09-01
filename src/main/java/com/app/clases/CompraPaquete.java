@@ -27,7 +27,7 @@ public class CompraPaquete {
         this.fechaVencimiento = fechaVencimiento;
         this.costo = costo;
         this.paquete = paquete;
-        //this.cliente = cliente;
+        this.cliente = cliente;
     }
 
     public LocalDate getFechaCompra() {
@@ -62,7 +62,7 @@ public class CompraPaquete {
         this.paquete = paquete;
     }
 
-    // public Cliente getCliente() {return cliente;}
+    public Cliente getCliente() {return cliente;}
 
-    // public void setCliente(Cliente cliente) {this.cliente = cliente;}
+    public void setCliente(Cliente cliente) {this.cliente = cliente;}
 }

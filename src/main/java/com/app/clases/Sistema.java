@@ -450,8 +450,8 @@ public class Sistema implements ISistema {
 
 
     public List<Categoria> getCategorias(){
-        if(categoriaDao.listarCategorias().isEmpty()) { throw new IllegalArgumentException("No hay categorias.");}
-        return categoriaDao.listarCategorias();
+        if(categoriaDao.listar().isEmpty()) { throw new IllegalArgumentException("No hay categorias.");}
+        return categoriaDao.listar();
     }
 
     public void consultaVuelo(DtVuelo vuelo) {
@@ -650,7 +650,7 @@ public class Sistema implements ISistema {
         RutaEnPaquete rp = new RutaEnPaquete(cantidad,tipoAsiento,ruta);
 
         p.addRutaEnPaquete(rp);
-        paqueteDao.guardarRutaEnPaquete(rp);
+        paqueteDao.addRutaEnPaquete(p, rp);
     }
 
     public List <DtVuelo> getVuelosRutaDeVuelo(String nombre){
