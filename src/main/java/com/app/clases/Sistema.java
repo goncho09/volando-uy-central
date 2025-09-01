@@ -226,6 +226,16 @@ public class Sistema implements ISistema {
         return new ArrayList<>();
     }
 
+    public List<DtReserva> consultaDeReservasDeUnVuelo(String nickname) {
+        List<DtReserva> reservasDelVuelo = new ArrayList<>();
+        for (Reserva r : this.reservas.values()) {
+            if (r.getVuelo().getNombre().equals(nickname)) {
+                reservasDelVuelo.add(r.getDatos());
+            }
+        }
+        return reservasDelVuelo;
+    }
+
     public List<DtPaquete> mostrarPaquetes() {
         List<DtPaquete> paquetes = new ArrayList<>();
 

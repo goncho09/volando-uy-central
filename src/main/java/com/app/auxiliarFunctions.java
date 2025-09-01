@@ -18,6 +18,7 @@ public class auxiliarFunctions {
     private DefaultComboBoxModel<DtPaquete> comboPaqueteNoComprado = new DefaultComboBoxModel<>();
     private DefaultComboBoxModel<DtRuta> comboRutaDeVueloAerolinea = new DefaultComboBoxModel<>();
     private DefaultComboBoxModel<DtVuelo> comboVueloRutaDeVuelo = new DefaultComboBoxModel<>();
+    private DefaultComboBoxModel<DtReserva> comboReserva = new DefaultComboBoxModel<>();
 
     public auxiliarFunctions(ISistema s) {
         this.sistema = s;
@@ -174,7 +175,6 @@ public class auxiliarFunctions {
     }
 
 
-
     public void cargarPaqueteComboBox() {
         comboPaquete.removeAllElements();
         List<DtPaquete> p = sistema.listarPaquetes();
@@ -206,5 +206,18 @@ public class auxiliarFunctions {
             });
         }
     }
+    public void cargarDatosReservaComboBox() {
+        List<DtReserva> reservas = sistema.listarReservas();
+        if (reservas != null) {
+            for (DtReserva r : reservas) {
+                comboReserva.addElement(r);
+            }
+        } else {
+            comboReserva.removeAllElements();
+            comboReserva.addElement(new DtReserva() {
+                @Override // esto no se usa, pero es para que no rompa
+                public String toString() { return "N/A"; }
+            });
+        }
 
-}
+    }

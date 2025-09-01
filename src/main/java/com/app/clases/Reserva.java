@@ -131,4 +131,18 @@ public class Reserva {
     public void setPaquete(Paquete paquete) {
         this.paquete = paquete;
     }
+
+    public DtReserva getDatos() {
+        return new DtReserva(
+                this.fecha,
+                this.tipoAsiento,
+                this.cantPasajes,
+                this.equipajeExtra,
+                this.costo,
+                this.pasajeros,
+                this.cliente,
+                this.vuelo,
+                this.paquete
+        );
+    }
 }
