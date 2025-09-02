@@ -36,7 +36,6 @@ public class DtUsuario {
         this.email = email;
     }
 
-
     @Override
     public String toString() { return this.nickname; }
 }

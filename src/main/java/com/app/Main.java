@@ -141,6 +141,8 @@ public class Main extends JFrame {
     private JTextField correoModificarAerolinea;
     private JTextField linkWebModificarAerolinea;
     private JTextField descripcionModificarAerolinea;
+    private JButton confirmarModificarCliente;
+    private JTextField numeroDocumentoModificarCliente;
 
 
     public Main() {
@@ -250,8 +252,10 @@ public class Main extends JFrame {
                 RutaDeVuelo ruta1 = new RutaDeVuelo(new DtRuta("Vuelo A1", "Descripcion A1", hora, 100, 200, 20, fecha1,s.getCategorias(),s.getCiudades().get(0),s.getCiudades().get(1)));
                 DtVuelo dataVuelo = new DtVuelo("A1", fechaPrueba, horaPrueba, 160, 40, fechaAltaPrueba, ruta1);
 
-                JFrame vuelo = new dataVuelo(dataVuelo);
+                JFrame vuelo = new dataVuelo(s.consultarVuelo("pepe"));
                 setEnabled(false);
+
+
 
                 vuelo.addWindowListener(new WindowAdapter() {
                     @Override
@@ -344,14 +348,30 @@ public class Main extends JFrame {
                             new dialogMessage("Faltan argumentos");
                             return;
                         }
+
                         // Crear DtCliente
-                        LocalDate fecha1 = LocalDate.of(2025, 8, 25);
+                        int dia = (Integer)fechaDiaRegistrarCliente.getValue();
+                        int mes = (Integer)fechaMesRegistrarCliente.getValue();
+                        int anio = (Integer)fechaMesRegistrarCliente.getValue();
+                        LocalDate fecha;
+
+                        try{
+                            fecha = LocalDate.of(anio,mes,dia);
+                            if(!auxiliar.esFechaValida(fecha)){
+                                new dialogMessage("Debes ingresar una fecha válida..");
+                                return;
+                            }
+                        }catch (Exception ex){
+                            new dialogMessage("Debes ingresar una fecha válida..");
+                            return;
+                        }
+
                         TipoDocumento documentoT = tipoDocumentoRegistrarCliente.getSelectedItem().toString().equals("Cedula") ?
                                 TipoDocumento.CEDULA : TipoDocumento.PASAPORTE;
 
                         DtCliente cliente = new DtCliente(
                                 nicknameRegistrarCliente.getText(), nombreRegistrarCliente.getText(), correoElectronicoRegistrarCliente.getText(),
-                                apellidoRegistrarCliente.getText(), fecha1, nacionalidadRegistrarCliente.getText(),
+                                apellidoRegistrarCliente.getText(), fecha, nacionalidadRegistrarCliente.getText(),
                                 documentoT, Integer.parseInt(documentoRegistrarCliente.getText())
                         );
                         try {
@@ -689,6 +709,48 @@ public class Main extends JFrame {
                     new dialogMessage(ex.getMessage());
                 }
 
+
+            }
+        });
+        // MODIFICAR CLIENTE
+        confirmarModificarCliente.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(auxiliar.estanVaciosJComboBox(JComboBoxSeleccionarUsuarioModificar) || auxiliar.estanVaciosJTextField(nombreClienteModificar, apellidoClienteModificar, correoClienteModificar, nacionalidadClienteModificar)){
+                    new dialogMessage("Los campos no pueden quedar vacíos..");
+                    return;
+                }
+
+                int dia = (Integer)fechaDiaClienteModificar.getValue();
+                int mes = (Integer)fechaMesClienteModificar.getValue();
+                int anio = (Integer)fechaAnioClienteModificar.getValue();
+                LocalDate fecha;
+
+                try{
+                    fecha = LocalDate.of(anio,mes,dia);
+                    if(!auxiliar.esFechaValida(fecha)){
+                        new dialogMessage("Debes ingresar una fecha válida..");
+                        return;
+                    }
+                }catch (Exception ex){
+                    new dialogMessage("Debes ingresar una fecha válida..");
+                    return;
+                }
+
+                TipoDocumento tipoDocumento = tipoDocumentoClienteModificar.getSelectedItem().toString().equals("Cedula") ? TipoDocumento.CEDULA : TipoDocumento.PASAPORTE;
+
+                DtCliente cliente = new DtCliente(
+                  nicknameModificarCliente.getText(),
+                  nombreClienteModificar.getText(),
+                  correoClienteModificar.getText(),
+                  apellidoClienteModificar.getText(),
+                  fecha,
+                  nacionalidadClienteModificar.getText(),
+                        tipoDocumento,
+                        Integer.parseInt(numeroDocumentoModificarCliente.getText())
+                );
+
+                s.modificarCliente(cliente);
 
             }
         });
