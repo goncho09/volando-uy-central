@@ -182,6 +182,7 @@ public class Main extends JFrame {
         JComboBoxAerolineaAgregarRuta.setModel(auxiliar.getComboAerolineaModel());
         JComboBoxRutaVueloAgregarRuta.setModel(auxiliar.getComboRutaDeVueloAerolineaModel());
         JComboBoxRutaVueloConsultaRuta.setModel(auxiliar.getComboRutaDeVueloAerolineaModel());
+        SeleccionarConsultaAerolinea.setModel(auxiliar.getComboAerolineaModel());
 
         JPanelCategorias.setLayout(new GridLayout(0, 2, 5, 5));
 
@@ -218,6 +219,8 @@ public class Main extends JFrame {
         auxiliar.cargarCiudadesComboBox();
         auxiliar.cargarPaqueteComboBox();
         auxiliar.cargarPaqueteNoCompradoComboBox();
+        auxiliar.cargarRutasDeVueloEsComboBox();
+        auxiliar.cargarVuelosEsComboBox();
 
         JComboBoxSeleccionarUsuarioModificar.setSelectedIndex(-1);
         JComboBoxSeleccionarUsuarioConsultar.setSelectedIndex(-1);
@@ -234,27 +237,31 @@ public class Main extends JFrame {
         JComboBoxAerolineaAgregarRuta.setSelectedIndex(-1);
         JComboBoxRutaVueloAgregarRuta.setSelectedIndex(-1);
 
+        SeleccionarConsultaAerolinea.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+
+            }
+        });
+
+        SeleccionarConsultaRutaDeVuelo.addItemListener(new ItemListener() {
+                @Override
+                public void itemStateChanged(ItemEvent e) {
+                    if (e.getStateChange() == ItemEvent.SELECTED) {
+                        auxiliar.cargarVuelosEsComboBox(SeleccionarConsultaRutaDeVuelo.getSelectedItem().toString());
+                    }
+                }
+            });
+
         consultarVueloButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // USAR DATOS VERDADEROS
-                LocalDate fechaPrueba = LocalDate.of(2025,12,3);
-                LocalTime horaPrueba = LocalTime.of(10, 30);
-                LocalDate fechaAltaPrueba = LocalDate.of(2025,8,18);
-                LocalTime hora = LocalTime.of(10,0);
-                LocalDate fecha1 = LocalDate.of(2025,8,18);
-                RutaDeVuelo ruta1 = new RutaDeVuelo(new DtRuta("Vuelo A1", "Descripcion A1", hora, 100, 200, 20, fecha1,s.getCategorias(),s.getCiudades().get(0),s.getCiudades().get(1)));
-                DtVuelo dataVuelo = new DtVuelo("A1", fechaPrueba, horaPrueba, 160, 40, fechaAltaPrueba, ruta1);
+                if(auxiliar.estanVaciosJComboBox(SeleccionarConsultaAerolinea, SeleccionarConsultaRutaDeVuelo, SeleccionarConsultaVuelo)){
+                    new dialogMessage("Faltan argumentos");
+                    return;
+                }
 
-                JFrame vuelo = new dataVuelo(dataVuelo);
-                setEnabled(false);
-
-                vuelo.addWindowListener(new WindowAdapter() {
-                    @Override
-                    public void windowClosing(WindowEvent e){
-                        setEnabled(true);
-                    };
-                });
 
             }
         });

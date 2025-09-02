@@ -118,6 +118,40 @@ public class auxiliarFunctions {
             }
     }
 
+    //carga las rutas de vuelo de una aerolinea en especifico
+    public void cargarRutasDeVueloEsComboBox(DtatAerolinea aerolinea) {
+        comboRutaDeVuelo.removeAllElements();
+        List<DtRuta> rt = sistema.listarRutasDeVuelo(aerolinea.getNickname());
+        if(rt != null) {
+            for (DtRuta rutav : rt) {
+                comboRutaDeVuelo.addElement(rutav);
+            }
+        }else{
+            comboRutaDeVuelo.removeAllElements();
+            comboRutaDeVuelo.addElement(new DtRuta() {
+                @Override
+                public String toString() { return "N/A"; }
+            });
+        }
+    }
+
+    //carga los vuelos de una ruta de vuelo en especifico
+    public void cargarVuelosEsComboBox(Dtaerolinea aerolinea, Dtruta ruta) {
+        comboVueloRutaDeVuelo.removeAllElements();
+        List<DtVuelo> vuelos = sistema.listarVuelosDeRuta(aerolinea.getNickname(), ruta.getNombre());
+        if(vuelos != null) {
+            for (DtVuelo v : vuelos) {
+                comboVueloRutaDeVuelo.addElement(v);
+            }
+        }else{
+            comboVueloRutaDeVuelo.removeAllElements();
+            comboVueloRutaDeVuelo.addElement(new DtVuelo() {
+                @Override
+                public String toString() { return "N/A"; }
+            });
+        }
+    }
+
     public void cargarRutasDeVueloComboBox() {
         comboRutaDeVuelo.removeAllElements();
         List<DtRuta> rt = sistema.listarRutasDeVuelo();
@@ -215,7 +249,7 @@ public class auxiliarFunctions {
         } else {
             comboReserva.removeAllElements();
             comboReserva.addElement(new DtReserva() {
-                @Override // esto no se usa, pero es para que no rompa
+                @Override
                 public String toString() { return "N/A"; }
             });
         }
