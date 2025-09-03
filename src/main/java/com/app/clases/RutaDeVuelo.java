@@ -41,11 +41,17 @@ public class RutaDeVuelo {
     private List<Categoria> categorias = new ArrayList<>();;
 
     @ManyToOne
-    @JoinColumn(name = "ciudad_origen", nullable = false)
+    @JoinColumns({
+            @JoinColumn(name = "ciudadOrigen_nombre", referencedColumnName = "nombre"),
+            @JoinColumn(name = "ciudadOrigen_pais", referencedColumnName = "pais")
+    })
     private Ciudad ciudadOrigen;
 
     @ManyToOne
-    @JoinColumn(name = "ciudad_destino", nullable = false)
+    @JoinColumns({
+            @JoinColumn(name = "ciudadDestino_nombre", referencedColumnName = "nombre"),
+            @JoinColumn(name = "ciudadDestino_pais", referencedColumnName = "pais")
+    })
     private Ciudad ciudadDestino;
 
     public RutaDeVuelo() {}
