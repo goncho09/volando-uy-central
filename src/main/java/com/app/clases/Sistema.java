@@ -455,7 +455,8 @@ public class Sistema implements ISistema {
 
     public void altaCiudad(DtCiudad ciudad) {
         //Entiendo que es una clave compuesta nombre + país; agrego país
-        Ciudad existente = ciudadDao.buscarPorNombreYPais(ciudad.getNombre(), ciudad.getPais());
+        CiudadId id = new CiudadId(ciudad.getNombre(), ciudad.getPais());
+        Ciudad existente = ciudadDao.buscar(id);
 
         if (existente != null) {
             throw new IllegalArgumentException("Ya existe una ciudad con ese nombre en ese país.");
@@ -590,7 +591,7 @@ public class Sistema implements ISistema {
     }
 
     public Ciudad buscarCiudadPorNombreYPais(String nombre, String pais) {
-        Ciudad c = this.ciudadDao.buscarPorNombreYPais(nombre, pais);
+        Ciudad c = this.ciudadDao.buscar(new CiudadId(nombre, pais));
         if (c == null) {
             throw new IllegalArgumentException("No existe una ciudad con ese nombre y país.");
         }
