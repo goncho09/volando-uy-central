@@ -68,6 +68,7 @@ public interface ISistema {
     void altaCiudad(DtCiudad ciudad);
     List<DtCiudad> listarCiudades();
     Ciudad buscarCiudad(String nombre);
+    Ciudad buscarCiudadPorNombreYPais(String nombre, String pais);
     List<Ciudad> getCiudades();
 
     // ---------- COMPRAS ---------- //

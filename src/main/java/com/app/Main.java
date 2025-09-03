@@ -270,12 +270,22 @@ public class Main extends JFrame {
         btnConfirmarAltaCiudad.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(auxiliar.estanVaciosJTextField(nombreAltaCiudad, paisAltaCiudad, aeropuertoAltaCiudad, descripcionAltaCiudad)){
-                    new dialogMessage("Faltan argumentos");
-                    return;
-                }
-                s.altaCiudad(new DtCiudad(nombreAltaCiudad.getText(), paisAltaCiudad.getText(),aeropuertoAltaCiudad.getText(),descripcionAltaCiudad.getText(),webAltaCiudad.getText(),LocalDate.now()));
+                try {
+                    if (auxiliar.estanVaciosJTextField(nombreAltaCiudad, paisAltaCiudad, aeropuertoAltaCiudad, descripcionAltaCiudad)) {
+                        new dialogMessage("Faltan argumentos");
+                        return;
+                    }
+                    s.altaCiudad(new DtCiudad(nombreAltaCiudad.getText(), paisAltaCiudad.getText(),aeropuertoAltaCiudad.getText(),descripcionAltaCiudad.getText(),webAltaCiudad.getText(),LocalDate.now()));
 
+                    new dialogMessage("Ciudad registrada exitosamente: " + nombreAltaCiudad.getText());
+
+                    auxiliar.cargarCiudadesComboBox();
+
+                } catch (IllegalArgumentException ex) {
+                    new dialogMessage("Error " + ex.getMessage()); //de validacion
+            } catch (Exception ex) {
+                new dialogMessage("Error al registrar ciudad: " + ex.getMessage());
+                }
             }
         });
 
