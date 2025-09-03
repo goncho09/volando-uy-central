@@ -30,6 +30,8 @@ public class Ciudad {
         return id;
     }
 
+    public void setId(CiudadId id) {this.id = id;}
+
     public String listarId() {
         return id.toString();
     }

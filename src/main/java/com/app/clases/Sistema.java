@@ -797,4 +797,6 @@ public class Sistema implements ISistema {
         paqueteTemp = null;
     }
 
+    public void altaReserva(DtReserva reserva) {}
+
 }

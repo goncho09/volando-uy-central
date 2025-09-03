@@ -28,6 +28,8 @@ public interface ISistema {
     void confirmarAltaUsuario(DtUsuario user);
 
     // ------------ RESERVAS ----------- //
+    void altaReserva(DtReserva reserva);
+
     List<DtReserva> mostrarReservas();
     List<DtPaquete> mostrarPaquetes();
 

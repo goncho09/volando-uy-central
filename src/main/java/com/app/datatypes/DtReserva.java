@@ -19,6 +19,7 @@ public class DtReserva {
     private Vuelo vuelo;
     private Paquete paquete;
 
+    public DtReserva() {}
     public DtReserva(LocalDate fecha, TipoAsiento tipoAsiento, int cantPasajes, int equipajeExtra, float costo, List<DtPasajero> pasajeros, Cliente cliente, Vuelo vuelo, Paquete paquete) {
         this.fecha = fecha;
         this.tipoAsiento = tipoAsiento;

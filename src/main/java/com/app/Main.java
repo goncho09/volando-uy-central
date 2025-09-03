@@ -143,6 +143,9 @@ public class Main extends JFrame {
     private JTextField descripcionModificarAerolinea;
     private JButton confirmarModificarCliente;
     private JTextField numeroDocumentoModificarCliente;
+    private JSpinner spinner1;
+    private JSpinner spinner2;
+    private JSpinner spinner3;
 
 
     public Main() {
@@ -344,21 +347,26 @@ public class Main extends JFrame {
                     return;
                 }
 
-                for(int i = 0; i < pasajes; i++){
+                insertPasaje ventanaPasajes = new insertPasaje(pasajes);
+                setEnabled(false);
 
-                }
-
-                // Esto se puede comentar, solamente lo vamos a usar para verificar el botón.
-                System.out.println("===== Debug Reserva =====");
-                System.out.printf("%-15s: %s%n", "Aerolinea", aerolinea);
-                System.out.printf("%-15s: %s%n", "Ruta de Vuelo", rutaDeVuelo);
-                System.out.printf("%-15s: %s%n", "Vuelo", vuelo);
-                System.out.printf("%-15s: %s%n", "Cliente", cliente);
-                System.out.printf("%-15s: %s%n", "Tipo Asiento", tipoAsiento);
-                System.out.printf("%-15s: %d%n", "Pasajes", pasajes);
-                System.out.printf("%-15s: %d%n", "Equipaje Extra", equipajeExtra);
-                System.out.println("=========================");
-
+                ventanaPasajes.addWindowListener(new WindowAdapter() {
+                    @Override
+                    public void windowClosed(WindowEvent e){
+                        setEnabled(true);
+                        List<DtPasajero> listaPasajes = ventanaPasajes.getPasajes();
+                        if(listaPasajes.size() == pasajes){
+                            DtReserva reserva = new DtReserva();
+                            try{
+                                s.altaReserva(reserva);
+                            } catch (Exception ex) {
+                                new dialogMessage(ex.getMessage());
+                            }
+                        } else {
+                            new dialogMessage("La cantidad de pasajes no concuerda..");
+                        }
+                    }
+                });
 
             }
         });
@@ -914,9 +922,7 @@ public class Main extends JFrame {
             @Override
             public void itemStateChanged(ItemEvent e) {
                 if(e.getStateChange() == ItemEvent.SELECTED){
-                    if(!JComboBoxvueloReserva.getSelectedItem().toString().equals("N/A")){
-                        JButtonVerVueloReservaButton.setEnabled(true);
-                    }
+                    JButtonVerVueloReservaButton.setEnabled(!JComboBoxvueloReserva.getSelectedItem().toString().equals("N/A"));
                     JComboBoxSeleccionarClienteReserva.setEnabled(true);
                     JComboBoxtipoAsientoReserva.setEnabled(true);
                 }
