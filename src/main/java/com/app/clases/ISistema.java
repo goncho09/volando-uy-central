@@ -30,7 +30,6 @@ public interface ISistema {
 
     List<DtReserva> mostrarReservas();
     List<DtPaquete> mostrarPaquetes();
-    DtReserva consultarReservasDeUnVuelo(String nickname);
 
 
     // ---------- RUTAS DE VUELO ---------- //
@@ -43,6 +42,8 @@ public interface ISistema {
 
     // ---------- VUELOS ---------- //
     DtVuelo consultarVuelo(String nombre);
+    List<DtVuelo> listarVuelos();
+    List<DtVuelo> listarVuelos(String nombre);
 
     void seleccionarAerolineaParaVuelo(String nickname);
     void seleccionarRuta(String nombre);

@@ -36,9 +36,9 @@ public class Main extends JFrame {
     private JPanel fechaField;
     private JButton crearVueloButton;
     private JPanel vueloPanel;
-    private JComboBox JComboBoxAerolineaConsultaVuelo;
-    private JComboBox comboBox4;
-    private JComboBox comboBox5;
+    private JComboBox JComboBoxConsultaVueloAerolinea;
+    private JComboBox JComboBoxConsultaVueloRutaDeVuelo;
+    private JComboBox JComboBoxConsultaVueloVuelo;
     private JButton consultarVueloButton;
     private JTextField textField3;
     private JComboBox comboBox6;
@@ -176,13 +176,14 @@ public class Main extends JFrame {
         JComboBoxAerolineaAltaRutaVuelo.setModel(auxiliar.getComboAerolineaModel());
         JComboBoxPaqueteConsultaPaqueteRutaVuelo.setModel(auxiliar.getComboPaqueteModel());
         JComboBoxPaqueteComprarPaquete.setModel(auxiliar.getComboPaqueteModel());
-        JComboBoxAerolineaConsultaVuelo.setModel(auxiliar.getComboAerolineaModel());
+        JComboBoxConsultaVueloAerolinea.setModel(auxiliar.getComboAerolineaModel());
         JComboBoxAerolineaConsultaRuta.setModel(auxiliar.getComboAerolineaModel());
         JComboBoxPaqueteAgregarRuta.setModel(auxiliar.getComboPaqueteNoCompradoModel());
         JComboBoxAerolineaAgregarRuta.setModel(auxiliar.getComboAerolineaModel());
         JComboBoxRutaVueloAgregarRuta.setModel(auxiliar.getComboRutaDeVueloAerolineaModel());
         JComboBoxRutaVueloConsultaRuta.setModel(auxiliar.getComboRutaDeVueloAerolineaModel());
-        SeleccionarConsultaAerolinea.setModel(auxiliar.getComboAerolineaModel());
+        JComboBoxConsultaVueloRutaDeVuelo.setModel(auxiliar.getComboRutaDeVueloModel());
+        JComboBoxConsultaVueloVuelo.setModel(auxiliar.getComboVuelosModel());
 
         JPanelCategorias.setLayout(new GridLayout(0, 2, 5, 5));
 
@@ -219,8 +220,7 @@ public class Main extends JFrame {
         auxiliar.cargarCiudadesComboBox();
         auxiliar.cargarPaqueteComboBox();
         auxiliar.cargarPaqueteNoCompradoComboBox();
-        auxiliar.cargarRutasDeVueloEsComboBox();
-        auxiliar.cargarVuelosEsComboBox();
+
 
         JComboBoxSeleccionarUsuarioModificar.setSelectedIndex(-1);
         JComboBoxSeleccionarUsuarioConsultar.setSelectedIndex(-1);
@@ -231,37 +231,32 @@ public class Main extends JFrame {
         JComboBoxAerolineaAltaRutaVuelo.setSelectedIndex(-1);
         JComboBoxPaqueteConsultaPaqueteRutaVuelo.setSelectedIndex(-1);
         JComboBoxPaqueteComprarPaquete.setSelectedIndex(-1);
-        JComboBoxAerolineaConsultaVuelo.setSelectedIndex(-1);
+        JComboBoxConsultaVueloAerolinea.setSelectedIndex(-1);
         JComboBoxAerolineaConsultaRuta.setSelectedIndex(-1);
         JComboBoxPaqueteAgregarRuta.setSelectedIndex(-1);
         JComboBoxAerolineaAgregarRuta.setSelectedIndex(-1);
         JComboBoxRutaVueloAgregarRuta.setSelectedIndex(-1);
 
-        SeleccionarConsultaAerolinea.addItemListener(new ItemListener() {
-            @Override
-            public void itemStateChanged(ItemEvent e) {
 
-            }
-        });
-
-        SeleccionarConsultaRutaDeVuelo.addItemListener(new ItemListener() {
-                @Override
-                public void itemStateChanged(ItemEvent e) {
-                    if (e.getStateChange() == ItemEvent.SELECTED) {
-                        auxiliar.cargarVuelosEsComboBox(SeleccionarConsultaRutaDeVuelo.getSelectedItem().toString());
-                    }
-                }
-            });
 
         consultarVueloButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // USAR DATOS VERDADEROS
-                if(auxiliar.estanVaciosJComboBox(SeleccionarConsultaAerolinea, SeleccionarConsultaRutaDeVuelo, SeleccionarConsultaVuelo)){
+                if(auxiliar.estanVaciosJComboBox(JComboBoxConsultaVueloAerolinea, JComboBoxConsultaVueloRutaDeVuelo, JComboBoxConsultaVueloVuelo)){
                     new dialogMessage("Faltan argumentos");
                     return;
                 }
 
+                String aerolinea = JComboBoxConsultaVueloAerolinea.getSelectedItem().toString();
+                String rutaDeVuelo = JComboBoxConsultaVueloRutaDeVuelo.getSelectedItem().toString();
+                String vueloStr = JComboBoxConsultaVueloVuelo.getSelectedItem().toString();
+                DtVuelo vuelo = (DtVuelo) JComboBoxConsultaVueloVuelo.getSelectedItem();
+
+                System.out.println("Aerolinea: " + aerolinea);
+                System.out.println("Ruta de Vuelo: " + rutaDeVuelo);
+                System.out.println("Vuelo: " + vueloStr);
+
+                new dataVuelo(vuelo);
 
             }
         });
@@ -690,6 +685,35 @@ public class Main extends JFrame {
                 }
 
 
+            }
+        });
+        JComboBoxConsultaVueloAerolinea.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    DtAerolinea aerolinea = (DtAerolinea) JComboBoxConsultaVueloAerolinea.getSelectedItem();
+                    auxiliar.cargarRutasDeVueloEsComboBox(aerolinea);
+
+                    if (aerolinea == null) {
+                        new dialogMessage("Ha ocurrido un error..");
+                        return;
+                    }
+                }
+            }
+        });
+
+        JComboBoxConsultaVueloRutaDeVuelo.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    DtRuta ruta = (DtRuta) JComboBoxConsultaVueloRutaDeVuelo.getSelectedItem();
+                    auxiliar.cargarVuelosEsComboBox(ruta);
+
+                    if (ruta == null) {
+                        new dialogMessage("Ha ocurrido un error..");
+                        return;
+                    }
+                }
             }
         });
     }

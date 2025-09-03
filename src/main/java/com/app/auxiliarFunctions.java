@@ -19,6 +19,7 @@ public class auxiliarFunctions {
     private DefaultComboBoxModel<DtRuta> comboRutaDeVueloAerolinea = new DefaultComboBoxModel<>();
     private DefaultComboBoxModel<DtVuelo> comboVueloRutaDeVuelo = new DefaultComboBoxModel<>();
     private DefaultComboBoxModel<DtReserva> comboReserva = new DefaultComboBoxModel<>();
+    private DefaultComboBoxModel <DtVuelo> comboVuelos = new DefaultComboBoxModel<>();
 
     public auxiliarFunctions(ISistema s) {
         this.sistema = s;
@@ -57,7 +58,9 @@ public class auxiliarFunctions {
         return comboPaqueteNoComprado;
     }
 
-    public DefaultComboBoxModel<DtVuelo> getComboVueloRutaDeVueloModel() {return  comboVueloRutaDeVuelo;}
+    public DefaultComboBoxModel<DtVuelo> getComboVueloRutaDeVueloModel() {return comboVueloRutaDeVuelo;}
+
+    public DefaultComboBoxModel<DtVuelo> getComboVuelosModel() {return comboVuelos;}
 
     //Función para validar 1 o más "JComboBox"
     public boolean estanVaciosJComboBox(JComboBox<?>... combos) {
@@ -119,10 +122,10 @@ public class auxiliarFunctions {
     }
 
     //carga las rutas de vuelo de una aerolinea en especifico
-    public void cargarRutasDeVueloEsComboBox(DtatAerolinea aerolinea) {
+    public void cargarRutasDeVueloEsComboBox(DtAerolinea aerolinea) {
         comboRutaDeVuelo.removeAllElements();
         List<DtRuta> rt = sistema.listarRutasDeVuelo(aerolinea.getNickname());
-        if(rt != null) {
+        if(rt != null && !rt.isEmpty()) {
             for (DtRuta rutav : rt) {
                 comboRutaDeVuelo.addElement(rutav);
             }
@@ -136,20 +139,19 @@ public class auxiliarFunctions {
     }
 
     //carga los vuelos de una ruta de vuelo en especifico
-    public void cargarVuelosEsComboBox(Dtaerolinea aerolinea, Dtruta ruta) {
-        comboVueloRutaDeVuelo.removeAllElements();
-        List<DtVuelo> vuelos = sistema.listarVuelosDeRuta(aerolinea.getNickname(), ruta.getNombre());
-        if(vuelos != null) {
+    public void cargarVuelosEsComboBox(DtRuta ruta) {
+        comboVuelos.removeAllElements();
+        List<DtVuelo> vuelos = sistema.listarVuelos(ruta.getNombre());
+        if(vuelos != null && !vuelos.isEmpty()) {
             for (DtVuelo v : vuelos) {
-                comboVueloRutaDeVuelo.addElement(v);
+                comboVuelos.addElement(v);
             }
         }else{
-            comboVueloRutaDeVuelo.removeAllElements();
-            comboVueloRutaDeVuelo.addElement(new DtVuelo() {
+            comboVuelos.addElement(new DtVuelo() {
                 @Override
                 public String toString() { return "N/A"; }
             });
-        }
+    }
     }
 
     public void cargarRutasDeVueloComboBox() {
@@ -170,10 +172,10 @@ public class auxiliarFunctions {
 
     public void cargarRutasDeVueloComboBoxAerolinea(String nickname) {
         comboRutaDeVueloAerolinea.removeAllElements();
-        List<DtRuta> rt = sistema.listarRutasDeVuelo(nickname);
-        if(rt != null) {
-            for (DtRuta rtv : rt) {
-                comboRutaDeVueloAerolinea.addElement(rtv);
+        List<DtRuta> rutas = sistema.listarRutasDeVuelo(nickname);
+        if(rutas != null && !rutas.isEmpty()) {
+            for (DtRuta r : rutas) {
+                comboRutaDeVueloAerolinea.addElement(r);
             }
         }else{
             comboRutaDeVueloAerolinea.removeAllElements();
@@ -183,7 +185,6 @@ public class auxiliarFunctions {
             });
         }
     }
-
     public void cargarCiudadesComboBox() {
         comboCiudadOrigen.removeAllElements();
         comboCiudadDestino.removeAllElements();
@@ -240,7 +241,7 @@ public class auxiliarFunctions {
             });
         }
     }
-    public void cargarDatosReservaComboBox() {
+   /* public void cargarDatosReservaComboBox() {
         List<DtReserva> reservas = sistema.listarReservas();
         if (reservas != null) {
             for (DtReserva r : reservas) {
@@ -252,6 +253,6 @@ public class auxiliarFunctions {
                 @Override
                 public String toString() { return "N/A"; }
             });
-        }
+        }*/
 
     }
