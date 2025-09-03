@@ -352,7 +352,7 @@ public class Main extends JFrame {
                         // Crear DtCliente
                         int dia = (Integer)fechaDiaRegistrarCliente.getValue();
                         int mes = (Integer)fechaMesRegistrarCliente.getValue();
-                        int anio = (Integer)fechaMesRegistrarCliente.getValue();
+                        int anio = (Integer)fechaAnioRegistrarCliente.getValue();
                         LocalDate fecha;
 
                         try{
