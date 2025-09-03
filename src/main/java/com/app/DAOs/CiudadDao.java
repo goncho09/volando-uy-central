@@ -31,6 +31,18 @@ public class CiudadDao {
         return em.find(Ciudad.class, nombre);
     }
 
+    //agrego un buscar por nombre y país
+    public Ciudad buscarPorNombreYPais(String nombre, String pais) {
+        try {
+            return em.createQuery("SELECT c FROM Ciudad c WHERE c.nombre = :nombre AND c.pais = :pais", Ciudad.class)
+                    .setParameter("nombre", nombre)
+                    .setParameter("pais", pais)
+                    .getSingleResult();
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
     public void guardar(Ciudad c) {
         EntityTransaction tx = em.getTransaction();
         try{ //Se intenta "guardar"

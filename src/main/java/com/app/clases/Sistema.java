@@ -436,11 +436,18 @@ public class Sistema implements ISistema {
         categoriaDao.guardar(c);
     }
 
-    public void altaCiudad(DtCiudad ciudad){
-        if(this.ciudades.containsKey(ciudad.getNombre())) { throw new IllegalArgumentException("Ya existe una ciudad con ese nombre.");}
+    public void altaCiudad(DtCiudad ciudad) {
+        //Entiendo que es una clave compuesta nombre + país; agrego país
+        Ciudad existente = ciudadDao.buscarPorNombreYPais(ciudad.getNombre(), ciudad.getPais());
+
+        if (existente != null) {
+            throw new IllegalArgumentException("Ya existe una ciudad con ese nombre en ese país.");
+        }
+
+        // Si no existe, crear
         Ciudad c = new Ciudad(ciudad);
         ciudadDao.guardar(c);
-        this.ciudades.put(c.getNombre(),c);
+        this.ciudades.put(c.getNombre(), c);
     }
 
 
@@ -556,6 +563,14 @@ public class Sistema implements ISistema {
         Ciudad c = this.ciudadDao.buscar(nombre);
         if(c == null)  throw new IllegalArgumentException("Esta ciudad no existe.");
         return  c;
+    }
+
+    public Ciudad buscarCiudadPorNombreYPais(String nombre, String pais) {
+        Ciudad c = this.ciudadDao.buscarPorNombreYPais(nombre, pais);
+        if (c == null) {
+            throw new IllegalArgumentException("No existe una ciudad con ese nombre y país.");
+        }
+        return c;
     }
 
     // ---------- ALTA DE VUELO ---------- //
