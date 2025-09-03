@@ -24,6 +24,7 @@ public class Sistema implements ISistema {
     private VueloDao vueloDao;
     private ReservaDao reservaDao;
     private PasajerosDao pasajeroDao;
+    private CompraPaqueteDao compraDao;
 
     private Map<String, Categoria> categorias;
     private Map<String, Ciudad> ciudades;
@@ -31,7 +32,8 @@ public class Sistema implements ISistema {
     private Map<String, Paquete> paquetes;
     private Map<String, Vuelo> vuelos;
     private Map<String, RutaDeVuelo> rutasDeVuelo;
-    private Map<String, CompraPaquete> compraPaquetes;
+
+    private List<CompraPaquete> compraPaquetes;
     private List<Reserva> reservas;
     private List<DtPasajero> pasajes;
 
@@ -63,6 +65,7 @@ public class Sistema implements ISistema {
         this.vueloDao = new VueloDao(em);
         this.reservaDao = new ReservaDao(em);
         this.pasajeroDao = new PasajerosDao(em);
+        this.compraDao = new CompraPaqueteDao(em);
 
         this.categorias = categoriaDao.obtenerCategorias();
         this.ciudades = ciudadDao.obtenerCiudades();
@@ -72,6 +75,7 @@ public class Sistema implements ISistema {
         this.vuelos = vueloDao.obtenerVuelos();
         this.reservas = reservaDao.listar();
         this.pasajes = pasajeroDao.listar();
+        this.compras = compraDao.listar();
     }
 
     public static Sistema getInstancia() {
