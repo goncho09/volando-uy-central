@@ -30,7 +30,9 @@ public class Vuelo {
     @ManyToOne(optional = false)
     private RutaDeVuelo rutaDeVuelo;
 
-    public DtVuelo getDatos() {return null;}
+    public DtVuelo getDatos() {
+        return new DtVuelo(this.nombre,this.fecha,this.duracion,this.maxTuristas,this.maxEjecutivos,this.fechaAlta,this.rutaDeVuelo);
+    }
 
     public Vuelo() {}
     public Vuelo(DtVuelo vuelo) {

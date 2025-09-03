@@ -2,33 +2,17 @@ package com.app.DAOs;
 
 import com.app.clases.Ciudad;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityTransaction;
 
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
-public class CiudadDao {
-    private EntityManager em;
+public class CiudadDao extends BaseDao<Ciudad, String>{
 
     public CiudadDao(EntityManager em) {
-        this.em = em;
-    }
-
-    public List<Ciudad> listarCiudades(){
-        return em.createQuery("SELECT c FROM Ciudad c", Ciudad.class).getResultList();
+        super(em, Ciudad.class);
     }
 
     public Map<String, Ciudad> obtenerCiudades() {
-        return em.createQuery("SELECT c FROM Ciudad c", Ciudad.class)
-                .getResultList()
-                .stream()
-                .collect(Collectors.toMap(Ciudad::getNombre, c -> c));
-    }
-
-
-    public Ciudad buscar(String nombre){
-        return em.find(Ciudad.class, nombre);
+        return super.obtener(Ciudad::getNombre);
     }
 
     //agrego un buscar por nombre y país

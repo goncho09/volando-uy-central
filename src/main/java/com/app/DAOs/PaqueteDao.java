@@ -5,88 +5,17 @@ import com.app.clases.Paquete;
 import com.app.clases.RutaDeVuelo;
 import com.app.clases.RutaEnPaquete;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityTransaction;
 
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
-public class PaqueteDao {
-    private EntityManager em;
+public class PaqueteDao extends BaseDao<Paquete, String> {
 
     public PaqueteDao(EntityManager em) {
-        this.em = em;
-    }
-
-    public List<Paquete> listarPaquetes(){
-        return em.createQuery("SELECT p FROM Paquete p", Paquete.class).getResultList();
-    }
-
-
-    public List<Paquete> listarRutasVueloPaquete(Paquete p){
-        return em.createQuery("SELECT p FROM Paquete p", Paquete.class).getResultList();
+        super(em, Paquete.class);
     }
 
     public Map<String, Paquete> obtenerPaquetes() {
-        return em.createQuery("SELECT p FROM Paquete p", Paquete.class)
-                .getResultList()
-                .stream()
-                .collect(Collectors.toMap(Paquete::getNombre, p -> p));
-    }
-
-    public Paquete buscar(String nombre){
-        return em.find(Paquete.class, nombre);
-    }
-
-    public void guardar(Paquete p) {
-        EntityTransaction tx = em.getTransaction();
-        try{ //Se intenta "guardar"
-            tx.begin();
-            em.persist(p);
-            tx.commit();
-        }catch(Exception e){ //Si llega a fallar se hace un rollback y se lanza el error a la capa de presentación
-            if(tx.isActive()){
-                tx.rollback();
-            }
-            throw e;
-        }
-    }
-
-    public void actualizar(Paquete p) {
-        EntityTransaction tx = em.getTransaction();
-        try{ //Se intenta "modificar"
-            tx.begin();
-            em.merge(p);
-            tx.commit();
-        }catch(Exception e){ //Si llega a fallar se hace un rollback y se lanza el error a la capa de presentación
-            if(tx.isActive()){
-                tx.rollback();
-            }
-            throw e;
-        }
-    }
-
-    public void guardarRutaEnPaquete(RutaEnPaquete rp){
-        EntityTransaction tx = em.getTransaction();
-        try{ //Se intenta "guardar"
-            tx.begin();
-            em.persist(rp);
-            tx.commit();
-        }catch(Exception e){ //Si llega a fallar se hace un rollback y se lanza el error a la capa de presentación
-            if(tx.isActive()){
-                tx.rollback();
-            }
-            throw e;
-        }
-    }
-
-    public void eliminar(String nombre) {
-        em.getTransaction().begin();
-        Paquete p = em.find(Paquete.class, nombre);
-        if (p != null) {
-            em.remove(p);
-        }
-        em.getTransaction().commit();
+        return super.obtener(Paquete::getNombre);
     }
 
     public void addRutaEnPaquete(Paquete p, RutaEnPaquete rp){

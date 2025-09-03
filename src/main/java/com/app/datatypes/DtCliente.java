@@ -23,7 +23,7 @@ public class DtCliente extends DtUsuario{
         this.tipoDocumento = tipoDocumento;
         this.numeroDocumento = numeroDocumento;
         this.comprasPaquetes = new ArrayList<>();
-        System.out.println("Creando datatype: " + nickname + " - " + nombre + " - " + email + " - " + apellido + " - " + fechaNacimiento + " - " + nacionalidad + " - " + tipoDocumento + " - " + numeroDocumento);
+        //System.out.println("Creando datatype: " + nickname + " - " + nombre + " - " + email + " - " + apellido + " - " + fechaNacimiento + " - " + nacionalidad + " - " + tipoDocumento + " - " + numeroDocumento);
     }
 
     public String getApellido() {
