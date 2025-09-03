@@ -34,11 +34,11 @@ public class DtAerolinea extends DtUsuario {
     }
 
     public String getDescripcion() {
-        return descripcion;
+        return this.descripcion;
     }
 
     public String getLinkWeb() {
-        return linkWeb;
+        return this.linkWeb;
     }
 
     public List<RutaDeVuelo> getRutasDeVuelo() {
@@ -56,5 +56,7 @@ public class DtAerolinea extends DtUsuario {
     public void setRutasDeVuelo(List<RutaDeVuelo> rutasDeVuelo) {
         this.rutasDeVuelo = rutasDeVuelo;
     }
+
+    public void mostrarDatos(){ System.out.println("Datos de la aerolinea: " + this.getNickname() + " - " + this.getNombre() + " - " + this.getEmail() + " - " + this.getDescripcion() + " - " + this.getLinkWeb());}
 
 }

@@ -8,10 +8,8 @@ import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class Sistema implements ISistema {
     private static Sistema instancia;
@@ -24,6 +22,8 @@ public class Sistema implements ISistema {
     private CiudadDao ciudadDao;
     private PaqueteDao paqueteDao;
     private VueloDao vueloDao;
+    private ReservaDao reservaDao;
+    private PasajerosDao pasajeroDao;
 
     private Map<String, Categoria> categorias;
     private Map<String, Ciudad> ciudades;
@@ -31,8 +31,8 @@ public class Sistema implements ISistema {
     private Map<String, Paquete> paquetes;
     private Map<String, Vuelo> vuelos;
     private Map<String, RutaDeVuelo> rutasDeVuelo;
-    //private Map<String, CompraPaquete> compraPaquetes;
-    private Map<String, Reserva> reservas;
+    private Map<String, CompraPaquete> compraPaquetes;
+    private List<Reserva> reservas;
     private List<DtPasajero> pasajes;
 
     private List<Vuelo> consultaVuelos = new ArrayList<>();
@@ -61,6 +61,8 @@ public class Sistema implements ISistema {
         this.ciudadDao = new CiudadDao(em);
         this.paqueteDao = new PaqueteDao(em);
         this.vueloDao = new VueloDao(em);
+        this.reservaDao = new ReservaDao(em);
+        this.pasajeroDao = new PasajerosDao(em);
 
         this.categorias = categoriaDao.obtenerCategorias();
         this.ciudades = ciudadDao.obtenerCiudades();
@@ -68,9 +70,8 @@ public class Sistema implements ISistema {
         this.paquetes = paqueteDao.obtenerPaquetes();
         this.rutasDeVuelo = rutaDeVueloDao.obtenerRutasDeVuelo();
         this.vuelos = vueloDao.obtenerVuelos();
-        this.reservas = new LinkedHashMap<>();
-        this.pasajes = new ArrayList<>();
-        this.compras = new ArrayList<>();
+        this.reservas = reservaDao.listar();
+        this.pasajes = pasajeroDao.listar();
     }
 
     public static Sistema getInstancia() {
@@ -488,6 +489,7 @@ public class Sistema implements ISistema {
             c.setNacionalidad(cliente.getNacionalidad());
             c.setTipoDocumento(cliente.getTipoDocumento());
             c.setNumeroDocumento(cliente.getNumeroDocumento());
+            userDao.actualizar(c);
         }else{
             throw new IllegalArgumentException("Este usuario es aerolinea.");
         }
@@ -511,8 +513,11 @@ public class Sistema implements ISistema {
 
         if (u instanceof Aerolinea a) {
             a.setNombre(aerolinea.getNombre());
+            a.setEmail(aerolinea.getEmail());
             a.setDescripcion(aerolinea.getDescripcion());
             a.setLinkWeb(aerolinea.getLinkWeb());
+            userDao.actualizar(a);
+            a.mostrarDatos();
         }else{
             throw new IllegalArgumentException("Este usuario es cliente.");
         }
@@ -523,10 +528,12 @@ public class Sistema implements ISistema {
             Cliente newUser = new Cliente((DtCliente) usuario);
             this.usuarios.put(newUser.getNickname(),newUser);
             userDao.guardar(newUser);
+            //newUser.mostrarDatos(); //Debug
         }else if (usuario instanceof DtAerolinea) {
             Aerolinea newUser = new Aerolinea((DtAerolinea) usuario);
             this.usuarios.put(newUser.getNickname(), newUser);
             userDao.guardar(newUser);
+            //newUser.mostrarDatos(); //Debug
         }
     }
 

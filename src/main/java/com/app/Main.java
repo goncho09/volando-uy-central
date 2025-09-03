@@ -137,6 +137,12 @@ public class Main extends JFrame {
     private JComboBox JComboBoxAerolineaAgregarRuta;
     private JComboBox JComboBoxRutaVueloConsultaRuta;
     private JButton ButtonConsultarRutaVuelo;
+    private JTextField nombreModificarAerolinea;
+    private JTextField correoModificarAerolinea;
+    private JTextField linkWebModificarAerolinea;
+    private JTextField descripcionModificarAerolinea;
+    private JButton confirmarModificarCliente;
+    private JTextField numeroDocumentoModificarCliente;
 
 
     public Main() {
@@ -246,8 +252,10 @@ public class Main extends JFrame {
                 RutaDeVuelo ruta1 = new RutaDeVuelo(new DtRuta("Vuelo A1", "Descripcion A1", hora, 100, 200, 20, fecha1,s.getCategorias(),s.getCiudades().get(0),s.getCiudades().get(1)));
                 DtVuelo dataVuelo = new DtVuelo("A1", fechaPrueba, horaPrueba, 160, 40, fechaAltaPrueba, ruta1);
 
-                JFrame vuelo = new dataVuelo(dataVuelo);
+                JFrame vuelo = new dataVuelo(s.consultarVuelo("pepe"));
                 setEnabled(false);
+
+
 
                 vuelo.addWindowListener(new WindowAdapter() {
                     @Override
@@ -340,27 +348,42 @@ public class Main extends JFrame {
                             new dialogMessage("Faltan argumentos");
                             return;
                         }
+
                         // Crear DtCliente
-                        LocalDate fecha1 = LocalDate.of(2025, 8, 25);
+                        int dia = (Integer)fechaDiaRegistrarCliente.getValue();
+                        int mes = (Integer)fechaMesRegistrarCliente.getValue();
+                        int anio = (Integer)fechaMesRegistrarCliente.getValue();
+                        LocalDate fecha;
+
+                        try{
+                            fecha = LocalDate.of(anio,mes,dia);
+                            if(!auxiliar.esFechaValida(fecha)){
+                                new dialogMessage("Debes ingresar una fecha válida..");
+                                return;
+                            }
+                        }catch (Exception ex){
+                            new dialogMessage("Debes ingresar una fecha válida..");
+                            return;
+                        }
+
                         TipoDocumento documentoT = tipoDocumentoRegistrarCliente.getSelectedItem().toString().equals("Cedula") ?
                                 TipoDocumento.CEDULA : TipoDocumento.PASAPORTE;
 
                         DtCliente cliente = new DtCliente(
                                 nicknameRegistrarCliente.getText(), nombreRegistrarCliente.getText(), correoElectronicoRegistrarCliente.getText(),
-                                apellidoRegistrarCliente.getText(), fecha1, nacionalidadRegistrarCliente.getText(),
+                                apellidoRegistrarCliente.getText(), fecha, nacionalidadRegistrarCliente.getText(),
                                 documentoT, Integer.parseInt(documentoRegistrarCliente.getText())
                         );
                         try {
                             s.registrarCliente(cliente);
+                            auxiliar.cargarTodosLosDatos();
                         } catch (Exception ex) {
                             ex.printStackTrace();
                             s.cancelarAltaUsuario();
                             new dialogMessage(ex.getMessage());
                         }
-                        System.out.println("Cliente registrado: " + nicknameRegistrarCliente.getText());
                         auxiliar.cargarUsuariosComboBox();
                     }
-
                 } catch (Exception ex) {
                         ex.printStackTrace();
                         new dialogMessage(ex.getMessage());
@@ -403,6 +426,8 @@ public class Main extends JFrame {
                     if(user instanceof DtCliente){ // Pregunta si mi usuario es un cliente
                         DtCliente cliente = (DtCliente) user;
                         LocalDate fechaCliente = cliente.getFechaNacimiento();
+                        int tipo = cliente.getTipoDocumento() == TipoDocumento.CEDULA ? 0 : 1;
+
                         JPanelModificarCliente.setVisible(true);
                         JPanelModificarAerolinea.setVisible(false);
                         nicknameModificarCliente.setText(cliente.getNickname());
@@ -413,12 +438,18 @@ public class Main extends JFrame {
                         fechaMesClienteModificar.setValue(fechaCliente.getMonthValue());
                         fechaAnioClienteModificar.setValue(fechaCliente.getYear());
                         nacionalidadClienteModificar.setText(cliente.getNacionalidad());
-                        //tipoDocumentoClienteModificar.setSelectedItem(cliente.getTipoDocumento()); <- Investigar este wey
+                        tipoDocumentoClienteModificar.setSelectedIndex(tipo);
+                        numeroDocumentoModificarCliente.setText(String.valueOf(cliente.getNumeroDocumento()));
 
                     }else if(user instanceof DtAerolinea){
                         DtAerolinea aerolinea = (DtAerolinea) user;
                         JPanelModificarCliente.setVisible(false);
                         JPanelModificarAerolinea.setVisible(true);
+                        nicknameModificarAerolinea.setText(aerolinea.getNickname());
+                        nombreModificarAerolinea.setText(aerolinea.getNombre());
+                        correoModificarAerolinea.setText(aerolinea.getEmail());
+                        linkWebModificarAerolinea.setText(aerolinea.getLinkWeb());
+                        descripcionModificarAerolinea.setText(aerolinea.getDescripcion());
                     }else{
                         JPanelModificarAerolinea.setVisible(false);
                         JPanelModificarCliente.setVisible(false);
@@ -509,7 +540,6 @@ public class Main extends JFrame {
                             s.cancelarAltaUsuario();
                             new dialogMessage(ex.getMessage());
                         }
-                        System.out.println("Aerolínea registrada: " + nicknameRegistrarCliente.getText());
                     }
                     auxiliar.cargarUsuariosComboBox();
             }catch (Exception ex) {
@@ -683,6 +713,78 @@ public class Main extends JFrame {
                 }
 
 
+            }
+        });
+        // MODIFICAR CLIENTE
+        confirmarModificarCliente.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(auxiliar.estanVaciosJComboBox(JComboBoxSeleccionarUsuarioModificar) || auxiliar.estanVaciosJTextField(nombreClienteModificar, apellidoClienteModificar, correoClienteModificar, nacionalidadClienteModificar, numeroDocumentoModificarCliente)){
+                    new dialogMessage("Los campos no pueden quedar vacíos..");
+                    return;
+                }
+
+                int dia = (Integer)fechaDiaClienteModificar.getValue();
+                int mes = (Integer)fechaMesClienteModificar.getValue();
+                int anio = (Integer)fechaAnioClienteModificar.getValue();
+                LocalDate fecha = null;
+
+                try{
+                    fecha = LocalDate.of(anio,mes,dia);
+                    if(!auxiliar.esFechaValida(fecha)){
+                        new dialogMessage("Debes ingresar una fecha válida..");
+                        return;
+                    }
+                }catch (Exception ex){
+                    new dialogMessage("Debes ingresar una fecha válida..");
+                }
+
+                TipoDocumento tipoDocumento = tipoDocumentoClienteModificar.getSelectedItem().toString().equals("Cedula") ? TipoDocumento.CEDULA : TipoDocumento.PASAPORTE;
+
+                DtCliente cliente = new DtCliente(
+                  nicknameModificarCliente.getText(),
+                  nombreClienteModificar.getText(),
+                  correoClienteModificar.getText(),
+                  apellidoClienteModificar.getText(),
+                  fecha,
+                  nacionalidadClienteModificar.getText(),
+                        tipoDocumento,
+                        Integer.parseInt(numeroDocumentoModificarCliente.getText())
+                );
+                try{
+                    s.modificarCliente(cliente);
+                    auxiliar.cargarUsuariosComboBox(cliente); // Funcion para actualizar valores.
+                }catch(Exception ex){
+                    new dialogMessage(ex.getMessage());
+                    ex.printStackTrace();
+                }
+
+            }
+        });
+        JButtonModificarAerolinea.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(auxiliar.estanVaciosJTextField(nombreModificarAerolinea, correoModificarAerolinea, descripcionModificarAerolinea)){
+                    new dialogMessage("No puedes dejar los campos vacios..");
+                    return;
+                }
+
+                String link = auxiliar.estanVaciosJTextField(linkWebModificarAerolinea) ? "" : linkWebModificarAerolinea.getText();
+
+                DtAerolinea aerolinea = new DtAerolinea(
+                        nicknameModificarAerolinea.getText(),
+                        nombreModificarAerolinea.getText(),
+                        correoModificarAerolinea.getText(),
+                        descripcionModificarAerolinea.getText(),
+                        link
+                );
+
+                try{
+                    s.modificarAerolinea(aerolinea);
+                    auxiliar.cargarUsuariosComboBox(aerolinea);
+                } catch (Exception ex) {
+                    new dialogMessage(ex.getMessage());
+                }
             }
         });
     }

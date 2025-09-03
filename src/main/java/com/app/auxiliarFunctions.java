@@ -4,13 +4,14 @@ import com.app.clases.*;
 import com.app.datatypes.*;
 
 import javax.swing.*;
+import java.time.LocalDate;
 import java.util.List;
 
 public class auxiliarFunctions {
 
     private ISistema sistema;
     private DefaultComboBoxModel<DtUsuario> comboUser = new DefaultComboBoxModel<>();
-    private DefaultComboBoxModel<DtAerolinea> comboAerolinea = new DefaultComboBoxModel<>();
+    private DefaultComboBoxModel<DtAerolinea> comboAerolinea = new DefaultComboBoxModel<>(); // Solo muestra aerolineas
     private DefaultComboBoxModel<DtRuta> comboRutaDeVuelo = new DefaultComboBoxModel<>();
     private DefaultComboBoxModel<DtCiudad> comboCiudadOrigen = new DefaultComboBoxModel<>();
     private DefaultComboBoxModel<DtCiudad> comboCiudadDestino = new DefaultComboBoxModel<>();
@@ -56,7 +57,7 @@ public class auxiliarFunctions {
         return comboPaqueteNoComprado;
     }
 
-    public DefaultComboBoxModel<DtVuelo> getComboVueloRutaDeVueloModel() {return  comboVueloRutaDeVuelo;}
+    public DefaultComboBoxModel<DtVuelo> getComboVueloRutaDeVueloModel() { return  comboVueloRutaDeVuelo; }
 
     //Función para validar 1 o más "JComboBox"
     public boolean estanVaciosJComboBox(JComboBox<?>... combos) {
@@ -84,12 +85,40 @@ public class auxiliarFunctions {
         }
     }
 
+    public void cargarTodosLosDatos(){
+        cargarUsuariosComboBox();
+        cargarCiudadesComboBox();
+        cargarAerolineasComboBox();
+        cargarRutasDeVueloComboBox();
+        cargarPaqueteComboBox();
+        cargarPaqueteNoCompradoComboBox();
+    }
+
     public void cargarUsuariosComboBox() {
         comboUser.removeAllElements();
         List<DtUsuario> usuarios = sistema.listarUsuarios();
         if(usuarios != null){
             for (DtUsuario u : usuarios) {
                 comboUser.addElement(u);
+            }
+        }else{
+            comboUser.removeAllElements();
+            comboUser.addElement(new DtUsuario() {
+                @Override
+                public String toString() { return "N/A"; }
+            });
+        }
+    }
+
+    public void cargarUsuariosComboBox(DtUsuario usuario) {
+        comboUser.removeAllElements();
+        List<DtUsuario> usuarios = sistema.listarUsuarios();
+        if(usuarios != null){
+            for (DtUsuario u : usuarios) {
+                comboUser.addElement(u);
+                if(u.getNombre().equals(usuario.getNombre())){
+                    comboUser.setSelectedItem(u);
+                }
             }
         }else{
             comboUser.removeAllElements();
@@ -173,8 +202,6 @@ public class auxiliarFunctions {
         }
     }
 
-
-
     public void cargarPaqueteComboBox() {
         comboPaquete.removeAllElements();
         List<DtPaquete> p = sistema.listarPaquetes();
@@ -205,6 +232,17 @@ public class auxiliarFunctions {
                 public String toString() { return "N/A"; }
             });
         }
+    }
+
+    public boolean esFechaValida(LocalDate fecha) {
+        if (fecha == null) {
+            return false;
+        }
+
+        LocalDate hoy = LocalDate.now();
+        LocalDate limitePasado = hoy.minusYears(200);
+
+        return !fecha.isAfter(hoy) && !fecha.isBefore(limitePasado);
     }
 
 }
