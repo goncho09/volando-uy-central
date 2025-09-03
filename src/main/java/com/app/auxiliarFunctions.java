@@ -76,7 +76,7 @@ public class auxiliarFunctions {
     public void cargarUsuariosComboBox() {
         comboUser.removeAllElements();
         List<DtUsuario> usuarios = sistema.listarUsuarios();
-        if(usuarios != null){
+        if(usuarios != null && !usuarios.isEmpty()){
             for (DtUsuario u : usuarios) {
                 comboUser.addElement(u);
             }
@@ -91,7 +91,7 @@ public class auxiliarFunctions {
     public void cargarUsuariosComboBox(DtUsuario usuario) {
         comboUser.removeAllElements();
         List<DtUsuario> usuarios = sistema.listarUsuarios();
-        if(usuarios != null){
+        if(usuarios != null  && !usuarios.isEmpty()){
             for (DtUsuario u : usuarios) {
                 comboUser.addElement(u);
                 if(u.getNombre().equals(usuario.getNombre())){
@@ -109,7 +109,7 @@ public class auxiliarFunctions {
     public void cargarAerolineasComboBox() {
         comboAerolinea.removeAllElements();
             List<DtAerolinea> aerolineas = sistema.listarAerolineas();
-            if(aerolineas != null){
+            if(aerolineas != null && !aerolineas.isEmpty()){
                 for (DtAerolinea a : aerolineas) {
                     comboAerolinea.addElement(a);
                 }
@@ -141,7 +141,7 @@ public class auxiliarFunctions {
     public void cargarRutasDeVueloComboBox() {
         comboRutaDeVuelo.removeAllElements();
         List<DtRuta> rt = sistema.listarRutasDeVuelo();
-        if(rt != null) {
+        if(rt != null && !rt.isEmpty()) {
             for (DtRuta rtv : rt) {
                 comboRutaDeVuelo.addElement(rtv);
             }
@@ -173,7 +173,7 @@ public class auxiliarFunctions {
         comboCiudadDestino.removeAllElements();
 
         List<DtCiudad> c = sistema.listarCiudades();
-        if(c != null) {
+        if(c != null && !c.isEmpty()) {
             for (DtCiudad ciudad : c) {
                 comboCiudadOrigen.addElement(ciudad);
                 comboCiudadDestino.addElement(ciudad);
@@ -193,7 +193,7 @@ public class auxiliarFunctions {
     public void cargarPaqueteComboBox() {
         comboPaquete.removeAllElements();
         List<DtPaquete> p = sistema.listarPaquetes();
-        if(p != null) {
+        if(p != null && !p.isEmpty()) {
             for (DtPaquete pqt : p) {
                 comboPaquete.addElement(pqt);
             }
@@ -208,7 +208,7 @@ public class auxiliarFunctions {
     public void cargarPaqueteNoCompradoComboBox() {
         comboPaqueteNoComprado.removeAllElements();
         List<DtPaquete> p = sistema.listarPaquetesNoComprados();
-        if(p != null) {
+        if(p != null && !p.isEmpty()) {
             for (DtPaquete pqt : p) {
                 comboPaqueteNoComprado.addElement(pqt);
             }
