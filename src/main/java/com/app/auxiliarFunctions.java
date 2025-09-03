@@ -110,6 +110,25 @@ public class auxiliarFunctions {
         }
     }
 
+    public void cargarUsuariosComboBox(DtUsuario usuario) {
+        comboUser.removeAllElements();
+        List<DtUsuario> usuarios = sistema.listarUsuarios();
+        if(usuarios != null){
+            for (DtUsuario u : usuarios) {
+                comboUser.addElement(u);
+                if(u.getNombre().equals(usuario.getNombre())){
+                    comboUser.setSelectedItem(u);
+                }
+            }
+        }else{
+            comboUser.removeAllElements();
+            comboUser.addElement(new DtUsuario() {
+                @Override
+                public String toString() { return "N/A"; }
+            });
+        }
+    }
+
     public void cargarAerolineasComboBox() {
         comboAerolinea.removeAllElements();
             List<DtAerolinea> aerolineas = sistema.listarAerolineas();

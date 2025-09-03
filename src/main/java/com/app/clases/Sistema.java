@@ -487,6 +487,7 @@ public class Sistema implements ISistema {
             c.setNacionalidad(cliente.getNacionalidad());
             c.setTipoDocumento(cliente.getTipoDocumento());
             c.setNumeroDocumento(cliente.getNumeroDocumento());
+            userDao.actualizar(c);
         }else{
             throw new IllegalArgumentException("Este usuario es aerolinea.");
         }
@@ -510,8 +511,11 @@ public class Sistema implements ISistema {
 
         if (u instanceof Aerolinea a) {
             a.setNombre(aerolinea.getNombre());
+            a.setEmail(aerolinea.getEmail());
             a.setDescripcion(aerolinea.getDescripcion());
             a.setLinkWeb(aerolinea.getLinkWeb());
+            userDao.actualizar(a);
+            a.mostrarDatos();
         }else{
             throw new IllegalArgumentException("Este usuario es cliente.");
         }

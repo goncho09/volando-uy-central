@@ -449,7 +449,7 @@ public class Main extends JFrame {
                         nombreModificarAerolinea.setText(aerolinea.getNombre());
                         correoModificarAerolinea.setText(aerolinea.getEmail());
                         linkWebModificarAerolinea.setText(aerolinea.getLinkWeb());
-                        descripcionModificarAerolinea.setText(aerolinea.getLinkWeb());
+                        descripcionModificarAerolinea.setText(aerolinea.getDescripcion());
                     }else{
                         JPanelModificarAerolinea.setVisible(false);
                         JPanelModificarCliente.setVisible(false);
@@ -752,14 +752,39 @@ public class Main extends JFrame {
                         Integer.parseInt(numeroDocumentoModificarCliente.getText())
                 );
                 try{
-                    System.out.println("Modificando datos de " + nicknameModificarCliente.getText());
                     s.modificarCliente(cliente);
-                    auxiliar.cargarUsuariosComboBox(); // Funcion para actualizar valores.
+                    auxiliar.cargarUsuariosComboBox(cliente); // Funcion para actualizar valores.
                 }catch(Exception ex){
                     new dialogMessage(ex.getMessage());
                     ex.printStackTrace();
                 }
 
+            }
+        });
+        JButtonModificarAerolinea.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(auxiliar.estanVaciosJTextField(nombreModificarAerolinea, correoModificarAerolinea, descripcionModificarAerolinea)){
+                    new dialogMessage("No puedes dejar los campos vacios..");
+                    return;
+                }
+
+                String link = auxiliar.estanVaciosJTextField(linkWebModificarAerolinea) ? "" : linkWebModificarAerolinea.getText();
+
+                DtAerolinea aerolinea = new DtAerolinea(
+                        nicknameModificarAerolinea.getText(),
+                        nombreModificarAerolinea.getText(),
+                        correoModificarAerolinea.getText(),
+                        descripcionModificarAerolinea.getText(),
+                        link
+                );
+
+                try{
+                    s.modificarAerolinea(aerolinea);
+                    auxiliar.cargarUsuariosComboBox(aerolinea);
+                } catch (Exception ex) {
+                    new dialogMessage(ex.getMessage());
+                }
             }
         });
     }
