@@ -17,6 +17,7 @@ public interface ISistema {
     List<Cliente> getClientes();
     void registrarCliente(DtCliente cliente);
     void modificarCliente(DtCliente cliente);
+    void seleccionarCliente(String nickname);
 
     List<DtAerolinea> listarAerolineas();
     List<Aerolinea> getAerolineas();
@@ -27,7 +28,6 @@ public interface ISistema {
     void confirmarAltaUsuario(DtUsuario user);
 
     // ------------ RESERVAS ----------- //
-
     List<DtReserva> mostrarReservas();
     List<DtPaquete> mostrarPaquetes();
 
@@ -69,6 +69,11 @@ public interface ISistema {
     List<DtCiudad> listarCiudades();
     Ciudad buscarCiudad(String nombre);
     List<Ciudad> getCiudades();
+
+    // ---------- COMPRAS ---------- //
+    void ingresarDatosCompra(DtCompraPaquete datosCompra);
+    void confirmarCompraPaquete();
+    void cancelarCompraPaquete();
 
     // ---------- INFRAESTRUCTURA ---------- //
     UserDao getUserDao();

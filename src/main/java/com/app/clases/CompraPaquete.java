@@ -1,5 +1,6 @@
 package com.app.clases;
 
+import com.app.datatypes.DtCompraPaquete;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -29,6 +30,15 @@ public class CompraPaquete {
         this.paquete = paquete;
         this.cliente = cliente;
     }
+
+    public CompraPaquete(DtCompraPaquete dto) {
+        this.fechaCompra = dto.getFechaCompra();
+        this.fechaVencimiento = dto.getFechaVencimiento();
+        this.costo = dto.getCosto();
+        this.paquete = dto.getPaquete();
+        this.cliente = dto.getCliente();
+    }
+
 
     public LocalDate getFechaCompra() {
         return fechaCompra;

@@ -31,12 +31,13 @@ public class Sistema implements ISistema {
     private Map<String, Paquete> paquetes;
     private Map<String, Vuelo> vuelos;
     private Map<String, RutaDeVuelo> rutasDeVuelo;
-    private Map<String, CompraPaquete> compraPaquetes;
+    //private Map<String, CompraPaquete> compraPaquetes;
     private Map<String, Reserva> reservas;
     private List<DtPasajero> pasajes;
 
     private List<Vuelo> consultaVuelos = new ArrayList<>();
     private List<Usuario> consultaUsuarios = new ArrayList<>();
+    private List<CompraPaquete> compras = new ArrayList<>();
 
     private Usuario usuarioSeleccionado; // Guarda selección actual
     private Paquete paqueteSeleccionado;
@@ -47,6 +48,7 @@ public class Sistema implements ISistema {
     private RutaDeVuelo rutaTemporal;
     private Aerolinea aerolineaTemp;
     private Cliente clienteTemp;
+    private DtCompraPaquete compraTemp;
 
 
     private Sistema() {
@@ -68,6 +70,7 @@ public class Sistema implements ISistema {
         this.vuelos = vueloDao.obtenerVuelos();
         this.reservas = new LinkedHashMap<>();
         this.pasajes = new ArrayList<>();
+        this.compras = new ArrayList<>();
     }
 
     public static Sistema getInstancia() {
@@ -536,7 +539,7 @@ public class Sistema implements ISistema {
         }else{
             throw new IllegalArgumentException("Ha ocurrido un error al crear el usuario.");
         }
-    };
+    }
 
     public List<Categoria> getCategoriasPorNombre(List<String> nombres) {
         List<Categoria> categoriasSeleccionadas = new ArrayList<>();
@@ -629,11 +632,65 @@ public class Sistema implements ISistema {
 
     // ---------- COMPRA PAQUETE ---------- //
     public void seleccionarPaqueteCompra(String nombre){
-
+        Paquete paquete = paqueteDao.buscar((nombre));
+        if(paquete == null){
+            throw new IllegalArgumentException("El paquete no existe");
+        }
+        this.paqueteSeleccionado = paquete;
     }
 
-    public void seleccionarCliente(){
+    public void seleccionarCliente(String nickname){
+        Cliente cliente = (Cliente) userDao.buscar(nickname);
+        if(cliente == null){
+            throw new IllegalArgumentException(("El cliente no existe"));
+        }
+        this.clienteTemp = cliente;
+    }
 
+    public void ingresarDatosCompra(DtCompraPaquete datosCompra){
+        if(paqueteSeleccionado == null){
+            throw  new IllegalArgumentException("Debe seleccionar un paquete.");
+        }
+
+        if(clienteTemp == null){
+            throw new IllegalArgumentException("Debe seleccionar un cliente.");
+        }
+
+        this.compraTemp = datosCompra;
+    }
+
+    public void confirmarCompraPaquete(){
+        if(paqueteSeleccionado == null){
+            throw  new IllegalArgumentException("Debe seleccionar un paquete.");
+        }
+
+        if(clienteTemp == null){
+            throw new IllegalArgumentException("Debe seleccionar un cliente.");
+        }
+
+        for(CompraPaquete c : this.clienteTemp.getComprasPaquetes()){
+            if (c.getPaquete().equals(paqueteSeleccionado)){
+                throw new IllegalArgumentException("El cliente ya ha comprado este paquete.");
+            }
+        }
+
+        CompraPaquete nuevaCompra = new CompraPaquete(this.compraTemp);
+        nuevaCompra.setPaquete(paqueteSeleccionado);
+        nuevaCompra.setCliente(clienteTemp);
+        nuevaCompra.setCosto(paqueteSeleccionado.getCosto());
+
+        this.compras.add(nuevaCompra);
+        this.userDao.addCompraPaquete(clienteTemp, nuevaCompra);
+
+        this.compraTemp = null;
+        this.clienteTemp = null;
+        this.paqueteSeleccionado = null;
+    }
+
+    public void cancelarCompraPaquete(){
+        this.compraTemp = null;
+        this.clienteTemp = null;
+        this.paqueteSeleccionado = null;
     }
 
     public void agregarRutaAPaquete(String nombrePaquete, String nombreRuta,int cantidad, TipoAsiento tipoAsiento){
