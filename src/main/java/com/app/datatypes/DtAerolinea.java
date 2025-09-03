@@ -45,6 +45,14 @@ public class DtAerolinea extends DtUsuario {
         return rutasDeVuelo;
     }
 
+    public List<DtRuta> listarRutasDeVuelo() {
+        List<DtRuta> listaRutas = new ArrayList<>();
+        for( RutaDeVuelo r : this.getRutasDeVuelo()){
+            listaRutas.add(r.getDatos());
+        }
+        return listaRutas;
+    }
+
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }

@@ -111,7 +111,11 @@ public class Sistema implements ISistema {
     public List<DtRuta> listarRutasDeVuelo(String nickname) {
         List<DtRuta> listaRutas = new ArrayList<>();
         Aerolinea a = (Aerolinea)this.usuarios.get(nickname);
-        for (RutaDeVuelo r : a.getRutasDeVuelo()) {
+        if(a == null){
+            return listaRutas;
+        }
+        List<RutaDeVuelo> rutasAerolinea = a.getRutasDeVuelo();
+        for (RutaDeVuelo r : rutasAerolinea) {
             listaRutas.add(r.getDatos());
         }
         return listaRutas;
@@ -578,8 +582,9 @@ public class Sistema implements ISistema {
         this.aerolineaTemporal = null;
     }
 
-    public Ciudad buscarCiudad (String nombre){
-        Ciudad c = this.ciudadDao.buscar(nombre);
+    public Ciudad buscarCiudad (String nombre, String pais){
+        CiudadId ciudadId = new CiudadId(nombre, pais);
+        Ciudad c = this.ciudadDao.buscar(ciudadId);
         if(c == null)  throw new IllegalArgumentException("Esta ciudad no existe.");
         return  c;
     }
@@ -748,6 +753,23 @@ public class Sistema implements ISistema {
         return  vuelos;
     }
 
+    public List<DtVuelo> listarVuelos(){
+        List<DtVuelo> listaVuelos = new ArrayList<>();
+        for(Vuelo v : this.getVuelos()){
+            listaVuelos.add(v.getDatos());
+        }
+        return listaVuelos;
+    }
+
+    public List<DtVuelo> listarVuelos(String nombre){
+        List<DtVuelo> listaVuelos = new ArrayList<>();
+        for(Vuelo v : this.getVuelos()){
+            if(v.getRutaDeVuelo().getNombre().equals(nombre)){
+                listaVuelos.add(v.getDatos());
+            }
+        }
+        return listaVuelos;
+    }
 
     public void crearPaqueteDeRutas(DtPaquete datosPaquete){
         Paquete paquete = paqueteDao.buscar((datosPaquete.getNombre()));
