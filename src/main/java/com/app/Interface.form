@@ -1690,7 +1690,7 @@
                               <text value="Seleccionar Aerolínea"/>
                             </properties>
                           </component>
-                          <component id="54de9" class="javax.swing.JComboBox" binding="JComboBoxAerolineaConsultaVuelo">
+                          <component id="54de9" class="javax.swing.JComboBox" binding="SeleccionarConsultaAerolinea">
                             <constraints>
                               <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false">
                                 <minimum-size width="200" height="-1"/>
@@ -1779,14 +1779,12 @@
                               <text value="Seleccionar Aerolinea"/>
                             </properties>
                           </component>
-                          <component id="311a1" class="javax.swing.JComboBox" binding="aerolineaReserva">
+                          <component id="311a1" class="javax.swing.JComboBox" binding="JComboBoxseleccionarAerolineaReserva">
                             <constraints>
                               <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                             </constraints>
                             <properties>
-                              <model>
-                                <item value="Ejemplo"/>
-                              </model>
+                              <model/>
                             </properties>
                           </component>
                           <hspacer id="1f356">
@@ -1815,27 +1813,23 @@
                               <text value="Seleccionar Vuelo"/>
                             </properties>
                           </component>
-                          <component id="beec7" class="javax.swing.JComboBox" binding="rutaDeVueloReserva">
+                          <component id="beec7" class="javax.swing.JComboBox" binding="JComboBoxrutaDeVueloReserva">
                             <constraints>
                               <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                             </constraints>
                             <properties>
-                              <model>
-                                <item value="Esto es una Ruta"/>
-                              </model>
+                              <model/>
                             </properties>
                           </component>
-                          <component id="f4fb5" class="javax.swing.JComboBox" binding="vueloReserva">
+                          <component id="f4fb5" class="javax.swing.JComboBox" binding="JComboBoxvueloReserva">
                             <constraints>
                               <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                             </constraints>
                             <properties>
-                              <model>
-                                <item value="Asd"/>
-                              </model>
+                              <model/>
                             </properties>
                           </component>
-                          <component id="136db" class="javax.swing.JButton" binding="verVueloButton" default-binding="true">
+                          <component id="136db" class="javax.swing.JButton" binding="JButtonVerVueloReservaButton">
                             <constraints>
                               <grid row="2" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                             </constraints>
@@ -1856,14 +1850,12 @@
                               <text value="Seleccionar Cliente"/>
                             </properties>
                           </component>
-                          <component id="f952d" class="javax.swing.JComboBox" binding="clienteReserva">
+                          <component id="f952d" class="javax.swing.JComboBox" binding="JComboBoxSeleccionarClienteReserva">
                             <constraints>
                               <grid row="3" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                             </constraints>
                             <properties>
-                              <model>
-                                <item value="Pepe"/>
-                              </model>
+                              <model/>
                             </properties>
                           </component>
                           <component id="cded" class="javax.swing.JLabel">
@@ -1874,7 +1866,7 @@
                               <text value="Tipo Asiento"/>
                             </properties>
                           </component>
-                          <component id="9949f" class="javax.swing.JComboBox" binding="tipoAsientoReserva">
+                          <component id="9949f" class="javax.swing.JComboBox" binding="JComboBoxtipoAsientoReserva">
                             <constraints>
                               <grid row="4" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                             </constraints>
@@ -1893,7 +1885,7 @@
                               <text value="Cantidad de Pasajes"/>
                             </properties>
                           </component>
-                          <component id="73cbd" class="javax.swing.JSpinner" binding="pasajesReserva">
+                          <component id="73cbd" class="javax.swing.JSpinner" binding="JSpinnerCantPasajesReserva">
                             <constraints>
                               <grid row="5" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                             </constraints>
@@ -1907,7 +1899,7 @@
                               <text value="Cantidad de Equipaje Extra"/>
                             </properties>
                           </component>
-                          <component id="2a665" class="javax.swing.JSpinner" binding="equipajeExtraReserva">
+                          <component id="2a665" class="javax.swing.JSpinner" binding="JSpinnerCantEquipajeExtraReserva">
                             <constraints>
                               <grid row="6" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                             </constraints>

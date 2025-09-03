@@ -33,14 +33,16 @@ public interface ISistema {
 
 
     // ---------- RUTAS DE VUELO ---------- //
-    List<DtRuta> listarRutasDeVuelo();
-    List<DtRuta> listarRutasDeVuelo(String nickname);
+    List<DtRuta> listarRutasDeVuelo(); // Devuelve TODAS las rutas de vuelo
+    List<DtRuta> listarRutasDeVuelo(String nickname); // Devuelve TODAS las rutas de vuelo de una aerolínea en específico
     DtRuta consultarRuta(String nombre);
 
     boolean existeRuta(String nombre);
     void altaRutaDeVuelo(String nickname, DtRuta datosRuta);
 
     // ---------- VUELOS ---------- //
+    List<DtVuelo> listarVuelos();
+    List<DtVuelo> listarVuelos(String nombre);
     DtVuelo consultarVuelo(String nombre);
 
     void seleccionarAerolineaParaVuelo(String nickname);
@@ -67,7 +69,7 @@ public interface ISistema {
     // ---------- CIUDADES ---------- //
     void altaCiudad(DtCiudad ciudad);
     List<DtCiudad> listarCiudades();
-    Ciudad buscarCiudad(String nombre);
+    Ciudad buscarCiudad(String nombre, String pais);
     List<Ciudad> getCiudades();
 
     // ---------- COMPRAS ---------- //
