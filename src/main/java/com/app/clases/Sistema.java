@@ -51,6 +51,7 @@ public class Sistema implements ISistema {
     private Aerolinea aerolineaTemp;
     private Cliente clienteTemp;
     private DtCompraPaquete compraTemp;
+    private DtPaquete paqueteTemp;
 
 
     private Sistema() {
@@ -746,4 +747,31 @@ public class Sistema implements ISistema {
         }
         return  vuelos;
     }
+
+
+    public void crearPaqueteDeRutas(DtPaquete datosPaquete){
+        Paquete paquete = paqueteDao.buscar((datosPaquete.getNombre()));
+        if (paquete == null) { //Si el paquete no existe
+            this.paqueteTemp = datosPaquete;
+        } else {
+            throw new IllegalArgumentException("El paquete ya existe.");
+        }
+    }
+
+    public void confirmarAltaPaquete() {
+        if (this.paqueteTemp == null){
+            throw new IllegalArgumentException("Debe ingresar datos del paquete");
+        }
+        Paquete nuevo = new Paquete(paqueteTemp);
+
+        paqueteDao.guardar(nuevo);
+
+        this.paquetes.put(nuevo.getNombre(), nuevo);
+        this.paqueteTemp = null;
+    }
+
+    public void cancelarAltaPquete(){
+        paqueteTemp = null;
+    }
+
 }
