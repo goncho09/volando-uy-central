@@ -264,4 +264,10 @@ public class auxiliarFunctions {
         return !fecha.isAfter(hoy) && !fecha.isBefore(limitePasado);
     }
 
+    public void validarNombreVuelo(String nombre) {
+        if (!nombre.matches("^[a-zA-Z0-9 ]+$")) {
+            throw new IllegalArgumentException("El nombre del vuelo solo puede contener letras, números y espacios.");
+        }
+    }
+
 }

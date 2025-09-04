@@ -32,6 +32,7 @@ public interface ISistema {
 
     List<DtReserva> mostrarReservas();
     List<DtPaquete> mostrarPaquetes();
+    List<DtReserva> listarReservaDeVuelo(String nombreVuelo);
 
 
     // ---------- RUTAS DE VUELO ---------- //

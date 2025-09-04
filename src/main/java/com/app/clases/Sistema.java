@@ -753,6 +753,17 @@ public class Sistema implements ISistema {
         return  vuelos;
     }
 
+    public List<DtReserva> listarReservaDeVuelo(String nombreVuelo){
+        List<DtReserva> reservasVuelo = new ArrayList<>();
+
+        for(Reserva r : this.reservas){
+            if(r.getVuelo() != null && r.getVuelo().getNombre().equals(nombreVuelo)){
+                reservasVuelo.add(r.getDatos());
+            }
+        }
+        return reservasVuelo;
+    }
+
     public List<DtVuelo> listarVuelos(){
        List<DtVuelo> vuelos = new ArrayList<>();
          for(Vuelo v : this.getVuelos()){

@@ -559,6 +559,8 @@ public class Main extends JFrame {
                     String ruta = JComboBoxRutaVueloAltaVuelo.getSelectedItem().toString();
                     String nombre = nombreAltaVuelo.getText();
 
+                    auxiliar.validarNombreVuelo(nombre);
+
                     LocalDate fecha = LocalDate.of((Integer)JSpinnerAñoAltaVuelo.getValue(), (Integer)JSpinnerMesAltaVuelo.getValue(), (Integer)JSpinnerDiaAltaVuelo.getValue());
                     LocalTime hora = LocalTime.of((Integer) JSpinnerDuracionAltaVueloHora.getValue(), (Integer) JSpinnerDuracionAltaVueloMinuto.getValue());
 
@@ -995,6 +997,7 @@ public class Main extends JFrame {
                 }
             }
         });
+
         CancelarAltaCategori.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
