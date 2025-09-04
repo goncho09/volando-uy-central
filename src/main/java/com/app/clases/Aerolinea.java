@@ -47,21 +47,8 @@ public class Aerolinea extends Usuario {
         return this.rutasDeVuelo;
     }
 
-    public void agregarRuta(RutaDeVuelo ruta) {
-        this.rutasDeVuelo.add(ruta);
-    }
-
     public DtAerolinea getDatos(){
         return new DtAerolinea(this.getNickname(), this.getNombre(), this.getEmail(), this.getDescripcion(), this.getLinkWeb(), this.getRutasDeVuelo());
-    }
-
-    public boolean buscarRutaDeVuelo(String nombre){
-        for (RutaDeVuelo rt : this.getRutasDeVuelo()){
-            if(rt.getNombre().equals(nombre)){
-                return true;
-            }
-        }
-        return false;
     }
 
     public void addRuta(RutaDeVuelo ruta) {

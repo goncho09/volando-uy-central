@@ -149,12 +149,11 @@ public class Sistema implements ISistema {
 
         if (aerolinea == null) throw new IllegalArgumentException("Aerolinea no existe");
 
-        if(aerolinea.buscarRutaDeVuelo(datosRuta.getNombre())) throw new IllegalArgumentException("Ya existe esa ruta de vuelo en esa aerolinea");
-
         RutaDeVuelo nuevaRuta = new RutaDeVuelo(datosRuta);
 
+        if(aerolinea.getRutasDeVuelo().contains(nuevaRuta)) throw new IllegalArgumentException("Ya existe esa ruta de vuelo en esa aerolinea");
+
         this.rutasDeVuelo.put(nuevaRuta.getNombre(),nuevaRuta); // Guardas la ruta en el sistema
-        aerolinea.addRuta(nuevaRuta); // Dicha ruta la asocia con aerolinea
         this.rutaDeVueloDao.guardar(nuevaRuta); // Persistimos la nuevaRuta
         this.userDao.addRutaDeVuelo(aerolinea, nuevaRuta); // La agregamos a su aerolinea
     }
@@ -454,7 +453,6 @@ public class Sistema implements ISistema {
     }
 
     public void altaCiudad(DtCiudad ciudad) {
-        //Entiendo que es una clave compuesta nombre + país; agrego país
         CiudadId id = new CiudadId(ciudad.getNombre(), ciudad.getPais());
         Ciudad existente = ciudadDao.buscar(id);
 
@@ -464,8 +462,8 @@ public class Sistema implements ISistema {
 
         // Si no existe, crear
         Ciudad c = new Ciudad(ciudad);
-        ciudadDao.guardar(c);
         this.ciudades.put(c.getNombre(), c);
+        ciudadDao.guardar(c);
     }
 
 

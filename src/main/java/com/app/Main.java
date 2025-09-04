@@ -144,9 +144,9 @@ public class Main extends JFrame {
     private JTextField descripcionModificarAerolinea;
     private JButton confirmarModificarCliente;
     private JTextField numeroDocumentoModificarCliente;
-    private JSpinner spinner1;
-    private JSpinner spinner2;
-    private JSpinner spinner3;
+    private JSpinner fechaDiaReserva;
+    private JSpinner fechaMesReserva;
+    private JSpinner fechaAnioReserva;
 
 
     public Main() {
@@ -317,8 +317,11 @@ public class Main extends JFrame {
                         new dialogMessage("Faltan argumentos");
                         return;
                     }
-                    s.altaCiudad(new DtCiudad(nombreAltaCiudad.getText(), paisAltaCiudad.getText(),aeropuertoAltaCiudad.getText(),descripcionAltaCiudad.getText(),webAltaCiudad.getText(),LocalDate.now()));
-
+                    try {
+                        s.altaCiudad(new DtCiudad(nombreAltaCiudad.getText(), paisAltaCiudad.getText(), aeropuertoAltaCiudad.getText(), descripcionAltaCiudad.getText(), webAltaCiudad.getText(), LocalDate.now()));
+                    } catch (Exception ex) {
+                        new dialogMessage("Ha fallado el alta ciudad");
+                    }
                     new dialogMessage("Ciudad registrada exitosamente: " + nombreAltaCiudad.getText());
 
                     auxiliar.cargarCiudadesComboBox();
@@ -347,6 +350,21 @@ public class Main extends JFrame {
                 String tipoAsiento = JComboBoxtipoAsientoReserva.getSelectedItem().toString();
                 int pasajes = (Integer) JSpinnerCantPasajesReserva.getValue();
                 int equipajeExtra = (Integer) JSpinnerCantEquipajeExtraReserva.getValue();
+
+                int dia = (Integer) fechaDiaReserva.getValue();
+                int mes = (Integer) fechaMesReserva.getValue();
+                int anio = (Integer) fechaAnioReserva.getValue();
+
+                LocalDate fecha = null;
+                try{
+                    fecha = LocalDate.of(anio, mes, dia);
+                } catch (Exception ex) {
+                    new dialogMessage("Error " + ex.getMessage());
+                }
+
+                if(!auxiliar.esFechaValida(fecha)){
+                    new dialogMessage("Debes ingresar una fecha válida..");
+                }
 
                 if(pasajes <= 0){
                     new dialogMessage("Pasajes de reservas debe ser mayor a 0");
