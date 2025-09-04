@@ -17,13 +17,14 @@ public class Ciudad {
     private String sitioWeb;
     private LocalDate fechaAlta;
 
-    public Ciudad() {}
+    public Ciudad() {};
+
     public Ciudad(DtCiudad ciudad) {
-        this.id = new CiudadId(ciudad.getNombre(), ciudad.getPais());
         this.aeropuerto = ciudad.getAeropuerto();
         this.descripcion = ciudad.getDescripcion();
         this.sitioWeb = ciudad.getSitioWeb();
         this.fechaAlta = ciudad.getFechaAlta();
+        this.id = new CiudadId(ciudad.getNombre(), ciudad.getPais());
     }
 
     public CiudadId getId() {
