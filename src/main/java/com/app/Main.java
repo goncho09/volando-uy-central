@@ -211,10 +211,10 @@ public class Main extends JFrame {
         JComboBoxRutaVueloAgregarRuta.setModel(auxiliar.getComboRutaDeVueloAerolineaModel());
         JComboBoxRutaVueloConsultaRuta.setModel(auxiliar.getComboRutaDeVueloAerolineaModel());
         JComboBoxrutaDeVueloReserva.setModel(auxiliar.getComboRutaDeVueloAerolineaModel());
+        JComboBoxConsultaVueloRutaDeVuelo.setModel(auxiliar.getComboRutaDeVueloAerolineaModel());
 
         JComboBoxvueloReserva.setModel(auxiliar.getComboVueloRutaDeVueloModel());
-        JComboBoxConsultaVueloRutaDeVuelo.setModel(auxiliar.getComboRutaDeVueloModel());
-        JComboBoxConsultaVueloVuelo.setModel(auxiliar.getComboVuelosModel());
+        JComboBoxConsultaVueloVuelo.setModel(auxiliar.getComboVueloRutaDeVueloModel());
 
         JPanelCategorias.setLayout(new GridLayout(0, 2, 5, 5));
 

@@ -8,6 +8,7 @@
         <class>com.app.clases.Aerolinea</class>
         <class>com.app.clases.Categoria</class>
         <class>com.app.clases.Ciudad</class>
+        <class>com.app.clases.CiudadId</class>
         <class>com.app.clases.CompraPaquete</class>
         <class>com.app.clases.Paquete</class>
         <class>com.app.clases.Reserva</class>

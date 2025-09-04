@@ -42,17 +42,18 @@ public class RutaDeVuelo {
 
     @ManyToOne
     @JoinColumns({
-            @JoinColumn(name = "ciudadOrigen_nombre", referencedColumnName = "nombre"),
-            @JoinColumn(name = "ciudadOrigen_pais", referencedColumnName = "pais")
+            @JoinColumn(name = "ciudadDestino_nombre", referencedColumnName = "nombreCiudad"),
+            @JoinColumn(name = "ciudadDestino_pais", referencedColumnName = "paisCiudad")
     })
-    private Ciudad ciudadOrigen;
+    private Ciudad ciudadDestino;
 
     @ManyToOne
     @JoinColumns({
-            @JoinColumn(name = "ciudadDestino_nombre", referencedColumnName = "nombre"),
-            @JoinColumn(name = "ciudadDestino_pais", referencedColumnName = "pais")
+            @JoinColumn(name = "ciudadOrigen_nombre", referencedColumnName = "nombreCiudad"),
+            @JoinColumn(name = "ciudadOrigen_pais", referencedColumnName = "paisCiudad")
     })
-    private Ciudad ciudadDestino;
+    private Ciudad ciudadOrigen;
+
 
     public RutaDeVuelo() {}
 
