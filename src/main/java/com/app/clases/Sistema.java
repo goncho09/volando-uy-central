@@ -755,21 +755,21 @@ public class Sistema implements ISistema {
     }
 
     public List<DtVuelo> listarVuelos(){
-        List<DtVuelo> listaVuelos = new ArrayList<>();
-        for(Vuelo v : this.getVuelos()){
-            listaVuelos.add(v.getDatos());
-        }
-        return listaVuelos;
+       List<DtVuelo> vuelos = new ArrayList<>();
+         for(Vuelo v : this.getVuelos()){
+              vuelos.add(v.getDatos());
+         }
+            return vuelos;
     }
 
     public List<DtVuelo> listarVuelos(String nombre){
-        List<DtVuelo> listaVuelos = new ArrayList<>();
-        for(Vuelo v : this.getVuelos()){
-            if(v.getRutaDeVuelo().getNombre().equals(nombre)){
-                listaVuelos.add(v.getDatos());
+       List<DtVuelo> vuelos = new ArrayList<>();
+            for(Vuelo v : this.getVuelos()){
+                if(v.getRutaDeVuelo().getNombre().equals(nombre)){
+                    vuelos.add(v.getDatos());
+                }
             }
-        }
-        return listaVuelos;
+                return vuelos;
     }
 
     public void crearPaqueteDeRutas(DtPaquete datosPaquete){
@@ -800,3 +800,4 @@ public class Sistema implements ISistema {
     public void altaReserva(DtReserva reserva) {}
 
 }
+

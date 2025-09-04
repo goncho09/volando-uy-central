@@ -20,6 +20,8 @@ public class auxiliarFunctions {
     private DefaultComboBoxModel<DtPaquete> comboPaqueteNoComprado = new DefaultComboBoxModel<>();
     private DefaultComboBoxModel<DtRuta> comboRutaDeVueloAerolinea = new DefaultComboBoxModel<>();
     private DefaultComboBoxModel<DtVuelo> comboVueloRutaDeVuelo = new DefaultComboBoxModel<>();
+    private DefaultComboBoxModel<DtReserva> comboReserva = new DefaultComboBoxModel<>();
+    private DefaultComboBoxModel <DtVuelo> comboVuelos = new DefaultComboBoxModel<>();
 
     public auxiliarFunctions(ISistema s) {
         this.sistema = s;
@@ -36,6 +38,7 @@ public class auxiliarFunctions {
     public DefaultComboBoxModel<DtPaquete> getComboPaqueteModel() { return comboPaquete; }
     public DefaultComboBoxModel<DtPaquete> getComboPaqueteNoCompradoModel() { return comboPaqueteNoComprado; }
     public DefaultComboBoxModel<DtVuelo> getComboVueloRutaDeVueloModel() { return  comboVueloRutaDeVuelo; }
+    public DefaultComboBoxModel<DtVuelo> getComboVuelosModel() {return comboVuelos;}
 
     //Función para validar 1 o más "JComboBox"
     public boolean estanVaciosJComboBox(JComboBox<?>... combos) {
@@ -167,7 +170,6 @@ public class auxiliarFunctions {
             });
         }
     }
-
     public void cargarCiudadesComboBox() {
         comboCiudadOrigen.removeAllElements();
         comboCiudadDestino.removeAllElements();
@@ -189,6 +191,8 @@ public class auxiliarFunctions {
             });
         }
     }
+
+
 
     public void cargarPaqueteComboBox() {
         comboPaquete.removeAllElements();
@@ -219,6 +223,19 @@ public class auxiliarFunctions {
             });
         }
     }
+   /* public void cargarDatosReservaComboBox() {
+        List<DtReserva> reservas = sistema.listarReservas();
+        if (reservas != null) {
+            for (DtReserva r : reservas) {
+                comboReserva.addElement(r);
+            }
+        } else {
+            comboReserva.removeAllElements();
+            comboReserva.addElement(new DtReserva() {
+                @Override
+                public String toString() { return "N/A"; }
+            });
+        }*/
 
     public void cargarVuelosComboBoxRuta(String nombre){
         comboVueloRutaDeVuelo.removeAllElements();

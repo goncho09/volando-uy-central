@@ -1690,7 +1690,7 @@
                               <text value="Seleccionar Aerolínea"/>
                             </properties>
                           </component>
-                          <component id="54de9" class="javax.swing.JComboBox" binding="SeleccionarConsultaAerolinea">
+                          <component id="54de9" class="javax.swing.JComboBox" binding="JComboBoxConsultaVueloAerolinea">
                             <constraints>
                               <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false">
                                 <minimum-size width="200" height="-1"/>
@@ -1724,13 +1724,13 @@
                               <text value="Seleccionar Vuelo"/>
                             </properties>
                           </component>
-                          <component id="9549e" class="javax.swing.JComboBox" binding="comboBox4" default-binding="true">
+                          <component id="9549e" class="javax.swing.JComboBox" binding="JComboBoxConsultaVueloRutaDeVuelo">
                             <constraints>
                               <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                             </constraints>
                             <properties/>
                           </component>
-                          <component id="32629" class="javax.swing.JComboBox" binding="comboBox5" default-binding="true">
+                          <component id="32629" class="javax.swing.JComboBox" binding="JComboBoxConsultaVueloVuelo">
                             <constraints>
                               <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                             </constraints>
@@ -1743,6 +1743,14 @@
                             <properties>
                               <text value="Consultar Vuelo"/>
                             </properties>
+                          </component>
+                          <component id="54de9" class="javax.swing.JComboBox" binding="a">
+                            <constraints>
+                              <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                                <minimum-size width="200" height="-1"/>
+                              </grid>
+                            </constraints>
+                            <properties/>
                           </component>
                         </children>
                       </grid>
