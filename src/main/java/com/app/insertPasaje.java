@@ -48,6 +48,11 @@ public class insertPasaje extends JFrame{
 
                 // Crear el objeto pasaje (podés usar tu DtPasaje o Pasaje)
                 DtPasajero p = new DtPasajero(nombre, apellido);
+                if(listPasajes.contains(p)){
+                    new dialogMessage("No puedes crear 2 pasajes iguales");
+                    dispose();
+                    return;
+                }
                 listPasajes.add(p);
                 contador++;
 

@@ -17,7 +17,7 @@ public interface ISistema {
     List<Cliente> getClientes();
     void registrarCliente(DtCliente cliente);
     void modificarCliente(DtCliente cliente);
-    void seleccionarCliente(String nickname);
+    Cliente buscarCliente(String nickname);
 
     List<DtAerolinea> listarAerolineas();
     List<Aerolinea> getAerolineas();
@@ -28,7 +28,7 @@ public interface ISistema {
     void confirmarAltaUsuario(DtUsuario user);
 
     // ------------ RESERVAS ----------- //
-    void altaReserva(DtReserva reserva);
+    void altaReserva(DtReserva reserva, String nickCliente, String nameVuelo); //Reserva de un Vuelo
 
     List<DtReserva> mostrarReservas();
     List<DtPaquete> mostrarPaquetes();
@@ -45,6 +45,7 @@ public interface ISistema {
     // ---------- VUELOS ---------- //
     List<DtVuelo> listarVuelos();
     List<DtVuelo> listarVuelos(String nombre);
+    Vuelo buscarVuelo(String nombre);
     DtVuelo consultarVuelo(String nombre);
 
     void seleccionarAerolineaParaVuelo(String nickname);

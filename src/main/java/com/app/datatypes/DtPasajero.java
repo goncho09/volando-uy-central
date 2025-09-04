@@ -3,6 +3,8 @@ package com.app.datatypes;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 
+import java.util.Objects;
+
 @Entity
 public class DtPasajero {
     @Id
@@ -29,6 +31,20 @@ public class DtPasajero {
 
     public void setApellido(String apellido) {
         this.apellido = apellido;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        DtPasajero that = (DtPasajero) o;
+        return Objects.equals(nombre, that.nombre) &&
+                Objects.equals(apellido, that.apellido);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(nombre, apellido);
     }
 
     @Override

@@ -111,7 +111,8 @@ public class Main extends JFrame {
     private JTextField nacionalidadClienteModificar;
     private JComboBox tipoDocumentoClienteModificar;
     private JComboBox JComboBoxSeleccionarUsuarioConsultar;
-    private JSpinner JSpinnerDuracionAltaVuelo;
+    private JSpinner JSpinnerDuracionAltaVueloHora;
+    private JSpinner JSpinnerDuracionAltaVueloMinuto;
     private JTextField nombreAltaCategoría;
     private JButton confirmarAltaCategoria;
     private JSpinner fechaDiaRegistrarCliente;
@@ -147,6 +148,7 @@ public class Main extends JFrame {
     private JSpinner fechaDiaReserva;
     private JSpinner fechaMesReserva;
     private JSpinner fechaAnioReserva;
+    private JSpinner JSpinner;
 
 
     public Main() {
@@ -231,7 +233,6 @@ public class Main extends JFrame {
         JSpinnerDiaAltaVuelo.setModel(new SpinnerNumberModel(1, 1, 31, 1));
 
         JSpinnerMesAltaVuelo.setModel(new SpinnerNumberModel(1, 1, 12, 1));
-        JSpinnerDuracionAltaVuelo.setModel(new SpinnerNumberModel(1, 1, 12, 1));
 
         JSpinnerAñoAltaVuelo.setModel(new SpinnerNumberModel(2025, 2025, 2030, 1));
 
@@ -249,8 +250,11 @@ public class Main extends JFrame {
         JSpinnerCostoAltaPaquete.setModel(new SpinnerNumberModel(1.0, 1.0, 1_000_000.0, 1.0));
 
         SpinnerHoraAltaRutaDeVuelo.setModel(new SpinnerNumberModel(0, 0, 200, 1));
+        JSpinnerDuracionAltaVueloHora.setModel(new SpinnerNumberModel(0, 0, 200, 1));
 
         SpinnerMinutoAltaRutaDeVuelo.setModel(new SpinnerNumberModel(0, 0, 59, 1));
+        JSpinnerDuracionAltaVueloMinuto.setModel(new SpinnerNumberModel(0, 0, 59, 1));
+
 
         JSpinnerDescuentoAltaPaquete.setModel(new SpinnerNumberModel(0, 0, 100, 1));
 
@@ -347,7 +351,8 @@ public class Main extends JFrame {
                 String rutaDeVuelo = JComboBoxrutaDeVueloReserva.getSelectedItem().toString();
                 String vuelo = JComboBoxvueloReserva.getSelectedItem().toString();
                 String cliente = JComboBoxSeleccionarClienteReserva.getSelectedItem().toString();
-                String tipoAsiento = JComboBoxtipoAsientoReserva.getSelectedItem().toString();
+                TipoAsiento tipoAsiento = JComboBoxtipoAsientoReserva.getSelectedItem().toString() == "Turista" ? TipoAsiento.TURISTA : TipoAsiento.EJECUTIVO;
+
                 int pasajes = (Integer) JSpinnerCantPasajesReserva.getValue();
                 int equipajeExtra = (Integer) JSpinnerCantEquipajeExtraReserva.getValue();
 
@@ -359,11 +364,8 @@ public class Main extends JFrame {
                 try{
                     fecha = LocalDate.of(anio, mes, dia);
                 } catch (Exception ex) {
-                    new dialogMessage("Error " + ex.getMessage());
-                }
-
-                if(!auxiliar.esFechaValida(fecha)){
                     new dialogMessage("Debes ingresar una fecha válida..");
+                    return;
                 }
 
                 if(pasajes <= 0){
@@ -374,15 +376,22 @@ public class Main extends JFrame {
                 insertPasaje ventanaPasajes = new insertPasaje(pasajes);
                 setEnabled(false);
 
+                LocalDate finalFecha = fecha;
                 ventanaPasajes.addWindowListener(new WindowAdapter() {
                     @Override
                     public void windowClosed(WindowEvent e){
                         setEnabled(true);
                         List<DtPasajero> listaPasajes = ventanaPasajes.getPasajes();
                         if(listaPasajes.size() == pasajes){
-                            DtReserva reserva = new DtReserva();
+                            DtReserva reserva = new DtReserva(
+                                    finalFecha,
+                                    tipoAsiento,
+                                    pasajes,
+                                    equipajeExtra,
+                                    listaPasajes
+                            );
                             try{
-                                s.altaReserva(reserva);
+                                s.altaReserva(reserva, cliente, vuelo);
                             } catch (Exception ex) {
                                 new dialogMessage(ex.getMessage());
                             }
@@ -550,7 +559,12 @@ public class Main extends JFrame {
                     String nombre = nombreAltaVuelo.getText();
 
                     LocalDate fecha = LocalDate.of((Integer)JSpinnerAñoAltaVuelo.getValue(), (Integer)JSpinnerMesAltaVuelo.getValue(), (Integer)JSpinnerDiaAltaVuelo.getValue());
-                    LocalTime hora = LocalTime.of(10, 0);
+                    LocalTime hora = LocalTime.of((Integer) JSpinnerDuracionAltaVueloHora.getValue(), (Integer) JSpinnerDuracionAltaVueloMinuto.getValue());
+
+                    if(fecha.isBefore(LocalDate.now())){
+                        new dialogMessage("La fecha debe ser para el futuro");
+                        return;
+                    }
 
                     DtVuelo dtVuelo = new DtVuelo(nombre, fecha, hora, (Integer)JSpinnerTuristasAltaVuelo.getValue(), (Integer)JSpinnerEjecutivosAltaVuelo.getValue(), LocalDate.now(), null);
 
@@ -562,8 +576,6 @@ public class Main extends JFrame {
                     //pa verificar que se creo
                     try {
                         s.consultarVuelo(dtVuelo.getNombre());
-                        new dialogMessage("Vuelo creado y verificado correctamente");
-                        new dialogMessage("No se guarda en la BD");
                     } catch (IllegalArgumentException ex) {
                         new dialogMessage("Error: el vuelo no se registró correctamente");
                     }

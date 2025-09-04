@@ -19,7 +19,6 @@ public class DtReserva {
     private Vuelo vuelo;
     private Paquete paquete;
 
-    public DtReserva() {}
     public DtReserva(LocalDate fecha, TipoAsiento tipoAsiento, int cantPasajes, int equipajeExtra, float costo, List<DtPasajero> pasajeros, Cliente cliente, Vuelo vuelo, Paquete paquete) {
         this.fecha = fecha;
         this.tipoAsiento = tipoAsiento;
@@ -30,6 +29,38 @@ public class DtReserva {
         this.cliente = cliente;
         this.vuelo = vuelo;
         this.paquete = paquete;
+    }
+
+    public DtReserva(LocalDate fecha, TipoAsiento tipoAsiento, int cantPasajes, int equipajeExtra, float costo, List<DtPasajero> pasajeros, Cliente cliente, Vuelo vuelo) {
+        this.fecha = fecha;
+        this.tipoAsiento = tipoAsiento;
+        this.cantPasajes = cantPasajes;
+        this.equipajeExtra = equipajeExtra;
+        this.costo = costo;
+        this.pasajeros = pasajeros;
+        this.cliente = cliente;
+        this.vuelo = vuelo;
+        this.paquete = null;
+    }
+
+    public DtReserva(LocalDate fecha, TipoAsiento tipoAsiento, int cantPasajes, int equipajeExtra, float costo, List<DtPasajero> pasajeros, Cliente cliente, Paquete paquete) {
+        this.fecha = fecha;
+        this.tipoAsiento = tipoAsiento;
+        this.cantPasajes = cantPasajes;
+        this.equipajeExtra = equipajeExtra;
+        this.costo = costo;
+        this.pasajeros = pasajeros;
+        this.cliente = cliente;
+        this.vuelo = null;
+        this.paquete = paquete;
+    }
+
+    public DtReserva(LocalDate fecha, TipoAsiento tipoAsiento, int cantPasajes, int equipajeExtra,List<DtPasajero> pasajeros) {
+        this.fecha = fecha;
+        this.tipoAsiento = tipoAsiento;
+        this.cantPasajes = cantPasajes;
+        this.equipajeExtra = equipajeExtra;
+        this.pasajeros = pasajeros;
     }
 
     public LocalDate getFecha() {

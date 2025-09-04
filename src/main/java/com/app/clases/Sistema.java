@@ -648,6 +648,7 @@ public class Sistema implements ISistema {
 
         this.vuelos.put(nuevo.getNombre(), nuevo);
         this.consultaVuelos.add(nuevo);
+        this.vueloDao.guardar(nuevo);
 
         this.vueloTemporal = null;
         this.rutaTemporal = null;
@@ -670,12 +671,12 @@ public class Sistema implements ISistema {
         this.paqueteSeleccionado = paquete;
     }
 
-    public void seleccionarCliente(String nickname){
-        Cliente cliente = (Cliente) userDao.buscar(nickname);
+    public Cliente buscarCliente(String nickname){
+        Cliente cliente = (Cliente) this.usuarios.get(nickname);
         if(cliente == null){
             throw new IllegalArgumentException(("El cliente no existe"));
         }
-        this.clienteTemp = cliente;
+        return cliente;
     }
 
     public void ingresarDatosCompra(DtCompraPaquete datosCompra){
@@ -795,7 +796,47 @@ public class Sistema implements ISistema {
         paqueteTemp = null;
     }
 
-    public void altaReserva(DtReserva reserva) {}
+    public Vuelo buscarVuelo(String nombre){
+        Vuelo v = (Vuelo) this.vuelos.get(nombre);
+        if(v == null){
+            throw new IllegalArgumentException("El vuelo no existe.");
+        }
+        return v;
+    }
+
+    public void altaReserva(DtReserva reserva, String nickCliente, String nameVuelo) {
+        Cliente c = buscarCliente(nickCliente);
+        Vuelo v = buscarVuelo(nameVuelo);
+        float costoAsiento = reserva.getTipoAsiento() == TipoAsiento.EJECUTIVO ? v.getRutaDeVuelo().getCostoEjecutivo() : v.getRutaDeVuelo().getCostoTurista();
+        int cantPasajes = reserva.getCantPasajes();
+        float costoEquipaje = reserva.getEquipajeExtra() * v.getRutaDeVuelo().getEquipajeExtra();
+        float costo = (costoAsiento * cantPasajes) + costoEquipaje;
+
+        if(cantPasajes != reserva.getPasajeros().size()){
+            throw new IllegalArgumentException("La cantidad de pasajeros no coincide");
+        }
+
+        DtReserva r = new DtReserva(
+                reserva.getFecha(),
+                reserva.getTipoAsiento(),
+                cantPasajes,
+                reserva.getEquipajeExtra(),
+                costo,
+                reserva.getPasajeros(),
+                c,
+                v
+        );
+
+        Reserva nuevaReserva = new Reserva(r);
+        this.reservas.add(nuevaReserva);
+        this.reservaDao.guardar(nuevaReserva);
+        this.userDao.addReserva(c, nuevaReserva);
+
+        for(DtPasajero p : reserva.getPasajeros()){
+            this.pasajeroDao.guardar(p);
+        }
+
+    }
 
 }
 
