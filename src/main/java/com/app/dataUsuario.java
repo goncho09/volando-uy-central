@@ -8,6 +8,9 @@ import com.app.datatypes.DtUsuario;
 import javax.swing.*;
 
 public class dataUsuario extends JFrame {
+
+    private auxiliarFunctions a;
+
     private JPanel panel1;
     private JLabel nicknameConsultaUsuario;
     private JLabel nombreConsultaUsuario;
@@ -26,13 +29,15 @@ public class dataUsuario extends JFrame {
     private JButton cancelarAerolinea;
     private JPanel PanelUsuario;
 
-    public dataUsuario(DtUsuario usuario) {
+    public dataUsuario(DtUsuario usuario, auxiliarFunctions auxiliar) {
         setContentPane(panel1);
         setTitle("Datos de Usuario: " + usuario.getNickname());
         setResizable(false);
         setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         setSize(275, 300);
         setLocationRelativeTo(null);
+
+        this.a = auxiliar;
 
         cancelarButton.addActionListener(e -> dispose());
         cancelarAerolinea.addActionListener(e -> dispose());

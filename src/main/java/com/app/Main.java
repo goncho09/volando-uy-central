@@ -301,7 +301,7 @@ public class Main extends JFrame {
                 System.out.println("Ruta de Vuelo: " + rutaDeVuelo);
                 System.out.println("Vuelo: " + vueloStr);
 
-                dataVuelo vuelo = new dataVuelo(dtVuelo);
+                dataVuelo vuelo = new dataVuelo(dtVuelo, auxiliar);
 
                 vuelo.addWindowListener(new WindowAdapter() {
                     @Override
@@ -498,7 +498,7 @@ public class Main extends JFrame {
                     return;
                 }
 
-                new dataUsuario(dtUsuario);
+                new dataUsuario(dtUsuario, auxiliar);
             }catch (Exception ex) {
                 new dialogMessage("Error al consultar: " + ex.getMessage());
                 ex.printStackTrace();
@@ -723,7 +723,7 @@ public class Main extends JFrame {
                 }
                     try{
                         s.seleccionarPaquete(JComboBoxPaqueteConsultaPaqueteRutaVuelo.getSelectedItem().toString());
-                        JFrame paquete = new dataPaquete(s.getPaquete());
+                        JFrame paquete = new dataPaquete(s.getPaquete(), auxiliar);
                         setEnabled(false);
 
                         paquete.addWindowListener(new WindowAdapter() {
@@ -819,7 +819,7 @@ public class Main extends JFrame {
 
                 try{
                     String nombreRuta = JComboBoxRutaVueloConsultaRuta.getSelectedItem().toString();
-                    new dataRutaDeVuelo(s.consultarRuta(nombreRuta),s.getVuelosRutaDeVuelo(nombreRuta));
+                    new dataRutaDeVuelo(s.consultarRuta(nombreRuta),s.getVuelosRutaDeVuelo(nombreRuta), auxiliar);
                 } catch (Exception ex) {
                     new dialogMessage(ex.getMessage());
                 }
@@ -849,6 +849,7 @@ public class Main extends JFrame {
                     }
                 }catch (Exception ex){
                     new dialogMessage("Debes ingresar una fecha válida..");
+                    return;
                 }
 
                 TipoDocumento tipoDocumento = tipoDocumentoClienteModificar.getSelectedItem().toString().equals("Cedula") ? TipoDocumento.CEDULA : TipoDocumento.PASAPORTE;
@@ -951,7 +952,7 @@ public class Main extends JFrame {
                     new dialogMessage("Ha ocurrido un error..");
                     return;
                 }
-                new dataVuelo(vuelo);
+                new dataVuelo(vuelo, auxiliar);
             }
         });
         JComboBoxvueloReserva.addItemListener(new ItemListener() {

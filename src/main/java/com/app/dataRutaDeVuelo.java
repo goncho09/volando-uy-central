@@ -10,6 +10,8 @@ import java.awt.event.ActionListener;
 import java.util.List;
 
 public class dataRutaDeVuelo extends JFrame{
+    private auxiliarFunctions a;
+
     private JPanel panel1;
     private JLabel nombre;
     private JLabel descripcion;
@@ -25,7 +27,7 @@ public class dataRutaDeVuelo extends JFrame{
     private JComboBox JComboBoxVuelos;
     private JButton ButtonVerVuelo;
 
-    public dataRutaDeVuelo(DtRuta ruta, List<DtVuelo> vuelosAsociados){
+    public dataRutaDeVuelo(DtRuta ruta, List<DtVuelo> vuelosAsociados, auxiliarFunctions auxiliar){
         setTitle("Datos de la ruta: " + ruta.getNombre());
         setResizable(false);
         setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
@@ -33,6 +35,8 @@ public class dataRutaDeVuelo extends JFrame{
         setLocationRelativeTo(null);
         setVisible(true);
         add(dataRutaPanel);
+
+        a = auxiliar;
 
         DefaultComboBoxModel<DtVuelo> model = new DefaultComboBoxModel<>();
         for (DtVuelo v : vuelosAsociados) {
@@ -73,7 +77,7 @@ public class dataRutaDeVuelo extends JFrame{
 
                 for (DtVuelo v : vuelosAsociados) {
                     if(v.getNombre().equals(JComboBoxVuelos.getSelectedItem().toString())){
-                        new dataVuelo(v.getDatos());
+                        new dataVuelo(v.getDatos(), a);
                         break;
                     }
                 }
