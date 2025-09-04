@@ -148,6 +148,7 @@ public class Main extends JFrame {
     private JSpinner fechaDiaReserva;
     private JSpinner fechaMesReserva;
     private JSpinner fechaAnioReserva;
+    private JButton CancelarAltaCategori;
     private JSpinner JSpinner;
 
 
@@ -852,6 +853,7 @@ public class Main extends JFrame {
                     return;
                 }
 
+
                 TipoDocumento tipoDocumento = tipoDocumentoClienteModificar.getSelectedItem().toString().equals("Cedula") ? TipoDocumento.CEDULA : TipoDocumento.PASAPORTE;
 
                 DtCliente cliente = new DtCliente(
@@ -992,6 +994,12 @@ public class Main extends JFrame {
                         return;
                     }
                 }
+            }
+        });
+        CancelarAltaCategori.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                nombreAltaCategoría.setText("");
             }
         });
     }
