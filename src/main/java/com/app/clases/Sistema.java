@@ -843,6 +843,8 @@ public class Sistema implements ISistema {
         this.reservaDao.guardar(nuevaReserva);
         this.userDao.addReserva(c, nuevaReserva);
 
+        v.setCantReservas(v.getCantReservas()+1);
+
         for(DtPasajero p : reserva.getPasajeros()){
             this.pasajeroDao.guardar(p);
         }

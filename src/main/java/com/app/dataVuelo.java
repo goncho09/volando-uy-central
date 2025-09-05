@@ -34,7 +34,7 @@ public class dataVuelo extends JFrame {
         setVisible(true);
         add(dataVueloPanel);
 
-        int cantidadReservas = 178; // Hay que hacer una variable en "Vuelos" para conseguir las reservas uwu
+        int cantidadReservas = dataVuelo.getCantReservas();
         int capacidadMaxima = dataVuelo.getMaxEjecutivos() + dataVuelo.getMaxTuristas();
 
         nombreVuelo.setText(dataVuelo.getNombre());

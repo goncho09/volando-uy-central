@@ -13,10 +13,11 @@ public class DtVuelo {
     private int maxEjecutivos;
     private LocalDate fechaAlta;
     private RutaDeVuelo rutaDeVuelo;
+    private int cantReservas;
 
     public DtVuelo(){};
 
-    public DtVuelo(String nombre, LocalDate fecha, LocalTime duracion, int maxTuristas, int maxEjecutivos, LocalDate fechaAlta,RutaDeVuelo rutaDeVuelo) {
+    public DtVuelo(String nombre, LocalDate fecha, LocalTime duracion, int maxTuristas, int maxEjecutivos, LocalDate fechaAlta,RutaDeVuelo rutaDeVuelo, int cantReservas) {
         this.nombre = nombre;
         this.fecha = fecha;
         this.duracion = duracion;
@@ -24,10 +25,11 @@ public class DtVuelo {
         this.maxEjecutivos = maxEjecutivos;
         this.fechaAlta = fechaAlta;
         this.rutaDeVuelo = rutaDeVuelo;
+        this.cantReservas = cantReservas;
     }
 
     public DtVuelo getDatos() {
-        return new DtVuelo(this.nombre,this.fecha,this.duracion,this.maxTuristas,this.maxEjecutivos,this.fechaAlta,this.rutaDeVuelo);
+        return new DtVuelo(this.nombre,this.fecha,this.duracion,this.maxTuristas,this.maxEjecutivos,this.fechaAlta,this.rutaDeVuelo, this.cantReservas);
     }
 
     public String getNombre() {
@@ -76,6 +78,10 @@ public class DtVuelo {
 
     public void setFechaAlta(LocalDate fechaAlta) {
         this.fechaAlta = fechaAlta;
+    }
+
+    public int getCantReservas(){
+        return this.cantReservas;
     }
 
     public RutaDeVuelo getRutaDeVuelo() {

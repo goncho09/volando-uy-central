@@ -569,7 +569,7 @@ public class Main extends JFrame {
                         return;
                     }
 
-                    DtVuelo dtVuelo = new DtVuelo(nombre, fecha, hora, (Integer)JSpinnerTuristasAltaVuelo.getValue(), (Integer)JSpinnerEjecutivosAltaVuelo.getValue(), LocalDate.now(), null);
+                    DtVuelo dtVuelo = new DtVuelo(nombre, fecha, hora, (Integer)JSpinnerTuristasAltaVuelo.getValue(), (Integer)JSpinnerEjecutivosAltaVuelo.getValue(), LocalDate.now(), null, 0);
 
                     s.seleccionarAerolineaParaVuelo(aerolinea);
                     s.seleccionarRuta(ruta);
@@ -955,7 +955,8 @@ public class Main extends JFrame {
                     new dialogMessage("Ha ocurrido un error..");
                     return;
                 }
-                new dataVuelo(vuelo);
+                DtVuelo dtVueloActualizado = s.consultarVuelo(vuelo.getNombre());
+                new dataVuelo(dtVueloActualizado);
             }
         });
         JComboBoxvueloReserva.addItemListener(new ItemListener() {
