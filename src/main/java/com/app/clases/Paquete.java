@@ -25,7 +25,7 @@ public class Paquete {
     @Column(nullable = false)
     private float costo;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name="paquete_name")
     private List<RutaEnPaquete> rutaEnPaquete = new ArrayList<>();
 

@@ -93,8 +93,8 @@ public class Main extends JFrame {
     private JSpinner JSpinnerDescuentoAltaPaquete;
     private JTextField nombreAltaPaquete;
     private JComboBox JComboBoxPaqueteComprarPaquete;
-    private JComboBox comboBox10;
-    private JButton CONFIRMARButton1;
+    private JComboBox JComboBoxClienteCompraPaquete;
+    private JButton ButtonConfirmarCompraPaquete;
     private JButton CANCELARButton1;
     private JPanel JPanelModificarAerolinea;
     private JButton JButtonModificarAerolinea;
@@ -191,6 +191,9 @@ public class Main extends JFrame {
         JComboBoxSeleccionarUsuarioModificar.setModel(auxiliar.getComboUserModel());
         JComboBoxSeleccionarUsuarioConsultar.setModel(auxiliar.getComboUserModel());
 
+        JComboBoxClienteCompraPaquete.setModel(auxiliar.getComboClienteModel());
+        JComboBoxSeleccionarClienteReserva.setModel(auxiliar.getComboClienteModel());
+
         JComboBoxAerolineaAltaVuelo.setModel(auxiliar.getComboAerolineaModel());
         JComboBoxAerolineaAltaRutaVuelo.setModel(auxiliar.getComboAerolineaModel());
         JComboBoxAerolineaConsultaRuta.setModel(auxiliar.getComboAerolineaModel());
@@ -199,8 +202,6 @@ public class Main extends JFrame {
         JComboBoxConsultaVueloAerolinea.setModel(auxiliar.getComboAerolineaModel());
         JComboBoxAerolineaConsultaRuta.setModel(auxiliar.getComboAerolineaModel());
 
-        JComboBoxSeleccionarClienteReserva.setModel(auxiliar.getComboClienteModel());
-
         JComboBoxRutaVueloAltaVuelo.setModel(auxiliar.getComboRutaDeVueloModel());
 
         JComboBoxCiudadOrigen.setModel(auxiliar.getComboCiudadOrigenModel());
@@ -208,7 +209,9 @@ public class Main extends JFrame {
         JComboBoxCiudadDestino.setModel(auxiliar.getComboCiudadDestinoModel());
 
         JComboBoxPaqueteConsultaPaqueteRutaVuelo.setModel(auxiliar.getComboPaqueteModel());
-        JComboBoxPaqueteComprarPaquete.setModel(auxiliar.getComboPaqueteModel());
+
+        JComboBoxPaqueteComprarPaquete.setModel(auxiliar.getComboPaquetesConRutasModel());
+
         JComboBoxPaqueteAgregarRuta.setModel(auxiliar.getComboPaqueteNoCompradoModel());
 
         JComboBoxRutaVueloAgregarRuta.setModel(auxiliar.getComboRutaDeVueloAerolineaModel());
@@ -245,10 +248,10 @@ public class Main extends JFrame {
         SpinnerCostoTurista.setModel(new SpinnerNumberModel(1, 1, 1_000_000, 1));
         SpínnerCostoEjecutivo.setModel(new SpinnerNumberModel(1, 1, 1_000_000, 1));
         SpinnerCostoEquipaje.setModel(new SpinnerNumberModel(1, 1, 1_000_000, 1));
-        JSpinnerPeriodoAltaPaquete.setModel(new SpinnerNumberModel(1, 1, 1_000_000, 1));
+
         JSpinnerCantidadAgregarRuta.setModel(new SpinnerNumberModel(1, 1, 1_000_000, 1));
 
-        JSpinnerCostoAltaPaquete.setModel(new SpinnerNumberModel(1.0, 1.0, 1_000_000.0, 1.0));
+
 
         SpinnerHoraAltaRutaDeVuelo.setModel(new SpinnerNumberModel(0, 0, 200, 1));
         JSpinnerDuracionAltaVueloHora.setModel(new SpinnerNumberModel(0, 0, 200, 1));
@@ -258,6 +261,8 @@ public class Main extends JFrame {
 
 
         JSpinnerDescuentoAltaPaquete.setModel(new SpinnerNumberModel(0, 0, 100, 1));
+        JSpinnerCostoAltaPaquete.setModel(new SpinnerNumberModel(1.0, 1.0, 1_000_000.0, 1.0));
+        JSpinnerPeriodoAltaPaquete.setModel(new SpinnerNumberModel(1, 1, 1_000_000, 1));
 
 
         //¡Cargar datitos!
@@ -465,6 +470,7 @@ public class Main extends JFrame {
                         );
                         try {
                             s.registrarCliente(cliente);
+                            new dialogMessage("Cliente creado correctamente.");
                             auxiliar.cargarUsuariosComboBox(); //Cada vez que se agregue un usuario, actualice todos los datos
                         } catch (Exception ex) {
                             ex.printStackTrace();
@@ -612,7 +618,7 @@ public class Main extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 try {
                     if(auxiliar.estanVaciosJComboBox(userType)){
-                        System.out.println("Ta vacio");
+                        new dialogMessage("Seleccione un tipo de usuario");
                         return;
                     }
                     String tipoUsuario = userType.getSelectedItem().toString();
@@ -629,6 +635,7 @@ public class Main extends JFrame {
                         );
                         try{
                             s.registrarAerolinea(aerolinea);
+                            new dialogMessage("Aerolínea creada correctamente.");
                         }catch (Exception ex){
                             ex.printStackTrace();
                             s.cancelarAltaUsuario();
@@ -698,19 +705,16 @@ public class Main extends JFrame {
                             s.buscarCiudad(ciudadOrigen.getNombre(), ciudadOrigen.getPais()),
                             s.buscarCiudad(ciudadDestino.getNombre(), ciudadDestino.getPais()));
 
-                    try {
                         s.altaRutaDeVuelo(JComboBoxAerolineaAltaRutaVuelo.getSelectedItem().toString(), ruta);
                         auxiliar.cargarRutasDeVueloComboBox();
-                    }catch (Exception ex){
-                        new dialogMessage(ex.getMessage());
-                    }
-                    new dialogMessage("Ruta de vuelo creada correctamente.");
-                    auxiliar.limpiarJTextField(nombreAltaRutaDeVuelo, descripcionAltaRutaDeVuelo);
-                    for (int i = 0; i < categorias.size(); i++) {
-                        if (checkboxes.get(i).isSelected()) {
-                            checkboxes.get(i).setSelected(false);
+                        new dialogMessage("Ruta de vuelo creada correctamente.");
+
+                        auxiliar.limpiarJTextField(nombreAltaRutaDeVuelo, descripcionAltaRutaDeVuelo);
+                        for (int i = 0; i < categorias.size(); i++) {
+                            if (checkboxes.get(i).isSelected()) {
+                                checkboxes.get(i).setSelected(false);
+                            }
                         }
-                    }
 
                 } catch (Exception ex) {
                     new dialogMessage(ex.getMessage());
@@ -725,8 +729,7 @@ public class Main extends JFrame {
                     return;
                 }
                     try{
-                        s.seleccionarPaquete(JComboBoxPaqueteConsultaPaqueteRutaVuelo.getSelectedItem().toString());
-                        JFrame paquete = new dataPaquete(s.getPaquete());
+                        JFrame paquete = new dataPaquete(s.buscarPaquete(JComboBoxPaqueteConsultaPaqueteRutaVuelo.getSelectedItem().toString()).getDatos());
                         setEnabled(false);
 
                         paquete.addWindowListener(new WindowAdapter() {
@@ -744,7 +747,7 @@ public class Main extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(auxiliar.estanVaciosJTextField(nombreAltaPaquete,descripcionAltaPaquete)){
-                    new dialogMessage("Falta ingresar campos de texto");
+                    new dialogMessage("Falta ingresar campos.");
                     return;
                 }
                 try {
@@ -762,16 +765,14 @@ public class Main extends JFrame {
                         return;
                     }
 
-                    try{
-                        s.altaPaquete(new DtPaquete(nombreAltaPaquete.getText(),descripcionAltaPaquete.getText(),periodo,descuento,costo, new ArrayList<>()));
-                        auxiliar.cargarPaqueteComboBox();
-                        auxiliar.cargarPaqueteNoCompradoComboBox();
-                    }catch (Exception ex){
-                        new dialogMessage(ex.getMessage());
-                    }
-
+                    s.altaPaquete(new DtPaquete(nombreAltaPaquete.getText(),descripcionAltaPaquete.getText(),periodo,descuento,costo, new ArrayList<>()));
                     new dialogMessage("Paquete creado correctamente.");
-                    return;
+                    auxiliar.cargarPaqueteComboBox();
+                    auxiliar.cargarPaqueteNoCompradoComboBox();
+                    auxiliar.limpiarJTextField(nombreAltaPaquete,descripcionAltaPaquete);
+                    JSpinnerPeriodoAltaPaquete.setValue(1);
+                    JSpinnerDescuentoAltaPaquete.setValue(0);
+                    JSpinnerCostoAltaPaquete.setValue(1.0);
                 } catch (Exception ex){
                     new dialogMessage(ex.getMessage());
                 }
@@ -789,9 +790,7 @@ public class Main extends JFrame {
                 try{
                     Integer cantidad = (Integer) JSpinnerCantidadAgregarRuta.getValue();
                     s.agregarRutaAPaquete(JComboBoxPaqueteAgregarRuta.getSelectedItem().toString(),JComboBoxRutaVueloAgregarRuta.getSelectedItem().toString(),cantidad, TipoAsiento.valueOf(JComboBoxTipoAsientoAgregarRutaPaquete.getSelectedItem().toString()));
-
                     new dialogMessage("Ruta de vuelo agregada a paquete correctamente.");
-                    return;
                 } catch (Exception ex) {
                     new dialogMessage(ex.getMessage());
                 }
@@ -1003,6 +1002,23 @@ public class Main extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 nombreAltaCategoría.setText("");
+            }
+        });
+
+        ButtonConfirmarCompraPaquete.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(auxiliar.estanVaciosJComboBox(JComboBoxPaqueteComprarPaquete,JComboBoxClienteCompraPaquete)){
+                    new  dialogMessage("Complete todos los campos.");
+                    return;
+                }
+
+                try {
+                    s.compraPaquete(JComboBoxPaqueteComprarPaquete.getSelectedItem().toString(),JComboBoxClienteCompraPaquete.getSelectedItem().toString());
+                    new dialogMessage("Compra de paquete realizada exitosamente.");
+                } catch (Exception ex){
+                    new dialogMessage(ex.getMessage());
+                }
             }
         });
     }
