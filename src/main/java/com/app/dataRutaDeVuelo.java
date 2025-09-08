@@ -7,6 +7,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.List;
 
 public class dataRutaDeVuelo extends JFrame{
@@ -46,8 +48,8 @@ public class dataRutaDeVuelo extends JFrame{
             }
         }
 
-        JComboBoxVuelos.setModel(model);
-        JComboBoxVuelos.setSelectedIndex(-1);
+        JComboBoxVuelos.setModel(a.getComboVueloRutaDeVueloModel());
+        a.cargarVuelosComboBoxRuta(ruta.getNombre());
 
         nombre.setText(ruta.getNombre());
         descripcion.setText(ruta.getDescripcion());
@@ -80,7 +82,15 @@ public class dataRutaDeVuelo extends JFrame{
 
                 for (DtVuelo v : vuelosAsociados) {
                     if(v.getNombre().equals(JComboBoxVuelos.getSelectedItem().toString())){
-                        new dataVuelo(v.getDatos(), a);
+                        dataVuelo ventanaVuelo = new dataVuelo(v.getDatos(), a);
+                        setEnabled(false);
+
+                        ventanaVuelo.addWindowListener(new WindowAdapter() {
+                            @Override
+                            public void windowClosing(WindowEvent e){
+                                setEnabled(true);
+                            };
+                        });
                         break;
                     }
                 }

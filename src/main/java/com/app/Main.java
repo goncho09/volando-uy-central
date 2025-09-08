@@ -308,6 +308,7 @@ public class Main extends JFrame {
                 System.out.println("Vuelo: " + vueloStr);
 
                 dataVuelo vuelo = new dataVuelo(dtVuelo, auxiliar);
+                setEnabled(false);
 
                 vuelo.addWindowListener(new WindowAdapter() {
                     @Override
@@ -822,10 +823,18 @@ public class Main extends JFrame {
                     new dialogMessage("Seleccione todos los campos");
                     return;
                 }
-
                 try{
                     String nombreRuta = JComboBoxRutaVueloConsultaRuta.getSelectedItem().toString();
-                    new dataRutaDeVuelo(s.consultarRuta(nombreRuta),s.getVuelosRutaDeVuelo(nombreRuta), auxiliar);
+                    dataRutaDeVuelo ventanaRuta = new dataRutaDeVuelo(s.consultarRuta(nombreRuta),s.getVuelosRutaDeVuelo(nombreRuta), auxiliar);
+                    setEnabled(false);
+
+                    ventanaRuta.addWindowListener(new WindowAdapter() {
+                        @Override
+                        public void windowClosing(WindowEvent e){
+                            setEnabled(true);
+                        };
+                    });
+
                 } catch (Exception ex) {
                     new dialogMessage(ex.getMessage());
                 }
@@ -959,8 +968,15 @@ public class Main extends JFrame {
                     new dialogMessage("Ha ocurrido un error..");
                     return;
                 }
-                DtVuelo dtVueloActualizado = s.consultarVuelo(vuelo.getNombre());
-                new dataVuelo(dtVueloActualizado, auxiliar);
+                dataVuelo ventanaVuelo = new dataVuelo(vuelo, auxiliar);
+                setEnabled(false);
+
+                ventanaVuelo.addWindowListener(new WindowAdapter() {
+                    @Override
+                    public void windowClosing(WindowEvent e){
+                        setEnabled(true);
+                    };
+                });
             }
         });
         JComboBoxvueloReserva.addItemListener(new ItemListener() {
