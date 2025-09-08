@@ -3,10 +3,13 @@ package com.app;
 import com.app.clases.RutaDeVuelo;
 import com.app.clases.RutaEnPaquete;
 import com.app.datatypes.DtPaquete;
+import com.app.datatypes.DtVuelo;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
 public class dataPaquete extends JFrame {
     private JLabel nombre;
@@ -20,7 +23,7 @@ public class dataPaquete extends JFrame {
     private JButton ButtonVerRutaDeVuelo;
     private JPanel dataPaqueteDisplay;
 
-    public dataPaquete(DtPaquete paquete) {
+    public dataPaquete(DtPaquete paquete, List<DtVuelo> vuelos) {
             setTitle("Datos del paquete: " + paquete.getNombre());
             setResizable(false);
             setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
@@ -34,13 +37,19 @@ public class dataPaquete extends JFrame {
             validezDias.setText(Integer.toString(paquete.getValidezDias()));
             descuento.setText(Float.toString(paquete.getDescuento()));
             costo.setText(Float.toString(paquete.getCosto()));
-            cantidadRutas.setText(Integer.toString(paquete.getRutaEnPaquete().size()));
 
 
             DefaultComboBoxModel<RutaEnPaquete> model = new DefaultComboBoxModel<>();
+            List <RutaEnPaquete> rutasTemp = new ArrayList<>();
+
             for (RutaEnPaquete rp : paquete.getRutaEnPaquete()) {
-                model.addElement(rp);
+                if(!rutasTemp.equals(rp)){
+                    rutasTemp.add(rp);
+                    model.addElement(rp);
+                }
             }
+
+            cantidadRutas.setText(Integer.toString(rutasTemp.size()));
 
             JComboBoxRutasVuelo.setModel(model);
             JComboBoxRutasVuelo.setSelectedIndex(-1);
@@ -53,7 +62,7 @@ public class dataPaquete extends JFrame {
                     new dialogMessage("Debe seleccionar una ruta de vuelo para ver su información");
                 }
                 try{
-                    //new dataRutaDeVuelo(paquete.getRutaDeVuelo(JComboBoxRutasVuelo.getSelectedItem().toString()).getDatos(),);
+                    new dataRutaDeVuelo(paquete.getRutaDeVuelo(JComboBoxRutasVuelo.getSelectedItem().toString()).getDatos(),vuelos);
                 } catch (Exception ex) {
                     new dialogMessage(ex.getMessage());
                 }

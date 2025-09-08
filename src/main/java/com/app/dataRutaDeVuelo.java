@@ -36,7 +36,10 @@ public class dataRutaDeVuelo extends JFrame{
 
         DefaultComboBoxModel<DtVuelo> model = new DefaultComboBoxModel<>();
         for (DtVuelo v : vuelosAsociados) {
-            model.addElement(v);
+            if(v.getRutaDeVuelo().getNombre().equals(ruta.getNombre())){
+             model.addElement(v);
+
+            }
         }
 
         JComboBoxVuelos.setModel(model);

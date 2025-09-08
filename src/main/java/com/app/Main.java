@@ -729,7 +729,7 @@ public class Main extends JFrame {
                     return;
                 }
                     try{
-                        JFrame paquete = new dataPaquete(s.buscarPaquete(JComboBoxPaqueteConsultaPaqueteRutaVuelo.getSelectedItem().toString()).getDatos());
+                        JFrame paquete = new dataPaquete(s.buscarPaquete(JComboBoxPaqueteConsultaPaqueteRutaVuelo.getSelectedItem().toString()).getDatos(),s.listarVuelos());
                         setEnabled(false);
 
                         paquete.addWindowListener(new WindowAdapter() {
@@ -789,8 +789,10 @@ public class Main extends JFrame {
 
                 try{
                     Integer cantidad = (Integer) JSpinnerCantidadAgregarRuta.getValue();
-                    s.agregarRutaAPaquete(JComboBoxPaqueteAgregarRuta.getSelectedItem().toString(),JComboBoxRutaVueloAgregarRuta.getSelectedItem().toString(),cantidad, TipoAsiento.valueOf(JComboBoxTipoAsientoAgregarRutaPaquete.getSelectedItem().toString()));
-                    new dialogMessage("Ruta de vuelo agregada a paquete correctamente.");
+                    int res = s.agregarRutaAPaquete(JComboBoxPaqueteAgregarRuta.getSelectedItem().toString(),JComboBoxRutaVueloAgregarRuta.getSelectedItem().toString(),cantidad, TipoAsiento.valueOf(JComboBoxTipoAsientoAgregarRutaPaquete.getSelectedItem().toString()));
+                    if (res != 0 ) new dialogMessage("La ruta ya existía en el paquete, cantidad modificada a: " + res);
+                    else new dialogMessage("Ruta de vuelo agregada a paquete correctamente.");
+                    auxiliar.cargarPaquetesConRutasComboBox();
                 } catch (Exception ex) {
                     new dialogMessage(ex.getMessage());
                 }
