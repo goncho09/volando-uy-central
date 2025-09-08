@@ -7,6 +7,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -148,6 +149,8 @@ public class Sistema implements ISistema {
         Aerolinea aerolinea = (Aerolinea) userDao.buscar(nombreAerolinea);
 
         if (aerolinea == null) throw new IllegalArgumentException("Aerolinea no existe");
+
+        if (this.rutasDeVuelo.containsKey(datosRuta.getNombre())) throw new IllegalArgumentException("Ya existe esa ruta de vuelo.");
 
         RutaDeVuelo nuevaRuta = new RutaDeVuelo(datosRuta);
 
@@ -298,12 +301,27 @@ public class Sistema implements ISistema {
     public List<DtPaquete> listarPaquetesNoComprados() {
         List<DtPaquete> listaPaquetes = new ArrayList<>();
         for(Paquete p : this.getPaquetes()){
-            if(p.getRutaEnPaquete().isEmpty()) {
+            boolean esComprado = false;
+            for(CompraPaquete cp : this.compras){
+                if (cp.getPaquete().equals(p)){
+                    esComprado = true;
+                    break;
+                }
+            }
+            if(!esComprado) listaPaquetes.add(p.getDatos());
+        }
+        return listaPaquetes;
+
+    }
+
+    public List<DtPaquete> listarPaquetesConRutas(){
+        List<DtPaquete> listaPaquetes = new ArrayList<>();
+        for(Paquete p : this.getPaquetes()){
+            if (!p.getRutaEnPaquete().isEmpty()){
                 listaPaquetes.add(p.getDatos());
             }
         }
         return listaPaquetes;
-
     }
 
     public List<DtCliente> listarClientes(){
@@ -355,14 +373,6 @@ public class Sistema implements ISistema {
             }
         }
         return listaAerolineas;
-    }
-
-    public void seleccionarPaquete(String nombre) {
-        Paquete paquete = this.paquetes.get(nombre);
-        if (paquete == null) {
-            throw new IllegalArgumentException("No existe un paquete con ese nombre.");
-        }
-        this.paqueteSeleccionado = paquete;
     }
 
     public DtPaquete getPaquete() {
@@ -423,21 +433,7 @@ public class Sistema implements ISistema {
 
     }
 
-    public void agregarRutaDeVueloAPaquete(DtPaquete paquete, DtAerolinea aerolinea, String nombreRuta,int cantidad,TipoAsiento tipoAsiento) {
-        listarPaquetes();
-        seleccionarPaquete(paquete.getNombre());
-        listarAerolineas();
-        seleccionarAeroLinea(aerolinea.getNickname());
-        listarRutasDeVuelo();
-        seleccionarRutaDeVuelo(nombreRuta,cantidad,tipoAsiento);
 
-        this.aerolineaTemporal = null;
-        this.paqueteSeleccionado = null;
-    }
-
-
-
-    //  TEMPORAL
     public void altaPaquete(DtPaquete paquete){
         if(this.paquetes.containsKey(paquete.getNombre())) { throw new IllegalArgumentException("Ya existe un paquete con ese nombre.");}
         Paquete p = new Paquete(paquete);
@@ -663,14 +659,6 @@ public class Sistema implements ISistema {
 
 
     // ---------- COMPRA PAQUETE ---------- //
-    public void seleccionarPaqueteCompra(String nombre){
-        Paquete paquete = paqueteDao.buscar((nombre));
-        if(paquete == null){
-            throw new IllegalArgumentException("El paquete no existe");
-        }
-        this.paqueteSeleccionado = paquete;
-    }
-
     public Cliente buscarCliente(String nickname){
         Cliente cliente = (Cliente) this.usuarios.get(nickname);
         if(cliente == null){
@@ -679,50 +667,31 @@ public class Sistema implements ISistema {
         return cliente;
     }
 
-    public void ingresarDatosCompra(DtCompraPaquete datosCompra){
-        if(paqueteSeleccionado == null){
-            throw  new IllegalArgumentException("Debe seleccionar un paquete.");
+    public Paquete buscarPaquete(String nombre){
+        Paquete p = this.paquetes.get(nombre);
+        if(p == null){
+            throw new IllegalArgumentException(("El paquete no existe"));
         }
-
-        if(clienteTemp == null){
-            throw new IllegalArgumentException("Debe seleccionar un cliente.");
-        }
-
-        this.compraTemp = datosCompra;
+        return p;
     }
 
-    public void confirmarCompraPaquete(){
-        if(paqueteSeleccionado == null){
-            throw  new IllegalArgumentException("Debe seleccionar un paquete.");
-        }
+    public void compraPaquete(String paquete,String nickname){
+        Cliente c = buscarCliente(nickname);
+        Paquete p = buscarPaquete(paquete);
 
-        if(clienteTemp == null){
-            throw new IllegalArgumentException("Debe seleccionar un cliente.");
-        }
-
-        for(CompraPaquete c : this.clienteTemp.getComprasPaquetes()){
-            if (c.getPaquete().equals(paqueteSeleccionado)){
+        for(CompraPaquete cp : c.getComprasPaquetes()){
+            if (cp.getPaquete().equals(p)){
                 throw new IllegalArgumentException("El cliente ya ha comprado este paquete.");
             }
         }
 
-        CompraPaquete nuevaCompra = new CompraPaquete(this.compraTemp);
-        nuevaCompra.setPaquete(paqueteSeleccionado);
-        nuevaCompra.setCliente(clienteTemp);
-        nuevaCompra.setCosto(paqueteSeleccionado.getCosto());
+        // Cuanto es el vencimiento?
+        LocalDate vencimiento = LocalDate.now().plusDays(p.getValidezDias());
+
+        CompraPaquete nuevaCompra = new CompraPaquete(new DtCompraPaquete(LocalDate.now(),vencimiento,p.getCosto(),p,c));
 
         this.compras.add(nuevaCompra);
-        this.userDao.addCompraPaquete(clienteTemp, nuevaCompra);
-
-        this.compraTemp = null;
-        this.clienteTemp = null;
-        this.paqueteSeleccionado = null;
-    }
-
-    public void cancelarCompraPaquete(){
-        this.compraTemp = null;
-        this.clienteTemp = null;
-        this.paqueteSeleccionado = null;
+        userDao.addCompraPaquete(c,nuevaCompra);
     }
 
     public void agregarRutaAPaquete(String nombrePaquete, String nombreRuta,int cantidad, TipoAsiento tipoAsiento){
@@ -736,10 +705,16 @@ public class Sistema implements ISistema {
         Paquete p = this.paquetes.get(nombrePaquete);
         RutaDeVuelo ruta = this.rutasDeVuelo.get(nombreRuta);
 
+        for (RutaEnPaquete rep : p.getRutaEnPaquete()){
+            if (rep.getRutaDeVuelo().equals(ruta) && rep.getTipoAsiento() == tipoAsiento){
+                throw new IllegalArgumentException("Ya existe esa ruta de vuelo con ese tipo de asiento en ese paquete.");
+            }
+        }
+
         RutaEnPaquete rp = new RutaEnPaquete(cantidad,tipoAsiento,ruta);
 
-        p.addRutaEnPaquete(rp);
         paqueteDao.addRutaEnPaquete(p, rp);
+        System.out.println(p.getRutaEnPaquete());
     }
 
     public List <DtVuelo> getVuelosRutaDeVuelo(String nombre){
@@ -751,6 +726,17 @@ public class Sistema implements ISistema {
             }
         }
         return  vuelos;
+    }
+
+    public List<DtReserva> listarReservaDeVuelo(String nombreVuelo){
+        List<DtReserva> reservasVuelo = new ArrayList<>();
+
+        for(Reserva r : this.reservas){
+            if(r.getVuelo() != null && r.getVuelo().getNombre().equals(nombreVuelo)){
+                reservasVuelo.add(r.getDatos());
+            }
+        }
+        return reservasVuelo;
     }
 
     public List<DtVuelo> listarVuelos(){
@@ -831,6 +817,8 @@ public class Sistema implements ISistema {
         this.reservas.add(nuevaReserva);
         this.reservaDao.guardar(nuevaReserva);
         this.userDao.addReserva(c, nuevaReserva);
+
+        v.setCantReservas(v.getCantReservas()+1);
 
         for(DtPasajero p : reserva.getPasajeros()){
             this.pasajeroDao.guardar(p);

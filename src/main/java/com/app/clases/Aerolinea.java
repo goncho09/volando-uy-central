@@ -11,7 +11,7 @@ public class Aerolinea extends Usuario {
     private String descripcion;
     private String linkWeb;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinTable(
             name = "aerolinea_rutas",
             joinColumns = @JoinColumn(name = "aerolinea_nombre"),

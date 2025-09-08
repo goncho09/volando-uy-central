@@ -26,7 +26,7 @@ public class dataPaquete extends JFrame {
             setTitle("Datos del paquete: " + paquete.getNombre());
             setResizable(false);
             setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-            setSize(275, 300);
+            setSize(500, 300);
             setLocationRelativeTo(null);
             setVisible(true);
             add(dataPaquetePanel);
@@ -57,7 +57,7 @@ public class dataPaquete extends JFrame {
                     new dialogMessage("Debe seleccionar una ruta de vuelo para ver su información");
                 }
                 try{
-                    //new dataRutaDeVuelo(paquete.getRutaDeVuelo(JComboBoxRutasVuelo.getSelectedItem().toString()).getDatos());
+                    //new dataRutaDeVuelo(paquete.getRutaDeVuelo(JComboBoxRutasVuelo.getSelectedItem().toString()).getDatos(),);
                 } catch (Exception ex) {
                     new dialogMessage(ex.getMessage());
                 }

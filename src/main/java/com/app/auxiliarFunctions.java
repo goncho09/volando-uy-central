@@ -18,6 +18,7 @@ public class auxiliarFunctions {
     private DefaultComboBoxModel<DtCiudad> comboCiudadDestino = new DefaultComboBoxModel<>();
     private DefaultComboBoxModel<DtPaquete> comboPaquete = new DefaultComboBoxModel<>();
     private DefaultComboBoxModel<DtPaquete> comboPaqueteNoComprado = new DefaultComboBoxModel<>();
+    private DefaultComboBoxModel<DtPaquete> comboPaquetesConRutas = new DefaultComboBoxModel<>();
     private DefaultComboBoxModel<DtRuta> comboRutaDeVueloAerolinea = new DefaultComboBoxModel<>();
     private DefaultComboBoxModel<DtVuelo> comboVueloRutaDeVuelo = new DefaultComboBoxModel<>();
     private DefaultComboBoxModel<DtReserva> comboReserva = new DefaultComboBoxModel<>();
@@ -37,6 +38,7 @@ public class auxiliarFunctions {
     public DefaultComboBoxModel<DtCiudad> getComboCiudadDestinoModel() { return comboCiudadDestino; }
     public DefaultComboBoxModel<DtPaquete> getComboPaqueteModel() { return comboPaquete; }
     public DefaultComboBoxModel<DtPaquete> getComboPaqueteNoCompradoModel() { return comboPaqueteNoComprado; }
+    public DefaultComboBoxModel<DtPaquete> getComboPaquetesConRutasModel() { return comboPaquetesConRutas; }
     public DefaultComboBoxModel<DtVuelo> getComboVueloRutaDeVueloModel() { return  comboVueloRutaDeVuelo; }
     public DefaultComboBoxModel<DtVuelo> getComboVuelosModel() {return comboVuelos;}
 
@@ -74,6 +76,7 @@ public class auxiliarFunctions {
         cargarRutasDeVueloComboBox();
         cargarPaqueteComboBox();
         cargarPaqueteNoCompradoComboBox();
+        cargarPaquetesConRutasComboBox();
     }
 
     public void cargarUsuariosComboBox() {
@@ -223,6 +226,21 @@ public class auxiliarFunctions {
             });
         }
     }
+
+    public void cargarPaquetesConRutasComboBox() {
+        comboPaquetesConRutas.removeAllElements();
+        List<DtPaquete> p = sistema.listarPaquetesConRutas();
+        if(p != null && !p.isEmpty()) {
+            for (DtPaquete pqt : p) {
+                comboPaquetesConRutas.addElement(pqt);
+            }
+        }else{
+            comboPaquetesConRutas.addElement(new DtPaquete() {
+                @Override
+                public String toString() { return "N/A"; }
+            });
+        }
+    }
    /* public void cargarDatosReservaComboBox() {
         List<DtReserva> reservas = sistema.listarReservas();
         if (reservas != null) {
@@ -262,6 +280,12 @@ public class auxiliarFunctions {
         LocalDate limitePasado = hoy.minusYears(200);
 
         return !fecha.isAfter(hoy) && !fecha.isBefore(limitePasado);
+    }
+
+    public void validarNombreVuelo(String nombre) {
+        if (!nombre.matches("^[a-zA-Z0-9 ]+$")) {
+            throw new IllegalArgumentException("El nombre del vuelo solo puede contener letras, números y espacios.");
+        }
     }
 
 }

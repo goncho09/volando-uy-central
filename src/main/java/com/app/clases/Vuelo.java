@@ -27,11 +27,14 @@ public class Vuelo {
     @Column(nullable = false)
     private LocalDate fechaAlta;
 
+    @Column(nullable = false)
+    private int cantReservas;
+
     @ManyToOne(optional = false)
     private RutaDeVuelo rutaDeVuelo;
 
     public DtVuelo getDatos() {
-        return new DtVuelo(this.nombre,this.fecha,this.duracion,this.maxTuristas,this.maxEjecutivos,this.fechaAlta,this.rutaDeVuelo);
+        return new DtVuelo(this.nombre,this.fecha,this.duracion,this.maxTuristas,this.maxEjecutivos,this.fechaAlta,this.rutaDeVuelo, this.cantReservas);
     }
 
     public Vuelo() {}
@@ -43,6 +46,7 @@ public class Vuelo {
         this.maxEjecutivos = vuelo.getMaxEjecutivos();
         this.fechaAlta = vuelo.getFechaAlta();
         this.rutaDeVuelo = vuelo.getRutaDeVuelo();
+        this.cantReservas = vuelo.getCantReservas();
     }
 
     public String getNombre() {
@@ -91,6 +95,14 @@ public class Vuelo {
 
     public void setFechaAlta(LocalDate fechaAlta) {
         this.fechaAlta = fechaAlta;
+    }
+
+    public void setCantReservas(int cantReservas){
+        this.cantReservas = cantReservas;
+    }
+
+    public int getCantReservas(){
+        return this.cantReservas;
     }
 
     public RutaDeVuelo getRutaDeVuelo() {

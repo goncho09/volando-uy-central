@@ -18,7 +18,7 @@ public class Cliente extends Usuario{
     private TipoDocumento tipoDocumento;
     private int numeroDocumento;
 
-    @OneToMany(mappedBy = "cliente") // 1 - N (un cliente tiene muchas "compras"
+    @OneToMany(mappedBy = "cliente",cascade = CascadeType.ALL, orphanRemoval = true)// 1 - N (un cliente tiene muchas "compras"
     private List<CompraPaquete> comprasPaquetes = new ArrayList<>();
 
     @OneToMany(mappedBy = "cliente") // 1 - N (un cliente tiene muchas "reservas"
