@@ -13,6 +13,8 @@ import javax.swing.*;
 
 public class dataVuelo extends JFrame {
 
+    private auxiliarFunctions a;
+
     private JPanel dataVueloPanel;
     private JButton consultarReservasButton;
     private JLabel nombreVuelo;
@@ -25,7 +27,7 @@ public class dataVuelo extends JFrame {
     private JLabel capacidadRestante;
     private JPanel dataVueloDisplay;
 
-    public dataVuelo(DtVuelo dataVuelo) {
+    public dataVuelo(DtVuelo dataVuelo, auxiliarFunctions auxiliar) {
         setTitle("Datos del Vuelo: " + dataVuelo.getNombre());
         setResizable(false);
         setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
@@ -34,8 +36,11 @@ public class dataVuelo extends JFrame {
         setVisible(true);
         add(dataVueloPanel);
 
+        a = auxiliar;
         int cantidadReservas = dataVuelo.getCantReservas();
         int capacidadMaxima = dataVuelo.getMaxEjecutivos() + dataVuelo.getMaxTuristas();
+
+        //a.cargarReservasComboBox();
 
         nombreVuelo.setText(dataVuelo.getNombre());
         fechaDespegue.setText(dataVuelo.getFecha().toString());

@@ -307,7 +307,7 @@ public class Main extends JFrame {
                 System.out.println("Ruta de Vuelo: " + rutaDeVuelo);
                 System.out.println("Vuelo: " + vueloStr);
 
-                dataVuelo vuelo = new dataVuelo(dtVuelo);
+                dataVuelo vuelo = new dataVuelo(dtVuelo, auxiliar);
 
                 vuelo.addWindowListener(new WindowAdapter() {
                     @Override
@@ -505,7 +505,7 @@ public class Main extends JFrame {
                     return;
                 }
 
-                new dataUsuario(dtUsuario);
+                new dataUsuario(dtUsuario, auxiliar);
             }catch (Exception ex) {
                 new dialogMessage("Error al consultar: " + ex.getMessage());
                 ex.printStackTrace();
@@ -729,7 +729,9 @@ public class Main extends JFrame {
                     return;
                 }
                     try{
+
                         JFrame paquete = new dataPaquete(s.buscarPaquete(JComboBoxPaqueteConsultaPaqueteRutaVuelo.getSelectedItem().toString()).getDatos(),s.listarVuelos());
+
                         setEnabled(false);
 
                         paquete.addWindowListener(new WindowAdapter() {
@@ -823,7 +825,7 @@ public class Main extends JFrame {
 
                 try{
                     String nombreRuta = JComboBoxRutaVueloConsultaRuta.getSelectedItem().toString();
-                    new dataRutaDeVuelo(s.consultarRuta(nombreRuta),s.getVuelosRutaDeVuelo(nombreRuta));
+                    new dataRutaDeVuelo(s.consultarRuta(nombreRuta),s.getVuelosRutaDeVuelo(nombreRuta), auxiliar);
                 } catch (Exception ex) {
                     new dialogMessage(ex.getMessage());
                 }
@@ -853,6 +855,7 @@ public class Main extends JFrame {
                     }
                 }catch (Exception ex){
                     new dialogMessage("Debes ingresar una fecha válida..");
+                    return;
                 }
 
 
@@ -957,7 +960,7 @@ public class Main extends JFrame {
                     return;
                 }
                 DtVuelo dtVueloActualizado = s.consultarVuelo(vuelo.getNombre());
-                new dataVuelo(dtVueloActualizado);
+                new dataVuelo(dtVueloActualizado, auxiliar);
             }
         });
         JComboBoxvueloReserva.addItemListener(new ItemListener() {

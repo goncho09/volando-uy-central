@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class dataPaquete extends JFrame {
+    private auxiliarFunctions a;
+
     private JLabel nombre;
     private JLabel descripcion;
     private JLabel validezDias;
@@ -31,6 +33,8 @@ public class dataPaquete extends JFrame {
             setLocationRelativeTo(null);
             setVisible(true);
             add(dataPaquetePanel);
+
+            this.a = auxiliar;
 
             nombre.setText(paquete.getNombre());
             descripcion.setText(paquete.getDescripcion());
