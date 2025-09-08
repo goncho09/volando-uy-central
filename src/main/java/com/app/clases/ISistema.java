@@ -41,6 +41,7 @@ public interface ISistema {
     DtRuta consultarRuta(String nombre);
 
     boolean existeRuta(String nombre);
+    RutaDeVuelo buscarRutaDeVuelo(String nombre);
     void altaRutaDeVuelo(String nickname, DtRuta datosRuta);
 
     // ---------- VUELOS ---------- //
@@ -60,7 +61,7 @@ public interface ISistema {
     List<DtPaquete> listarPaquetes();
     List<DtPaquete> listarPaquetesNoComprados();
     List<DtPaquete> listarPaquetesConRutas();
-    void agregarRutaAPaquete(String nombrePaquete, String nombreRuta,int cantidad, TipoAsiento tipoAsiento);
+    int agregarRutaAPaquete(String nombrePaquete, String nombreRuta,int cantidad, TipoAsiento tipoAsiento);
     DtPaquete getPaquete();
     Paquete buscarPaquete(String nombre);
 

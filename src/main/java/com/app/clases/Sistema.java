@@ -675,6 +675,14 @@ public class Sistema implements ISistema {
         return p;
     }
 
+    public RutaDeVuelo buscarRutaDeVuelo(String nombre){
+        RutaDeVuelo r = this.rutasDeVuelo.get(nombre);
+        if(r == null){
+            throw new IllegalArgumentException(("La ruta de vuelo no existe"));
+        }
+        return r;
+    }
+
     public void compraPaquete(String paquete,String nickname){
         Cliente c = buscarCliente(nickname);
         Paquete p = buscarPaquete(paquete);
@@ -685,7 +693,6 @@ public class Sistema implements ISistema {
             }
         }
 
-        // Cuanto es el vencimiento?
         LocalDate vencimiento = LocalDate.now().plusDays(p.getValidezDias());
 
         CompraPaquete nuevaCompra = new CompraPaquete(new DtCompraPaquete(LocalDate.now(),vencimiento,p.getCosto(),p,c));
@@ -694,27 +701,21 @@ public class Sistema implements ISistema {
         userDao.addCompraPaquete(c,nuevaCompra);
     }
 
-    public void agregarRutaAPaquete(String nombrePaquete, String nombreRuta,int cantidad, TipoAsiento tipoAsiento){
-        if(!this.paquetes.containsKey(nombrePaquete)){
-            throw new IllegalArgumentException("No existe este paquete");
-        }
-        if(!this.rutasDeVuelo.containsKey(nombreRuta)){
-            throw new IllegalArgumentException("No existe esa ruta de vuelo");
-        }
-
-        Paquete p = this.paquetes.get(nombrePaquete);
-        RutaDeVuelo ruta = this.rutasDeVuelo.get(nombreRuta);
+    public int agregarRutaAPaquete(String nombrePaquete, String nombreRuta,int cantidad, TipoAsiento tipoAsiento){
+        Paquete p = buscarPaquete(nombrePaquete);
+        RutaDeVuelo ruta = buscarRutaDeVuelo(nombreRuta);
 
         for (RutaEnPaquete rep : p.getRutaEnPaquete()){
-            if (rep.getRutaDeVuelo().equals(ruta) && rep.getTipoAsiento() == tipoAsiento){
-                throw new IllegalArgumentException("Ya existe esa ruta de vuelo con ese tipo de asiento en ese paquete.");
+            if (rep.getRutaDeVuelo().getNombre().equals(ruta.getNombre()) && rep.getTipoAsiento() == tipoAsiento){
+                return paqueteDao.actualizarCantidadRutaEnPaquete(p,rep,cantidad);
             }
         }
 
         RutaEnPaquete rp = new RutaEnPaquete(cantidad,tipoAsiento,ruta);
 
         paqueteDao.addRutaEnPaquete(p, rp);
-        System.out.println(p.getRutaEnPaquete());
+
+        return 0;
     }
 
     public List <DtVuelo> getVuelosRutaDeVuelo(String nombre){

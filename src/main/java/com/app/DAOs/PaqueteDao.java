@@ -28,4 +28,10 @@ public class PaqueteDao extends BaseDao<Paquete, String> {
         actualizar(p);
     }
 
+    public int actualizarCantidadRutaEnPaquete(Paquete p, RutaEnPaquete rp,int cantidad){
+        rp.setCantidad(rp.getCantidad() + cantidad);
+        actualizar(p);
+        return  rp.getCantidad();
+    }
+
 }
