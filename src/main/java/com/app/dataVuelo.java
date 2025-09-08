@@ -40,7 +40,7 @@ public class dataVuelo extends JFrame {
         int cantidadReservas = dataVuelo.getCantReservas();
         int capacidadMaxima = dataVuelo.getMaxEjecutivos() + dataVuelo.getMaxTuristas();
 
-        //a.cargarReservasComboBox();
+//        a.cargarReservasComboBox();
 
         nombreVuelo.setText(dataVuelo.getNombre());
         fechaDespegue.setText(dataVuelo.getFecha().toString());
