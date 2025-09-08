@@ -28,6 +28,9 @@ public interface ISistema {
     void confirmarAltaUsuario(DtUsuario user);
 
     // ------------ RESERVAS ----------- //
+    List<DtReserva> listarReservas();
+    List<DtReserva> listarReservas(DtVuelo v); // Devuelve las reservas de un vuelo en específico
+
     void altaReserva(DtReserva reserva, String nickCliente, String nameVuelo); //Reserva de un Vuelo
 
     List<DtReserva> mostrarReservas();
@@ -79,6 +82,10 @@ public interface ISistema {
 
     // ---------- COMPRAS ---------- //
     void compraPaquete(String paquete,String nickname);
+
+    // -------- Pasajeros --------- //
+    List<DtPasajero> listarPasajeros();
+    List<DtPasajero> listarPasajeros(DtReserva reserva);
 
     // ---------- INFRAESTRUCTURA ---------- //
     UserDao getUserDao();

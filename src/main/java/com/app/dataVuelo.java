@@ -4,12 +4,11 @@ import com.app.clases.Factory;
 import com.app.datatypes.DtVuelo;
 import com.app.datatypes.DtReserva;
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.List;
-
-import javax.swing.*;
 
 public class dataVuelo extends JFrame {
 
@@ -26,12 +25,13 @@ public class dataVuelo extends JFrame {
     private JLabel cantReservas;
     private JLabel capacidadRestante;
     private JPanel dataVueloDisplay;
+    private JComboBox JComboBoxReservas;
 
     public dataVuelo(DtVuelo dataVuelo, auxiliarFunctions auxiliar) {
         setTitle("Datos del Vuelo: " + dataVuelo.getNombre());
         setResizable(false);
         setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-        setSize(275, 300);
+        setSize(550, 300);
         setLocationRelativeTo(null);
         setVisible(true);
         add(dataVueloPanel);
@@ -39,8 +39,6 @@ public class dataVuelo extends JFrame {
         a = auxiliar;
         int cantidadReservas = dataVuelo.getCantReservas();
         int capacidadMaxima = dataVuelo.getMaxEjecutivos() + dataVuelo.getMaxTuristas();
-
-//        a.cargarReservasComboBox();
 
         nombreVuelo.setText(dataVuelo.getNombre());
         fechaDespegue.setText(dataVuelo.getFecha().toString());
@@ -51,39 +49,28 @@ public class dataVuelo extends JFrame {
         cantReservas.setText(Integer.toString(cantidadReservas));
         capacidadRestante.setText(Integer.toString(capacidadMaxima - cantidadReservas));
 
+        JComboBoxReservas.setModel(a.getComboReservaVueloModel());
 
-        consultarReservasButton.addActionListener(e -> {
-            try {
-                List<DtReserva> reservas = Factory.getSistema().listarReservaDeVuelo(dataVuelo.getNombre());
+        a.cargarDatosReservaComboBox(dataVuelo);
 
-                if (reservas.isEmpty()) {
-                    JOptionPane.showMessageDialog(this, "Este vuelo no tiene reservas.");
-                    return;
+        consultarReservasButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                DtReserva reserva = (DtReserva) JComboBoxReservas.getSelectedItem();
+                if(reserva == null){
+                    new dialogMessage("Esta reserva no existe");
                 }
+                dataReserva ventanaReserva = new dataReserva(reserva, a);
+                setEnabled(false);
 
-                StringBuilder sb = new StringBuilder("Reservas del vuelo:\n\n");
-                for (DtReserva r : reservas) {
-                    sb.append("- Cliente: ").append(r.getCliente().getNickname())
-                            .append(" - Asientos: ").append(r.getCantPasajes())
-                            .append(" - Tipo: ").append(r.getTipoAsiento())
-                            .append(" - Costo: ").append(r.getCosto())
-                            .append("\n");
-                }
-
-                JOptionPane.showMessageDialog(
-                        this,
-                        sb.toString(),
-                        "Reservas",
-                        JOptionPane.INFORMATION_MESSAGE
-                );
-
-            } catch (Exception ex) {
-                JOptionPane.showMessageDialog(this, "Error al consultar reservas: " + ex.getMessage());
+                ventanaReserva.addWindowListener(new WindowAdapter() {
+                    @Override
+                    public void windowClosed(WindowEvent e){
+                        setEnabled(true);
+                    }
+                });
             }
         });
-
-
-
     }
 
 }

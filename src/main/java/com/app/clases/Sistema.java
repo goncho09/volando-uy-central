@@ -819,12 +819,39 @@ public class Sistema implements ISistema {
         this.userDao.addReserva(c, nuevaReserva);
 
         v.setCantReservas(v.getCantReservas()+1);
+        this.vueloDao.actualizar(v);
 
         for(DtPasajero p : reserva.getPasajeros()){
             this.pasajeroDao.guardar(p);
         }
 
     }
+
+    public List<DtReserva> listarReservas(){
+        List<DtReserva> listaReservas = new ArrayList<>();
+        for(Reserva r : this.reservas){
+            listaReservas.add(r.getDatos());
+        }
+        return listaReservas;
+    };
+
+    public List<DtReserva> listarReservas(DtVuelo vuelo){
+        String nombre = vuelo.getNombre();
+        List<DtReserva> listaReservas = new ArrayList<>();
+        for(Reserva r : this.reservas){
+            if(r.getVuelo().getNombre().equals(nombre)){
+                listaReservas.add(r.getDatos());
+            }
+        }
+        return listaReservas;
+    };
+
+    public List<DtPasajero> listarPasajeros(){
+        return this.pasajes;
+    };
+    public List<DtPasajero> listarPasajeros(DtReserva reserva){
+        return reserva.getPasajeros();
+    };
 
 }
 
