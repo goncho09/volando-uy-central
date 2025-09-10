@@ -883,6 +883,7 @@ public class Main extends JFrame {
                 try{
                     s.modificarCliente(cliente);
                     auxiliar.cargarUsuariosComboBox(cliente); // Funcion para actualizar valores.
+                    new dialogMessage("Cliente actualizado correctamente.");
                 }catch(Exception ex){
                     new dialogMessage(ex.getMessage());
                     ex.printStackTrace();
@@ -911,6 +912,7 @@ public class Main extends JFrame {
                 try{
                     s.modificarAerolinea(aerolinea);
                     auxiliar.cargarUsuariosComboBox(aerolinea);
+                    new dialogMessage("Aerolinea actualizado correctamente.");
                 } catch (Exception ex) {
                     new dialogMessage(ex.getMessage());
                 }

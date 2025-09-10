@@ -505,6 +505,7 @@ public class Sistema implements ISistema {
         if (u instanceof Cliente c) {
             c.setNombre(cliente.getNombre());
             c.setApellido(cliente.getApellido());
+            c.setEmail(cliente.getEmail());
             c.setFechaNacimiento(cliente.getFechaNacimiento());
             c.setNacionalidad(cliente.getNacionalidad());
             c.setTipoDocumento(cliente.getTipoDocumento());
