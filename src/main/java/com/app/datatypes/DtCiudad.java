@@ -70,6 +70,6 @@ public class DtCiudad {
     }
 
     @Override
-    public String toString() { return this.nombre; }
+    public String toString() { return this.nombre + ", " + this.pais; }
 
 }

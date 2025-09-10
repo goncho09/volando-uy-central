@@ -23,7 +23,7 @@ public class dataReserva extends JFrame{
         setTitle("Reservas del vuelo: " + dataReserva.getVuelo().getNombre());
         setResizable(false);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setSize(275, 300);
+        setSize(350, 300);
         setLocationRelativeTo(null);
         setVisible(true);
         add(dataReservaPanel);
