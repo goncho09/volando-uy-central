@@ -29,7 +29,7 @@ public class dataRutaDeVuelo extends JFrame{
     private JComboBox JComboBoxVuelos;
     private JButton ButtonVerVuelo;
 
-    public dataRutaDeVuelo(DtRuta ruta, List<DtVuelo> vuelosAsociados, auxiliarFunctions auxiliar){
+    public dataRutaDeVuelo(DtRuta ruta, auxiliarFunctions auxiliar){
         setTitle("Datos de la ruta: " + ruta.getNombre());
         setResizable(false);
         setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
@@ -39,14 +39,6 @@ public class dataRutaDeVuelo extends JFrame{
         add(dataRutaPanel);
 
         a = auxiliar;
-
-        DefaultComboBoxModel<DtVuelo> model = new DefaultComboBoxModel<>();
-        for (DtVuelo v : vuelosAsociados) {
-            if(v.getRutaDeVuelo().getNombre().equals(ruta.getNombre())){
-             model.addElement(v);
-
-            }
-        }
 
         JComboBoxVuelos.setModel(a.getComboVueloRutaDeVueloModel());
         a.cargarVuelosComboBoxRuta(ruta.getNombre());
@@ -80,20 +72,15 @@ public class dataRutaDeVuelo extends JFrame{
                     new dialogMessage("Seleccione un vuelo para poder verlo.");
                 }
 
-                for (DtVuelo v : vuelosAsociados) {
-                    if(v.getNombre().equals(JComboBoxVuelos.getSelectedItem().toString())){
-                        dataVuelo ventanaVuelo = new dataVuelo(v.getDatos(), a);
-                        setEnabled(false);
+                DtVuelo v =  (DtVuelo) JComboBoxVuelos.getSelectedItem();
+                dataVuelo ventanaVuelo = new dataVuelo(v.getDatos(), a);
+                setEnabled(false);
 
-                        ventanaVuelo.addWindowListener(new WindowAdapter() {
+                ventanaVuelo.addWindowListener(new WindowAdapter() {
                             @Override
-                            public void windowClosing(WindowEvent e){
-                                setEnabled(true);
+                            public void windowClosing(WindowEvent e){setEnabled(true);
                             };
                         });
-                        break;
-                    }
-                }
 
             }
         });

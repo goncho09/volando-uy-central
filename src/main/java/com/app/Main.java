@@ -731,7 +731,7 @@ public class Main extends JFrame {
                 }
                     try{
 
-                        JFrame paquete = new dataPaquete(s.buscarPaquete(JComboBoxPaqueteConsultaPaqueteRutaVuelo.getSelectedItem().toString()).getDatos(),s.listarVuelos());
+                        JFrame paquete = new dataPaquete(s.buscarPaquete(JComboBoxPaqueteConsultaPaqueteRutaVuelo.getSelectedItem().toString()).getDatos(), auxiliar);
 
                         setEnabled(false);
 
@@ -825,7 +825,7 @@ public class Main extends JFrame {
                 }
                 try{
                     String nombreRuta = JComboBoxRutaVueloConsultaRuta.getSelectedItem().toString();
-                    dataRutaDeVuelo ventanaRuta = new dataRutaDeVuelo(s.consultarRuta(nombreRuta),s.getVuelosRutaDeVuelo(nombreRuta), auxiliar);
+                    dataRutaDeVuelo ventanaRuta = new dataRutaDeVuelo(s.consultarRuta(nombreRuta), auxiliar);
                     setEnabled(false);
 
                     ventanaRuta.addWindowListener(new WindowAdapter() {

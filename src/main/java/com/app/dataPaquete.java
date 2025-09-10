@@ -25,7 +25,7 @@ public class dataPaquete extends JFrame {
     private JButton ButtonVerRutaDeVuelo;
     private JPanel dataPaqueteDisplay;
 
-    public dataPaquete(DtPaquete paquete, List<DtVuelo> vuelos) {
+    public dataPaquete(DtPaquete paquete, auxiliarFunctions auxiliar) {
             setTitle("Datos del paquete: " + paquete.getNombre());
             setResizable(false);
             setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
@@ -66,7 +66,7 @@ public class dataPaquete extends JFrame {
                     new dialogMessage("Debe seleccionar una ruta de vuelo para ver su información");
                 }
                 try{
-                    new dataRutaDeVuelo(paquete.getRutaDeVuelo(JComboBoxRutasVuelo.getSelectedItem().toString()).getDatos(),vuelos);
+                    new dataRutaDeVuelo(paquete.getRutaDeVuelo(JComboBoxRutasVuelo.getSelectedItem().toString()).getDatos(), a);
                 } catch (Exception ex) {
                     new dialogMessage(ex.getMessage());
                 }
