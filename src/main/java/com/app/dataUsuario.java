@@ -81,7 +81,7 @@ public class dataUsuario extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(JComboBoxReservas.getSelectedItem() == null || JComboBoxReservas.getSelectedItem().toString().equals("N/A")){
-                    new dialogMessage("Seleccione un paquete");
+                    new dialogMessage("Seleccione una reserva");
                     return;
                 }
                 DtReserva r = (DtReserva) JComboBoxReservas.getSelectedItem();
@@ -120,7 +120,7 @@ public class dataUsuario extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(JComboBoxRutasDeVuelo.getSelectedItem() == null || JComboBoxRutasDeVuelo.getSelectedItem().toString().equals("N/A")){
-                    new dialogMessage("Seleccione un paquete");
+                    new dialogMessage("Seleccione una ruta");
                     return;
                 }
                 DtRuta ruta =  (DtRuta) JComboBoxRutasDeVuelo.getSelectedItem();
