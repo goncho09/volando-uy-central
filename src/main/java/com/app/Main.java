@@ -496,7 +496,16 @@ public class Main extends JFrame {
                     return;
                 }
 
-                new dataUsuario(dtUsuario, auxiliar);
+                dataUsuario ventanaUsuario = new dataUsuario(dtUsuario, auxiliar);
+                setEnabled(false);
+
+                ventanaUsuario.addWindowListener(new WindowAdapter() {
+                    @Override
+                    public void windowClosing(WindowEvent e){
+                        setEnabled(true);
+                    };
+                });
+
             }catch (Exception ex) {
                 new dialogMessage("Error al consultar: " + ex.getMessage());
                 ex.printStackTrace();

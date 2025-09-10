@@ -29,7 +29,8 @@ public interface ISistema {
 
     // ------------ RESERVAS ----------- //
     List<DtReserva> listarReservas();
-    List<DtReserva> listarReservas(DtVuelo v); // Devuelve las reservas de un vuelo en específico
+    List<DtReserva> listarReservas(DtVuelo vuelo); // Devuelve las reservas de un vuelo en específico
+    List<DtReserva> listarReservas(DtCliente cliente); // Devuelve las reservas de un cliente en específico
 
     void altaReserva(DtReserva reserva, String nickCliente, String nameVuelo); //Reserva de un Vuelo
 
@@ -63,6 +64,7 @@ public interface ISistema {
 
     // ---------- PAQUETES ---------- //
     List<DtPaquete> listarPaquetes();
+    List<DtPaquete> listarPaquetes(DtCliente cliente); // Lista todos los paquetes comprados por un cliente.
     List<DtPaquete> listarPaquetesNoComprados();
     List<DtPaquete> listarPaquetesConRutas();
     int agregarRutaAPaquete(String nombrePaquete, String nombreRuta,int cantidad, TipoAsiento tipoAsiento);

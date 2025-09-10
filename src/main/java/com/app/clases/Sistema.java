@@ -295,7 +295,18 @@ public class Sistema implements ISistema {
             listaPaquetes.add(p.getDatos());
         }
         return listaPaquetes;
+    }
 
+    public List<DtPaquete> listarPaquetes(DtCliente c) {
+        Cliente cliente = (Cliente) this.usuarios.get(c.getNickname());
+        if(cliente == null){
+            throw new RuntimeException("Cliente no encontrado");
+        }
+        List<DtPaquete> listaPaquetes = new ArrayList<>();
+        for(CompraPaquete cp : cliente.getComprasPaquetes()){
+            listaPaquetes.add(cp.getPaquete().getDatos());
+        }
+        return listaPaquetes;
     }
 
     public List<DtPaquete> listarPaquetesNoComprados() {
@@ -855,6 +866,17 @@ public class Sistema implements ISistema {
         List<DtReserva> listaReservas = new ArrayList<>();
         for(Reserva r : this.reservas){
             if(r.getVuelo().getNombre().equals(nombre)){
+                listaReservas.add(r.getDatos());
+            }
+        }
+        return listaReservas;
+    };
+
+    public List<DtReserva> listarReservas(DtCliente cliente){
+        String nickname = cliente.getNickname();
+        List<DtReserva> listaReservas = new ArrayList<>();
+        for(Reserva r : this.reservas){
+            if(r.getCliente().getNickname().equals(nickname)){
                 listaReservas.add(r.getDatos());
             }
         }

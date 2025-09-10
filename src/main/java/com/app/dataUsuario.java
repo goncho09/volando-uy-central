@@ -1,17 +1,15 @@
 package com.app;
 
-import com.app.datatypes.DtUsuario;
-import com.app.datatypes.DtAerolinea;
-import com.app.datatypes.DtCliente;
-import com.app.datatypes.DtUsuario;
+import com.app.datatypes.*;
 
 import javax.swing.*;
+import java.awt.event.*;
 
 public class dataUsuario extends JFrame {
 
     private auxiliarFunctions a;
 
-    private JPanel panel1;
+    private JPanel PanelGlobal;
     private JLabel nicknameConsultaUsuario;
     private JLabel nombreConsultaUsuario;
     private JLabel emailConsultaUsuario;
@@ -23,24 +21,25 @@ public class dataUsuario extends JFrame {
     private JLabel numDocumentoConsultaCliente;
     private JLabel nacionalidadConsultaUsuario;
     private JLabel descripcionAerolineaConsultaUsuario;
-    private JLabel nombreAerlineaConsultaUsuario;
-    private JLabel nicknameAerlineaConsultaUsuario;
     private JLabel sitioAerolineaConsultaUsuario;
-    private JButton cancelarAerolinea;
     private JPanel PanelUsuario;
+    private JPanel PanelCliente;
+    private JComboBox JComboBoxRutasDeVuelo;
+    private JButton verRuta;
+    private JComboBox JComboBoxReservas;
+    private JComboBox JComboBoxPaquetes;
+    private JButton verReserva;
+    private JButton verPaquete;
 
     public dataUsuario(DtUsuario usuario, auxiliarFunctions auxiliar) {
-        setContentPane(panel1);
+        setContentPane(PanelGlobal);
         setTitle("Datos de Usuario: " + usuario.getNickname());
         setResizable(false);
         setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-        setSize(275, 300);
-        setLocationRelativeTo(null);
 
         this.a = auxiliar;
 
         cancelarButton.addActionListener(e -> dispose());
-        cancelarAerolinea.addActionListener(e -> dispose());
 
         nicknameConsultaUsuario.setText(usuario.getNickname());
         nombreConsultaUsuario.setText(usuario.getNombre());
@@ -48,6 +47,7 @@ public class dataUsuario extends JFrame {
 
         if (usuario instanceof DtCliente) {
             DtCliente cliente = (DtCliente) usuario;
+            PanelCliente.setVisible(true);
             PanelAerolinea.setVisible(false);
             apellidoConsultaUsuario.setText(cliente.getApellido());
             nacionalidadConsultaUsuario.setText(cliente.getNacionalidad());
@@ -55,27 +55,86 @@ public class dataUsuario extends JFrame {
             numDocumentoConsultaCliente.setText(String.valueOf(cliente.getNumeroDocumento()));
             fechaNacConsultaUsuario.setText(cliente.getFechaNacimiento().toString());
 
+            JComboBoxReservas.setModel(a.getComboReservaVueloClienteModel());
+            a.cargarDatosReservaComboBox(cliente);
+
+            JComboBoxPaquetes.setModel(a.getComboPaqueteClienteModel());
+            a.cargarPaqueteClienteComboBox(cliente);
+
         } else if (usuario instanceof DtAerolinea) {
             DtAerolinea aerolinea = (DtAerolinea) usuario;
-
             PanelAerolinea.setVisible(true);
-
-            PanelUsuario.setVisible(false);
-
-            apellidoConsultaUsuario.setVisible(false);
-            nacionalidadConsultaUsuario.setVisible(false);
-            tipoDocConsultaUsuario.setVisible(false);
-            numDocumentoConsultaCliente.setVisible(false);
-            fechaNacConsultaUsuario.setVisible(false);
-
-            PanelAerolinea.setVisible(true);
+            PanelCliente.setVisible(false);
 
             descripcionAerolineaConsultaUsuario.setText(aerolinea.getDescripcion());
             sitioAerolineaConsultaUsuario.setText(aerolinea.getLinkWeb());
-            nombreAerlineaConsultaUsuario.setText(aerolinea.getNombre());
-            nicknameAerlineaConsultaUsuario.setText(aerolinea.getNickname());
+
+            JComboBoxRutasDeVuelo.setModel(a.getComboRutaDeVueloAerolineaModel());
+            a.cargarRutasDeVueloComboBoxAerolinea(aerolinea.getNickname());
         }
+
+        pack();
+        setLocationRelativeTo(null);
         setVisible(true);
+
+        verReserva.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(JComboBoxReservas.getSelectedItem() == null || JComboBoxReservas.getSelectedItem().toString().equals("N/A")){
+                    new dialogMessage("Seleccione un paquete");
+                    return;
+                }
+                DtReserva r = (DtReserva) JComboBoxReservas.getSelectedItem();
+                dataReserva ventanaReserva = new dataReserva(r, a);
+                setEnabled(false);
+
+                ventanaReserva.addWindowListener(new WindowAdapter() {
+                    @Override
+                    public void windowClosing(WindowEvent e){
+                        setEnabled(true);
+                    };
+                });
+            }
+        });
+
+        verPaquete.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(JComboBoxPaquetes.getSelectedItem() == null || JComboBoxPaquetes.getSelectedItem().toString().equals("N/A")){
+                    new dialogMessage("Seleccione un paquete");
+                    return;
+                }
+                DtPaquete p = (DtPaquete) JComboBoxPaquetes.getSelectedItem();
+                dataPaquete ventanaPaquete = new dataPaquete(p, a);
+                setEnabled(false);
+
+                ventanaPaquete.addWindowListener(new WindowAdapter() {
+                    @Override
+                    public void windowClosing(WindowEvent e){
+                        setEnabled(true);
+                    };
+                });
+            }
+        });
+        verRuta.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(JComboBoxRutasDeVuelo.getSelectedItem() == null || JComboBoxRutasDeVuelo.getSelectedItem().toString().equals("N/A")){
+                    new dialogMessage("Seleccione un paquete");
+                    return;
+                }
+                DtRuta ruta =  (DtRuta) JComboBoxRutasDeVuelo.getSelectedItem();
+                dataRutaDeVuelo ventanaRuta = new dataRutaDeVuelo(ruta, a);
+                setEnabled(false);
+
+                ventanaRuta.addWindowListener(new WindowAdapter() {
+                    @Override
+                    public void windowClosing(WindowEvent e){
+                        setEnabled(true);
+                    }
+                });
+            }
+        });
     }
 
 
