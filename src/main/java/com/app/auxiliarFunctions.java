@@ -25,6 +25,7 @@ public class auxiliarFunctions {
     private DefaultComboBoxModel<DtReserva> comboReservaVuelo = new DefaultComboBoxModel<>();
     private DefaultComboBoxModel<DtVuelo> comboVuelos = new DefaultComboBoxModel<>();
     private DefaultComboBoxModel<DtPasajero> comboPasajerosReserva = new DefaultComboBoxModel<>();
+    private DefaultComboBoxModel<DtRuta> comboRutaPaquete = new DefaultComboBoxModel<>();
 
     public auxiliarFunctions(ISistema s) {
         this.sistema = s;
@@ -46,6 +47,7 @@ public class auxiliarFunctions {
     public DefaultComboBoxModel<DtReserva> getComboReservaVueloModel() { return comboReservaVuelo; }
     public DefaultComboBoxModel<DtVuelo> getComboVuelosModel() {return comboVuelos;}
     public DefaultComboBoxModel<DtPasajero> getComboPasajerosReserva() { return comboPasajerosReserva; }
+    public DefaultComboBoxModel<DtRuta> getComboRutaPaquete() { return comboRutaPaquete; }
 
     //Función para validar 1 o más "JComboBox"
     public boolean estanVaciosJComboBox(JComboBox<?>... combos) {
@@ -306,7 +308,21 @@ public class auxiliarFunctions {
                 public String toString() { return "N/A"; }
             });
         }
+    }
 
+    public void cargarRutasPaquete(DtPaquete p){
+        comboRutaPaquete.removeAllElements();
+        List<DtRuta> rutas = sistema.listarRutasDeVuelo(p);
+        if(rutas != null && !rutas.isEmpty()) {
+            for(DtRuta r : rutas){
+                comboRutaPaquete.addElement(r);
+            }
+        }else{
+            comboRutaPaquete.addElement(new DtRuta() {
+                @Override
+                public String toString() { return "N/A"; }
+            });
+        }
     }
 
     public boolean esFechaValida(LocalDate fecha) {

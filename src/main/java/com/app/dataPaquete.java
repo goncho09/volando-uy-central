@@ -3,11 +3,11 @@ package com.app;
 import com.app.clases.RutaDeVuelo;
 import com.app.clases.RutaEnPaquete;
 import com.app.datatypes.DtPaquete;
+import com.app.datatypes.DtRuta;
 import com.app.datatypes.DtVuelo;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,32 +41,29 @@ public class dataPaquete extends JFrame {
             validezDias.setText(Integer.toString(paquete.getValidezDias()));
             descuento.setText(Float.toString(paquete.getDescuento()));
             costo.setText(Float.toString(paquete.getCosto()));
+            cantidadRutas.setText(Integer.toString(paquete.getRutaEnPaquete().size()));
 
-
-            DefaultComboBoxModel<RutaEnPaquete> model = new DefaultComboBoxModel<>();
-            List <RutaEnPaquete> rutasTemp = new ArrayList<>();
-
-            for (RutaEnPaquete rp : paquete.getRutaEnPaquete()) {
-                if(!rutasTemp.equals(rp)){
-                    rutasTemp.add(rp);
-                    model.addElement(rp);
-                }
-            }
-
-            cantidadRutas.setText(Integer.toString(rutasTemp.size()));
-
-            JComboBoxRutasVuelo.setModel(model);
-            JComboBoxRutasVuelo.setSelectedIndex(-1);
+            JComboBoxRutasVuelo.setModel(a.getComboRutaPaquete());
+            a.cargarRutasPaquete(paquete);
 
 
         ButtonVerRutaDeVuelo.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(JComboBoxRutasVuelo.getSelectedItem() == null){
+                if(JComboBoxRutasVuelo.getSelectedItem() == null || JComboBoxRutasVuelo.getSelectedItem().toString().equals("N/A")){
                     new dialogMessage("Debe seleccionar una ruta de vuelo para ver su información");
+                    return;
                 }
                 try{
-                    new dataRutaDeVuelo(paquete.getRutaDeVuelo(JComboBoxRutasVuelo.getSelectedItem().toString()).getDatos(), a);
+                    DtRuta ruta = (DtRuta) JComboBoxRutasVuelo.getSelectedItem();
+                    dataRutaDeVuelo ventanaRuta = new dataRutaDeVuelo(ruta, a);
+                    setEnabled(false);
+
+                    ventanaRuta.addWindowListener(new WindowAdapter() {
+                        @Override
+                        public void windowClosing(WindowEvent e){setEnabled(true);
+                        };
+                    });
                 } catch (Exception ex) {
                     new dialogMessage(ex.getMessage());
                 }

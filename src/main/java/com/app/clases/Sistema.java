@@ -401,6 +401,15 @@ public class Sistema implements ISistema {
         return listaRutas;
     }
 
+    public List<DtRuta> listarRutasDeVuelo(DtPaquete p) {
+        List<DtRuta> listaRutas = new ArrayList<>();
+        List<RutaEnPaquete> rutasDelPaquete = p.getRutaEnPaquete();
+        for (RutaEnPaquete r : rutasDelPaquete) {
+            listaRutas.add(r.getRutaDeVuelo().getDatos());
+        }
+        return listaRutas;
+    }
+
     public void seleccionarRutaDeVuelo(String nombre, int cantidad, TipoAsiento tipoAsiento) {
         if (this.aerolineaTemporal == null) {
             throw new IllegalArgumentException("No hay una aerolinea seleccionada.");

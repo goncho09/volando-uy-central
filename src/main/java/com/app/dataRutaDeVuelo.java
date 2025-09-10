@@ -5,10 +5,7 @@ import com.app.datatypes.DtRuta;
 import com.app.datatypes.DtVuelo;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.event.*;
 import java.util.List;
 
 public class dataRutaDeVuelo extends JFrame{
@@ -68,8 +65,9 @@ public class dataRutaDeVuelo extends JFrame{
         ButtonVerVuelo.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(JComboBoxVuelos.getSelectedItem() == null){
+                if(JComboBoxVuelos.getSelectedItem() == null || JComboBoxVuelos.getSelectedItem().toString().equals("N/A")){
                     new dialogMessage("Seleccione un vuelo para poder verlo.");
+                    return;
                 }
 
                 DtVuelo v =  (DtVuelo) JComboBoxVuelos.getSelectedItem();

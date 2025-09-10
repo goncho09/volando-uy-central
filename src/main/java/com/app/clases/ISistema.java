@@ -41,6 +41,7 @@ public interface ISistema {
     // ---------- RUTAS DE VUELO ---------- //
     List<DtRuta> listarRutasDeVuelo(); // Devuelve TODAS las rutas de vuelo
     List<DtRuta> listarRutasDeVuelo(String nickname); // Devuelve TODAS las rutas de vuelo de una aerolínea en específico
+    List<DtRuta> listarRutasDeVuelo(DtPaquete paquete); // Devuelve TODAS las rutas de un paquete en específico
     DtRuta consultarRuta(String nombre);
 
     boolean existeRuta(String nombre);
