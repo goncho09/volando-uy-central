@@ -178,6 +178,8 @@ public class Main extends JFrame {
         //Settear swing elements isEditable false
         nicknameModificarAerolinea.setEditable(false);
         nicknameModificarCliente.setEditable(false);
+        correoModificarAerolinea.setEditable(false);
+        correoClienteModificar.setEditable(false);
 
         //Settear swing elements isEnabled false
         JComboBoxrutaDeVueloReserva.setEnabled(false);
