@@ -137,6 +137,15 @@ public class Cliente extends Usuario{
         );
     }
 
+    public boolean existeVueloReserva(Vuelo vuelo){
+        for(Reserva r : this.getReservas()){
+            if(r.getVuelo().getNombre().equals(vuelo.getNombre())){
+                return true;
+            }
+        }
+        return false;
+    };
+
     public void mostrarDatos() {
         System.out.println("Datos Usuario: " +
                 nickname + " - " + nombre + " - " + apellido + " - " +

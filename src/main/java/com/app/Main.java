@@ -363,17 +363,7 @@ public class Main extends JFrame {
                 int pasajes = (Integer) JSpinnerCantPasajesReserva.getValue();
                 int equipajeExtra = (Integer) JSpinnerCantEquipajeExtraReserva.getValue();
 
-                int dia = (Integer) fechaDiaReserva.getValue();
-                int mes = (Integer) fechaMesReserva.getValue();
-                int anio = (Integer) fechaAnioReserva.getValue();
-
-                LocalDate fecha = null;
-                try{
-                    fecha = LocalDate.of(anio, mes, dia);
-                } catch (Exception ex) {
-                    new dialogMessage("Debes ingresar una fecha válida..");
-                    return;
-                }
+                LocalDate fecha = LocalDate.now();
 
                 if(pasajes <= 0){
                     new dialogMessage("Pasajes de reservas debe ser mayor a 0");
@@ -383,7 +373,6 @@ public class Main extends JFrame {
                 insertPasaje ventanaPasajes = new insertPasaje(pasajes);
                 setEnabled(false);
 
-                LocalDate finalFecha = fecha;
                 ventanaPasajes.addWindowListener(new WindowAdapter() {
                     @Override
                     public void windowClosed(WindowEvent e){
@@ -391,7 +380,7 @@ public class Main extends JFrame {
                         List<DtPasajero> listaPasajes = ventanaPasajes.getPasajes();
                         if(listaPasajes.size() == pasajes){
                             DtReserva reserva = new DtReserva(
-                                    finalFecha,
+                                    fecha,
                                     tipoAsiento,
                                     pasajes,
                                     equipajeExtra,
@@ -399,6 +388,7 @@ public class Main extends JFrame {
                             );
                             try{
                                 s.altaReserva(reserva, cliente, vuelo);
+                                new dialogMessage("Reserva realizada exitosamente");
                             } catch (Exception ex) {
                                 new dialogMessage(ex.getMessage());
                             }

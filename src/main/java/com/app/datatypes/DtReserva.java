@@ -139,7 +139,7 @@ public class DtReserva {
 
     @Override
     public String toString() {
-        return this.getCliente().getNombre() + " - " + this.getVuelo().getNombre();
+        return this.getCliente().getNickname() + " - " + this.getVuelo().getNombre();
     }
 
 }

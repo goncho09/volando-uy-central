@@ -809,6 +809,10 @@ public class Sistema implements ISistema {
         float costoEquipaje = reserva.getEquipajeExtra() * v.getRutaDeVuelo().getEquipajeExtra();
         float costo = (costoAsiento * cantPasajes) + costoEquipaje;
 
+        if(c.existeVueloReserva(v)){
+            throw new IllegalArgumentException("Ya existe una reserva para este vuelo. Cambie el Cliente, Aerolinea o RutaDeVuelo.");
+        };
+
         if(cantPasajes != reserva.getPasajeros().size()){
             throw new IllegalArgumentException("La cantidad de pasajeros no coincide");
         }
