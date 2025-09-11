@@ -651,6 +651,7 @@ public class Main extends JFrame {
                         }
                     }
                     auxiliar.cargarUsuariosComboBox();
+                    auxiliar.cargarAerolineasComboBox();
             }catch (Exception ex) {
                     ex.printStackTrace();
                     new dialogMessage(ex.getMessage());
