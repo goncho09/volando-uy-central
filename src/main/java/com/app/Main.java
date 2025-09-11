@@ -335,6 +335,7 @@ public class Main extends JFrame {
                         s.altaCiudad(new DtCiudad(nombreAltaCiudad.getText(), paisAltaCiudad.getText(), aeropuertoAltaCiudad.getText(), descripcionAltaCiudad.getText(), webAltaCiudad.getText(), LocalDate.now()));
                     } catch (Exception ex) {
                         new dialogMessage("Ha fallado el alta ciudad");
+                        return;
                     }
                     new dialogMessage("Ciudad registrada exitosamente: " + nombreAltaCiudad.getText());
 
