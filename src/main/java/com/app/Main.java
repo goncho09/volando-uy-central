@@ -17,6 +17,7 @@ public class Main extends JFrame {
     //Declaración de variables "importantes"
     private ISistema s;
     private auxiliarFunctions auxiliar;
+    private List<JCheckBox> checkboxes;
 
     //Declaració de JavaSwing
     private JComboBox a; // Solucionar luego. <- no arranca el programa sin eso dxd
@@ -159,6 +160,7 @@ public class Main extends JFrame {
 
         //Inicializar Auxiliar
         this.auxiliar = new auxiliarFunctions(s);
+        this.checkboxes = new ArrayList<>();
 
         //Settear JFrame principal
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -228,12 +230,8 @@ public class Main extends JFrame {
         JPanelCategorias.setLayout(new GridLayout(0, 2, 5, 5));
 
         // Es para mostrar las categorias en alta ruta vuelo
-        List<JCheckBox> checkboxes = new ArrayList<>();
-        for (Categoria c : s.getCategorias()) {
-            JCheckBox check = new JCheckBox(c.getNombre());
-            JPanelCategorias.add(check);
-            checkboxes.add(check);
-        }
+        cargarCategorias();
+
 
 
         // Configurar JSpinner
@@ -615,6 +613,7 @@ public class Main extends JFrame {
                 s.altaCategoria(new DtCategoria(nombreAltaCategoría.getText()));
                 new dialogMessage("Categoria creada correctamente");
                 nombreAltaCategoría.setText("");
+                cargarCategorias();
             } catch (Exception ex) {
                 ex.printStackTrace();
                 new dialogMessage(ex.getMessage());
@@ -1068,7 +1067,15 @@ public class Main extends JFrame {
         });
     }
 
-
+    public void cargarCategorias(){
+        JPanelCategorias.removeAll();
+        checkboxes.clear();
+        for (Categoria c : s.getCategorias()) {
+            JCheckBox check = new JCheckBox(c.getNombre());
+            JPanelCategorias.add(check);
+            this.checkboxes.add(check);
+        }
+    }
 
     public static void main(String[] args) {
         new Main();
