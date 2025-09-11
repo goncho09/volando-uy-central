@@ -376,4 +376,16 @@ public class auxiliarFunctions {
         }
     }
 
+    public void validarCorreo(String correo) {
+        if (!correo.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
+            throw new IllegalArgumentException("El correo es inválido.");
+        }
+    }
+
+    public void validarDocumento(String documentoCi){
+        if(!documentoCi.matches("^\\d{8}$")){
+            throw new IllegalArgumentException("El documento no es valido");
+        }
+    }
+
 }

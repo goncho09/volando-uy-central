@@ -438,6 +438,9 @@ public class Main extends JFrame {
                             return;
                         }
 
+                        auxiliar.validarCorreo(correoElectronicoRegistrarCliente.getText());
+                        auxiliar.validarDocumento(documentoRegistrarCliente.getText());
+
                         // Crear DtCliente
                         int dia = (Integer)fechaDiaRegistrarCliente.getValue();
                         int mes = (Integer)fechaMesRegistrarCliente.getValue();
@@ -632,6 +635,7 @@ public class Main extends JFrame {
                             new dialogMessage("Faltan argumentos");
                             return;
                         }
+                        auxiliar.validarCorreo(correoRegistrarAerolinea.getText());
                         // Crear DtAerolinea
                         DtAerolinea aerolinea = new DtAerolinea(
                                 nicknameRegistrarAerolinea.getText(), nombreRegistrarAerolinea.getText(), correoRegistrarAerolinea.getText(),
