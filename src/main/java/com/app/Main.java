@@ -220,6 +220,7 @@ public class Main extends JFrame {
         JComboBoxRutaVueloConsultaRuta.setModel(auxiliar.getComboRutaDeVueloAerolineaModel());
         JComboBoxrutaDeVueloReserva.setModel(auxiliar.getComboRutaDeVueloAerolineaModel());
         JComboBoxConsultaVueloRutaDeVuelo.setModel(auxiliar.getComboRutaDeVueloAerolineaModel());
+        JComboBoxRutaVueloAltaVuelo.setModel(auxiliar.getComboRutaDeVueloAerolineaModel());
 
         JComboBoxvueloReserva.setModel(auxiliar.getComboVueloRutaDeVueloModel());
         JComboBoxConsultaVueloVuelo.setModel(auxiliar.getComboVueloRutaDeVueloModel());
@@ -1042,6 +1043,20 @@ public class Main extends JFrame {
                     new dialogMessage("Compra de paquete realizada exitosamente.");
                 } catch (Exception ex){
                     new dialogMessage(ex.getMessage());
+                }
+            }
+        });
+
+        JComboBoxAerolineaAltaVuelo.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if(e.getStateChange() == ItemEvent.SELECTED){
+                    DtAerolinea a = (DtAerolinea) JComboBoxAerolineaAltaVuelo.getSelectedItem();
+                    if(a == null || a.toString().equals("N/A")){
+                        new dialogMessage("Ha ocurrido un error..");
+                        return;
+                    }
+                    auxiliar.cargarRutasDeVueloComboBoxAerolinea(a.getNickname());
                 }
             }
         });
