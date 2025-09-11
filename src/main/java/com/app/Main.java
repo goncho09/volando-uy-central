@@ -505,7 +505,7 @@ public class Main extends JFrame {
 
                 ventanaUsuario.addWindowListener(new WindowAdapter() {
                     @Override
-                    public void windowClosing(WindowEvent e){
+                    public void windowClosed(WindowEvent e){
                         setEnabled(true);
                     };
                 });

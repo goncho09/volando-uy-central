@@ -35,7 +35,7 @@ public class dataUsuario extends JFrame {
         setContentPane(PanelGlobal);
         setTitle("Datos de Usuario: " + usuario.getNickname());
         setResizable(false);
-        setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         this.a = auxiliar;
 
