@@ -1,17 +1,13 @@
-package com.app;
+package com.app.interfaces;
 
-import com.app.clases.RutaDeVuelo;
-import com.app.clases.RutaEnPaquete;
 import com.app.datatypes.DtPaquete;
 import com.app.datatypes.DtRuta;
-import com.app.datatypes.DtVuelo;
+import com.app.utils.auxiliarFunctions;
 
 import javax.swing.*;
 import java.awt.event.*;
-import java.util.ArrayList;
-import java.util.List;
 
-public class dataPaquete extends JFrame {
+public class InfoPaquete extends JFrame {
     private auxiliarFunctions a;
 
     private JLabel nombre;
@@ -25,7 +21,7 @@ public class dataPaquete extends JFrame {
     private JButton ButtonVerRutaDeVuelo;
     private JPanel dataPaqueteDisplay;
 
-    public dataPaquete(DtPaquete paquete, auxiliarFunctions auxiliar) {
+    public InfoPaquete(DtPaquete paquete, auxiliarFunctions auxiliar) {
             setTitle("Datos del paquete: " + paquete.getNombre());
             setResizable(false);
             setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
@@ -51,12 +47,12 @@ public class dataPaquete extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(JComboBoxRutasVuelo.getSelectedItem() == null || JComboBoxRutasVuelo.getSelectedItem().toString().equals("N/A")){
-                    new dialogMessage("Debe seleccionar una ruta de vuelo para ver su información");
+                    new VentanaMensaje("Debe seleccionar una ruta de vuelo para ver su información");
                     return;
                 }
                 try{
                     DtRuta ruta = (DtRuta) JComboBoxRutasVuelo.getSelectedItem();
-                    dataRutaDeVuelo ventanaRuta = new dataRutaDeVuelo(ruta, a);
+                    InfoRutaDeVuelo ventanaRuta = new InfoRutaDeVuelo(ruta, a);
                     setEnabled(false);
 
                     ventanaRuta.addWindowListener(new WindowAdapter() {
@@ -65,7 +61,7 @@ public class dataPaquete extends JFrame {
                         };
                     });
                 } catch (Exception ex) {
-                    new dialogMessage(ex.getMessage());
+                    new VentanaMensaje(ex.getMessage());
                 }
 
             }

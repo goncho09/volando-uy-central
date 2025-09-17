@@ -1,16 +1,16 @@
-package com.app;
+package com.app.interfaces;
 
-import com.app.clases.Factory;
 import com.app.datatypes.DtVuelo;
 import com.app.datatypes.DtReserva;
+import com.app.utils.auxiliarFunctions;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.List;
 
-public class dataVuelo extends JFrame {
+public class InfoVuelo extends JFrame {
 
     private auxiliarFunctions a;
 
@@ -27,7 +27,7 @@ public class dataVuelo extends JFrame {
     private JPanel dataVueloDisplay;
     private JComboBox JComboBoxReservas;
 
-    public dataVuelo(DtVuelo dataVuelo, auxiliarFunctions auxiliar) {
+    public InfoVuelo(DtVuelo dataVuelo, auxiliarFunctions auxiliar) {
         setTitle("Datos del Vuelo: " + dataVuelo.getNombre());
         setResizable(false);
         setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
@@ -58,9 +58,9 @@ public class dataVuelo extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 DtReserva reserva = (DtReserva) JComboBoxReservas.getSelectedItem();
                 if(reserva == null){
-                    new dialogMessage("Esta reserva no existe");
+                    new VentanaMensaje("Esta reserva no existe");
                 }
-                dataReserva ventanaReserva = new dataReserva(reserva, a);
+                InfoReserva ventanaReserva = new InfoReserva(reserva, a);
                 setEnabled(false);
 
                 ventanaReserva.addWindowListener(new WindowAdapter() {

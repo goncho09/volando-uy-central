@@ -1,11 +1,11 @@
-package com.app;
+package com.app.interfaces;
 
 import com.app.datatypes.DtReserva;
+import com.app.utils.auxiliarFunctions;
 
 import javax.swing.*;
-import java.util.List;
 
-public class dataReserva extends JFrame{
+public class InfoReserva extends JFrame{
 
     private auxiliarFunctions a;
 
@@ -19,7 +19,7 @@ public class dataReserva extends JFrame{
     private JLabel equipajeLabel;
     private JLabel costoLabel;
 
-    public dataReserva(DtReserva dataReserva, auxiliarFunctions auxiliar){
+    public InfoReserva(DtReserva dataReserva, auxiliarFunctions auxiliar){
         setTitle("Reservas del vuelo: " + dataReserva.getVuelo().getNombre());
         setResizable(false);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
