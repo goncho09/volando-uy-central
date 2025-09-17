@@ -1,11 +1,12 @@
-package com.app;
+package com.app.interfaces;
 
 import com.app.datatypes.*;
+import com.app.utils.auxiliarFunctions;
 
 import javax.swing.*;
 import java.awt.event.*;
 
-public class dataUsuario extends JFrame {
+public class InfoUsuario extends JFrame {
 
     private auxiliarFunctions a;
 
@@ -31,7 +32,7 @@ public class dataUsuario extends JFrame {
     private JButton verReserva;
     private JButton verPaquete;
 
-    public dataUsuario(DtUsuario usuario, auxiliarFunctions auxiliar) {
+    public InfoUsuario(DtUsuario usuario, auxiliarFunctions auxiliar) {
         setContentPane(PanelGlobal);
         setTitle("Datos de Usuario: " + usuario.getNickname());
         setResizable(false);
@@ -81,11 +82,11 @@ public class dataUsuario extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(JComboBoxReservas.getSelectedItem() == null || JComboBoxReservas.getSelectedItem().toString().equals("N/A")){
-                    new dialogMessage("Seleccione una reserva");
+                    new VentanaMensaje("Seleccione una reserva");
                     return;
                 }
                 DtReserva r = (DtReserva) JComboBoxReservas.getSelectedItem();
-                dataReserva ventanaReserva = new dataReserva(r, a);
+                InfoReserva ventanaReserva = new InfoReserva(r, a);
                 setEnabled(false);
 
                 ventanaReserva.addWindowListener(new WindowAdapter() {
@@ -101,11 +102,11 @@ public class dataUsuario extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(JComboBoxPaquetes.getSelectedItem() == null || JComboBoxPaquetes.getSelectedItem().toString().equals("N/A")){
-                    new dialogMessage("Seleccione un paquete");
+                    new VentanaMensaje("Seleccione un paquete");
                     return;
                 }
                 DtPaquete p = (DtPaquete) JComboBoxPaquetes.getSelectedItem();
-                dataPaquete ventanaPaquete = new dataPaquete(p, a);
+                InfoPaquete ventanaPaquete = new InfoPaquete(p, a);
                 setEnabled(false);
 
                 ventanaPaquete.addWindowListener(new WindowAdapter() {
@@ -120,11 +121,11 @@ public class dataUsuario extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(JComboBoxRutasDeVuelo.getSelectedItem() == null || JComboBoxRutasDeVuelo.getSelectedItem().toString().equals("N/A")){
-                    new dialogMessage("Seleccione una ruta");
+                    new VentanaMensaje("Seleccione una ruta");
                     return;
                 }
                 DtRuta ruta =  (DtRuta) JComboBoxRutasDeVuelo.getSelectedItem();
-                dataRutaDeVuelo ventanaRuta = new dataRutaDeVuelo(ruta, a);
+                InfoRutaDeVuelo ventanaRuta = new InfoRutaDeVuelo(ruta, a);
                 setEnabled(false);
 
                 ventanaRuta.addWindowListener(new WindowAdapter() {

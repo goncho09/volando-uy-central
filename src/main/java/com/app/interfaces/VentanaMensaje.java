@@ -1,14 +1,14 @@
-package com.app;
+package com.app.interfaces;
 
 import javax.swing.*;
 import java.awt.event.*;
 
-public class dialogMessage extends JDialog {
+public class VentanaMensaje extends JDialog {
     private JPanel contentPane;
     private JButton buttonOK;
     private JLabel message;
 
-    public dialogMessage(String msg) {
+    public VentanaMensaje(String msg) {
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);

@@ -1,14 +1,15 @@
-package com.app;
+package com.app.interfaces;
 
 import com.app.clases.Categoria;
 import com.app.datatypes.DtRuta;
 import com.app.datatypes.DtVuelo;
+import com.app.utils.auxiliarFunctions;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.List;
 
-public class dataRutaDeVuelo extends JFrame{
+public class InfoRutaDeVuelo extends JFrame{
     private auxiliarFunctions a;
 
     private JPanel panel1;
@@ -26,7 +27,7 @@ public class dataRutaDeVuelo extends JFrame{
     private JComboBox JComboBoxVuelos;
     private JButton ButtonVerVuelo;
 
-    public dataRutaDeVuelo(DtRuta ruta, auxiliarFunctions auxiliar){
+    public InfoRutaDeVuelo(DtRuta ruta, auxiliarFunctions auxiliar){
         setTitle("Datos de la ruta: " + ruta.getNombre());
         setResizable(false);
         setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
@@ -66,12 +67,12 @@ public class dataRutaDeVuelo extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(JComboBoxVuelos.getSelectedItem() == null || JComboBoxVuelos.getSelectedItem().toString().equals("N/A")){
-                    new dialogMessage("Seleccione un vuelo para poder verlo.");
+                    new VentanaMensaje("Seleccione un vuelo para poder verlo.");
                     return;
                 }
 
                 DtVuelo v =  (DtVuelo) JComboBoxVuelos.getSelectedItem();
-                dataVuelo ventanaVuelo = new dataVuelo(v.getDatos(), a);
+                InfoVuelo ventanaVuelo = new InfoVuelo(v.getDatos(), a);
                 setEnabled(false);
 
                 ventanaVuelo.addWindowListener(new WindowAdapter() {
