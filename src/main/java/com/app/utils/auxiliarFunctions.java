@@ -2,12 +2,26 @@ package com.app.utils;
 
 import com.app.clases.*;
 import com.app.datatypes.*;
+import com.app.interfaces.VentanaMensaje;
 
 import javax.swing.*;
+import java.awt.*;
+import java.awt.geom.Ellipse2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
 
 public class auxiliarFunctions {
+
+    private static final String BASE_DIR = "C:/proyecto-final-g2-sc/pictures";
+    private static final String[] SUB_DIRS = { "users", "vuelos", "rutas" };
 
     private ISistema sistema;
     private DefaultComboBoxModel<DtUsuario> comboUser = new DefaultComboBoxModel<>();
@@ -111,7 +125,7 @@ public class auxiliarFunctions {
         if(usuarios != null  && !usuarios.isEmpty()){
             for (DtUsuario u : usuarios) {
                 comboUser.addElement(u);
-                if(u.getNombre().equals(usuario.getNombre())){
+                if(u.getNickname().equals(usuario.getNickname())){
                     comboUser.setSelectedItem(u);
                 }
             }
@@ -184,6 +198,7 @@ public class auxiliarFunctions {
             });
         }
     }
+
     public void cargarCiudadesComboBox() {
         comboCiudadOrigen.removeAllElements();
         comboCiudadDestino.removeAllElements();
@@ -205,8 +220,6 @@ public class auxiliarFunctions {
             });
         }
     }
-
-
 
     public void cargarPaqueteComboBox() {
         comboPaquete.removeAllElements();
@@ -385,6 +398,108 @@ public class auxiliarFunctions {
     public void validarDocumento(String documentoCi){
         if(!documentoCi.matches("^\\d{8}$")){
             throw new IllegalArgumentException("El documento no es valido");
+        }
+    }
+
+    public static void initFolders() {
+        try {
+            // Crear base y subcarpetas
+            Path basePath = Paths.get(BASE_DIR);
+            if (!Files.exists(basePath)) {
+                Files.createDirectories(basePath);
+            }
+
+            for (String sub : SUB_DIRS) {
+                Path subPath = basePath.resolve(sub);
+                if (!Files.exists(subPath)) {
+                    Files.createDirectories(subPath);
+                }
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static Path getUserImagePath(String fileName) {
+        return Paths.get(BASE_DIR, "users", fileName);
+    }
+
+    public static ImageIcon createRoundImageIcon(ImageIcon originalIcon) {
+        Image originalImage = originalIcon.getImage();
+        int diameter = Math.min(originalImage.getWidth(null), originalImage.getHeight(null));
+
+        // Create a new BufferedImage with transparency
+        BufferedImage roundImage = new BufferedImage(diameter, diameter, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2d = roundImage.createGraphics();
+
+        // Set rendering hints for smooth edges
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+        // Create a circular clip
+        Shape circle = new Ellipse2D.Double(0, 0, diameter, diameter);
+        g2d.setClip(circle);
+
+        // Draw the original image within the clip
+        g2d.drawImage(originalImage, 0, 0, diameter, diameter, null);
+        g2d.dispose();
+
+        return new ImageIcon(roundImage);
+    }
+
+    public static File guardarImagenUsuario(File original) throws IOException {
+        File carpetaDestino = new File(BASE_DIR, "users");
+        if (!carpetaDestino.exists()) {
+            carpetaDestino.mkdirs();
+        }
+
+        // Obtener extensión original
+        String nombre = original.getName();
+        String extension = "";
+        int i = nombre.lastIndexOf('.');
+        if (i > 0) {
+            extension = nombre.substring(i); // incluye el punto (.jpg, .png...)
+        }
+
+        // Generar nombre aleatorio
+        String nombreUnico = UUID.randomUUID().toString() + extension;
+
+        // Crear el archivo destino
+        File nuevoArchivo = new File(carpetaDestino, nombreUnico);
+
+        // Copiar archivo
+        Files.copy(original.toPath(), nuevoArchivo.toPath());
+
+        return nuevoArchivo;
+    }
+
+    public static void mostrarFotoPerfil(JPanel imagenPanel, ImageIcon profileImage, int ancho, int largo){
+        Image imgRaw = profileImage.getImage();
+        Image imgScaled = imgRaw.getScaledInstance(ancho, largo, Image.SCALE_SMOOTH);
+        profileImage = new ImageIcon(imgScaled);
+
+        profileImage = auxiliarFunctions.createRoundImageIcon(profileImage);
+
+        JLabel imgLabel = new JLabel(profileImage);
+
+        imagenPanel.setLayout(new FlowLayout());
+        imagenPanel.removeAll();
+        imagenPanel.add(imgLabel);
+        imagenPanel.revalidate();
+        imagenPanel.repaint();
+    }
+
+    public static void borrarImagenUsuario(String imgName){
+        Path borrar = auxiliarFunctions.getUserImagePath(imgName);
+        File imagenABorrar = new File(borrar.toAbsolutePath().toString());
+        if (imagenABorrar.exists()) {
+            if (imagenABorrar.delete()) {
+                System.out.println("Imagen eliminada con éxito");
+            } else {
+                System.out.println("No se pudo eliminar la imagen");
+            }
+        }else{
+            System.out.println("Imagen no encontrada");
         }
     }
 

@@ -4,7 +4,11 @@ import com.app.datatypes.*;
 import com.app.utils.auxiliarFunctions;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 public class InfoUsuario extends JFrame {
 
@@ -31,6 +35,8 @@ public class InfoUsuario extends JFrame {
     private JComboBox JComboBoxPaquetes;
     private JButton verReserva;
     private JButton verPaquete;
+    private JPanel imagenPanel;
+    private ImageIcon profileImage;
 
     public InfoUsuario(DtUsuario usuario, auxiliarFunctions auxiliar) {
         setContentPane(PanelGlobal);
@@ -45,6 +51,21 @@ public class InfoUsuario extends JFrame {
         nicknameConsultaUsuario.setText(usuario.getNickname());
         nombreConsultaUsuario.setText(usuario.getNombre());
         emailConsultaUsuario.setText(usuario.getEmail());
+
+        new VentanaMensaje(usuario.getUrlImage());
+
+        try {
+            Path userImg = auxiliarFunctions.getUserImagePath(usuario.getUrlImage());
+            if(!Files.exists(userImg)) {
+                throw new Exception("No se encontro el imagen");
+            }
+            profileImage = new ImageIcon(userImg.toAbsolutePath().toString());
+        } catch (Exception e) {
+            profileImage = new ImageIcon(getClass().getResource("/pictures/users/default.png"));
+        }
+
+        auxiliarFunctions.mostrarFotoPerfil(imagenPanel, profileImage, 175, 175);
+
 
         if (usuario instanceof DtCliente) {
             DtCliente cliente = (DtCliente) usuario;

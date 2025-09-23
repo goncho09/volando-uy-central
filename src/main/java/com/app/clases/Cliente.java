@@ -26,7 +26,7 @@ public class Cliente extends Usuario{
 
     public Cliente(){}
     public Cliente(DtCliente cliente) {
-        super(new DtUsuario(cliente.getNickname(), cliente.getNombre(), cliente.getEmail()));
+        super(new DtUsuario(cliente.getNickname(), cliente.getNombre(), cliente.getEmail(), cliente.getPassword(), cliente.getUrlImage()));
         this.apellido = cliente.getApellido();
         this.fechaNacimiento = cliente.getFechaNacimiento();
         this.nacionalidad = cliente.getNacionalidad();
@@ -129,6 +129,7 @@ public class Cliente extends Usuario{
                 this.getNickname(),
                 this.getNombre(),
                 this.getEmail(),
+                this.getUrlImage(),
                 this.getApellido(),
                 this.getFechaNacimiento(),
                 this.getNacionalidad(),

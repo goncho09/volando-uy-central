@@ -10,6 +10,9 @@ import com.formdev.flatlaf.FlatLightLaf;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -21,6 +24,9 @@ public class Main extends JFrame {
     private ISistema s;
     private auxiliarFunctions auxiliar;
     private List<JCheckBox> checkboxes;
+
+    // Para gestión imagenes
+    private File imagenTemporal;
 
     //Declaració de JavaSwing
     private JPanel menuPrincipal;
@@ -144,6 +150,13 @@ public class Main extends JFrame {
     private JButton confirmarModificarCliente;
     private JTextField numeroDocumentoModificarCliente;
     private JButton CancelarAltaCategori;
+    private JPasswordField registrarContrasenaCliente;
+    private JPanel clienteSubirImagePanel;
+    private JPasswordField registrarContrasenaCliente2;
+    private JButton subirImagenButton;
+    private JLabel selectedFileClienteRegistrar;
+    private JPanel modificarClienteImagenPanel;
+    private JButton modificarClienteImagen;
 
 
     public Main() {
@@ -154,6 +167,9 @@ public class Main extends JFrame {
         //Inicializar Auxiliar
         this.auxiliar = new auxiliarFunctions(s);
         this.checkboxes = new ArrayList<>();
+
+        //Inicializar carpetas
+        auxiliarFunctions.initFolders();
 
         try {
             UIManager.setLookAndFeel(new FlatLightLaf());
@@ -236,7 +252,6 @@ public class Main extends JFrame {
         cargarCategorias();
 
 
-
         // Configurar JSpinner
         JSpinnerDiaAltaVuelo.setModel(new SpinnerNumberModel(1, 1, 31, 1));
 
@@ -255,14 +270,11 @@ public class Main extends JFrame {
 
         JSpinnerCantidadAgregarRuta.setModel(new SpinnerNumberModel(1, 1, 1_000_000, 1));
 
-
-
         SpinnerHoraAltaRutaDeVuelo.setModel(new SpinnerNumberModel(0, 0, 200, 1));
         JSpinnerDuracionAltaVueloHora.setModel(new SpinnerNumberModel(0, 0, 200, 1));
 
         SpinnerMinutoAltaRutaDeVuelo.setModel(new SpinnerNumberModel(0, 0, 59, 1));
         JSpinnerDuracionAltaVueloMinuto.setModel(new SpinnerNumberModel(0, 0, 59, 1));
-
 
         JSpinnerDescuentoAltaPaquete.setModel(new SpinnerNumberModel(0, 0, 100, 1));
         JSpinnerCostoAltaPaquete.setModel(new SpinnerNumberModel(1.0, 1.0, 1_000_000.0, 1.0));
@@ -434,7 +446,7 @@ public class Main extends JFrame {
                 try {
                     String tipoUsuario = userType.getSelectedItem().toString();
                     if (tipoUsuario.equals("Cliente")) {
-                        if (auxiliar.estanVaciosJTextField(nicknameRegistrarCliente, nombreRegistrarCliente, correoElectronicoRegistrarCliente, apellidoRegistrarCliente, nacionalidadRegistrarCliente, documentoRegistrarCliente) || auxiliar.estanVaciosJComboBox(tipoDocumentoRegistrarCliente)){
+                        if (auxiliar.estanVaciosJTextField(nicknameRegistrarCliente, nombreRegistrarCliente, correoElectronicoRegistrarCliente, registrarContrasenaCliente, registrarContrasenaCliente2, apellidoRegistrarCliente, nacionalidadRegistrarCliente, documentoRegistrarCliente) || auxiliar.estanVaciosJComboBox(tipoDocumentoRegistrarCliente)){
                             new VentanaMensaje("Faltan argumentos");
                             return;
                         }
@@ -462,10 +474,39 @@ public class Main extends JFrame {
                         TipoDocumento documentoT = tipoDocumentoRegistrarCliente.getSelectedItem().toString().equals("Cedula") ?
                                 TipoDocumento.CEDULA : TipoDocumento.PASAPORTE;
 
+                        if(!registrarContrasenaCliente.getText().equals(registrarContrasenaCliente2.getText())){
+                            new VentanaMensaje("Las contraseñas no coinciden.");
+                            return;
+                        }
+
+                        String contrasena = "1234";
+
+                        if(imagenTemporal == null){
+                            new VentanaMensaje("Debes ingresar una imagen.");
+                            return;
+                        }
+
+                        File imagenGuardada = auxiliarFunctions.guardarImagenUsuario(imagenTemporal);
+                        imagenTemporal = null;
+
+                        if(imagenGuardada == null){
+                            new VentanaMensaje("Ocurrió un error al guardar la imagen");
+                            return;
+                        }
+
+                        String urlImage = imagenGuardada.getName();
+
                         DtCliente cliente = new DtCliente(
-                                nicknameRegistrarCliente.getText(), nombreRegistrarCliente.getText(), correoElectronicoRegistrarCliente.getText(),
-                                apellidoRegistrarCliente.getText(), fecha, nacionalidadRegistrarCliente.getText(),
-                                documentoT, Integer.parseInt(documentoRegistrarCliente.getText())
+                                nicknameRegistrarCliente.getText(),
+                                nombreRegistrarCliente.getText(),
+                                correoElectronicoRegistrarCliente.getText(),
+                                contrasena,
+                                urlImage,
+                                apellidoRegistrarCliente.getText(),
+                                fecha,
+                                nacionalidadRegistrarCliente.getText(),
+                                documentoT,
+                                Integer.parseInt(documentoRegistrarCliente.getText())
                         );
                         try {
                             s.registrarCliente(cliente);
@@ -543,6 +584,19 @@ public class Main extends JFrame {
                         nacionalidadClienteModificar.setText(cliente.getNacionalidad());
                         tipoDocumentoClienteModificar.setSelectedIndex(tipo);
                         numeroDocumentoModificarCliente.setText(String.valueOf(cliente.getNumeroDocumento()));
+                        ImageIcon profileImage;
+
+                        try {
+                            Path userImg = auxiliarFunctions.getUserImagePath(cliente.getUrlImage());
+                            if(!Files.exists(userImg)) {
+                                throw new Exception("No se encontro el imagen");
+                            }
+                            profileImage = new ImageIcon(userImg.toAbsolutePath().toString());
+                        } catch (Exception err) {
+                            profileImage = new ImageIcon(getClass().getResource("/pictures/users/default.png"));
+                        }
+
+                        auxiliarFunctions.mostrarFotoPerfil(modificarClienteImagenPanel, profileImage, 100, 100);
 
                     }else if(user instanceof DtAerolinea){
                         DtAerolinea aerolinea = (DtAerolinea) user;
@@ -638,10 +692,16 @@ public class Main extends JFrame {
                             return;
                         }
                         auxiliar.validarCorreo(correoRegistrarAerolinea.getText());
-                        // Crear DtAerolinea
+
+                        String urlImage = "/src/main/pictures/users/default.png";
+
                         DtAerolinea aerolinea = new DtAerolinea(
-                                nicknameRegistrarAerolinea.getText(), nombreRegistrarAerolinea.getText(), correoRegistrarAerolinea.getText(),
-                                descripcionRegistrarAerolinea.getText(), sitioWebRegistrarAerolinea.getText()
+                                nicknameRegistrarAerolinea.getText(),
+                                nombreRegistrarAerolinea.getText(),
+                                correoRegistrarAerolinea.getText(),
+                                urlImage,
+                                descripcionRegistrarAerolinea.getText(),
+                                sitioWebRegistrarAerolinea.getText()
                         );
                         try{
                             s.registrarAerolinea(aerolinea);
@@ -881,12 +941,12 @@ public class Main extends JFrame {
                 TipoDocumento tipoDocumento = tipoDocumentoClienteModificar.getSelectedItem().toString().equals("Cedula") ? TipoDocumento.CEDULA : TipoDocumento.PASAPORTE;
 
                 DtCliente cliente = new DtCliente(
-                  nicknameModificarCliente.getText(),
-                  nombreClienteModificar.getText(),
-                  correoClienteModificar.getText(),
-                  apellidoClienteModificar.getText(),
-                  fecha,
-                  nacionalidadClienteModificar.getText(),
+                        nicknameModificarCliente.getText(),
+                        nombreClienteModificar.getText(),
+                        correoClienteModificar.getText(),
+                        apellidoClienteModificar.getText(),
+                        fecha,
+                        nacionalidadClienteModificar.getText(),
                         tipoDocumento,
                         Integer.parseInt(numeroDocumentoModificarCliente.getText())
                 );
@@ -911,10 +971,13 @@ public class Main extends JFrame {
 
                 String link = auxiliar.estanVaciosJTextField(linkWebModificarAerolinea) ? "" : linkWebModificarAerolinea.getText();
 
+                String urlImage = "/src/main/pictures/users/default.png";
+
                 DtAerolinea aerolinea = new DtAerolinea(
                         nicknameModificarAerolinea.getText(),
                         nombreModificarAerolinea.getText(),
                         correoModificarAerolinea.getText(),
+                        urlImage,
                         descripcionModificarAerolinea.getText(),
                         link
                 );
@@ -1066,6 +1129,60 @@ public class Main extends JFrame {
                     }
                     auxiliar.cargarRutasDeVueloComboBoxAerolinea(a.getNickname());
                 }
+            }
+        });
+        subirImagenButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                imagenTemporal = null;
+                SubirImagen ventanaImagen = new SubirImagen();
+                setEnabled(false);
+
+                ventanaImagen.addWindowListener(new WindowAdapter() {
+                    @Override
+                    public void windowClosed(WindowEvent e){
+                        setEnabled(true);
+                        imagenTemporal = ventanaImagen.getImagen();
+                        if(imagenTemporal != null){
+                            selectedFileClienteRegistrar.setText(imagenTemporal.getName());
+                        }else{
+                            selectedFileClienteRegistrar.setText("No se ha seleccionado archivo.");
+                        }
+                    };
+                });
+            }
+        });
+        modificarClienteImagen.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                imagenTemporal = null;
+                SubirImagen ventanaImagen = new SubirImagen();
+                setEnabled(false);
+
+                ventanaImagen.addWindowListener(new WindowAdapter() {
+                    @Override
+                    public void windowClosed(WindowEvent e){
+                        setEnabled(true);
+                        imagenTemporal = ventanaImagen.getImagen();
+
+                        DtCliente cliente = (DtCliente)JComboBoxSeleccionarUsuarioModificar.getSelectedItem();
+                        if(imagenTemporal != null){
+                            try{
+                                auxiliarFunctions.borrarImagenUsuario(cliente.getUrlImage());
+                                File imagen = auxiliarFunctions.guardarImagenUsuario(imagenTemporal);
+                                s.modificarClienteImagen(cliente, imagen.getName());
+                                auxiliar.cargarUsuariosComboBox(cliente);
+                                new VentanaMensaje("Imagen actualizada correctamente.");
+                            } catch (Exception ex) {
+                                new VentanaMensaje(ex.getMessage());
+                                return;
+                            }
+                        }else{
+                            new VentanaMensaje("Se ha cancelado la operación");
+                            return;
+                        }
+                    };
+                });
             }
         });
     }

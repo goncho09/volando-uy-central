@@ -16,12 +16,19 @@ public abstract class Usuario {
     @Column(nullable = false, unique = true)
     protected String email;
 
+    @Column(nullable = false)
+    protected String password;
+
+    @Column(nullable = false)
+    protected String urlImage;
+
     public Usuario() {}
     public Usuario(DtUsuario usuario){
         this.nickname = usuario.getNickname();
         this.nombre = usuario.getNombre();
         this.email = usuario.getEmail();
-        //userDao.guardar(this);
+        this.password = usuario.getPassword();
+        this.urlImage = usuario.getUrlImage();
     }
 
     public String getNickname() {
@@ -36,6 +43,14 @@ public abstract class Usuario {
         return email;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public String getUrlImage() {
+        return urlImage;
+    }
+
     public void setNickname(String nickname) {
         this.nickname = nickname;
     }
@@ -48,11 +63,21 @@ public abstract class Usuario {
         this.email = email;
     }
 
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setUrlImage(String urlImage) {
+        this.urlImage = urlImage;
+    }
+
     public DtUsuario getDatos() {
         return new DtUsuario(
                 this.nickname,
                 this.nombre,
-                this.email
+                this.email,
+                this.password,
+                this.urlImage
         );
     }
 

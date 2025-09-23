@@ -17,6 +17,7 @@ public interface ISistema {
     List<Cliente> getClientes();
     void registrarCliente(DtCliente cliente);
     void modificarCliente(DtCliente cliente);
+    void modificarClienteImagen(DtCliente cliente, String urlImagen);
     Cliente buscarCliente(String nickname);
 
     List<DtAerolinea> listarAerolineas();

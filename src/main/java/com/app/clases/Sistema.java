@@ -195,6 +195,7 @@ public class Sistema implements ISistema {
                     c.getNickname(),
                     c.getNombre(),
                     c.getEmail(),
+                    c.getUrlImage(),
                     c.getApellido(),
                     c.getFechaNacimiento(),
                     c.getNacionalidad(),
@@ -207,6 +208,7 @@ public class Sistema implements ISistema {
                     a.getNickname(),
                     a.getNombre(),
                     a.getEmail(),
+                    a.getUrlImage(),
                     a.getDescripcion(),
                     a.getLinkWeb()
             );
@@ -214,7 +216,8 @@ public class Sistema implements ISistema {
         return new DtUsuario(
                 usuarioSeleccionado.getNickname(),
                 usuarioSeleccionado.getNombre(),
-                usuarioSeleccionado.getEmail()
+                usuarioSeleccionado.getEmail(),
+                usuarioSeleccionado.getUrlImage()
         );
     }
 
@@ -525,6 +528,15 @@ public class Sistema implements ISistema {
         }else{
             throw new IllegalArgumentException("Este usuario es aerolinea.");
         }
+    };
+
+    public void modificarClienteImagen(DtCliente cliente, String urlImagen){
+        Cliente c = this.buscarCliente(cliente.getNickname());
+        if(c == null) {
+            throw new IllegalArgumentException("Este usuario no existe.");
+        }
+        c.setUrlImage(urlImagen);
+        userDao.actualizar(c);
     };
 
     public void registrarAerolinea(DtAerolinea aerolinea){

@@ -12,22 +12,22 @@ public class DtAerolinea extends DtUsuario {
 
     public DtAerolinea() {}
 
-    public DtAerolinea(String nickname, String nombre, String email, String descripcion) {
-        super(nickname, nombre, email);
+    public DtAerolinea(String nickname, String nombre, String email, String urlImage, String descripcion) {
+        super(nickname, nombre, email, urlImage);
         this.descripcion = descripcion;
         this.linkWeb = "";
         this.rutasDeVuelo = new ArrayList<>();
     }
 
-    public DtAerolinea(String nickname, String nombre, String email, String descripcion, String linkWeb) {
-        super(nickname, nombre, email);
+    public DtAerolinea(String nickname, String nombre, String email, String urlImage, String descripcion, String linkWeb) {
+        super(nickname, nombre, email, urlImage);
         this.descripcion = descripcion;
         this.linkWeb = linkWeb;
         this.rutasDeVuelo = new ArrayList<>();
     }
 
-    public DtAerolinea(String nickname, String nombre, String email, String descripcion, String linkweb, List<RutaDeVuelo> rutasDeVuelo) {
-        super(nickname, nombre, email);
+    public DtAerolinea(String nickname, String nombre, String email, String urlImage, String descripcion, String linkweb, List<RutaDeVuelo> rutasDeVuelo) {
+        super(nickname, nombre, email, urlImage);
         this.descripcion = descripcion;
         this.linkWeb = linkweb;
         this.rutasDeVuelo = rutasDeVuelo;

@@ -16,7 +16,25 @@ public class DtCliente extends DtUsuario{
     private List<CompraPaquete> comprasPaquetes;
 
     public DtCliente() {}
-    public DtCliente(String nickname, String nombre, String email,String apellido, LocalDate fechaNacimiento, String nacionalidad, TipoDocumento tipoDocumento, int numeroDocumento) {
+    public DtCliente(String nickname, String nombre, String email, String password, String urlImage, String apellido, LocalDate fechaNacimiento, String nacionalidad, TipoDocumento tipoDocumento, int numeroDocumento) {
+        super(nickname, nombre, email, password, urlImage);
+        this.apellido = apellido;
+        this.fechaNacimiento = fechaNacimiento;
+        this.nacionalidad = nacionalidad;
+        this.tipoDocumento = tipoDocumento;
+        this.numeroDocumento = numeroDocumento;
+        this.comprasPaquetes = new ArrayList<>();
+    }
+    public DtCliente(String nickname, String nombre, String email, String urlImage, String apellido, LocalDate fechaNacimiento, String nacionalidad, TipoDocumento tipoDocumento, int numeroDocumento) {
+        super(nickname, nombre, email, urlImage);
+        this.apellido = apellido;
+        this.fechaNacimiento = fechaNacimiento;
+        this.nacionalidad = nacionalidad;
+        this.tipoDocumento = tipoDocumento;
+        this.numeroDocumento = numeroDocumento;
+        this.comprasPaquetes = new ArrayList<>();
+    }
+    public DtCliente(String nickname, String nombre, String email, String apellido, LocalDate fechaNacimiento, String nacionalidad, TipoDocumento tipoDocumento, int numeroDocumento) {
         super(nickname, nombre, email);
         this.apellido = apellido;
         this.fechaNacimiento = fechaNacimiento;
@@ -24,12 +42,10 @@ public class DtCliente extends DtUsuario{
         this.tipoDocumento = tipoDocumento;
         this.numeroDocumento = numeroDocumento;
         this.comprasPaquetes = new ArrayList<>();
-        //System.out.println("Creando datatype: " + nickname + " - " + nombre + " - " + email + " - " + apellido + " - " + fechaNacimiento + " - " + nacionalidad + " - " + tipoDocumento + " - " + numeroDocumento);
     }
 
-    public String getApellido() {
-        return apellido;
-    }
+
+    public String getApellido() {return apellido;}
 
     public void setApellido(String apellido) {
         this.apellido = apellido;
