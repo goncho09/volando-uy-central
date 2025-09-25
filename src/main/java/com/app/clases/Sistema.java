@@ -191,27 +191,10 @@ public class Sistema implements ISistema {
 
         if (usuarioSeleccionado instanceof Cliente) {
             Cliente c = (Cliente) usuarioSeleccionado;
-            return new DtCliente(
-                    c.getNickname(),
-                    c.getNombre(),
-                    c.getEmail(),
-                    c.getUrlImage(),
-                    c.getApellido(),
-                    c.getFechaNacimiento(),
-                    c.getNacionalidad(),
-                    c.getTipoDocumento(),
-                    c.getNumeroDocumento()
-            );
+            return c.getDatos();
         } else if (usuarioSeleccionado instanceof Aerolinea) {
             Aerolinea a = (Aerolinea) usuarioSeleccionado;
-            return new DtAerolinea(
-                    a.getNickname(),
-                    a.getNombre(),
-                    a.getEmail(),
-                    a.getUrlImage(),
-                    a.getDescripcion(),
-                    a.getLinkWeb()
-            );
+            return a.getDatos();
         }
         return new DtUsuario(
                 usuarioSeleccionado.getNickname(),
@@ -567,6 +550,15 @@ public class Sistema implements ISistema {
         }
     };
 
+    public void modificarAerolineaImagen(DtAerolinea aerolinea, String urlImagen){
+        Aerolinea a = this.buscarAerolinea(aerolinea.getNickname());
+        if(a == null) {
+            throw new IllegalArgumentException("Este usuario no existe.");
+        }
+        a.setUrlImage(urlImagen);
+        userDao.actualizar(a);
+    };
+
     public void confirmarAltaUsuario(DtUsuario usuario){
         if(usuario instanceof DtCliente){
             Cliente newUser = new Cliente((DtCliente) usuario);
@@ -901,6 +893,14 @@ public class Sistema implements ISistema {
     public List<DtPasajero> listarPasajeros(DtReserva reserva){
         return reserva.getPasajeros();
     };
+
+    public Aerolinea buscarAerolinea(String nickname){
+        Aerolinea aerolinea = (Aerolinea) this.usuarios.get(nickname);
+        if(aerolinea == null){
+            throw new IllegalArgumentException(("El cliente no existe"));
+        }
+        return aerolinea;
+    }
 
 }
 

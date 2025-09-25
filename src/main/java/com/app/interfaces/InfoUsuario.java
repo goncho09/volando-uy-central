@@ -52,7 +52,7 @@ public class InfoUsuario extends JFrame {
         nombreConsultaUsuario.setText(usuario.getNombre());
         emailConsultaUsuario.setText(usuario.getEmail());
 
-        new VentanaMensaje(usuario.getUrlImage());
+        //new VentanaMensaje(usuario.getUrlImage());
 
         try {
             Path userImg = auxiliarFunctions.getUserImagePath(usuario.getUrlImage());

@@ -12,6 +12,7 @@ public class VentanaMensaje extends JDialog {
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
+        setTitle("Ventana Mensaje");
 
         message.setText(msg);
 

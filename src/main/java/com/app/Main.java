@@ -157,6 +157,13 @@ public class Main extends JFrame {
     private JLabel selectedFileClienteRegistrar;
     private JPanel modificarClienteImagenPanel;
     private JButton modificarClienteImagen;
+    private JButton subirImagenImagenAerolineaButton;
+    private JPanel aerolineaSubirImagenPanel;
+    private JPasswordField registrarAerolineaContrasena;
+    private JPasswordField registrarAerolineaContrasena2;
+    private JLabel selectedFileAerolineaRegistrar;
+    private JPanel modificarAerolineaImagenPanel;
+    private JButton modificarAerolineaImagenButton;
 
 
     public Main() {
@@ -479,7 +486,7 @@ public class Main extends JFrame {
                             return;
                         }
 
-                        String contrasena = "1234";
+                        String contrasena = registrarContrasenaCliente.getText();
 
                         if(imagenTemporal == null){
                             new VentanaMensaje("Debes ingresar una imagen.");
@@ -514,6 +521,8 @@ public class Main extends JFrame {
                             auxiliar.cargarUsuariosComboBox(); //Cada vez que se agregue un usuario, actualice todos los datos
                         } catch (Exception ex) {
                             ex.printStackTrace();
+                            auxiliarFunctions.borrarImagenUsuario(urlImage);
+                            selectedFileClienteRegistrar.setText("No se ha seleccionado archivo.");
                             s.cancelarAltaUsuario();
                             new VentanaMensaje(ex.getMessage());
                         }
@@ -607,6 +616,19 @@ public class Main extends JFrame {
                         correoModificarAerolinea.setText(aerolinea.getEmail());
                         linkWebModificarAerolinea.setText(aerolinea.getLinkWeb());
                         descripcionModificarAerolinea.setText(aerolinea.getDescripcion());
+                        ImageIcon profileImage;
+
+                        try {
+                            Path userImg = auxiliarFunctions.getUserImagePath(aerolinea.getUrlImage());
+                            if(!Files.exists(userImg)) {
+                                throw new Exception("No se encontro el imagen");
+                            }
+                            profileImage = new ImageIcon(userImg.toAbsolutePath().toString());
+                        } catch (Exception err) {
+                            profileImage = new ImageIcon(getClass().getResource("/pictures/users/default.png"));
+                        }
+
+                        auxiliarFunctions.mostrarFotoPerfil(modificarAerolineaImagenPanel, profileImage, 100, 100);
                     }else{
                         JPanelModificarAerolinea.setVisible(false);
                         JPanelModificarCliente.setVisible(false);
@@ -686,19 +708,39 @@ public class Main extends JFrame {
                     }
                     String tipoUsuario = userType.getSelectedItem().toString();
                     if (tipoUsuario.equals("Aerolinea")) {
-                        if (auxiliar.estanVaciosJTextField(nombreRegistrarAerolinea)) {
-
+                        if (auxiliar.estanVaciosJTextField(nicknameRegistrarAerolinea, nombreRegistrarAerolinea, correoRegistrarAerolinea, registrarAerolineaContrasena, registrarAerolineaContrasena2, descripcionRegistrarAerolinea)) {
                             new VentanaMensaje("Faltan argumentos");
                             return;
                         }
                         auxiliar.validarCorreo(correoRegistrarAerolinea.getText());
 
-                        String urlImage = "/src/main/pictures/users/default.png";
+                        if(!registrarAerolineaContrasena.getText().equals(registrarAerolineaContrasena2.getText())){
+                            new VentanaMensaje("Las contraseñas no coinciden.");
+                            return;
+                        }
+
+                        String contrasena = registrarAerolineaContrasena.getText();
+
+                        if(imagenTemporal == null){
+                            new VentanaMensaje("Debes ingresar una imagen.");
+                            return;
+                        }
+
+                        File imagenGuardada = auxiliarFunctions.guardarImagenUsuario(imagenTemporal);
+                        imagenTemporal = null;
+
+                        if(imagenGuardada == null){
+                            new VentanaMensaje("Ocurrió un error al guardar la imagen");
+                            return;
+                        }
+
+                        String urlImage = imagenGuardada.getName();
 
                         DtAerolinea aerolinea = new DtAerolinea(
                                 nicknameRegistrarAerolinea.getText(),
                                 nombreRegistrarAerolinea.getText(),
                                 correoRegistrarAerolinea.getText(),
+                                contrasena,
                                 urlImage,
                                 descripcionRegistrarAerolinea.getText(),
                                 sitioWebRegistrarAerolinea.getText()
@@ -709,6 +751,8 @@ public class Main extends JFrame {
                         }catch (Exception ex){
                             ex.printStackTrace();
                             s.cancelarAltaUsuario();
+                            auxiliarFunctions.borrarImagenUsuario(urlImage);
+                            selectedFileAerolineaRegistrar.setText("No se ha seleccionado archivo.");
                             new VentanaMensaje(ex.getMessage());
                         }
                     }
@@ -1172,6 +1216,60 @@ public class Main extends JFrame {
                                 File imagen = auxiliarFunctions.guardarImagenUsuario(imagenTemporal);
                                 s.modificarClienteImagen(cliente, imagen.getName());
                                 auxiliar.cargarUsuariosComboBox(cliente);
+                                new VentanaMensaje("Imagen actualizada correctamente.");
+                            } catch (Exception ex) {
+                                new VentanaMensaje(ex.getMessage());
+                                return;
+                            }
+                        }else{
+                            new VentanaMensaje("Se ha cancelado la operación");
+                            return;
+                        }
+                    };
+                });
+            }
+        });
+        subirImagenImagenAerolineaButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                imagenTemporal = null;
+                SubirImagen ventanaImagen = new SubirImagen();
+                setEnabled(false);
+
+                ventanaImagen.addWindowListener(new WindowAdapter() {
+                    @Override
+                    public void windowClosed(WindowEvent e){
+                        setEnabled(true);
+                        imagenTemporal = ventanaImagen.getImagen();
+                        if(imagenTemporal != null){
+                            selectedFileAerolineaRegistrar.setText(imagenTemporal.getName());
+                        }else{
+                            selectedFileAerolineaRegistrar.setText("No se ha seleccionado archivo.");
+                        }
+                    };
+                });
+            }
+        });
+        modificarAerolineaImagenButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                imagenTemporal = null;
+                SubirImagen ventanaImagen = new SubirImagen();
+                setEnabled(false);
+
+                ventanaImagen.addWindowListener(new WindowAdapter() {
+                    @Override
+                    public void windowClosed(WindowEvent e){
+                        setEnabled(true);
+                        imagenTemporal = ventanaImagen.getImagen();
+
+                        DtAerolinea aerolinea = (DtAerolinea) JComboBoxSeleccionarUsuarioModificar.getSelectedItem();
+                        if(imagenTemporal != null){
+                            try{
+                                auxiliarFunctions.borrarImagenUsuario(aerolinea.getUrlImage());
+                                File imagen = auxiliarFunctions.guardarImagenUsuario(imagenTemporal);
+                                s.modificarAerolineaImagen(aerolinea, imagen.getName());
+                                auxiliar.cargarUsuariosComboBox(aerolinea);
                                 new VentanaMensaje("Imagen actualizada correctamente.");
                             } catch (Exception ex) {
                                 new VentanaMensaje(ex.getMessage());

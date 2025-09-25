@@ -24,6 +24,8 @@ public interface ISistema {
     List<Aerolinea> getAerolineas();
     void registrarAerolinea(DtAerolinea aerolinea);
     void modificarAerolinea(DtAerolinea aerolinea);
+    void modificarAerolineaImagen(DtAerolinea aerolinea, String urlImagen);
+    Aerolinea buscarAerolinea(String nickname);
 
     void cancelarAltaUsuario();
     void confirmarAltaUsuario(DtUsuario user);
