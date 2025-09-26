@@ -283,8 +283,8 @@ public class Main extends JFrame {
 
         JSpinnerCantidadAgregarRuta.setModel(new SpinnerNumberModel(1, 1, 1_000_000, 1));
 
-        SpinnerHoraAltaRutaDeVuelo.setModel(new SpinnerNumberModel(0, 0, 200, 1));
-        JSpinnerDuracionAltaVueloHora.setModel(new SpinnerNumberModel(0, 0, 200, 1));
+        SpinnerHoraAltaRutaDeVuelo.setModel(new SpinnerNumberModel(0, 0, 24, 1));
+        JSpinnerDuracionAltaVueloHora.setModel(new SpinnerNumberModel(0, 0, 24, 1));
 
         SpinnerMinutoAltaRutaDeVuelo.setModel(new SpinnerNumberModel(0, 0, 59, 1));
         JSpinnerDuracionAltaVueloMinuto.setModel(new SpinnerNumberModel(0, 0, 59, 1));
@@ -815,11 +815,6 @@ public class Main extends JFrame {
                     Integer hora = (Integer) SpinnerHoraAltaRutaDeVuelo.getValue();
                     Integer minuto = (Integer) SpinnerMinutoAltaRutaDeVuelo.getValue();
 
-                    if (hora == 0 && minuto == 0) {
-                        new VentanaMensaje("La ruta de vuelo no puede durar 0 horas y 0 minutos");
-                        return;
-                    }
-
                     LocalTime horaRuta = LocalTime.of(hora, minuto);
                     Integer costoTurista = (Integer) SpinnerCostoTurista.getValue();
                     Integer costoEjecutivo = (Integer) SpínnerCostoEjecutivo.getValue();
@@ -836,20 +831,32 @@ public class Main extends JFrame {
                         }
                     }
 
+                    String urlImage;
+
                     if(imagenTemporalRuta == null){
-                        new VentanaMensaje("Debes ingresar una imagen.");
-                        return;
+                        int opcion = JOptionPane.showConfirmDialog(
+                                null,
+                                "¿Quieres crear la ruta de vuelo sin una imagen?",
+                                "Confirmación",
+                                JOptionPane.YES_NO_OPTION,
+                                JOptionPane.QUESTION_MESSAGE
+                        );
+                        if (opcion == JOptionPane.NO_OPTION) {
+                            return;
+                        }else{
+                            urlImage = null;
+                        }
+                    }else{
+                        File imagenGuardada = AuxiliarFunctions.guardarImagen(imagenTemporalRuta, TipoImagen.RUTA);
+                        imagenTemporalRuta = null;
+
+                        if(imagenGuardada == null){
+                            new VentanaMensaje("Ocurrió un error al guardar la imagen");
+                            return;
+                        }
+
+                        urlImage = imagenGuardada.getName();
                     }
-
-                    File imagenGuardada = AuxiliarFunctions.guardarImagen(imagenTemporalRuta, TipoImagen.RUTA);
-                    imagenTemporalRuta = null;
-
-                    if(imagenGuardada == null){
-                        new VentanaMensaje("Ocurrió un error al guardar la imagen");
-                        return;
-                    }
-
-                    String urlImage = imagenGuardada.getName();
 
                     DtRuta ruta = new DtRuta(nombreAltaRutaDeVuelo.getText(),
                             descripcionAltaRutaDeVuelo.getText(),
