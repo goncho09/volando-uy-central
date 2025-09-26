@@ -164,6 +164,8 @@ public class Main extends JFrame {
     private JLabel selectedFileAerolineaRegistrar;
     private JPanel modificarAerolineaImagenPanel;
     private JButton modificarAerolineaImagenButton;
+    private JButton button1;
+    private JLabel selectedFileVueloCrear;
 
 
     public Main() {
@@ -605,7 +607,7 @@ public class Main extends JFrame {
                             profileImage = new ImageIcon(getClass().getResource("/pictures/users/default.png"));
                         }
 
-                        auxiliarFunctions.mostrarFotoPerfil(modificarClienteImagenPanel, profileImage, 100, 100);
+                        auxiliarFunctions.mostrarFoto(modificarClienteImagenPanel, profileImage, 100, 100, TipoImagen.USUARIO);
 
                     }else if(user instanceof DtAerolinea){
                         DtAerolinea aerolinea = (DtAerolinea) user;
@@ -628,7 +630,7 @@ public class Main extends JFrame {
                             profileImage = new ImageIcon(getClass().getResource("/pictures/users/default.png"));
                         }
 
-                        auxiliarFunctions.mostrarFotoPerfil(modificarAerolineaImagenPanel, profileImage, 100, 100);
+                        auxiliarFunctions.mostrarFoto(modificarAerolineaImagenPanel, profileImage, 100, 100, TipoImagen.USUARIO);
                     }else{
                         JPanelModificarAerolinea.setVisible(false);
                         JPanelModificarCliente.setVisible(false);
@@ -659,15 +661,28 @@ public class Main extends JFrame {
                         return;
                     }
 
-                    DtVuelo dtVuelo = new DtVuelo(nombre, fecha, hora, (Integer)JSpinnerTuristasAltaVuelo.getValue(), (Integer)JSpinnerEjecutivosAltaVuelo.getValue(), LocalDate.now(), null, 0);
+                    if(imagenTemporal == null){
+                        new VentanaMensaje("Debes ingresar una imagen.");
+                        return;
+                    }
 
-                    s.seleccionarAerolineaParaVuelo(aerolinea);
-                    s.seleccionarRuta(ruta);
-                    s.ingresarDatosVuelo(dtVuelo);
-                    s.confirmarAltaVuelo();
+                    File imagenGuardada = auxiliarFunctions.guardarImagenVuelo(imagenTemporal);
+                    imagenTemporal = null;
 
-                    //pa verificar que se creo
+                    if(imagenGuardada == null){
+                        new VentanaMensaje("Ocurrió un error al guardar la imagen");
+                        return;
+                    }
+
+                    String urlImage = imagenGuardada.getName();
+
+                    DtVuelo dtVuelo = new DtVuelo(nombre, fecha, hora, (Integer)JSpinnerTuristasAltaVuelo.getValue(), (Integer)JSpinnerEjecutivosAltaVuelo.getValue(), urlImage, LocalDate.now(), null, 0);
+
                     try {
+                        s.seleccionarAerolineaParaVuelo(aerolinea);
+                        s.seleccionarRuta(ruta);
+                        s.ingresarDatosVuelo(dtVuelo);
+                        s.confirmarAltaVuelo();
                         s.consultarVuelo(dtVuelo.getNombre());
                     } catch (IllegalArgumentException ex) {
                         new VentanaMensaje("Error: el vuelo no se registró correctamente");
@@ -675,6 +690,7 @@ public class Main extends JFrame {
 
                     new VentanaMensaje("Vuelo creado correctamente");
                     auxiliar.limpiarJTextField(nombreAltaVuelo);
+                    auxiliar.cargarAerolineasComboBox();
 
                 } catch (Exception ex) {
                     new VentanaMensaje(ex.getMessage());
@@ -1179,7 +1195,7 @@ public class Main extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 imagenTemporal = null;
-                SubirImagen ventanaImagen = new SubirImagen();
+                SubirImagen ventanaImagen = new SubirImagen(TipoImagen.USUARIO);
                 setEnabled(false);
 
                 ventanaImagen.addWindowListener(new WindowAdapter() {
@@ -1200,7 +1216,7 @@ public class Main extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 imagenTemporal = null;
-                SubirImagen ventanaImagen = new SubirImagen();
+                SubirImagen ventanaImagen = new SubirImagen(TipoImagen.USUARIO);
                 setEnabled(false);
 
                 ventanaImagen.addWindowListener(new WindowAdapter() {
@@ -1233,7 +1249,7 @@ public class Main extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 imagenTemporal = null;
-                SubirImagen ventanaImagen = new SubirImagen();
+                SubirImagen ventanaImagen = new SubirImagen(TipoImagen.USUARIO);
                 setEnabled(false);
 
                 ventanaImagen.addWindowListener(new WindowAdapter() {
@@ -1254,7 +1270,7 @@ public class Main extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 imagenTemporal = null;
-                SubirImagen ventanaImagen = new SubirImagen();
+                SubirImagen ventanaImagen = new SubirImagen(TipoImagen.USUARIO);
                 setEnabled(false);
 
                 ventanaImagen.addWindowListener(new WindowAdapter() {
@@ -1278,6 +1294,27 @@ public class Main extends JFrame {
                         }else{
                             new VentanaMensaje("Se ha cancelado la operación");
                             return;
+                        }
+                    };
+                });
+            }
+        });
+        button1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                imagenTemporal = null;
+                SubirImagen ventanaImagen = new SubirImagen(TipoImagen.VUELO);
+                setEnabled(false);
+
+                ventanaImagen.addWindowListener(new WindowAdapter() {
+                    @Override
+                    public void windowClosed(WindowEvent e){
+                        setEnabled(true);
+                        imagenTemporal = ventanaImagen.getImagen();
+                        if(imagenTemporal != null){
+                            selectedFileVueloCrear.setText(imagenTemporal.getName());
+                        }else{
+                            selectedFileVueloCrear.setText("No se ha seleccionado archivo.");
                         }
                     };
                 });

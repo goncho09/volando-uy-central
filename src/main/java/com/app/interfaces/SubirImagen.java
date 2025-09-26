@@ -1,5 +1,6 @@
 package com.app.interfaces;
 
+import com.app.enums.TipoImagen;
 import com.app.utils.auxiliarFunctions;
 
 import javax.swing.*;
@@ -18,12 +19,14 @@ public class SubirImagen extends JFrame {
     private JPanel panelGlobal;
     private ImageIcon profileImage;
     private File selectedFile;
+    private TipoImagen imgType;
 
-    public SubirImagen() {
+    public SubirImagen(TipoImagen tipo) {
         setContentPane(panelGlobal);
         setTitle("Subir imagen");
         setResizable(false);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        imgType = tipo;
 
         try{
             if (!abrirFileChooser()) {
@@ -81,7 +84,9 @@ public class SubirImagen extends JFrame {
             Image imgScaled = imgRaw.getScaledInstance(175, 175, Image.SCALE_SMOOTH);
             profileImage = new ImageIcon(imgScaled);
 
-            profileImage = auxiliarFunctions.createRoundImageIcon(profileImage);
+            if(imgType == TipoImagen.USUARIO){
+                profileImage = auxiliarFunctions.createRoundImageIcon(profileImage);
+            }
 
             JLabel imgLabel = new JLabel(profileImage);
 

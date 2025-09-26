@@ -11,25 +11,27 @@ public class DtVuelo {
     private LocalTime duracion;
     private int maxTuristas;
     private int maxEjecutivos;
+    private String urlImage;
     private LocalDate fechaAlta;
     private RutaDeVuelo rutaDeVuelo;
     private int cantReservas;
 
     public DtVuelo(){};
 
-    public DtVuelo(String nombre, LocalDate fecha, LocalTime duracion, int maxTuristas, int maxEjecutivos, LocalDate fechaAlta,RutaDeVuelo rutaDeVuelo, int cantReservas) {
+    public DtVuelo(String nombre, LocalDate fecha, LocalTime duracion, int maxTuristas, int maxEjecutivos, String urlImage,LocalDate fechaAlta,RutaDeVuelo rutaDeVuelo, int cantReservas) {
         this.nombre = nombre;
         this.fecha = fecha;
         this.duracion = duracion;
         this.maxTuristas = maxTuristas;
         this.maxEjecutivos = maxEjecutivos;
+        this.urlImage = urlImage;
         this.fechaAlta = fechaAlta;
         this.rutaDeVuelo = rutaDeVuelo;
         this.cantReservas = cantReservas;
     }
 
     public DtVuelo getDatos() {
-        return new DtVuelo(this.nombre,this.fecha,this.duracion,this.maxTuristas,this.maxEjecutivos,this.fechaAlta,this.rutaDeVuelo, this.cantReservas);
+        return new DtVuelo(this.nombre,this.fecha,this.duracion,this.maxTuristas,this.maxEjecutivos,this.urlImage,this.fechaAlta,this.rutaDeVuelo, this.cantReservas);
     }
 
     public String getNombre() {
@@ -71,6 +73,10 @@ public class DtVuelo {
     public void setMaxEjecutivos(int maxEjecutivos) {
         this.maxEjecutivos = maxEjecutivos;
     }
+
+    public String getUrlImage() {return this.urlImage;};
+
+    public void setUrlImage(String urlImage) {this.urlImage = urlImage;}
 
     public LocalDate getFechaAlta() {
         return fechaAlta;

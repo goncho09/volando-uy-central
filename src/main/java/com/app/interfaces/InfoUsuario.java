@@ -1,12 +1,11 @@
 package com.app.interfaces;
 
 import com.app.datatypes.*;
+import com.app.enums.TipoImagen;
 import com.app.utils.auxiliarFunctions;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.*;
-import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
@@ -64,7 +63,7 @@ public class InfoUsuario extends JFrame {
             profileImage = new ImageIcon(getClass().getResource("/pictures/users/default.png"));
         }
 
-        auxiliarFunctions.mostrarFotoPerfil(imagenPanel, profileImage, 175, 175);
+        auxiliarFunctions.mostrarFoto(imagenPanel, profileImage, 175, 175, TipoImagen.USUARIO);
 
 
         if (usuario instanceof DtCliente) {

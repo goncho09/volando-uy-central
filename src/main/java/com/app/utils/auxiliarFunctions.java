@@ -2,7 +2,7 @@ package com.app.utils;
 
 import com.app.clases.*;
 import com.app.datatypes.*;
-import com.app.interfaces.VentanaMensaje;
+import com.app.enums.TipoImagen;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,7 +10,6 @@ import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -424,6 +423,12 @@ public class auxiliarFunctions {
     public static Path getUserImagePath(String fileName) {
         return Paths.get(BASE_DIR, "users", fileName);
     }
+    public static Path getVueloImagePath(String fileName) {
+        return Paths.get(BASE_DIR, "vuelos", fileName);
+    }
+    public static Path getRutaImagePath(String fileName) {
+        return Paths.get(BASE_DIR, "rutas", fileName);
+    }
 
     public static ImageIcon createRoundImageIcon(ImageIcon originalIcon) {
         Image originalImage = originalIcon.getImage();
@@ -473,22 +478,6 @@ public class auxiliarFunctions {
         return nuevoArchivo;
     }
 
-    public static void mostrarFotoPerfil(JPanel imagenPanel, ImageIcon profileImage, int ancho, int largo){
-        Image imgRaw = profileImage.getImage();
-        Image imgScaled = imgRaw.getScaledInstance(ancho, largo, Image.SCALE_SMOOTH);
-        profileImage = new ImageIcon(imgScaled);
-
-        profileImage = auxiliarFunctions.createRoundImageIcon(profileImage);
-
-        JLabel imgLabel = new JLabel(profileImage);
-
-        imagenPanel.setLayout(new FlowLayout());
-        imagenPanel.removeAll();
-        imagenPanel.add(imgLabel);
-        imagenPanel.revalidate();
-        imagenPanel.repaint();
-    }
-
     public static void borrarImagenUsuario(String imgName){
         Path borrar = auxiliarFunctions.getUserImagePath(imgName);
         File imagenABorrar = new File(borrar.toAbsolutePath().toString());
@@ -501,6 +490,64 @@ public class auxiliarFunctions {
         }else{
             System.out.println("Imagen no encontrada");
         }
+    }
+
+    public static File guardarImagenVuelo(File original) throws IOException {
+        File carpetaDestino = new File(BASE_DIR, "vuelos");
+        if (!carpetaDestino.exists()) {
+            carpetaDestino.mkdirs();
+        }
+
+        // Obtener extensión original
+        String nombre = original.getName();
+        String extension = "";
+        int i = nombre.lastIndexOf('.');
+        if (i > 0) {
+            extension = nombre.substring(i); // incluye el punto (.jpg, .png...)
+        }
+
+        // Generar nombre aleatorio
+        String nombreUnico = UUID.randomUUID().toString() + extension;
+
+        // Crear el archivo destino
+        File nuevoArchivo = new File(carpetaDestino, nombreUnico);
+
+        // Copiar archivo
+        Files.copy(original.toPath(), nuevoArchivo.toPath());
+
+        return nuevoArchivo;
+    }
+
+    public static void borrarImagenVuelo(String imgName){
+        Path borrar = auxiliarFunctions.getVueloImagePath(imgName);
+        File imagenABorrar = new File(borrar.toAbsolutePath().toString());
+        if (imagenABorrar.exists()) {
+            if (imagenABorrar.delete()) {
+                System.out.println("Imagen eliminada con éxito");
+            } else {
+                System.out.println("No se pudo eliminar la imagen");
+            }
+        }else{
+            System.out.println("Imagen no encontrada");
+        }
+    }
+
+    public static void mostrarFoto(JPanel imagenPanel, ImageIcon imagen, int ancho, int largo, TipoImagen tipo){
+        Image imgRaw = imagen.getImage();
+        Image imgScaled = imgRaw.getScaledInstance(ancho, largo, Image.SCALE_SMOOTH);
+        imagen = new ImageIcon(imgScaled);
+
+        if(tipo == TipoImagen.USUARIO){
+            imagen = auxiliarFunctions.createRoundImageIcon(imagen);
+        }
+
+        JLabel imgLabel = new JLabel(imagen);
+
+        imagenPanel.setLayout(new FlowLayout());
+        imagenPanel.removeAll();
+        imagenPanel.add(imgLabel);
+        imagenPanel.revalidate();
+        imagenPanel.repaint();
     }
 
 }

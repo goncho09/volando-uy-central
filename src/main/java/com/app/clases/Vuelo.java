@@ -24,6 +24,9 @@ public class Vuelo {
     @Column(nullable = false)
     private int maxEjecutivos;
 
+    @Column(nullable = true)
+    private String urlImage;
+
     @Column(nullable = false)
     private LocalDate fechaAlta;
 
@@ -34,7 +37,7 @@ public class Vuelo {
     private RutaDeVuelo rutaDeVuelo;
 
     public DtVuelo getDatos() {
-        return new DtVuelo(this.nombre,this.fecha,this.duracion,this.maxTuristas,this.maxEjecutivos,this.fechaAlta,this.rutaDeVuelo, this.cantReservas);
+        return new DtVuelo(this.nombre,this.fecha,this.duracion,this.maxTuristas,this.maxEjecutivos,this.urlImage,this.fechaAlta,this.rutaDeVuelo, this.cantReservas);
     }
 
     public Vuelo() {}
@@ -44,6 +47,7 @@ public class Vuelo {
         this.duracion = vuelo.getDuracion();
         this.maxTuristas = vuelo.getMaxTuristas();
         this.maxEjecutivos = vuelo.getMaxEjecutivos();
+        this.urlImage = vuelo.getUrlImage();
         this.fechaAlta = vuelo.getFechaAlta();
         this.rutaDeVuelo = vuelo.getRutaDeVuelo();
         this.cantReservas = vuelo.getCantReservas();
@@ -88,6 +92,10 @@ public class Vuelo {
     public void setMaxEjecutivos(int maxEjecutivos) {
         this.maxEjecutivos = maxEjecutivos;
     }
+
+    public String getUrlImage() {return urlImage;}
+
+    public void  setUrlImage(String urlImage) {this.urlImage = urlImage;}
 
     public LocalDate getFechaAlta() {
         return fechaAlta;
