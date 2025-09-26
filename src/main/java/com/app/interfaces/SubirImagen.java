@@ -1,7 +1,7 @@
 package com.app.interfaces;
 
 import com.app.enums.TipoImagen;
-import com.app.utils.auxiliarFunctions;
+import com.app.utils.AuxiliarFunctions;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -9,8 +9,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.Path;
 
 public class SubirImagen extends JFrame {
     private JButton confirmarButton;
@@ -85,7 +83,7 @@ public class SubirImagen extends JFrame {
             profileImage = new ImageIcon(imgScaled);
 
             if(imgType == TipoImagen.USUARIO){
-                profileImage = auxiliarFunctions.createRoundImageIcon(profileImage);
+                profileImage = AuxiliarFunctions.createRoundImageIcon(profileImage);
             }
 
             JLabel imgLabel = new JLabel(profileImage);

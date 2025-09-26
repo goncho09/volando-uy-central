@@ -3,14 +3,14 @@ package com.app.interfaces;
 import com.app.clases.Categoria;
 import com.app.datatypes.DtRuta;
 import com.app.datatypes.DtVuelo;
-import com.app.utils.auxiliarFunctions;
+import com.app.utils.AuxiliarFunctions;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
 public class InfoRutaDeVuelo extends JFrame{
-    private auxiliarFunctions a;
+    private AuxiliarFunctions a;
 
     private JPanel panel1;
     private JLabel nombre;
@@ -27,7 +27,7 @@ public class InfoRutaDeVuelo extends JFrame{
     private JComboBox JComboBoxVuelos;
     private JButton ButtonVerVuelo;
 
-    public InfoRutaDeVuelo(DtRuta ruta, auxiliarFunctions auxiliar){
+    public InfoRutaDeVuelo(DtRuta ruta, AuxiliarFunctions auxiliar){
         setTitle("Datos de la ruta: " + ruta.getNombre());
         setResizable(false);
         setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);

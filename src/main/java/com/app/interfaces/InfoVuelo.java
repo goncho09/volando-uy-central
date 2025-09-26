@@ -3,7 +3,7 @@ package com.app.interfaces;
 import com.app.datatypes.DtVuelo;
 import com.app.datatypes.DtReserva;
 import com.app.enums.TipoImagen;
-import com.app.utils.auxiliarFunctions;
+import com.app.utils.AuxiliarFunctions;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -15,7 +15,7 @@ import java.nio.file.Path;
 
 public class InfoVuelo extends JFrame {
 
-    private auxiliarFunctions a;
+    private AuxiliarFunctions a;
 
     private JPanel dataVueloPanel;
     private JButton consultarReservasButton;
@@ -32,7 +32,7 @@ public class InfoVuelo extends JFrame {
     private JPanel imagenVueloPanel;
     private ImageIcon imagen;
 
-    public InfoVuelo(DtVuelo dataVuelo, auxiliarFunctions auxiliar) {
+    public InfoVuelo(DtVuelo dataVuelo, AuxiliarFunctions auxiliar) {
         setContentPane(dataVueloPanel);
         setTitle("Datos del Vuelo: " + dataVuelo.getNombre());
         setResizable(false);
@@ -56,7 +56,7 @@ public class InfoVuelo extends JFrame {
         new VentanaMensaje(dataVuelo.getUrlImage());
 
         try {
-            Path userImg = auxiliarFunctions.getVueloImagePath(dataVuelo.getUrlImage());
+            Path userImg = AuxiliarFunctions.getVueloImagePath(dataVuelo.getUrlImage());
             if(!Files.exists(userImg)) {
                 throw new Exception("No se encontró la imagen");
             }
@@ -65,7 +65,7 @@ public class InfoVuelo extends JFrame {
             imagen = new ImageIcon(getClass().getResource("/pictures/vuelos/default.jpg"));
         }
 
-        auxiliarFunctions.mostrarFoto(imagenVueloPanel, imagen, 175, 175, TipoImagen.VUELO);
+        AuxiliarFunctions.mostrarFoto(imagenVueloPanel, imagen, 175, 175, TipoImagen.VUELO);
         a.cargarDatosReservaComboBox(dataVuelo);
 
         pack();

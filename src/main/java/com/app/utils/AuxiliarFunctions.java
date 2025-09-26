@@ -17,7 +17,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
-public class auxiliarFunctions {
+public class AuxiliarFunctions {
 
     private static final String BASE_DIR = "C:/proyecto-final-g2-sc/pictures";
     private static final String[] SUB_DIRS = { "users", "vuelos", "rutas" };
@@ -42,7 +42,7 @@ public class auxiliarFunctions {
     private DefaultComboBoxModel<DtPasajero> comboPasajerosReserva = new DefaultComboBoxModel<>();
     private DefaultComboBoxModel<DtRuta> comboRutaPaquete = new DefaultComboBoxModel<>();
 
-    public auxiliarFunctions(ISistema s) {
+    public AuxiliarFunctions(ISistema s) {
         this.sistema = s;
     }
 
@@ -479,7 +479,7 @@ public class auxiliarFunctions {
     }
 
     public static void borrarImagenUsuario(String imgName){
-        Path borrar = auxiliarFunctions.getUserImagePath(imgName);
+        Path borrar = AuxiliarFunctions.getUserImagePath(imgName);
         File imagenABorrar = new File(borrar.toAbsolutePath().toString());
         if (imagenABorrar.exists()) {
             if (imagenABorrar.delete()) {
@@ -519,7 +519,7 @@ public class auxiliarFunctions {
     }
 
     public static void borrarImagenVuelo(String imgName){
-        Path borrar = auxiliarFunctions.getVueloImagePath(imgName);
+        Path borrar = AuxiliarFunctions.getVueloImagePath(imgName);
         File imagenABorrar = new File(borrar.toAbsolutePath().toString());
         if (imagenABorrar.exists()) {
             if (imagenABorrar.delete()) {
@@ -538,7 +538,7 @@ public class auxiliarFunctions {
         imagen = new ImageIcon(imgScaled);
 
         if(tipo == TipoImagen.USUARIO){
-            imagen = auxiliarFunctions.createRoundImageIcon(imagen);
+            imagen = AuxiliarFunctions.createRoundImageIcon(imagen);
         }
 
         JLabel imgLabel = new JLabel(imagen);

@@ -2,13 +2,13 @@ package com.app.interfaces;
 
 import com.app.datatypes.DtPaquete;
 import com.app.datatypes.DtRuta;
-import com.app.utils.auxiliarFunctions;
+import com.app.utils.AuxiliarFunctions;
 
 import javax.swing.*;
 import java.awt.event.*;
 
 public class InfoPaquete extends JFrame {
-    private auxiliarFunctions a;
+    private AuxiliarFunctions a;
 
     private JLabel nombre;
     private JLabel descripcion;
@@ -21,7 +21,7 @@ public class InfoPaquete extends JFrame {
     private JButton ButtonVerRutaDeVuelo;
     private JPanel dataPaqueteDisplay;
 
-    public InfoPaquete(DtPaquete paquete, auxiliarFunctions auxiliar) {
+    public InfoPaquete(DtPaquete paquete, AuxiliarFunctions auxiliar) {
             setTitle("Datos del paquete: " + paquete.getNombre());
             setResizable(false);
             setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);

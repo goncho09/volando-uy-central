@@ -2,7 +2,7 @@ package com.app.interfaces;
 
 import com.app.datatypes.*;
 import com.app.enums.TipoImagen;
-import com.app.utils.auxiliarFunctions;
+import com.app.utils.AuxiliarFunctions;
 
 import javax.swing.*;
 import java.awt.event.*;
@@ -11,7 +11,7 @@ import java.nio.file.Path;
 
 public class InfoUsuario extends JFrame {
 
-    private auxiliarFunctions a;
+    private AuxiliarFunctions a;
 
     private JPanel PanelGlobal;
     private JLabel nicknameConsultaUsuario;
@@ -37,7 +37,7 @@ public class InfoUsuario extends JFrame {
     private JPanel imagenPanel;
     private ImageIcon profileImage;
 
-    public InfoUsuario(DtUsuario usuario, auxiliarFunctions auxiliar) {
+    public InfoUsuario(DtUsuario usuario, AuxiliarFunctions auxiliar) {
         setContentPane(PanelGlobal);
         setTitle("Datos de Usuario: " + usuario.getNickname());
         setResizable(false);
@@ -54,7 +54,7 @@ public class InfoUsuario extends JFrame {
         //new VentanaMensaje(usuario.getUrlImage());
 
         try {
-            Path userImg = auxiliarFunctions.getUserImagePath(usuario.getUrlImage());
+            Path userImg = AuxiliarFunctions.getUserImagePath(usuario.getUrlImage());
             if(!Files.exists(userImg)) {
                 throw new Exception("No se encontro el imagen");
             }
@@ -63,7 +63,7 @@ public class InfoUsuario extends JFrame {
             profileImage = new ImageIcon(getClass().getResource("/pictures/users/default.png"));
         }
 
-        auxiliarFunctions.mostrarFoto(imagenPanel, profileImage, 175, 175, TipoImagen.USUARIO);
+        AuxiliarFunctions.mostrarFoto(imagenPanel, profileImage, 175, 175, TipoImagen.USUARIO);
 
 
         if (usuario instanceof DtCliente) {
