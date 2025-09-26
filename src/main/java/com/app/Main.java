@@ -169,6 +169,7 @@ public class Main extends JFrame {
     private JButton button1;
     private JLabel selectedFileVueloCrear;
     private JButton button2;
+    private JLabel selectedFileRutaCrear;
 
 
     public Main() {
@@ -498,7 +499,7 @@ public class Main extends JFrame {
                             return;
                         }
 
-                        File imagenGuardada = AuxiliarFunctions.guardarImagenUsuario(imagenTemporalUsuario);
+                        File imagenGuardada = AuxiliarFunctions.guardarImagen(imagenTemporalUsuario, TipoImagen.USUARIO);
                         imagenTemporalUsuario = null;
 
                         if(imagenGuardada == null){
@@ -526,7 +527,7 @@ public class Main extends JFrame {
                             auxiliar.cargarUsuariosComboBox(); //Cada vez que se agregue un usuario, actualice todos los datos
                         } catch (Exception ex) {
                             ex.printStackTrace();
-                            AuxiliarFunctions.borrarImagenUsuario(urlImage);
+                            AuxiliarFunctions.borrarImagen(urlImage, TipoImagen.USUARIO);
                             selectedFileClienteRegistrar.setText("No se ha seleccionado archivo.");
                             s.cancelarAltaUsuario();
                             new VentanaMensaje(ex.getMessage());
@@ -604,7 +605,7 @@ public class Main extends JFrame {
                         ImageIcon profileImage;
 
                         try {
-                            Path userImg = AuxiliarFunctions.getUserImagePath(cliente.getUrlImage());
+                            Path userImg = AuxiliarFunctions.getImagePath(cliente.getUrlImage(), TipoImagen.USUARIO);
                             if(!Files.exists(userImg)) {
                                 throw new Exception("No se encontro el imagen");
                             }
@@ -627,7 +628,7 @@ public class Main extends JFrame {
                         ImageIcon profileImage;
 
                         try {
-                            Path userImg = AuxiliarFunctions.getUserImagePath(aerolinea.getUrlImage());
+                            Path userImg = AuxiliarFunctions.getImagePath(aerolinea.getUrlImage(), TipoImagen.USUARIO);
                             if(!Files.exists(userImg)) {
                                 throw new Exception("No se encontro el imagen");
                             }
@@ -672,7 +673,7 @@ public class Main extends JFrame {
                         return;
                     }
 
-                    File imagenGuardada = AuxiliarFunctions.guardarImagenVuelo(imagenTemporalVuelo);
+                    File imagenGuardada = AuxiliarFunctions.guardarImagen(imagenTemporalVuelo, TipoImagen.VUELO);
                     imagenTemporalVuelo = null;
 
                     if(imagenGuardada == null){
@@ -750,7 +751,7 @@ public class Main extends JFrame {
                             return;
                         }
 
-                        File imagenGuardada = AuxiliarFunctions.guardarImagenUsuario(imagenTemporalUsuario);
+                        File imagenGuardada = AuxiliarFunctions.guardarImagen(imagenTemporalUsuario, TipoImagen.USUARIO);
                         imagenTemporalUsuario = null;
 
                         if(imagenGuardada == null){
@@ -775,7 +776,7 @@ public class Main extends JFrame {
                         }catch (Exception ex){
                             ex.printStackTrace();
                             s.cancelarAltaUsuario();
-                            AuxiliarFunctions.borrarImagenUsuario(urlImage);
+                            AuxiliarFunctions.borrarImagen(urlImage, TipoImagen.USUARIO);
                             selectedFileAerolineaRegistrar.setText("No se ha seleccionado archivo.");
                             new VentanaMensaje(ex.getMessage());
                         }
@@ -835,7 +836,20 @@ public class Main extends JFrame {
                         }
                     }
 
+                    if(imagenTemporalRuta == null){
+                        new VentanaMensaje("Debes ingresar una imagen.");
+                        return;
+                    }
 
+                    File imagenGuardada = AuxiliarFunctions.guardarImagen(imagenTemporalRuta, TipoImagen.RUTA);
+                    imagenTemporalRuta = null;
+
+                    if(imagenGuardada == null){
+                        new VentanaMensaje("Ocurrió un error al guardar la imagen");
+                        return;
+                    }
+
+                    String urlImage = imagenGuardada.getName();
 
                     DtRuta ruta = new DtRuta(nombreAltaRutaDeVuelo.getText(),
                             descripcionAltaRutaDeVuelo.getText(),
@@ -844,13 +858,15 @@ public class Main extends JFrame {
                             costoEjecutivo,
                             costoEquipaje,
                             LocalDate.now(),
+                            urlImage,
                             s.getCategoriasPorNombre(nombresCategorias),
                             s.buscarCiudad(ciudadOrigen.getNombre(), ciudadOrigen.getPais()),
                             s.buscarCiudad(ciudadDestino.getNombre(), ciudadDestino.getPais()));
 
                         s.altaRutaDeVuelo(JComboBoxAerolineaAltaRutaVuelo.getSelectedItem().toString(), ruta);
                         auxiliar.cargarRutasDeVueloComboBox();
-                        imagenTemporalUsuario = null;
+                        imagenTemporalRuta = null;
+                        selectedFileRutaCrear.setText("No se ha seleccionado Archivo");
                         new VentanaMensaje("Ruta de vuelo creada correctamente.");
 
                         auxiliar.limpiarJTextField(nombreAltaRutaDeVuelo, descripcionAltaRutaDeVuelo);
@@ -1241,8 +1257,8 @@ public class Main extends JFrame {
                         DtCliente cliente = (DtCliente)JComboBoxSeleccionarUsuarioModificar.getSelectedItem();
                         if(imagenTemporalUsuario != null){
                             try{
-                                AuxiliarFunctions.borrarImagenUsuario(cliente.getUrlImage());
-                                File imagen = AuxiliarFunctions.guardarImagenUsuario(imagenTemporalUsuario);
+                                AuxiliarFunctions.borrarImagen(cliente.getUrlImage(), TipoImagen.USUARIO);
+                                File imagen = AuxiliarFunctions.guardarImagen(imagenTemporalUsuario, TipoImagen.USUARIO);
                                 s.modificarClienteImagen(cliente, imagen.getName());
                                 auxiliar.cargarUsuariosComboBox(cliente);
                                 new VentanaMensaje("Imagen actualizada correctamente.");
@@ -1295,8 +1311,8 @@ public class Main extends JFrame {
                         DtAerolinea aerolinea = (DtAerolinea) JComboBoxSeleccionarUsuarioModificar.getSelectedItem();
                         if(imagenTemporalUsuario != null){
                             try{
-                                AuxiliarFunctions.borrarImagenUsuario(aerolinea.getUrlImage());
-                                File imagen = AuxiliarFunctions.guardarImagenUsuario(imagenTemporalUsuario);
+                                AuxiliarFunctions.borrarImagen(aerolinea.getUrlImage(), TipoImagen.USUARIO);
+                                File imagen = AuxiliarFunctions.guardarImagen(imagenTemporalUsuario, TipoImagen.USUARIO);
                                 s.modificarAerolineaImagen(aerolinea, imagen.getName());
                                 auxiliar.cargarUsuariosComboBox(aerolinea);
                                 new VentanaMensaje("Imagen actualizada correctamente.");
@@ -1328,6 +1344,27 @@ public class Main extends JFrame {
                             selectedFileVueloCrear.setText(imagenTemporalVuelo.getName());
                         }else{
                             selectedFileVueloCrear.setText("No se ha seleccionado archivo.");
+                        }
+                    };
+                });
+            }
+        });
+        button2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                imagenTemporalRuta = null;
+                SubirImagen ventanaImagen = new SubirImagen(TipoImagen.RUTA);
+                setEnabled(false);
+
+                ventanaImagen.addWindowListener(new WindowAdapter() {
+                    @Override
+                    public void windowClosed(WindowEvent e){
+                        setEnabled(true);
+                        imagenTemporalRuta = ventanaImagen.getImagen();
+                        if(imagenTemporalRuta != null){
+                            selectedFileRutaCrear.setText(imagenTemporalRuta.getName());
+                        }else{
+                            selectedFileRutaCrear.setText("No se ha seleccionado archivo.");
                         }
                     };
                 });

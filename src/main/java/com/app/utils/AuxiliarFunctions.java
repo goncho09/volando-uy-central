@@ -420,16 +420,6 @@ public class AuxiliarFunctions {
         }
     }
 
-    public static Path getUserImagePath(String fileName) {
-        return Paths.get(BASE_DIR, "users", fileName);
-    }
-    public static Path getVueloImagePath(String fileName) {
-        return Paths.get(BASE_DIR, "vuelos", fileName);
-    }
-    public static Path getRutaImagePath(String fileName) {
-        return Paths.get(BASE_DIR, "rutas", fileName);
-    }
-
     public static ImageIcon createRoundImageIcon(ImageIcon originalIcon) {
         Image originalImage = originalIcon.getImage();
         int diameter = Math.min(originalImage.getWidth(null), originalImage.getHeight(null));
@@ -452,85 +442,47 @@ public class AuxiliarFunctions {
         return new ImageIcon(roundImage);
     }
 
-    public static File guardarImagenUsuario(File original) throws IOException {
-        File carpetaDestino = new File(BASE_DIR, "users");
+    public static Path getImagePath(String urlImagen, TipoImagen tipo){
+      return Paths.get(BASE_DIR, tipo.getFolder(), urlImagen);
+    };
+
+    public static File guardarImagen(File original, TipoImagen tipo) throws IOException {
+        File carpetaDestino = new File(BASE_DIR, tipo.getFolder());
+
         if (!carpetaDestino.exists()) {
             carpetaDestino.mkdirs();
         }
 
-        // Obtener extensión original
-        String nombre = original.getName();
         String extension = "";
+        String nombre = original.getName();
         int i = nombre.lastIndexOf('.');
         if (i > 0) {
-            extension = nombre.substring(i); // incluye el punto (.jpg, .png...)
+            extension = nombre.substring(i); // incluye el punto
         }
 
-        // Generar nombre aleatorio
         String nombreUnico = UUID.randomUUID().toString() + extension;
 
-        // Crear el archivo destino
         File nuevoArchivo = new File(carpetaDestino, nombreUnico);
-
-        // Copiar archivo
         Files.copy(original.toPath(), nuevoArchivo.toPath());
 
         return nuevoArchivo;
     }
 
-    public static void borrarImagenUsuario(String imgName){
-        Path borrar = AuxiliarFunctions.getUserImagePath(imgName);
-        File imagenABorrar = new File(borrar.toAbsolutePath().toString());
+    public static void borrarImagen(String imgName, TipoImagen tipo) {
+        Path path = Paths.get(BASE_DIR, tipo.getFolder(), imgName);
+
+        File imagenABorrar = path.toFile();
         if (imagenABorrar.exists()) {
             if (imagenABorrar.delete()) {
                 System.out.println("Imagen eliminada con éxito");
             } else {
                 System.out.println("No se pudo eliminar la imagen");
             }
-        }else{
+        } else {
             System.out.println("Imagen no encontrada");
         }
     }
 
-    public static File guardarImagenVuelo(File original) throws IOException {
-        File carpetaDestino = new File(BASE_DIR, "vuelos");
-        if (!carpetaDestino.exists()) {
-            carpetaDestino.mkdirs();
-        }
-
-        // Obtener extensión original
-        String nombre = original.getName();
-        String extension = "";
-        int i = nombre.lastIndexOf('.');
-        if (i > 0) {
-            extension = nombre.substring(i); // incluye el punto (.jpg, .png...)
-        }
-
-        // Generar nombre aleatorio
-        String nombreUnico = UUID.randomUUID().toString() + extension;
-
-        // Crear el archivo destino
-        File nuevoArchivo = new File(carpetaDestino, nombreUnico);
-
-        // Copiar archivo
-        Files.copy(original.toPath(), nuevoArchivo.toPath());
-
-        return nuevoArchivo;
-    }
-
-    public static void borrarImagenVuelo(String imgName){
-        Path borrar = AuxiliarFunctions.getVueloImagePath(imgName);
-        File imagenABorrar = new File(borrar.toAbsolutePath().toString());
-        if (imagenABorrar.exists()) {
-            if (imagenABorrar.delete()) {
-                System.out.println("Imagen eliminada con éxito");
-            } else {
-                System.out.println("No se pudo eliminar la imagen");
-            }
-        }else{
-            System.out.println("Imagen no encontrada");
-        }
-    }
 
     public static void mostrarFoto(JPanel imagenPanel, ImageIcon imagen, int ancho, int largo, TipoImagen tipo){
         Image imgRaw = imagen.getImage();

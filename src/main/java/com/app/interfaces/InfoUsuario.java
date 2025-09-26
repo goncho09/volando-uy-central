@@ -54,7 +54,7 @@ public class InfoUsuario extends JFrame {
         //new VentanaMensaje(usuario.getUrlImage());
 
         try {
-            Path userImg = AuxiliarFunctions.getUserImagePath(usuario.getUrlImage());
+            Path userImg = AuxiliarFunctions.getImagePath(usuario.getUrlImage(), TipoImagen.USUARIO);
             if(!Files.exists(userImg)) {
                 throw new Exception("No se encontro el imagen");
             }

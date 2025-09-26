@@ -269,6 +269,7 @@ public class Sistema implements ISistema {
                 ruta.getCostoEjecutivo(),
                 ruta.getEquipajeExtra(),
                 ruta.getFechaAlta(),
+                ruta.getUrlImagen(),
                 ruta.getCategorias(),
                 ruta.getCiudadOrigen(),
                 ruta.getCiudadDestino()

@@ -53,10 +53,10 @@ public class InfoVuelo extends JFrame {
 
         JComboBoxReservas.setModel(a.getComboReservaVueloModel());
 
-        new VentanaMensaje(dataVuelo.getUrlImage());
+        //new VentanaMensaje(dataVuelo.getUrlImage());
 
         try {
-            Path userImg = AuxiliarFunctions.getVueloImagePath(dataVuelo.getUrlImage());
+            Path userImg = AuxiliarFunctions.getImagePath(dataVuelo.getUrlImage(), TipoImagen.VUELO);
             if(!Files.exists(userImg)) {
                 throw new Exception("No se encontró la imagen");
             }

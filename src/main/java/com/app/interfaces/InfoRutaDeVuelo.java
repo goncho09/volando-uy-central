@@ -3,16 +3,19 @@ package com.app.interfaces;
 import com.app.clases.Categoria;
 import com.app.datatypes.DtRuta;
 import com.app.datatypes.DtVuelo;
+import com.app.enums.TipoImagen;
 import com.app.utils.AuxiliarFunctions;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 public class InfoRutaDeVuelo extends JFrame{
     private AuxiliarFunctions a;
 
-    private JPanel panel1;
+    private JPanel panelGeneralRuta;
     private JLabel nombre;
     private JLabel descripcion;
     private JLabel duracion;
@@ -26,15 +29,14 @@ public class InfoRutaDeVuelo extends JFrame{
     private JPanel categoriasPanel;
     private JComboBox JComboBoxVuelos;
     private JButton ButtonVerVuelo;
+    private JPanel imagenRutaPanel;
+    private ImageIcon imagen;
 
     public InfoRutaDeVuelo(DtRuta ruta, AuxiliarFunctions auxiliar){
+        setContentPane(panelGeneralRuta);
         setTitle("Datos de la ruta: " + ruta.getNombre());
         setResizable(false);
         setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-        setSize(500, 400);
-        setLocationRelativeTo(null);
-        setVisible(true);
-        add(dataRutaPanel);
 
         a = auxiliar;
 
@@ -53,6 +55,20 @@ public class InfoRutaDeVuelo extends JFrame{
 
         categoriasPanel.setLayout(new GridLayout(0, 2, 10, 5));
 
+        //new VentanaMensaje(ruta.getUrlImagen());
+
+        try {
+            Path userImg = AuxiliarFunctions.getImagePath(ruta.getUrlImagen(), TipoImagen.RUTA);
+            if(!Files.exists(userImg)) {
+                throw new Exception("No se encontró la imagen");
+            }
+            imagen = new ImageIcon(userImg.toAbsolutePath().toString());
+        } catch (Exception e) {
+            imagen = new ImageIcon(getClass().getResource("/pictures/rutas/default.png"));
+        }
+
+        AuxiliarFunctions.mostrarFoto(imagenRutaPanel, imagen, 175, 175, TipoImagen.RUTA);
+
         if (ruta.getCategorias().isEmpty()){
             categoriasPanel.add(new JLabel("No hay categorías."));
         }else{
@@ -62,6 +78,9 @@ public class InfoRutaDeVuelo extends JFrame{
             }
         }
 
+        pack();
+        setLocationRelativeTo(null);
+        setVisible(true);
 
         ButtonVerVuelo.addActionListener(new ActionListener() {
             @Override

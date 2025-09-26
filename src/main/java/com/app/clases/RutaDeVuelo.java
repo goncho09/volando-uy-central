@@ -32,6 +32,9 @@ public class RutaDeVuelo {
     @Column( nullable = false)
     private LocalDate fechaAlta;
 
+    @Column( nullable = true)
+    private String urlImagen;
+
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
             name = "ruta_categoria",
@@ -65,6 +68,7 @@ public class RutaDeVuelo {
         this.costoEjecutivo = ruta.getCostoEjecutivo();
         this.equipajeExtra = ruta.getEquipajeExtra();
         this.fechaAlta = ruta.getFechaAlta();
+        this.urlImagen = ruta.getUrlImagen();
         this.categorias = ruta.getCategorias();
         this.ciudadOrigen = ruta.getCiudadOrigen();
         this.ciudadDestino = ruta.getCiudadDestino();
@@ -126,6 +130,10 @@ public class RutaDeVuelo {
         this.fechaAlta = fechaAlta;
     }
 
+    public String getUrlImagen() {return urlImagen;};
+
+    public void setUrlImagen(String urlImagen){this.urlImagen = urlImagen;};
+
     public DtRuta getDatos() {
         return new DtRuta(
                 this.getNombre(),
@@ -135,6 +143,7 @@ public class RutaDeVuelo {
                 this.getCostoEjecutivo(),
                 this.getEquipajeExtra(),
                 this.getFechaAlta(),
+                this.getUrlImagen(),
                 this.getCategorias(),
                 this.getCiudadOrigen(),
                 this.getCiudadDestino()

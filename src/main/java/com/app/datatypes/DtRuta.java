@@ -15,13 +15,14 @@ public class DtRuta {
     private float costoEjecutivo;
     private float equipajeExtra;
     private LocalDate fechaAlta;
+    private String urlImagen;
     private List<Categoria> categorias;
     private Ciudad ciudadOrigen;
     private Ciudad ciudadDestino;
 
     public DtRuta() {}
 
-    public DtRuta(String nombre, String descripcion, LocalTime duracion, float costoTurista, float costoEjecutivo, float equipajeExtra, LocalDate fechaAlta, List<Categoria> categorias, Ciudad origen, Ciudad destino) {
+    public DtRuta(String nombre, String descripcion, LocalTime duracion, float costoTurista, float costoEjecutivo, float equipajeExtra, LocalDate fechaAlta, String urlImagen, List<Categoria> categorias, Ciudad origen, Ciudad destino) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.duracion = duracion;
@@ -29,6 +30,7 @@ public class DtRuta {
         this.costoEjecutivo = costoEjecutivo;
         this.equipajeExtra = equipajeExtra;
         this.fechaAlta = fechaAlta;
+        this.urlImagen = urlImagen;
         this.categorias = categorias;
         this.ciudadOrigen = origen;
         this.ciudadDestino = destino;
@@ -89,6 +91,10 @@ public class DtRuta {
     public void setFechaAlta(LocalDate fechaAlta) {
         this.fechaAlta = fechaAlta;
     }
+
+    public String getUrlImagen() {return urlImagen;}
+
+    public void setUrlImagen(String urlImagen) {this.urlImagen = urlImagen;}
 
     public List<Categoria> getCategorias() {
         return categorias;
