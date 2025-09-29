@@ -30,6 +30,7 @@ public class InfoRutaDeVuelo extends JFrame{
     private JComboBox JComboBoxVuelos;
     private JButton ButtonVerVuelo;
     private JPanel imagenRutaPanel;
+    private JLabel estado;
     private ImageIcon imagen;
 
     public InfoRutaDeVuelo(DtRuta ruta, AuxiliarFunctions auxiliar){
@@ -52,6 +53,8 @@ public class InfoRutaDeVuelo extends JFrame{
         fechaAlta.setText(ruta.getFechaAlta().toString());
         ciudadOrigen.setText(ruta.getCiudadOrigen().getNombre());
         ciudadDestino.setText(ruta.getCiudadDestino().getNombre());
+        estado.setText(ruta.getEstado().toString());
+
 
         categoriasPanel.setLayout(new GridLayout(0, 2, 10, 5));
 

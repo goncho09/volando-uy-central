@@ -183,12 +183,32 @@ public class AuxiliarFunctions {
         }
     }
 
-    public void cargarRutasDeVueloComboBoxAerolinea(String nickname) {
+    public void cargarRutasDeVueloComboBoxAerolinea(DtAerolinea aerolinea) {
         comboRutaDeVueloAerolinea.removeAllElements();
+        String nickname = aerolinea.getNickname();
         List<DtRuta> rutas = sistema.listarRutasDeVuelo(nickname);
         if(rutas != null && !rutas.isEmpty()) {
             for (DtRuta r : rutas) {
                 comboRutaDeVueloAerolinea.addElement(r);
+            }
+        }else{
+            comboRutaDeVueloAerolinea.addElement(new DtRuta() {
+                @Override
+                public String toString() { return "N/A"; }
+            });
+        }
+    }
+
+    public void cargarRutasDeVueloComboBoxAerolinea(DtAerolinea aerolinea, DtRuta ruta) {
+        comboRutaDeVueloAerolinea.removeAllElements();
+        String nickname = aerolinea.getNickname();
+        List<DtRuta> rutas = sistema.listarRutasDeVuelo(nickname);
+        if(rutas != null && !rutas.isEmpty()) {
+            for (DtRuta r : rutas) {
+                comboRutaDeVueloAerolinea.addElement(r);
+                if(r.getNombre().equals(ruta.getNombre())){
+                    comboUser.setSelectedItem(r);
+                }
             }
         }else{
             comboRutaDeVueloAerolinea.addElement(new DtRuta() {

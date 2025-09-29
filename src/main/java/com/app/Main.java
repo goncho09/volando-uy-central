@@ -170,6 +170,11 @@ public class Main extends JFrame {
     private JLabel selectedFileVueloCrear;
     private JButton button2;
     private JLabel selectedFileRutaCrear;
+    private JComboBox seleccionarAerolineaAceptarRechazarRuta;
+    private JComboBox seleccionarRutaAceptarRechazarRuta;
+    private JButton aprobarButtonAceptarRechazarRuta;
+    private JButton rechazarButtonAceptarRechazarRuta;
+    private JLabel estadoRutaText;
 
 
     public Main() {
@@ -202,12 +207,10 @@ public class Main extends JFrame {
 
         SwingUtilities.updateComponentTreeUI(this);
 
-
         //Settear swing elements visibles false
         JPanelRegistrarAerolinea.setVisible(false);
         JPanelModificarAerolinea.setVisible(false);
         JPanelModificarCliente.setVisible(false);
-
 
         //Settear swing elements isEditable false
         nicknameModificarAerolinea.setEditable(false);
@@ -221,7 +224,8 @@ public class Main extends JFrame {
         JComboBoxSeleccionarClienteReserva.setEnabled(false);
         JComboBoxtipoAsientoReserva.setEnabled(false);
         JButtonVerVueloReservaButton.setEnabled(false);
-
+        aprobarButtonAceptarRechazarRuta.setEnabled(false);
+        rechazarButtonAceptarRechazarRuta.setEnabled(false);
 
         //Settear modelos JComboBox
         JComboBoxSeleccionarUsuarioModificar.setModel(auxiliar.getComboUserModel());
@@ -237,6 +241,7 @@ public class Main extends JFrame {
         JComboBoxAerolineaAgregarRuta.setModel(auxiliar.getComboAerolineaModel());
         JComboBoxConsultaVueloAerolinea.setModel(auxiliar.getComboAerolineaModel());
         JComboBoxAerolineaConsultaRuta.setModel(auxiliar.getComboAerolineaModel());
+        seleccionarAerolineaAceptarRechazarRuta.setModel(auxiliar.getComboAerolineaModel());
 
         JComboBoxRutaVueloAltaVuelo.setModel(auxiliar.getComboRutaDeVueloModel());
 
@@ -255,6 +260,7 @@ public class Main extends JFrame {
         JComboBoxrutaDeVueloReserva.setModel(auxiliar.getComboRutaDeVueloAerolineaModel());
         JComboBoxConsultaVueloRutaDeVuelo.setModel(auxiliar.getComboRutaDeVueloAerolineaModel());
         JComboBoxRutaVueloAltaVuelo.setModel(auxiliar.getComboRutaDeVueloAerolineaModel());
+        seleccionarRutaAceptarRechazarRuta.setModel(auxiliar.getComboRutaDeVueloAerolineaModel());
 
         JComboBoxvueloReserva.setModel(auxiliar.getComboVueloRutaDeVueloModel());
         JComboBoxConsultaVueloVuelo.setModel(auxiliar.getComboVueloRutaDeVueloModel());
@@ -971,14 +977,14 @@ public class Main extends JFrame {
         JComboBoxAerolineaAgregarRuta.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
-                auxiliar.cargarRutasDeVueloComboBoxAerolinea(JComboBoxAerolineaAgregarRuta.getSelectedItem().toString());
+                auxiliar.cargarRutasDeVueloComboBoxAerolinea((DtAerolinea) JComboBoxAerolineaAgregarRuta.getSelectedItem());
             }
         });
 
         JComboBoxAerolineaConsultaRuta.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
-                    auxiliar.cargarRutasDeVueloComboBoxAerolinea(JComboBoxAerolineaAgregarRuta.getSelectedItem().toString());
+                    auxiliar.cargarRutasDeVueloComboBoxAerolinea((DtAerolinea) JComboBoxAerolineaAgregarRuta.getSelectedItem());
             }
         });
 
@@ -1106,7 +1112,7 @@ public class Main extends JFrame {
                 //}
                 //System.out.println("-------------------------");
 
-                auxiliar.cargarRutasDeVueloComboBoxAerolinea(aerolinea.getNickname());
+                auxiliar.cargarRutasDeVueloComboBoxAerolinea(aerolinea);
                 JComboBoxrutaDeVueloReserva.setEnabled(true);
                 }
             }
@@ -1165,7 +1171,7 @@ public class Main extends JFrame {
             public void itemStateChanged(ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
                     DtAerolinea aerolinea = (DtAerolinea) JComboBoxConsultaVueloAerolinea.getSelectedItem();
-                    auxiliar.cargarRutasDeVueloComboBoxAerolinea(aerolinea.getNickname());
+                    auxiliar.cargarRutasDeVueloComboBoxAerolinea(aerolinea);
 
                     if (aerolinea == null) {
                         new VentanaMensaje("Ha ocurrido un error..");
@@ -1223,7 +1229,7 @@ public class Main extends JFrame {
                         new VentanaMensaje("Ha ocurrido un error..");
                         return;
                     }
-                    auxiliar.cargarRutasDeVueloComboBoxAerolinea(a.getNickname());
+                    auxiliar.cargarRutasDeVueloComboBoxAerolinea(a);
                 }
             }
         });
@@ -1375,6 +1381,44 @@ public class Main extends JFrame {
                         }
                     };
                 });
+            }
+        });
+        seleccionarRutaAceptarRechazarRuta.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if(e.getStateChange() == ItemEvent.SELECTED){
+                    DtRuta ruta = (DtRuta)seleccionarRutaAceptarRechazarRuta.getSelectedItem();
+                    if(ruta != null && !ruta.toString().equals("N/A") && ruta.getEstado().toString().equals("INGRESADA")){
+                        aprobarButtonAceptarRechazarRuta.setEnabled(true);
+                        rechazarButtonAceptarRechazarRuta.setEnabled(true);
+                        estadoRutaText.setText(ruta.getEstado().toString());
+                    }else{
+                        aprobarButtonAceptarRechazarRuta.setEnabled(false);
+                        rechazarButtonAceptarRechazarRuta.setEnabled(false);
+                        if(ruta != null){
+                            estadoRutaText.setText(ruta.getEstado().toString());
+                        }else{
+                            estadoRutaText.setText("No se ha seleccionado una ruta.");
+                        }
+                    }
+                }
+            }
+        });
+        aprobarButtonAceptarRechazarRuta.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                DtRuta ruta = (DtRuta)seleccionarRutaAceptarRechazarRuta.getSelectedItem();
+                if(ruta != null && !ruta.toString().equals("N/A")){
+                    try{
+                        //s.actualizarEstadoRuta(ruta);
+                        auxiliar.cargarRutasDeVueloComboBoxAerolinea((DtAerolinea)seleccionarAerolineaAceptarRechazarRuta.getSelectedItem(), ruta);
+                    } catch (Exception ex) {
+                        new VentanaMensaje(ex.getMessage());
+                    }
+
+                }else{
+                    new VentanaMensaje("Debe seleccionar una ruta para realizar esta acción");
+                }
             }
         });
     }

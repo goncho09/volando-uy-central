@@ -1,6 +1,7 @@
 package com.app.clases;
 
 import com.app.datatypes.DtRuta;
+import com.app.enums.EstadoRuta;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -34,6 +35,9 @@ public class RutaDeVuelo {
 
     @Column( nullable = true)
     private String urlImagen;
+
+    @Column( nullable = true)
+    private EstadoRuta estado;
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
@@ -69,6 +73,7 @@ public class RutaDeVuelo {
         this.equipajeExtra = ruta.getEquipajeExtra();
         this.fechaAlta = ruta.getFechaAlta();
         this.urlImagen = ruta.getUrlImagen();
+        this.estado = ruta.getEstado();
         this.categorias = ruta.getCategorias();
         this.ciudadOrigen = ruta.getCiudadOrigen();
         this.ciudadDestino = ruta.getCiudadDestino();
@@ -134,6 +139,10 @@ public class RutaDeVuelo {
 
     public void setUrlImagen(String urlImagen){this.urlImagen = urlImagen;};
 
+    public  EstadoRuta getEstado() {return estado;}
+
+    public void setEstado(EstadoRuta estado) {this.estado = estado;};
+
     public DtRuta getDatos() {
         return new DtRuta(
                 this.getNombre(),
@@ -144,6 +153,7 @@ public class RutaDeVuelo {
                 this.getEquipajeExtra(),
                 this.getFechaAlta(),
                 this.getUrlImagen(),
+                this.getEstado(),
                 this.getCategorias(),
                 this.getCiudadOrigen(),
                 this.getCiudadDestino()

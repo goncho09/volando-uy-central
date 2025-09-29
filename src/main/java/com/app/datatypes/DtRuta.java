@@ -2,6 +2,7 @@ package com.app.datatypes;
 
 import com.app.clases.Categoria;
 import com.app.clases.Ciudad;
+import com.app.enums.EstadoRuta;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -16,6 +17,7 @@ public class DtRuta {
     private float equipajeExtra;
     private LocalDate fechaAlta;
     private String urlImagen;
+    private EstadoRuta estado;
     private List<Categoria> categorias;
     private Ciudad ciudadOrigen;
     private Ciudad ciudadDestino;
@@ -31,6 +33,22 @@ public class DtRuta {
         this.equipajeExtra = equipajeExtra;
         this.fechaAlta = fechaAlta;
         this.urlImagen = urlImagen;
+        this.estado = EstadoRuta.INGRESADA; // Por defecto se creará la ruta con "Ingresada"
+        this.categorias = categorias;
+        this.ciudadOrigen = origen;
+        this.ciudadDestino = destino;
+    }
+
+    public DtRuta(String nombre, String descripcion, LocalTime duracion, float costoTurista, float costoEjecutivo, float equipajeExtra, LocalDate fechaAlta, String urlImagen, EstadoRuta estado, List<Categoria> categorias, Ciudad origen, Ciudad destino) {
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.duracion = duracion;
+        this.costoTurista = costoTurista;
+        this.costoEjecutivo = costoEjecutivo;
+        this.equipajeExtra = equipajeExtra;
+        this.fechaAlta = fechaAlta;
+        this.urlImagen = urlImagen;
+        this.estado = estado;
         this.categorias = categorias;
         this.ciudadOrigen = origen;
         this.ciudadDestino = destino;
@@ -95,6 +113,10 @@ public class DtRuta {
     public String getUrlImagen() {return urlImagen;}
 
     public void setUrlImagen(String urlImagen) {this.urlImagen = urlImagen;}
+
+    public EstadoRuta getEstado() {return estado;}
+
+    public void setEstado(EstadoRuta estado) {this.estado = estado;}
 
     public List<Categoria> getCategorias() {
         return categorias;
