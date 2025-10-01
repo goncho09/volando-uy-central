@@ -91,7 +91,7 @@ public class InfoUsuario extends JFrame {
             sitioAerolineaConsultaUsuario.setText(aerolinea.getLinkWeb());
 
             JComboBoxRutasDeVuelo.setModel(a.getComboRutaDeVueloAerolineaModel());
-            a.cargarRutasDeVueloComboBoxAerolinea(aerolinea.getNickname());
+            a.cargarRutasDeVueloComboBoxAerolinea(aerolinea);
         }
 
         pack();

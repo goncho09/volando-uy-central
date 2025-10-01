@@ -2,6 +2,7 @@ package com.app.clases;
 
 import com.app.DAOs.*;
 import com.app.datatypes.*;
+import com.app.enums.EstadoRuta;
 import com.app.enums.TipoAsiento;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -109,9 +110,9 @@ public class Sistema implements ISistema {
         return nuevaLista;
     }
 
-    public List<DtRuta> listarRutasDeVuelo(String nickname) {
+    public List<DtRuta> listarRutasDeVuelo(DtAerolinea aerolinea) {
         List<DtRuta> listaRutas = new ArrayList<>();
-        Aerolinea a = (Aerolinea)this.usuarios.get(nickname);
+        Aerolinea a = (Aerolinea)this.usuarios.get(aerolinea.getNickname());
         if(a == null){
             return listaRutas;
         }
@@ -515,7 +516,7 @@ public class Sistema implements ISistema {
     };
 
     public void modificarClienteImagen(DtCliente cliente, String urlImagen){
-        Cliente c = this.buscarCliente(cliente.getNickname());
+        Cliente c = this.buscarCliente(cliente);
         if(c == null) {
             throw new IllegalArgumentException("Este usuario no existe.");
         }
@@ -552,7 +553,7 @@ public class Sistema implements ISistema {
     };
 
     public void modificarAerolineaImagen(DtAerolinea aerolinea, String urlImagen){
-        Aerolinea a = this.buscarAerolinea(aerolinea.getNickname());
+        Aerolinea a = this.buscarAerolinea(aerolinea);
         if(a == null) {
             throw new IllegalArgumentException("Este usuario no existe.");
         }
@@ -639,6 +640,10 @@ public class Sistema implements ISistema {
             throw new IllegalArgumentException("La ruta no existe en esta aerolínea.");
         }
 
+        if(ruta.getEstado() != EstadoRuta.APROBADA){
+            throw new IllegalArgumentException("La ruta de vuelo no está aprobada.");
+        }
+
         this.rutaTemporal = ruta;
     }
 
@@ -685,32 +690,32 @@ public class Sistema implements ISistema {
 
 
     // ---------- COMPRA PAQUETE ---------- //
-    public Cliente buscarCliente(String nickname){
-        Cliente cliente = (Cliente) this.usuarios.get(nickname);
+    public Cliente buscarCliente(DtCliente c){
+        Cliente cliente = (Cliente) this.usuarios.get(c.getNickname());
         if(cliente == null){
             throw new IllegalArgumentException(("El cliente no existe"));
         }
         return cliente;
     }
 
-    public Paquete buscarPaquete(String nombre){
-        Paquete p = this.paquetes.get(nombre);
+    public Paquete buscarPaquete(DtPaquete paquete){
+        Paquete p = this.paquetes.get(paquete.getNombre());
         if(p == null){
             throw new IllegalArgumentException(("El paquete no existe"));
         }
         return p;
     }
 
-    public RutaDeVuelo buscarRutaDeVuelo(String nombre){
-        RutaDeVuelo r = this.rutasDeVuelo.get(nombre);
+    public RutaDeVuelo buscarRutaDeVuelo(DtRuta ruta){
+        RutaDeVuelo r = this.rutasDeVuelo.get(ruta.getNombre());
         if(r == null){
             throw new IllegalArgumentException(("La ruta de vuelo no existe"));
         }
         return r;
     }
 
-    public void compraPaquete(String paquete,String nickname){
-        Cliente c = buscarCliente(nickname);
+    public void compraPaquete(DtPaquete paquete, DtCliente cliente){
+        Cliente c = buscarCliente(cliente);
         Paquete p = buscarPaquete(paquete);
 
         for(CompraPaquete cp : c.getComprasPaquetes()){
@@ -727,9 +732,9 @@ public class Sistema implements ISistema {
         userDao.addCompraPaquete(c,nuevaCompra);
     }
 
-    public int agregarRutaAPaquete(String nombrePaquete, String nombreRuta,int cantidad, TipoAsiento tipoAsiento){
-        Paquete p = buscarPaquete(nombrePaquete);
-        RutaDeVuelo ruta = buscarRutaDeVuelo(nombreRuta);
+    public int agregarRutaAPaquete(DtPaquete paquete, DtRuta dataRuta, int cantidad, TipoAsiento tipoAsiento){
+        Paquete p = buscarPaquete(paquete);
+        RutaDeVuelo ruta = buscarRutaDeVuelo(dataRuta);
 
         for (RutaEnPaquete rep : p.getRutaEnPaquete()){
             if (rep.getRutaDeVuelo().getNombre().equals(ruta.getNombre()) && rep.getTipoAsiento() == tipoAsiento){
@@ -744,11 +749,11 @@ public class Sistema implements ISistema {
         return 0;
     }
 
-    public List <DtVuelo> getVuelosRutaDeVuelo(String nombre){
+    public List <DtVuelo> getVuelosRutaDeVuelo(DtRuta ruta){
         List <DtVuelo> vuelos = new ArrayList<>();
 
         for(Vuelo v : this.getVuelos()){
-            if(v.getRutaDeVuelo().getNombre().equals(nombre)){
+            if(v.getRutaDeVuelo().getNombre().equals(ruta.getNombre())){
                 vuelos.add(v.getDatos());
             }
         }
@@ -809,17 +814,17 @@ public class Sistema implements ISistema {
         paqueteTemp = null;
     }
 
-    public Vuelo buscarVuelo(String nombre){
-        Vuelo v = (Vuelo) this.vuelos.get(nombre);
+    public Vuelo buscarVuelo(DtVuelo vuelo){
+        Vuelo v = (Vuelo) this.vuelos.get(vuelo.getNombre());
         if(v == null){
             throw new IllegalArgumentException("El vuelo no existe.");
         }
         return v;
     }
 
-    public void altaReserva(DtReserva reserva, String nickCliente, String nameVuelo) {
-        Cliente c = buscarCliente(nickCliente);
-        Vuelo v = buscarVuelo(nameVuelo);
+    public void altaReserva(DtReserva reserva, DtCliente cliente, DtVuelo vuelo) {
+        Cliente c = buscarCliente(cliente);
+        Vuelo v = buscarVuelo(vuelo);
         float costoAsiento = reserva.getTipoAsiento() == TipoAsiento.EJECUTIVO ? v.getRutaDeVuelo().getCostoEjecutivo() : v.getRutaDeVuelo().getCostoTurista();
         int cantPasajes = reserva.getCantPasajes();
         float costoEquipaje = reserva.getEquipajeExtra() * v.getRutaDeVuelo().getEquipajeExtra();
@@ -895,13 +900,19 @@ public class Sistema implements ISistema {
         return reserva.getPasajeros();
     };
 
-    public Aerolinea buscarAerolinea(String nickname){
-        Aerolinea aerolinea = (Aerolinea) this.usuarios.get(nickname);
+    public Aerolinea buscarAerolinea(DtAerolinea a){
+        Aerolinea aerolinea = (Aerolinea) this.usuarios.get(a.getNickname());
         if(aerolinea == null){
             throw new IllegalArgumentException(("El cliente no existe"));
         }
         return aerolinea;
     }
+
+    public void actualizarEstadoRuta(DtRuta ruta, EstadoRuta estado){
+        RutaDeVuelo rdv = buscarRutaDeVuelo(ruta);
+        rdv.setEstado(estado);
+        rutaDeVueloDao.actualizar(rdv);
+    };
 
 }
 

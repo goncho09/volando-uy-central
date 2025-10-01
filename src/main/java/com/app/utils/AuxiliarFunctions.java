@@ -185,8 +185,7 @@ public class AuxiliarFunctions {
 
     public void cargarRutasDeVueloComboBoxAerolinea(DtAerolinea aerolinea) {
         comboRutaDeVueloAerolinea.removeAllElements();
-        String nickname = aerolinea.getNickname();
-        List<DtRuta> rutas = sistema.listarRutasDeVuelo(nickname);
+        List<DtRuta> rutas = sistema.listarRutasDeVuelo(aerolinea);
         if(rutas != null && !rutas.isEmpty()) {
             for (DtRuta r : rutas) {
                 comboRutaDeVueloAerolinea.addElement(r);
@@ -201,13 +200,12 @@ public class AuxiliarFunctions {
 
     public void cargarRutasDeVueloComboBoxAerolinea(DtAerolinea aerolinea, DtRuta ruta) {
         comboRutaDeVueloAerolinea.removeAllElements();
-        String nickname = aerolinea.getNickname();
-        List<DtRuta> rutas = sistema.listarRutasDeVuelo(nickname);
+        List<DtRuta> rutas = sistema.listarRutasDeVuelo(aerolinea);
         if(rutas != null && !rutas.isEmpty()) {
             for (DtRuta r : rutas) {
                 comboRutaDeVueloAerolinea.addElement(r);
                 if(r.getNombre().equals(ruta.getNombre())){
-                    comboUser.setSelectedItem(r);
+                    comboRutaDeVueloAerolinea.setSelectedItem(r);
                 }
             }
         }else{
@@ -502,7 +500,6 @@ public class AuxiliarFunctions {
             System.out.println("Imagen no encontrada");
         }
     }
-
 
     public static void mostrarFoto(JPanel imagenPanel, ImageIcon imagen, int ancho, int largo, TipoImagen tipo){
         Image imgRaw = imagen.getImage();
