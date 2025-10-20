@@ -1,5 +1,6 @@
 package com.app.clases;
 
+import com.app.datatypes.DtCategoria;
 import com.app.datatypes.DtRuta;
 import com.app.enums.EstadoRuta;
 import jakarta.persistence.*;
@@ -67,7 +68,7 @@ public class RutaDeVuelo {
 
     public RutaDeVuelo() {}
 
-    public RutaDeVuelo(DtRuta ruta) {
+    public RutaDeVuelo(DtRuta ruta, List<Categoria> categorias, Ciudad origen, Ciudad destino) {
         this.nombre = ruta.getNombre();
         this.descripcion = ruta.getDescripcion();
         this.descripcionCorta = ruta.getDescripcionCorta();
@@ -78,9 +79,9 @@ public class RutaDeVuelo {
         this.fechaAlta = ruta.getFechaAlta();
         this.urlImagen = ruta.getUrlImagen();
         this.estado = ruta.getEstado();
-        this.categorias = ruta.getCategorias();
-        this.ciudadOrigen = ruta.getCiudadOrigen();
-        this.ciudadDestino = ruta.getCiudadDestino();
+        this.categorias = categorias;
+        this.ciudadOrigen = origen;
+        this.ciudadDestino = destino;
     }
 
     public String getNombre() {
@@ -178,6 +179,10 @@ public class RutaDeVuelo {
     }
 
     public DtRuta getDatos() {
+        List<DtCategoria> categoriaList = new ArrayList<>();
+        for (Categoria categoria : this.categorias) {
+            categoriaList.add(categoria.getDatos());
+        }
         return new DtRuta(
                 this.getNombre(),
                 this.getDescripcion(),
@@ -189,9 +194,9 @@ public class RutaDeVuelo {
                 this.getFechaAlta(),
                 this.getUrlImagen(),
                 this.getEstado(),
-                this.getCategorias(),
-                this.getCiudadOrigen(),
-                this.getCiudadDestino()
+                categoriaList,
+                this.getCiudadOrigen().getDatos(),
+                this.getCiudadDestino().getDatos()
         );
     }
 

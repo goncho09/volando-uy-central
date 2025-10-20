@@ -184,6 +184,7 @@ public class Main extends JFrame {
         
         //Inicializar Sistema
         s = Factory.getSistema();
+        s.cargarDatos();
 
         //Inicializar Auxiliar
         this.auxiliar = new AuxiliarFunctions(s);
@@ -695,11 +696,7 @@ public class Main extends JFrame {
                     DtVuelo dtVuelo = new DtVuelo(nombre, fecha, hora, (Integer)JSpinnerTuristasAltaVuelo.getValue(), (Integer)JSpinnerEjecutivosAltaVuelo.getValue(), urlImage, LocalDate.now(), null, 0);
 
                     try {
-                        s.seleccionarAerolineaParaVuelo(aerolinea);
-                        s.seleccionarRuta(ruta);
-                        s.ingresarDatosVuelo(dtVuelo);
-                        s.confirmarAltaVuelo();
-                        s.consultarVuelo(dtVuelo.getNombre());
+                        s.altaVuelo(dtVuelo);
                         new VentanaMensaje("Vuelo creado correctamente");
                     } catch (IllegalArgumentException ex) {
                         AuxiliarFunctions.borrarImagen(urlImage, TipoImagen.VUELO);
@@ -832,7 +829,7 @@ public class Main extends JFrame {
                     Integer costoEjecutivo = (Integer) SpínnerCostoEjecutivo.getValue();
                     Integer costoEquipaje = (Integer) SpinnerCostoEquipaje.getValue();
                     List<String> nombresCategorias = new ArrayList<String>();
-                    List<Categoria> categorias = s.getCategorias();
+                    List<DtCategoria> categorias = s.buscarCategorias();
 
                     DtCiudad ciudadOrigen = (DtCiudad) JComboBoxCiudadOrigen.getSelectedItem();
                     DtCiudad ciudadDestino = (DtCiudad) JComboBoxCiudadDestino.getSelectedItem();
@@ -879,9 +876,9 @@ public class Main extends JFrame {
                             costoEquipaje,
                             LocalDate.now(),
                             urlImage,
-                            s.getCategoriasPorNombre(nombresCategorias),
-                            s.buscarCiudad(ciudadOrigen.getNombre(), ciudadOrigen.getPais()),
-                            s.buscarCiudad(ciudadDestino.getNombre(), ciudadDestino.getPais()));
+                            s.buscarCategoriasPorNombre(nombresCategorias),
+                            ciudadOrigen,
+                            ciudadDestino);
 
                         s.altaRutaDeVuelo(JComboBoxAerolineaAltaRutaVuelo.getSelectedItem().toString(), ruta);
                         auxiliar.cargarRutasDeVueloComboBox();
