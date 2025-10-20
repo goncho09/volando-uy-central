@@ -41,7 +41,7 @@ public class Main extends JFrame {
     private JSpinner JSpinnerTuristasAltaVuelo;
     private JSpinner JSpinnerEjecutivosAltaVuelo;
     private JSpinner JSpinnerDiaAltaVuelo;
-    private JSpinner JSpinnerAñoAltaVuelo;
+    private JSpinner JSpinnerAnioAltaVuelo;
     private JSpinner JSpinnerMesAltaVuelo;
     private JComboBox JComboBoxAerolineaAltaVuelo;
     private JPanel formVuelo;
@@ -280,7 +280,7 @@ public class Main extends JFrame {
 
         JSpinnerMesAltaVuelo.setModel(new SpinnerNumberModel(1, 1, 12, 1));
 
-        JSpinnerAñoAltaVuelo.setModel(new SpinnerNumberModel(2025, 2025, 2030, 1));
+        JSpinnerAnioAltaVuelo.setModel(new SpinnerNumberModel(2025, 2025, 2030, 1));
 
         JSpinnerEjecutivosAltaVuelo.setModel(new SpinnerNumberModel(1, 1, 100, 1));
         JSpinnerTuristasAltaVuelo.setModel(new SpinnerNumberModel(1, 1, 100, 1));
@@ -669,7 +669,7 @@ public class Main extends JFrame {
 
                     auxiliar.validarNombreVuelo(nombre);
 
-                    LocalDate fecha = LocalDate.of((Integer)JSpinnerAñoAltaVuelo.getValue(), (Integer)JSpinnerMesAltaVuelo.getValue(), (Integer)JSpinnerDiaAltaVuelo.getValue());
+                    LocalDate fecha = LocalDate.of((Integer) JSpinnerAnioAltaVuelo.getValue(), (Integer)JSpinnerMesAltaVuelo.getValue(), (Integer)JSpinnerDiaAltaVuelo.getValue());
                     LocalTime hora = LocalTime.of((Integer) JSpinnerDuracionAltaVueloHora.getValue(), (Integer) JSpinnerDuracionAltaVueloMinuto.getValue());
 
                     if(fecha.isBefore(LocalDate.now())){

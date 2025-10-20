@@ -1657,7 +1657,7 @@
                                 </constraints>
                                 <properties/>
                               </component>
-                              <component id="2a2" class="javax.swing.JSpinner" binding="JSpinnerAñoAltaVuelo">
+                              <component id="2a2" class="javax.swing.JSpinner" binding="JSpinnerAnioAltaVuelo">
                                 <constraints>
                                   <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                                 </constraints>

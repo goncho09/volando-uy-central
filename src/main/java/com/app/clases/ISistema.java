@@ -99,7 +99,7 @@ public interface ISistema {
 
     void altaPaquete(DtPaquete paquete);
 
-    // ---------- CATEGORÍAS ---------- //
+    // ---------- CATEGORIAS ---------- //
     void altaCategoria(DtCategoria categoria);
     DtCategoria buscarCategoria(String nombre);
     List<Categoria> getCategorias();
