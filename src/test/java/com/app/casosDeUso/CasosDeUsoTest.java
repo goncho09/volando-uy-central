@@ -18,7 +18,6 @@ class CasosDeUsoTest {
 
     // ------------ Alta de Usuario -------------- //
 
-
     @Test
     void registrarClienteExistente(){
         LocalDate fechaNacimiento = LocalDate.of(1990, 1, 1);

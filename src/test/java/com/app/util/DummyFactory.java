@@ -170,6 +170,7 @@ public class DummyFactory {
         s.compraPaquete(paquetesParaRutas.get(4), clientes.get(3));
 
 
+        // ------------------ Reservas --------------- (por hacer)
 
         return s;
     }
