@@ -35,7 +35,7 @@ public class DummyFactory {
 
         List<DtCliente> clientes = new ArrayList<>();
         clientes.add(new DtCliente("power", "Bloody", "laSanguinaria@gmail.com", "1234", "db774be8-a53e-40f7-aa14-default.png", "Mary", LocalDate.of(1990, 5, 12), "Tokyo", TipoDocumento.CEDULA, 12345678));
-        clientes.add(new DtCliente("mariaLopez", "Maria", "maria.lopez@gmail.com", "1234", "default.png", "Lopez", LocalDate.of(1985, 8, 22), "Argentina", TipoDocumento.PASAPORTE, 87654321));
+        clientes.add(new DtCliente("zacgamer", "José", "zacgamer255@gmail.com", "1234", "default.png", "García", LocalDate.of(2004, 8, 20), "Mexicana", TipoDocumento.PASAPORTE, 87654321));
         clientes.add(new DtCliente("carlosSanchez", "Carlos", "carlos.sanchez@gmail.com", "1234", "default.png", "Sanchez", LocalDate.of(1992, 3, 3), "Chile", TipoDocumento.CEDULA, 23456789));
         clientes.add(new DtCliente("anaGomez", "Ana", "ana.gomez@gmail.com", "1234", "default.png", "Gomez", LocalDate.of(1995, 11, 17), "Paraguay", TipoDocumento.PASAPORTE, 98765432));
         clientes.add(new DtCliente("luisRamirez", "Luis", "luis.ramirez@gmail.com", "1234", "default.png", "Ramirez", LocalDate.of(1988, 1, 30), "Brasil", TipoDocumento.CEDULA, 34567890));
@@ -162,6 +162,12 @@ public class DummyFactory {
         s.agregarRutaAPaquete(paquetesParaRutas.get(3), rutasAprobadas.get(4), 1, TipoAsiento.EJECUTIVO);
         s.agregarRutaAPaquete(paquetesParaRutas.get(3), rutasAprobadas.get(6), 3, TipoAsiento.TURISTA);
         s.agregarRutaAPaquete(paquetesParaRutas.get(4), rutasAprobadas.get(1), 5, TipoAsiento.TURISTA);
+
+        s.compraPaquete(paquetesParaRutas.get(0), clientes.get(1));
+        s.compraPaquete(paquetesParaRutas.get(1), clientes.get(0));
+        s.compraPaquete(paquetesParaRutas.get(2), clientes.get(1));
+        s.compraPaquete(paquetesParaRutas.get(3), clientes.get(4));
+        s.compraPaquete(paquetesParaRutas.get(4), clientes.get(3));
 
 
 

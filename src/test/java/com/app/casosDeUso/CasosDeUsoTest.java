@@ -1,12 +1,13 @@
-package com.app.clases;
+package com.app.casosDeUso;
 
+import com.app.clases.ISistema;
 import com.app.datatypes.DtCliente;
 import com.app.enums.TipoDocumento;
 import com.app.util.DummyFactory;
 import org.junit.jupiter.api.*;
 import java.time.LocalDate;
 
-class SistemaTest {
+class CasosDeUsoTest {
 
     static ISistema s;
 
