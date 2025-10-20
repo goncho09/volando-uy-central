@@ -18,6 +18,9 @@ public class RutaDeVuelo {
     @Column( nullable = false)
     private String descripcion;
 
+    @Column( nullable = true)
+    private String descripcionCorta;
+
     @Column( nullable = false)
     private LocalTime duracion;
 
@@ -67,6 +70,7 @@ public class RutaDeVuelo {
     public RutaDeVuelo(DtRuta ruta) {
         this.nombre = ruta.getNombre();
         this.descripcion = ruta.getDescripcion();
+        this.descripcionCorta = ruta.getDescripcionCorta();
         this.duracion = ruta.getDuracion();
         this.costoTurista = ruta.getCostoTurista();
         this.costoEjecutivo = ruta.getCostoEjecutivo();
@@ -93,6 +97,12 @@ public class RutaDeVuelo {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    public String getDescripcionCorta() {return descripcionCorta;}
+
+    public void setDescripcionCorta(String descripcionCorta) {
+        this.descripcionCorta = descripcionCorta;
     }
 
     public LocalTime getDuracion() {
@@ -143,24 +153,6 @@ public class RutaDeVuelo {
 
     public void setEstado(EstadoRuta estado) {this.estado = estado;};
 
-    public DtRuta getDatos() {
-        return new DtRuta(
-                this.getNombre(),
-                this.getDescripcion(),
-                this.getDuracion(),
-                this.getCostoTurista(),
-                this.getCostoEjecutivo(),
-                this.getEquipajeExtra(),
-                this.getFechaAlta(),
-                this.getUrlImagen(),
-                this.getEstado(),
-                this.getCategorias(),
-                this.getCiudadOrigen(),
-                this.getCiudadDestino()
-        );
-    }
-
-
     public List<Categoria> getCategorias() {
         return categorias;
     }
@@ -183,6 +175,24 @@ public class RutaDeVuelo {
 
     public void setCiudadDestino(Ciudad ciudadDestino) {
         this.ciudadDestino = ciudadDestino;
+    }
+
+    public DtRuta getDatos() {
+        return new DtRuta(
+                this.getNombre(),
+                this.getDescripcion(),
+                this.getDescripcionCorta(),
+                this.getDuracion(),
+                this.getCostoTurista(),
+                this.getCostoEjecutivo(),
+                this.getEquipajeExtra(),
+                this.getFechaAlta(),
+                this.getUrlImagen(),
+                this.getEstado(),
+                this.getCategorias(),
+                this.getCiudadOrigen(),
+                this.getCiudadDestino()
+        );
     }
 
     @Override

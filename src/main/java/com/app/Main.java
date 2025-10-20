@@ -135,7 +135,6 @@ public class Main extends JFrame {
     private JComboBox JComboBoxPaqueteConsultaPaqueteRutaVuelo;
     private JButton JButtonConsultarPaquete;
     private JPanel JPanelCategorias;
-    private JSpinner JSpinnerCostoAltaPaquete;
     private JComboBox JComboBoxAerolineaConsultaRuta;
     private JComboBox JComboBoxRutaVueloAgregarRuta;
     private JButton ButtonConfirmarAgregarRutaPaquete;
@@ -175,10 +174,14 @@ public class Main extends JFrame {
     private JButton aprobarButtonAceptarRechazarRuta;
     private JButton rechazarButtonAceptarRechazarRuta;
     private JLabel estadoRutaText;
+    private JTextField descripcionCortaAltaRutaDeVuelo;
+    private JRadioButton pagoGeneralRadioButton;
+    private JRadioButton pagoConPaqueteRadioButton;
+    private JComboBox JComboBoxSeleccionarPaqueteReserva;
 
 
     public Main() {
-
+        
         //Inicializar Sistema
         s = Factory.getSistema();
 
@@ -198,7 +201,7 @@ public class Main extends JFrame {
 
         // Configuración del JFrame
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(800, 600);
+        setSize(800, 700);
         setResizable(false);
         setLocationRelativeTo(null);
         setTitle("Admin Dashboard");
@@ -223,6 +226,7 @@ public class Main extends JFrame {
         JComboBoxvueloReserva.setEnabled(false);
         JComboBoxSeleccionarClienteReserva.setEnabled(false);
         JComboBoxtipoAsientoReserva.setEnabled(false);
+        JComboBoxSeleccionarPaqueteReserva.setEnabled(false);
         JButtonVerVueloReservaButton.setEnabled(false);
         aprobarButtonAceptarRechazarRuta.setEnabled(false);
         rechazarButtonAceptarRechazarRuta.setEnabled(false);
@@ -296,7 +300,6 @@ public class Main extends JFrame {
         JSpinnerDuracionAltaVueloMinuto.setModel(new SpinnerNumberModel(0, 0, 59, 1));
 
         JSpinnerDescuentoAltaPaquete.setModel(new SpinnerNumberModel(0, 0, 100, 1));
-        JSpinnerCostoAltaPaquete.setModel(new SpinnerNumberModel(1.0, 1.0, 1_000_000.0, 1.0));
         JSpinnerPeriodoAltaPaquete.setModel(new SpinnerNumberModel(1, 1, 1_000_000, 1));
 
 
@@ -811,7 +814,7 @@ public class Main extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    if (auxiliar.estanVaciosJTextField(nombreAltaRutaDeVuelo, descripcionAltaRutaDeVuelo) || auxiliar.estanVaciosJComboBox(JComboBoxAerolineaAltaRutaVuelo, JComboBoxCiudadOrigen, JComboBoxCiudadDestino)) {
+                    if (auxiliar.estanVaciosJTextField(nombreAltaRutaDeVuelo, descripcionAltaRutaDeVuelo, descripcionCortaAltaRutaDeVuelo) || auxiliar.estanVaciosJComboBox(JComboBoxAerolineaAltaRutaVuelo, JComboBoxCiudadOrigen, JComboBoxCiudadDestino)) {
                         new VentanaMensaje("Faltan argumentos");
                         return;
                     }
@@ -869,6 +872,7 @@ public class Main extends JFrame {
 
                     DtRuta ruta = new DtRuta(nombreAltaRutaDeVuelo.getText(),
                             descripcionAltaRutaDeVuelo.getText(),
+                            descripcionCortaAltaRutaDeVuelo.getText(),
                             horaRuta,
                             costoTurista,
                             costoEjecutivo,
@@ -931,26 +935,19 @@ public class Main extends JFrame {
                 try {
                     Integer periodo = (Integer) JSpinnerPeriodoAltaPaquete.getValue();
                     Integer descuento = (Integer) JSpinnerDescuentoAltaPaquete.getValue();
-                    float costo = ((Double) JSpinnerCostoAltaPaquete.getValue()).floatValue();
 
                     if(periodo < 1){
                         new VentanaMensaje("El período debe ser 1 o más.");
                         return;
                     }
 
-                    if(costo < 1){
-                        new VentanaMensaje("El costo debe ser 1 o más.");
-                        return;
-                    }
-
-                    s.altaPaquete(new DtPaquete(nombreAltaPaquete.getText(),descripcionAltaPaquete.getText(),periodo,descuento,costo, new ArrayList<>()));
+                    s.altaPaquete(new DtPaquete(nombreAltaPaquete.getText(),descripcionAltaPaquete.getText(),periodo,descuento,0, new ArrayList<>()));
                     new VentanaMensaje("Paquete creado correctamente.");
                     auxiliar.cargarPaqueteComboBox();
                     auxiliar.cargarPaqueteNoCompradoComboBox();
                     auxiliar.limpiarJTextField(nombreAltaPaquete,descripcionAltaPaquete);
                     JSpinnerPeriodoAltaPaquete.setValue(1);
                     JSpinnerDescuentoAltaPaquete.setValue(0);
-                    JSpinnerCostoAltaPaquete.setValue(1.0);
                 } catch (Exception ex){
                     new VentanaMensaje(ex.getMessage());
                 }
@@ -1134,6 +1131,38 @@ public class Main extends JFrame {
                 }
             }
         });
+
+        pagoConPaqueteRadioButton.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    JComboBoxSeleccionarPaqueteReserva.setEnabled(true);
+                } else {
+                    JComboBoxSeleccionarPaqueteReserva.setEnabled(false);
+                    JComboBoxSeleccionarPaqueteReserva.setSelectedIndex(-1);
+                }
+            }
+        });
+
+        JComboBoxSeleccionarClienteReserva.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if(e.getStateChange() == ItemEvent.SELECTED){
+                    DtCliente cliente = (DtCliente) JComboBoxSeleccionarClienteReserva.getSelectedItem();
+                    if(cliente == null){
+                        new VentanaMensaje("Ha ocurrido un error..");
+                        return;
+                    }
+
+                    // Llenamos el combo de paquetes del cliente
+                    auxiliar.cargarPaqueteClienteComboBox(cliente);
+                    JComboBoxSeleccionarPaqueteReserva.setModel(auxiliar.getComboPaqueteClienteModel());
+                    JComboBoxSeleccionarPaqueteReserva.setEnabled(true);
+                }
+            }
+        });
+
+
         JComboBoxrutaDeVueloReserva.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {

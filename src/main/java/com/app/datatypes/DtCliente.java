@@ -25,8 +25,9 @@ public class DtCliente extends DtUsuario{
         this.numeroDocumento = numeroDocumento;
         this.comprasPaquetes = new ArrayList<>();
     }
-    public DtCliente(String nickname, String nombre, String email, String urlImage, String apellido, LocalDate fechaNacimiento, String nacionalidad, TipoDocumento tipoDocumento, int numeroDocumento) {
-        super(nickname, nombre, email, urlImage);
+
+    public DtCliente(DtUsuario usuario, String apellido, LocalDate fechaNacimiento, String nacionalidad, TipoDocumento tipoDocumento, int numeroDocumento) {
+        super(usuario.getNickname(), usuario.getNombre(), usuario.getEmail(),  usuario.getPassword(), usuario.getUrlImage());
         this.apellido = apellido;
         this.fechaNacimiento = fechaNacimiento;
         this.nacionalidad = nacionalidad;
@@ -34,6 +35,7 @@ public class DtCliente extends DtUsuario{
         this.numeroDocumento = numeroDocumento;
         this.comprasPaquetes = new ArrayList<>();
     }
+
     public DtCliente(String nickname, String nombre, String email, String apellido, LocalDate fechaNacimiento, String nacionalidad, TipoDocumento tipoDocumento, int numeroDocumento) {
         super(nickname, nombre, email);
         this.apellido = apellido;
