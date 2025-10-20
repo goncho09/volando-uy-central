@@ -4,6 +4,7 @@ import com.app.clases.Factory;
 import com.app.clases.ISistema;
 import com.app.datatypes.*;
 import com.app.enums.EstadoRuta;
+import com.app.enums.TipoAsiento;
 import com.app.enums.TipoDocumento;
 
 import java.time.LocalDate;
@@ -130,6 +131,39 @@ public class DummyFactory {
         for(DtVuelo vuelo: vuelos){
             s.altaVuelo(vuelo);
         }
+
+        // --------------- Paquetes -------------- //
+
+        List<DtPaquete> paquetes = new ArrayList<>();
+        paquetes.add(new DtPaquete("ExploraSur", "Viajes por el sur con descuento especial", 30, 10));
+        paquetes.add(new DtPaquete("VueloExpress", "Ideal para escapadas rápidas", 15, 5));
+        paquetes.add(new DtPaquete("NegociosPlus", "Paquete para viajeros de negocios frecuentes", 60, 15));
+        paquetes.add(new DtPaquete("FamiliaFeliz", "Rutas ideales para disfrutar en familia", 45, 12));
+        paquetes.add(new DtPaquete("AventuraTotal", "Vuelos hacia destinos de aventura extrema", 20, 0));
+        paquetes.add(new DtPaquete("LujoMundial", "Viajes de lujo con beneficios exclusivos", 90, 20));
+        paquetes.add(new DtPaquete("TurismoCultural", "Descubre el patrimonio y cultura mundial", 40, 10));
+        paquetes.add(new DtPaquete("EscapadaRomántica", "Vuelos para parejas y lunas de miel", 25, 7));
+        paquetes.add(new DtPaquete("WorkAndTravel", "Para quienes combinan trabajo y viajes", 75, 0));
+        paquetes.add(new DtPaquete("EcoVuelo", "Promueve destinos ecológicos y sostenibles", 50, 9));
+
+        List<DtPaquete> paquetesParaRutas = new ArrayList<>();
+
+        for(DtPaquete p : paquetes){
+            s.altaPaquete(p);
+            if(p.getDescuento() == 0 || p.getNombre().equals("VueloExpress") || p.getNombre().equals("LujoMundial") || p.getNombre().equals("EcoVuelo")){
+                paquetesParaRutas.add(p);
+            }
+        }
+
+        s.agregarRutaAPaquete(paquetesParaRutas.get(0), rutasAprobadas.get(5), 3, TipoAsiento.TURISTA);
+        s.agregarRutaAPaquete(paquetesParaRutas.get(0), rutasAprobadas.get(4), 2, TipoAsiento.EJECUTIVO);
+        s.agregarRutaAPaquete(paquetesParaRutas.get(1), rutasAprobadas.get(2), 2, TipoAsiento.EJECUTIVO);
+        s.agregarRutaAPaquete(paquetesParaRutas.get(2), rutasAprobadas.get(0), 4, TipoAsiento.TURISTA);
+        s.agregarRutaAPaquete(paquetesParaRutas.get(3), rutasAprobadas.get(4), 1, TipoAsiento.EJECUTIVO);
+        s.agregarRutaAPaquete(paquetesParaRutas.get(3), rutasAprobadas.get(6), 3, TipoAsiento.TURISTA);
+        s.agregarRutaAPaquete(paquetesParaRutas.get(4), rutasAprobadas.get(1), 5, TipoAsiento.TURISTA);
+
+
 
         return s;
     }

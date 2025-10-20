@@ -26,12 +26,12 @@ public class DtPaquete {
         this.rutaEnPaquete = rutaEnPaquete;
     }
 
-    public DtPaquete(String nombre, String descripcion, int validezDias, float descuento, float costo) {
+    public DtPaquete(String nombre, String descripcion, int validezDias, float descuento) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.validezDias = validezDias;
         this.descuento = descuento;
-        this.costo = costo;
+        this.costo = 0;
         this.rutaEnPaquete = new ArrayList<>();
     }
 

@@ -938,7 +938,7 @@ public class Main extends JFrame {
                         return;
                     }
 
-                    s.altaPaquete(new DtPaquete(nombreAltaPaquete.getText(),descripcionAltaPaquete.getText(),periodo,descuento,0, new ArrayList<>()));
+                    s.altaPaquete(new DtPaquete(nombreAltaPaquete.getText(),descripcionAltaPaquete.getText(),periodo,descuento));
                     new VentanaMensaje("Paquete creado correctamente.");
                     auxiliar.cargarPaqueteComboBox();
                     auxiliar.cargarPaqueteNoCompradoComboBox();
