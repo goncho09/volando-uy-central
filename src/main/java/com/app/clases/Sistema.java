@@ -623,17 +623,11 @@ public class Sistema implements ISistema {
             throw new IllegalArgumentException("Este usuario ya existe.");
         }
 
-        System.out.println("pasa");
-        for (Usuario existente : this.usuarios.values()) {
-            if (existente.getEmail().equals(cliente.getEmail())) {
-                throw new IllegalArgumentException("Ya existe un usuario con ese email.");
-            }
+        if(existeUsuarioEmail(cliente.getEmail())){
+            throw new IllegalArgumentException("Ya existe un usuario con ese email.");
         }
-
         confirmarAltaUsuario(cliente);
-    }
-
-    ;
+    };
 
     public void modificarCliente(DtCliente cliente) {
         Usuario u = this.usuarios.get(cliente.getNickname());
@@ -686,15 +680,11 @@ public class Sistema implements ISistema {
             throw new IllegalArgumentException("Este usuario ya existe.");
         }
 
-        for (Usuario existente : this.usuarios.values()) {
-            if (existente.getEmail().equals(aerolinea.getEmail())) {
-                throw new IllegalArgumentException("Ya existe un usuario con ese email.");
-            }
+        if(existeUsuarioEmail(aerolinea.getEmail())){
+            throw new IllegalArgumentException("Ya existe un usuario con ese email.");
         }
         this.confirmarAltaUsuario(aerolinea);
-    }
-
-    ;
+    };
 
     public void modificarAerolinea(DtAerolinea aerolinea) {
         Usuario u = this.usuarios.get(aerolinea.getNickname());
@@ -728,7 +718,6 @@ public class Sistema implements ISistema {
     ;
 
     public void confirmarAltaUsuario(DtUsuario usuario) {
-        System.out.println("dasdsa");
         if (usuario instanceof DtCliente) {
             Cliente newUser = new Cliente((DtCliente) usuario);
             this.usuarios.put(newUser.getNickname(), newUser);

@@ -8,7 +8,9 @@ import java.util.List;
 
 @Entity
 public class Aerolinea extends Usuario {
+    @Column(nullable = false)
     private String descripcion;
+
     private String linkWeb;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
