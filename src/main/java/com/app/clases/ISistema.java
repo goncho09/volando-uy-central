@@ -118,8 +118,6 @@ public interface ISistema {
     List<DtPasajero> listarPasajeros(DtReserva reserva);
 
 
-    void validarTextoSoloLetra(String nombre);
-
     // ---------- BD ---------- //
     void vaciarBD();
     void cargarDatos();
