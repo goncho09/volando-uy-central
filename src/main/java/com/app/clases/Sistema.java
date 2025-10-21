@@ -1167,7 +1167,6 @@ public class Sistema implements ISistema {
     }
 
     ;
-
     public boolean clienteTienePaquete(String nickname, String nombrePaquete){
         DtCliente c = getCliente(nickname);
         Cliente cliente = buscarCliente(c);

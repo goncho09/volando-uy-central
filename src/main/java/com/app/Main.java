@@ -916,6 +916,7 @@ public class Main extends JFrame {
                             s.buscarCiudad(ciudadOrigen.getNombre(), ciudadOrigen.getPais()),
                             s.buscarCiudad(ciudadDestino.getNombre(), ciudadDestino.getPais()));
 
+
                         s.altaRutaDeVuelo(JComboBoxAerolineaAltaRutaVuelo.getSelectedItem().toString(), ruta);
                         auxiliar.cargarRutasDeVueloComboBox();
                         imagenTemporalRuta = null;
