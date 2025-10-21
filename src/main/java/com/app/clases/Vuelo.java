@@ -37,11 +37,11 @@ public class Vuelo {
     private RutaDeVuelo rutaDeVuelo;
 
     public DtVuelo getDatos() {
-        return new DtVuelo(this.nombre,this.fecha,this.duracion,this.maxTuristas,this.maxEjecutivos,this.urlImage,this.fechaAlta,this.rutaDeVuelo.getDatos(), this.cantReservas);
+        return new DtVuelo(this.nombre,this.fecha,this.duracion,this.maxTuristas,this.maxEjecutivos,this.urlImage,this.fechaAlta,this.rutaDeVuelo, this.cantReservas);
     }
 
     public Vuelo() {}
-    public Vuelo(DtVuelo vuelo, RutaDeVuelo rutaDeVuelo) {
+    public Vuelo(DtVuelo vuelo) {
         this.nombre = vuelo.getNombre();
         this.fecha = vuelo.getFecha();
         this.duracion = vuelo.getDuracion();
@@ -49,7 +49,7 @@ public class Vuelo {
         this.maxEjecutivos = vuelo.getMaxEjecutivos();
         this.urlImage = vuelo.getUrlImage();
         this.fechaAlta = vuelo.getFechaAlta();
-        this.rutaDeVuelo = rutaDeVuelo;
+        this.rutaDeVuelo = vuelo.getRutaDeVuelo();
         this.cantReservas = vuelo.getCantReservas();
     }
 

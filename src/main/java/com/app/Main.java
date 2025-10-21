@@ -41,7 +41,7 @@ public class Main extends JFrame {
     private JSpinner JSpinnerTuristasAltaVuelo;
     private JSpinner JSpinnerEjecutivosAltaVuelo;
     private JSpinner JSpinnerDiaAltaVuelo;
-    private JSpinner JSpinnerAnioAltaVuelo;
+    private JSpinner JSpinnerAñoAltaVuelo;
     private JSpinner JSpinnerMesAltaVuelo;
     private JComboBox JComboBoxAerolineaAltaVuelo;
     private JPanel formVuelo;
@@ -184,7 +184,6 @@ public class Main extends JFrame {
         
         //Inicializar Sistema
         s = Factory.getSistema();
-        s.cargarDatos();
 
         //Inicializar Auxiliar
         this.auxiliar = new AuxiliarFunctions(s);
@@ -281,7 +280,7 @@ public class Main extends JFrame {
 
         JSpinnerMesAltaVuelo.setModel(new SpinnerNumberModel(1, 1, 12, 1));
 
-        JSpinnerAnioAltaVuelo.setModel(new SpinnerNumberModel(2025, 2025, 2030, 1));
+        JSpinnerAñoAltaVuelo.setModel(new SpinnerNumberModel(2025, 2025, 2030, 1));
 
         JSpinnerEjecutivosAltaVuelo.setModel(new SpinnerNumberModel(1, 1, 100, 1));
         JSpinnerTuristasAltaVuelo.setModel(new SpinnerNumberModel(1, 1, 100, 1));
@@ -410,6 +409,23 @@ public class Main extends JFrame {
                     return;
                 }
 
+                MetodoPago metodoPago;
+                final DtPaquete[] paqueteSeleccionado = new DtPaquete[1];
+
+                if (pagoConPaqueteRadioButton.isSelected()) {
+                    metodoPago = MetodoPago.PAQUETE;
+                    paqueteSeleccionado[0] = (DtPaquete) JComboBoxSeleccionarPaqueteReserva.getSelectedItem();
+                    if (paqueteSeleccionado[0] == null) {
+                        new VentanaMensaje("Debe seleccionar un paquete");
+                        return;
+                    }
+                } else if (pagoGeneralRadioButton.isSelected()) {
+                    metodoPago = MetodoPago.GENERAL;
+                } else {
+                    new VentanaMensaje("Debe seleccionar un método de pago");
+                    return;
+                }
+
                 AgregarPasajero ventanaPasajes = new AgregarPasajero(pasajes);
                 setEnabled(false);
 
@@ -419,13 +435,29 @@ public class Main extends JFrame {
                         setEnabled(true);
                         List<DtPasajero> listaPasajes = ventanaPasajes.getPasajes();
                         if(listaPasajes.size() == pasajes){
-                            DtReserva reserva = new DtReserva(
-                                    fecha,
-                                    tipoAsiento,
-                                    pasajes,
-                                    equipajeExtra,
-                                    listaPasajes
-                            );
+                            DtReserva reserva;
+
+                            if (metodoPago == MetodoPago.PAQUETE) {
+                                reserva = new DtReserva(
+                                        fecha,
+                                        tipoAsiento,
+                                        pasajes,
+                                        equipajeExtra,
+                                        listaPasajes,
+                                        metodoPago,
+                                        paqueteSeleccionado[0]
+                                );
+                            } else {
+                                reserva = new DtReserva(
+                                        fecha,
+                                        tipoAsiento,
+                                        pasajes,
+                                        equipajeExtra,
+                                        listaPasajes,
+                                        metodoPago
+                                );
+                            }
+
                             try{
                                 s.altaReserva(reserva, cliente, vuelo);
                                 new VentanaMensaje("Reserva realizada exitosamente");
@@ -670,7 +702,7 @@ public class Main extends JFrame {
 
                     auxiliar.validarNombreVuelo(nombre);
 
-                    LocalDate fecha = LocalDate.of((Integer) JSpinnerAnioAltaVuelo.getValue(), (Integer)JSpinnerMesAltaVuelo.getValue(), (Integer)JSpinnerDiaAltaVuelo.getValue());
+                    LocalDate fecha = LocalDate.of((Integer)JSpinnerAñoAltaVuelo.getValue(), (Integer)JSpinnerMesAltaVuelo.getValue(), (Integer)JSpinnerDiaAltaVuelo.getValue());
                     LocalTime hora = LocalTime.of((Integer) JSpinnerDuracionAltaVueloHora.getValue(), (Integer) JSpinnerDuracionAltaVueloMinuto.getValue());
 
                     if(fecha.isBefore(LocalDate.now())){
@@ -696,7 +728,11 @@ public class Main extends JFrame {
                     DtVuelo dtVuelo = new DtVuelo(nombre, fecha, hora, (Integer)JSpinnerTuristasAltaVuelo.getValue(), (Integer)JSpinnerEjecutivosAltaVuelo.getValue(), urlImage, LocalDate.now(), null, 0);
 
                     try {
-                        s.altaVuelo(dtVuelo);
+                        s.seleccionarAerolineaParaVuelo(aerolinea);
+                        s.seleccionarRuta(ruta);
+                        s.ingresarDatosVuelo(dtVuelo);
+                        s.confirmarAltaVuelo();
+                        s.consultarVuelo(dtVuelo.getNombre());
                         new VentanaMensaje("Vuelo creado correctamente");
                     } catch (IllegalArgumentException ex) {
                         AuxiliarFunctions.borrarImagen(urlImage, TipoImagen.VUELO);
@@ -829,7 +865,7 @@ public class Main extends JFrame {
                     Integer costoEjecutivo = (Integer) SpínnerCostoEjecutivo.getValue();
                     Integer costoEquipaje = (Integer) SpinnerCostoEquipaje.getValue();
                     List<String> nombresCategorias = new ArrayList<String>();
-                    List<DtCategoria> categorias = s.buscarCategorias();
+                    List<Categoria> categorias = s.getCategorias();
 
                     DtCiudad ciudadOrigen = (DtCiudad) JComboBoxCiudadOrigen.getSelectedItem();
                     DtCiudad ciudadDestino = (DtCiudad) JComboBoxCiudadDestino.getSelectedItem();
@@ -876,9 +912,9 @@ public class Main extends JFrame {
                             costoEquipaje,
                             LocalDate.now(),
                             urlImage,
-                            s.buscarCategoriasPorNombre(nombresCategorias),
-                            ciudadOrigen,
-                            ciudadDestino);
+                            s.getCategoriasPorNombre(nombresCategorias),
+                            s.buscarCiudad(ciudadOrigen.getNombre(), ciudadOrigen.getPais()),
+                            s.buscarCiudad(ciudadDestino.getNombre(), ciudadDestino.getPais()));
 
                         s.altaRutaDeVuelo(JComboBoxAerolineaAltaRutaVuelo.getSelectedItem().toString(), ruta);
                         auxiliar.cargarRutasDeVueloComboBox();
@@ -938,7 +974,7 @@ public class Main extends JFrame {
                         return;
                     }
 
-                    s.altaPaquete(new DtPaquete(nombreAltaPaquete.getText(),descripcionAltaPaquete.getText(),periodo,descuento));
+                    s.altaPaquete(new DtPaquete(nombreAltaPaquete.getText(),descripcionAltaPaquete.getText(),periodo,descuento,0, new ArrayList<>()));
                     new VentanaMensaje("Paquete creado correctamente.");
                     auxiliar.cargarPaqueteComboBox();
                     auxiliar.cargarPaqueteNoCompradoComboBox();
@@ -1151,7 +1187,6 @@ public class Main extends JFrame {
                         return;
                     }
 
-                    // Llenamos el combo de paquetes del cliente
                     auxiliar.cargarPaqueteClienteComboBox(cliente);
                     JComboBoxSeleccionarPaqueteReserva.setModel(auxiliar.getComboPaqueteClienteModel());
                     JComboBoxSeleccionarPaqueteReserva.setEnabled(true);

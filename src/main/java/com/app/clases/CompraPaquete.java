@@ -23,14 +23,22 @@ public class CompraPaquete {
     private Cliente cliente;
 
     public CompraPaquete() {}
+    public CompraPaquete(LocalDate fechaCompra, LocalDate fechaVencimiento, float costo, Paquete paquete, Cliente cliente) {
+        this.fechaCompra = fechaCompra;
+        this.fechaVencimiento = fechaVencimiento;
+        this.costo = costo;
+        this.paquete = paquete;
+        this.cliente = cliente;
+    }
 
     public CompraPaquete(DtCompraPaquete dto) {
         this.fechaCompra = dto.getFechaCompra();
         this.fechaVencimiento = dto.getFechaVencimiento();
-        this.costo = 0;
+        this.costo = dto.getCosto();
         this.paquete = dto.getPaquete();
         this.cliente = dto.getCliente();
     }
+
 
     public LocalDate getFechaCompra() {
         return fechaCompra;

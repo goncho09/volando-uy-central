@@ -3,14 +3,13 @@ package com.app.clases;
 import com.app.DAOs.*;
 import com.app.datatypes.*;
 import com.app.enums.EstadoRuta;
+import com.app.enums.MetodoPago;
 import com.app.enums.TipoAsiento;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Persistence;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -70,6 +69,16 @@ public class Sistema implements ISistema {
         this.reservaDao = new ReservaDao(em);
         this.pasajeroDao = new PasajerosDao(em);
         this.compraDao = new CompraPaqueteDao(em);
+
+        this.categorias = categoriaDao.obtenerCategorias();
+        this.ciudades = ciudadDao.obtenerCiudades();
+        this.usuarios = userDao.obtenerUsuarios();
+        this.paquetes = paqueteDao.obtenerPaquetes();
+        this.rutasDeVuelo = rutaDeVueloDao.obtenerRutasDeVuelo();
+        this.vuelos = vueloDao.obtenerVuelos();
+        this.reservas = reservaDao.listar();
+        this.pasajes = pasajeroDao.listar();
+        this.compras = compraDao.listar();
     }
 
     public static Sistema getInstancia() {
@@ -208,27 +217,7 @@ public class Sistema implements ISistema {
         if (this.rutasDeVuelo.containsKey(datosRuta.getNombre()))
             throw new IllegalArgumentException("Ya existe esa ruta de vuelo.");
 
-        List<Categoria> categoriaList = new ArrayList();
-
-        for(DtCategoria c : datosRuta.getCategorias()) {
-            Categoria nuevaCategoria = this.getCategoria(c.getNombre());
-            if(nuevaCategoria == null) {
-                throw new IllegalArgumentException("Categoria no existe");
-            }
-            categoriaList.add(nuevaCategoria);
-        }
-
-        Ciudad origen = this.buscarCiudad(datosRuta.getCiudadOrigen().getNombre(), datosRuta.getCiudadOrigen().getPais());
-        if(origen == null){
-            throw new IllegalArgumentException("Ciudad Origen no existe");
-        }
-
-        Ciudad destino = this.buscarCiudad(datosRuta.getCiudadDestino().getNombre(), datosRuta.getCiudadDestino().getPais());
-        if(destino == null){
-            throw new IllegalArgumentException("Ciudad Destino no existe");
-        }
-
-        RutaDeVuelo nuevaRuta = new RutaDeVuelo(datosRuta, categoriaList, origen, destino);
+        RutaDeVuelo nuevaRuta = new RutaDeVuelo(datosRuta);
 
         if (aerolinea.getRutasDeVuelo().contains(nuevaRuta))
             throw new IllegalArgumentException("Ya existe esa ruta de vuelo en esa aerolinea");
@@ -307,7 +296,8 @@ public class Sistema implements ISistema {
                         r.getPasajeros(),
                         c, // Cliente
                         r.getVuelo(),
-                        r.getPaquete()
+                        r.getPaquete(),
+                        r.getMetodoPago()
                 ));
             }
             return dtReservas;
@@ -601,17 +591,6 @@ public class Sistema implements ISistema {
         return categoriaDao.listar();
     }
 
-    public List<DtCategoria> buscarCategorias(){
-        List<DtCategoria> categoriaList = new ArrayList<>();
-        if (categoriaDao.listar().isEmpty()) {
-            throw new IllegalArgumentException("No hay categorias.");
-        }
-        for(Categoria c : categoriaDao.listar()){
-            categoriaList.add(c.getDatos());
-        }
-        return categoriaList;
-    };
-
     public void consultaVuelo(DtVuelo vuelo) {
         Vuelo v = this.vuelos.get(vuelo.getNombre());
         if (v == null) {
@@ -624,11 +603,17 @@ public class Sistema implements ISistema {
             throw new IllegalArgumentException("Este usuario ya existe.");
         }
 
-        if(existeUsuarioEmail(cliente.getEmail())){
-            throw new IllegalArgumentException("Ya existe un usuario con ese email.");
+        System.out.println("pasa");
+        for (Usuario existente : this.usuarios.values()) {
+            if (existente.getEmail().equals(cliente.getEmail())) {
+                throw new IllegalArgumentException("Ya existe un usuario con ese email.");
+            }
         }
+
         confirmarAltaUsuario(cliente);
-    };
+    }
+
+    ;
 
     public void modificarCliente(DtCliente cliente) {
         Usuario u = this.usuarios.get(cliente.getNickname());
@@ -680,14 +665,16 @@ public class Sistema implements ISistema {
         if (this.usuarios.containsKey(aerolinea.getNickname())) {
             throw new IllegalArgumentException("Este usuario ya existe.");
         }
-        if(existeUsuarioEmail(aerolinea.getEmail())){
-            throw new IllegalArgumentException("Ya existe un usuario con ese email.");
-        }
-        if(aerolinea.getDescripcion().equals("")) {
-            throw new IllegalArgumentException("La descripción no puede ser vacía.");
+
+        for (Usuario existente : this.usuarios.values()) {
+            if (existente.getEmail().equals(aerolinea.getEmail())) {
+                throw new IllegalArgumentException("Ya existe un usuario con ese email.");
+            }
         }
         this.confirmarAltaUsuario(aerolinea);
-    };
+    }
+
+    ;
 
     public void modificarAerolinea(DtAerolinea aerolinea) {
         Usuario u = this.usuarios.get(aerolinea.getNickname());
@@ -721,6 +708,7 @@ public class Sistema implements ISistema {
     ;
 
     public void confirmarAltaUsuario(DtUsuario usuario) {
+        System.out.println("dasdsa");
         if (usuario instanceof DtCliente) {
             Cliente newUser = new Cliente((DtCliente) usuario);
             this.usuarios.put(newUser.getNickname(), newUser);
@@ -740,26 +728,12 @@ public class Sistema implements ISistema {
             for (Categoria c : this.getCategorias()) {
                 if (c.getNombre().equals(nombreCategoria)) {
                     categoriasSeleccionadas.add(c);
-                    break;
+                    break; // salimos del loop interno
                 }
             }
         }
         return categoriasSeleccionadas;
     }
-
-    public List<DtCategoria> buscarCategoriasPorNombre(List<String> nombres){
-        List<DtCategoria> categoriasSeleccionadas = new ArrayList<>();
-        for (String nombreCategoria : nombres) {
-            for (Categoria c : this.getCategorias()) {
-                if (c.getNombre().equals(nombreCategoria)) {
-                    categoriasSeleccionadas.add(c.getDatos());
-                    break;
-                }
-            }
-        }
-        return categoriasSeleccionadas;
-    };
-
 
     public void cancelarAltaUsuario() {
         this.clienteTemporal = null;
@@ -818,27 +792,41 @@ public class Sistema implements ISistema {
         return (this.rutasDeVuelo.get(nombre).getDatos());
     }
 
-    public void altaVuelo(DtVuelo vuelo){
-        if (vuelo == null || vuelo.getNombre().equals("")) {
-            throw new IllegalArgumentException("Ha ocurrido un error.");
+
+    public void ingresarDatosVuelo(DtVuelo datosVuelo) {
+        if (this.rutaTemporal == null) {
+            throw new IllegalArgumentException("Debe seleccionar una ruta primero.");
         }
-        if (this.vuelos.containsKey(vuelo.getNombre())) {
+        if (this.vuelos.containsKey(datosVuelo.getNombre())) {
             throw new IllegalArgumentException("Ya existe un vuelo con ese nombre.");
         }
-        if(vuelo.getDuracion().equals(LocalTime.of(0,0))){
-            throw new IllegalArgumentException("La duracion debe ser mayor a 0.");
+        this.vueloTemporal = datosVuelo;
+    }
+
+
+    public void confirmarAltaVuelo() {
+        if (this.vueloTemporal == null) {
+            throw new IllegalArgumentException("Debe seleccionar un vuelo");
         }
-        RutaDeVuelo ruta = this.buscarRutaDeVuelo(vuelo.getRutaDeVuelo());
-        if (ruta == null || ruta.getEstado() != EstadoRuta.APROBADA) {
-            throw new IllegalArgumentException("Debe seleccionar una ruta válida");
+        if (this.aerolineaTemp == null) {
+            throw new IllegalArgumentException("Debe seleccionar una aerolinea");
         }
 
-        Vuelo nuevo = new Vuelo(vuelo, ruta);
+        if (this.rutaTemporal == null) {
+            throw new IllegalArgumentException("Debe seleccionar una ruta");
+        }
+
+        Vuelo nuevo = new Vuelo(this.vueloTemporal);
+        nuevo.setRutaDeVuelo(this.rutaTemporal);
 
         this.vuelos.put(nuevo.getNombre(), nuevo);
         this.consultaVuelos.add(nuevo);
         this.vueloDao.guardar(nuevo);
-    };
+
+        this.vueloTemporal = null;
+        this.rutaTemporal = null;
+        this.aerolineaTemp = null;
+    }
 
     public void cancelarAlta() {
         this.rutaTemporal = null;
@@ -1030,10 +1018,29 @@ public class Sistema implements ISistema {
         float costoEquipaje = reserva.getEquipajeExtra() * v.getRutaDeVuelo().getEquipajeExtra();
         float costo = (costoAsiento * cantPasajes) + costoEquipaje;
 
+        if(reserva.getMetodoPago() == MetodoPago.PAQUETE){
+            int pasajesRestantes = cantPasajes;
+            List<DtPaquete> paquetesComprados = listarPaquetes(cliente);
+
+            for (DtPaquete p : paquetesComprados){
+                Paquete paq = buscarPaquete(p);
+                for (RutaEnPaquete rep : paq.getRutaEnPaquete()){
+                    if(rep.getRutaDeVuelo().equals(v.getRutaDeVuelo())) {
+                        int descontar = Math.min(pasajesRestantes, rep.getCantidad());
+                        rep.setCantidad(rep.getCantidad() - descontar);
+                        pasajesRestantes -= descontar;
+                        if (pasajesRestantes == 0) break;
+                    }
+                }
+                if(pasajesRestantes == 0) break;
+            }
+            costo = pasajesRestantes * (reserva.getTipoAsiento() == TipoAsiento.EJECUTIVO ? v.getRutaDeVuelo().getCostoEjecutivo() : v.getRutaDeVuelo().getCostoTurista());
+            costo += reserva.getEquipajeExtra() * v.getRutaDeVuelo().getEquipajeExtra();
+        }
+
         if (c.existeVueloReserva(v)) {
             throw new IllegalArgumentException("Ya existe una reserva para este vuelo. Cambie el Cliente, Aerolinea o RutaDeVuelo.");
         }
-        ;
 
         if (cantPasajes != reserva.getPasajeros().size()) {
             throw new IllegalArgumentException("La cantidad de pasajeros no coincide");
@@ -1071,8 +1078,6 @@ public class Sistema implements ISistema {
         }
         return listaReservas;
     }
-
-    ;
 
     public List<DtReserva> listarReservas(DtVuelo vuelo) {
         String nombre = vuelo.getNombre();
@@ -1136,7 +1141,7 @@ public class Sistema implements ISistema {
     ;
 
     public boolean containsCategoria(DtRuta ruta, String categoria) {
-        for (DtCategoria c : ruta.getCategorias()) {
+        for (Categoria c : ruta.getCategorias()) {
             if (c.getNombre().equals(categoria)) {
                 return true;
             }
@@ -1158,40 +1163,5 @@ public class Sistema implements ISistema {
         return false;
     };
 
-    public Categoria getCategoria(String nombre){
-        return this.categorias.get(nombre);
-    };
-
-    public void cargarDatos(){
-        this.categorias = categoriaDao.obtenerCategorias();
-        this.ciudades = ciudadDao.obtenerCiudades();
-        this.usuarios = userDao.obtenerUsuarios();
-        this.paquetes = paqueteDao.obtenerPaquetes();
-        this.rutasDeVuelo = rutaDeVueloDao.obtenerRutasDeVuelo();
-        this.vuelos = vueloDao.obtenerVuelos();
-        this.reservas = reservaDao.listar();
-        this.pasajes = pasajeroDao.listar();
-        this.compras = compraDao.listar();
-    }
-
-    public void vaciarBD() {
-        EntityTransaction tx = em.getTransaction();
-        tx.begin();
-
-        em.createQuery("DELETE FROM Aerolinea").executeUpdate();
-        em.createQuery("DELETE FROM Reserva").executeUpdate();
-        em.createQuery("DELETE FROM CompraPaquete").executeUpdate();
-        em.createQuery("DELETE FROM Cliente").executeUpdate();
-        em.createQuery("DELETE FROM DtPasajero ").executeUpdate();
-        em.createQuery("DELETE FROM Vuelo").executeUpdate();
-        em.createQuery("DELETE FROM Usuario").executeUpdate();
-        em.createQuery("DELETE FROM RutaEnPaquete").executeUpdate();
-        em.createQuery("DELETE FROM RutaDeVuelo ").executeUpdate();
-        em.createQuery("DELETE FROM Categoria").executeUpdate();
-        em.createQuery("DELETE FROM Ciudad").executeUpdate();
-        em.createQuery("DELETE FROM Paquete").executeUpdate();
-
-        tx.commit();
-    }
 }
 

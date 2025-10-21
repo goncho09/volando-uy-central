@@ -19,13 +19,13 @@ public class DtRuta {
     private LocalDate fechaAlta;
     private String urlImagen;
     private EstadoRuta estado;
-    private List<DtCategoria> categorias;
-    private DtCiudad ciudadOrigen;
-    private DtCiudad ciudadDestino;
+    private List<Categoria> categorias;
+    private Ciudad ciudadOrigen;
+    private Ciudad ciudadDestino;
 
     public DtRuta() {}
 
-    public DtRuta(String nombre, String descripcion, String descripcionCorta, LocalTime duracion, float costoTurista, float costoEjecutivo, float equipajeExtra, LocalDate fechaAlta, String urlImagen, List<DtCategoria> categorias, DtCiudad origen, DtCiudad destino) {
+    public DtRuta(String nombre, String descripcion, String descripcionCorta, LocalTime duracion, float costoTurista, float costoEjecutivo, float equipajeExtra, LocalDate fechaAlta, String urlImagen, List<Categoria> categorias, Ciudad origen, Ciudad destino) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.descripcionCorta = descripcionCorta;
@@ -41,7 +41,7 @@ public class DtRuta {
         this.ciudadDestino = destino;
     }
 
-    public DtRuta(String nombre, String descripcion, String descripcionCorta, LocalTime duracion, float costoTurista, float costoEjecutivo, float equipajeExtra, LocalDate fechaAlta, String urlImagen, EstadoRuta estado, List<DtCategoria> categorias, DtCiudad origen, DtCiudad destino) {
+    public DtRuta(String nombre, String descripcion, String descripcionCorta, LocalTime duracion, float costoTurista, float costoEjecutivo, float equipajeExtra, LocalDate fechaAlta, String urlImagen, EstadoRuta estado, List<Categoria> categorias, Ciudad origen, Ciudad destino) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.duracion = duracion;
@@ -125,27 +125,27 @@ public class DtRuta {
 
     public void setEstado(EstadoRuta estado) {this.estado = estado;}
 
-    public List<DtCategoria> getCategorias() {
+    public List<Categoria> getCategorias() {
         return categorias;
     }
 
-    public void setCategorias(List<DtCategoria> categorias) {
+    public void setCategorias(List<Categoria> categorias) {
         this.categorias = categorias;
     }
 
-    public DtCiudad getCiudadDestino() {
+    public Ciudad getCiudadDestino() {
         return ciudadDestino;
     }
 
-    public void setCiudadDestino(DtCiudad ciudadDestino) {
+    public void setCiudadDestino(Ciudad ciudadDestino) {
         this.ciudadDestino = ciudadDestino;
     }
 
-    public DtCiudad getCiudadOrigen() {
+    public Ciudad getCiudadOrigen() {
         return ciudadOrigen;
     }
 
-    public void setCiudadOrigen(DtCiudad ciudadOrigen) {
+    public void setCiudadOrigen(Ciudad ciudadOrigen) {
         this.ciudadOrigen = ciudadOrigen;
     }
 
