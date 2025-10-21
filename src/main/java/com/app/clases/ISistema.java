@@ -76,11 +76,8 @@ public interface ISistema {
     DtVuelo getVuelo(String nombre);
     boolean existeVuelo(String nombre);
 
-    void seleccionarAerolineaParaVuelo(String nickname);
-    void seleccionarRuta(String nombre);
-    void ingresarDatosVuelo(DtVuelo datosVuelo);
-    void confirmarAltaVuelo();
-    void cancelarAlta();
+    void altaVuelo(DtVuelo vuelo);
+
     List <DtVuelo> getVuelosRutaDeVuelo(DtRuta ruta);
 
     // ---------- PAQUETES ---------- //
@@ -97,11 +94,15 @@ public interface ISistema {
 
     void altaPaquete(DtPaquete paquete);
 
-    // ---------- CATEGORÍAS ---------- //
-    void altaCategoria(DtCategoria categoria);
-    DtCategoria buscarCategoria(String nombre);
+    // ---------- CATEGORIAS ---------- //
+    Categoria getCategoria(String nombre);
     List<Categoria> getCategorias();
     List<Categoria> getCategoriasPorNombre(List<String> nombres);
+
+    void altaCategoria(DtCategoria categoria);
+    DtCategoria buscarCategoria(String nombre);
+    List<DtCategoria> buscarCategorias();
+    List<DtCategoria> buscarCategoriasPorNombre(List<String> nombres);
 
     // ---------- CIUDADES ---------- //
     void altaCiudad(DtCiudad ciudad);
@@ -117,7 +118,9 @@ public interface ISistema {
     List<DtPasajero> listarPasajeros(DtReserva reserva);
 
 
-    // ---------- INFRAESTRUCTURA ---------- //
+    // ---------- BD ---------- //
+    void vaciarBD();
+    void cargarDatos();
     UserDao getUserDao();
     RutaDeVueloDao getRutaDeVueloDao();
     CategoriaDao getCategoriaDao();
