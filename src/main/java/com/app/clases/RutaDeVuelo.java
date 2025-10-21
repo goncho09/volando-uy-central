@@ -67,7 +67,6 @@ public class RutaDeVuelo {
 
 
     public RutaDeVuelo() {}
-
     public RutaDeVuelo(DtRuta ruta, List<Categoria> categorias, Ciudad origen, Ciudad destino) {
         this.nombre = ruta.getNombre();
         this.descripcion = ruta.getDescripcion();

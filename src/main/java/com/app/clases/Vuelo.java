@@ -41,6 +41,7 @@ public class Vuelo {
     }
 
     public Vuelo() {}
+
     public Vuelo(DtVuelo vuelo, RutaDeVuelo rutaDeVuelo) {
         this.nombre = vuelo.getNombre();
         this.fecha = vuelo.getFecha();
