@@ -16,6 +16,8 @@ class CasosDeUsoTest {
         s = DummyFactory.crearSistema();
     }
 
+    // ------------ Alta de Usuario -------------- //
+
     @Test
     void registrarClienteExistente(){
         LocalDate fechaNacimiento = LocalDate.of(1990, 1, 1);
@@ -38,4 +40,14 @@ class CasosDeUsoTest {
                 "El sistema no debería crear al usuario (mismo nickname) y debe lanzar una excepción" //Mensaje opcional por si falla el test, qué debería ocurrir
         );
     };
+
+    // ------------------ Modificar Datos de Usuario ------------------ //
+    // ------------------ Alta de Ruta de Vuelo ------------------ //
+    // ------------------ Alta de Vuelo -Reserva de Vuelo ------------------ //
+    // ------------------ Alta de Ciudad ------------------ //
+    // ------------------ Crear Paquete de Rutas de Vuelo ------------------ //
+    // ------------------ Agregar Ruta de Vuelo a Paquete ------------------ //
+    // ------------------ Compra de Paquete -Alta de Categorías ------------------ //
+    // ------------------ Aceptar/Rechazar Ruta de Vuelo ------------------ //
+
 }
