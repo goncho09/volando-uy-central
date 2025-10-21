@@ -17,7 +17,6 @@ public interface ISistema {
     boolean validarUsuario(String nickname, String password);
     boolean existeUsuarioNickname(String nickname);
     boolean existeUsuarioEmail(String email);
-
     boolean clienteTienePaquete(String nickname, String nombrePaquete);
 
     List<DtCliente> listarClientes();

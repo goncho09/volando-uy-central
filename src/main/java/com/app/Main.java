@@ -880,6 +880,7 @@ public class Main extends JFrame {
                             ciudadOrigen,
                             ciudadDestino);
 
+
                         s.altaRutaDeVuelo(JComboBoxAerolineaAltaRutaVuelo.getSelectedItem().toString(), ruta);
                         auxiliar.cargarRutasDeVueloComboBox();
                         imagenTemporalRuta = null;
