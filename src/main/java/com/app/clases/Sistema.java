@@ -10,6 +10,7 @@ import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Persistence;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -679,9 +680,11 @@ public class Sistema implements ISistema {
         if (this.usuarios.containsKey(aerolinea.getNickname())) {
             throw new IllegalArgumentException("Este usuario ya existe.");
         }
-
         if(existeUsuarioEmail(aerolinea.getEmail())){
             throw new IllegalArgumentException("Ya existe un usuario con ese email.");
+        }
+        if(aerolinea.getDescripcion().equals("")) {
+            throw new IllegalArgumentException("La descripción no puede ser vacía.");
         }
         this.confirmarAltaUsuario(aerolinea);
     };
@@ -816,14 +819,15 @@ public class Sistema implements ISistema {
     }
 
     public void altaVuelo(DtVuelo vuelo){
-        if (vuelo == null) {
+        if (vuelo == null || vuelo.getNombre().equals("")) {
             throw new IllegalArgumentException("Ha ocurrido un error.");
         }
         if (this.vuelos.containsKey(vuelo.getNombre())) {
             throw new IllegalArgumentException("Ya existe un vuelo con ese nombre.");
         }
-
-
+        if(vuelo.getDuracion().equals(LocalTime.of(0,0))){
+            throw new IllegalArgumentException("La duracion debe ser mayor a 0.");
+        }
         RutaDeVuelo ruta = this.buscarRutaDeVuelo(vuelo.getRutaDeVuelo());
         if (ruta == null || ruta.getEstado() != EstadoRuta.APROBADA) {
             throw new IllegalArgumentException("Debe seleccionar una ruta válida");
