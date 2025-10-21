@@ -15,4 +15,3 @@ public class DtCategoria {
         this.nombre = nombre;
     }
 }
-
