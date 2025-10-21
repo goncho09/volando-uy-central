@@ -586,7 +586,7 @@ class CasosDeUsoTest {
     @Test
     void validarRutaNoExistenteAltaVuelo(){
         DtRuta ruta = new DtRuta( //Esta creación literalmente no sirve ni se persiste en la BD.
-                "Esto Es La Ruta Mas Inexistente Del Mundo",
+                "Esto Es La Ruta Mas Inexistente Del Mundo Jeje",
                 "Ruta entre Bogotá y Santiago",
                 "Bogotá a Santiago",
                 LocalTime.of(5, 0),
