@@ -865,7 +865,7 @@ public class Main extends JFrame {
                     Integer costoEjecutivo = (Integer) SpínnerCostoEjecutivo.getValue();
                     Integer costoEquipaje = (Integer) SpinnerCostoEquipaje.getValue();
                     List<String> nombresCategorias = new ArrayList<String>();
-                    List<Categoria> categorias = s.getCategorias();
+                    List<DtCategoria> categorias = s.buscarCategorias();
 
                     DtCiudad ciudadOrigen = (DtCiudad) JComboBoxCiudadOrigen.getSelectedItem();
                     DtCiudad ciudadDestino = (DtCiudad) JComboBoxCiudadDestino.getSelectedItem();
@@ -912,23 +912,23 @@ public class Main extends JFrame {
                             costoEquipaje,
                             LocalDate.now(),
                             urlImage,
-                            s.getCategoriasPorNombre(nombresCategorias),
-                            s.buscarCiudad(ciudadOrigen.getNombre(), ciudadOrigen.getPais()),
-                            s.buscarCiudad(ciudadDestino.getNombre(), ciudadDestino.getPais()));
+                            s.buscarCategoriasPorNombre(nombresCategorias),
+                            ciudadOrigen,
+                            ciudadDestino);
 
 
-                        s.altaRutaDeVuelo(JComboBoxAerolineaAltaRutaVuelo.getSelectedItem().toString(), ruta);
-                        auxiliar.cargarRutasDeVueloComboBox();
-                        imagenTemporalRuta = null;
-                        selectedFileRutaCrear.setText("No se ha seleccionado Archivo");
-                        new VentanaMensaje("Ruta de vuelo creada correctamente.");
+                    s.altaRutaDeVuelo(JComboBoxAerolineaAltaRutaVuelo.getSelectedItem().toString(), ruta);
+                    auxiliar.cargarRutasDeVueloComboBox();
+                    imagenTemporalRuta = null;
+                    selectedFileRutaCrear.setText("No se ha seleccionado Archivo");
+                    new VentanaMensaje("Ruta de vuelo creada correctamente.");
 
-                        auxiliar.limpiarJTextField(nombreAltaRutaDeVuelo, descripcionAltaRutaDeVuelo);
-                        for (int i = 0; i < categorias.size(); i++) {
-                            if (checkboxes.get(i).isSelected()) {
-                                checkboxes.get(i).setSelected(false);
-                            }
+                    auxiliar.limpiarJTextField(nombreAltaRutaDeVuelo, descripcionAltaRutaDeVuelo);
+                    for (int i = 0; i < categorias.size(); i++) {
+                        if (checkboxes.get(i).isSelected()) {
+                            checkboxes.get(i).setSelected(false);
                         }
+                    }
 
                 } catch (Exception ex) {
                     new VentanaMensaje(ex.getMessage());
