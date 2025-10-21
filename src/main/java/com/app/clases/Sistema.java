@@ -903,8 +903,24 @@ public class Sistema implements ISistema {
     }
 
     public int agregarRutaAPaquete(DtPaquete paquete, DtRuta dataRuta, int cantidad, TipoAsiento tipoAsiento) {
+        //Validar parametros nulos
+        if (paquete == null || dataRuta == null || cantidad <= 0 || tipoAsiento == null) {
+            throw new IllegalArgumentException("Parámetros inválidos.");
+        }
+        //Validar que el paquete exista
         Paquete p = buscarPaquete(paquete);
+        if(p==null) {
+            throw new IllegalArgumentException("El paquete no existe.");
+        }
+
+        //Validar que la ruta existe y esta aprobada
         RutaDeVuelo ruta = buscarRutaDeVuelo(dataRuta);
+        if (ruta==null) {
+            throw new IllegalArgumentException("La ruta no existe.");
+        }
+        if (ruta.getEstado() != EstadoRuta.APROBADA) {
+            throw new IllegalArgumentException("La ruta no está aprobada aún.");
+        }
 
         float nuevoCosto = p.getCosto();
 
