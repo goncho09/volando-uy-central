@@ -638,6 +638,18 @@ public class Sistema implements ISistema {
             throw new IllegalArgumentException("Este usuario no existe.");
         }
 
+        if(cliente.getEmail().isEmpty() || cliente.getNombre().isEmpty() || cliente.getApellido().isEmpty() || cliente.getPassword().isEmpty() || cliente.getNacionalidad().isEmpty() || cliente.getNumeroDocumento() == 0 || cliente.getUrlImage().isEmpty()){
+            throw new IllegalArgumentException("Los campos no pueden estar vacíos.");
+        }
+
+        this.validarTextoSoloLetra(cliente.getNombre());
+        this.validarTextoSoloLetra(cliente.getApellido());
+        this.validarTextoSoloLetra(cliente.getNacionalidad());
+
+        if(cliente.getFechaNacimiento().isAfter(LocalDate.now())){
+            throw new IllegalArgumentException("La fecha de nacimiento no puede ser en el futuro.");
+        }
+
         if (u instanceof Cliente c) {
             c.setNombre(cliente.getNombre());
             c.setApellido(cliente.getApellido());
@@ -650,10 +662,7 @@ public class Sistema implements ISistema {
         } else {
             throw new IllegalArgumentException("Este usuario es aerolinea.");
         }
-    }
-
-    ;
-
+    };
 
     public DtAerolinea getAerolinea(String nickname) {
         Usuario u = this.usuarios.get(nickname);
@@ -695,6 +704,12 @@ public class Sistema implements ISistema {
         Usuario u = this.usuarios.get(aerolinea.getNickname());
         if (u == null) {
             throw new IllegalArgumentException("Este usuario no existe.");
+        }
+
+        this.validarTextoSoloLetra(aerolinea.getNombre());
+
+        if(aerolinea.getDescripcion().isEmpty() || aerolinea.getEmail().isEmpty() || aerolinea.getNombre().isEmpty() || aerolinea.getPassword().isEmpty() || aerolinea.getUrlImage().isEmpty()){
+            throw new IllegalArgumentException("Los campos no pueden estar vacíos.");
         }
 
         if (u instanceof Aerolinea a) {
@@ -1198,6 +1213,12 @@ public class Sistema implements ISistema {
     public Categoria getCategoria(String nombre){
         return this.categorias.get(nombre);
     };
+
+    public void validarTextoSoloLetra(String nombre){
+            if (!nombre.matches("^[a-zA-Z ]+$")) {
+                throw new IllegalArgumentException("El nombre solo puede contener letras, números y espacios.");
+            }
+    }
 
     public void cargarDatos(){
         this.categorias = categoriaDao.obtenerCategorias();

@@ -1097,6 +1097,7 @@ public class Main extends JFrame {
                         tipoDocumento,
                         Integer.parseInt(numeroDocumentoModificarCliente.getText())
                 );
+
                 try{
                     s.modificarCliente(cliente);
                     auxiliar.cargarUsuariosComboBox(cliente); // Funcion para actualizar valores.
