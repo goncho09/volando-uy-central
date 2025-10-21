@@ -629,6 +629,11 @@ public class Sistema implements ISistema {
         if(existeUsuarioEmail(cliente.getEmail())){
             throw new IllegalArgumentException("Ya existe un usuario con ese email.");
         }
+
+        if (cliente.getNombre().equals("") || cliente.getApellido().equals("") || cliente.getNickname().equals("") || cliente.getEmail().equals("") || cliente.getPassword().equals("") || cliente.getNacionalidad().equals("") || cliente.getNumeroDocumento() == 0 || cliente.getUrlImage().equals("")) {
+            throw new IllegalArgumentException("Los campos no pueden estar vacíos.");
+        }
+
         confirmarAltaUsuario(cliente);
     };
 
@@ -636,6 +641,18 @@ public class Sistema implements ISistema {
         Usuario u = this.usuarios.get(cliente.getNickname());
         if (u == null) {
             throw new IllegalArgumentException("Este usuario no existe.");
+        }
+
+        if(cliente.getNickname().isEmpty() || cliente.getEmail().isEmpty() || cliente.getNombre().isEmpty() || cliente.getApellido().isEmpty() || cliente.getPassword().isEmpty() || cliente.getNacionalidad().isEmpty() || cliente.getNumeroDocumento() == 0 || cliente.getUrlImage().isEmpty()){
+            throw new IllegalArgumentException("Los campos no pueden estar vacíos.");
+        }
+
+        this.validarTextoSoloLetra(cliente.getNombre());
+        this.validarTextoSoloLetra(cliente.getApellido());
+        this.validarTextoSoloLetra(cliente.getNacionalidad());
+
+        if(cliente.getFechaNacimiento().isAfter(LocalDate.now())){
+            throw new IllegalArgumentException("La fecha de nacimiento no puede ser en el futuro.");
         }
 
         if (u instanceof Cliente c) {
@@ -674,9 +691,8 @@ public class Sistema implements ISistema {
         }
         c.setUrlImage(urlImagen);
         userDao.actualizar(c);
-    }
+    };
 
-    ;
 
     public void registrarAerolinea(DtAerolinea aerolinea) {
         if (this.usuarios.containsKey(aerolinea.getNickname())) {
@@ -685,8 +701,8 @@ public class Sistema implements ISistema {
         if(existeUsuarioEmail(aerolinea.getEmail())){
             throw new IllegalArgumentException("Ya existe un usuario con ese email.");
         }
-        if(aerolinea.getDescripcion().equals("")) {
-            throw new IllegalArgumentException("La descripción no puede ser vacía.");
+        if(aerolinea.getDescripcion().equals("") || aerolinea.getNombre().equals("") || aerolinea.getNickname().equals("") || aerolinea.getEmail().equals("") || aerolinea.getPassword().equals("") || aerolinea.getUrlImage().equals("")){
+            throw new IllegalArgumentException("Los campos no pueden estar vacíos.");
         }
         this.confirmarAltaUsuario(aerolinea);
     };
@@ -695,6 +711,12 @@ public class Sistema implements ISistema {
         Usuario u = this.usuarios.get(aerolinea.getNickname());
         if (u == null) {
             throw new IllegalArgumentException("Este usuario no existe.");
+        }
+
+        this.validarTextoSoloLetra(aerolinea.getNombre());
+
+        if(aerolinea.getNickname().isEmpty() || aerolinea.getDescripcion().isEmpty() || aerolinea.getEmail().isEmpty() || aerolinea.getNombre().isEmpty() || aerolinea.getPassword().isEmpty() || aerolinea.getUrlImage().isEmpty()){
+            throw new IllegalArgumentException("Los campos no pueden estar vacíos.");
         }
 
         if (u instanceof Aerolinea a) {
@@ -1194,6 +1216,12 @@ public class Sistema implements ISistema {
         }
         return false;
     };
+
+    public void validarTextoSoloLetra(String nombre){
+        if (!nombre.matches("^[a-zA-Z ]+$")) {
+            throw new IllegalArgumentException("El nombre solo puede contener letras, números y espacios.");
+        }
+    }
 
     public Categoria getCategoria(String nombre){
         return this.categorias.get(nombre);
