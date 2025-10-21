@@ -41,7 +41,8 @@ public class Vuelo {
     }
 
     public Vuelo() {}
-    public Vuelo(DtVuelo vuelo, RutaDeVuelo ruta) {
+
+    public Vuelo(DtVuelo vuelo, RutaDeVuelo rutaDeVuelo) {
         this.nombre = vuelo.getNombre();
         this.fecha = vuelo.getFecha();
         this.duracion = vuelo.getDuracion();
@@ -49,7 +50,7 @@ public class Vuelo {
         this.maxEjecutivos = vuelo.getMaxEjecutivos();
         this.urlImage = vuelo.getUrlImage();
         this.fechaAlta = vuelo.getFechaAlta();
-        this.rutaDeVuelo = ruta;
+        this.rutaDeVuelo = rutaDeVuelo;
         this.cantReservas = vuelo.getCantReservas();
     }
 
