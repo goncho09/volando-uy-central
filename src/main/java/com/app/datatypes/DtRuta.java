@@ -24,7 +24,6 @@ public class DtRuta {
     private DtCiudad ciudadDestino;
 
     public DtRuta() {}
-
     public DtRuta(String nombre, String descripcion, String descripcionCorta, LocalTime duracion, float costoTurista, float costoEjecutivo, float equipajeExtra, LocalDate fechaAlta, String urlImagen, List<DtCategoria> categorias, DtCiudad origen, DtCiudad destino) {
         this.nombre = nombre;
         this.descripcion = descripcion;

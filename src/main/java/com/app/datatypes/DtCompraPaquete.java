@@ -25,7 +25,6 @@ public class DtCompraPaquete {
         this.cliente = cliente;
     }
 
-
     public LocalDate getFechaCompra(){
         return fechaCompra;
     }

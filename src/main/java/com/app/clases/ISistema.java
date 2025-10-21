@@ -9,7 +9,6 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface ISistema {
-
     // ---------- USUARIOS ---------- //
     List<DtUsuario> listarUsuarios();
     void elegirUsuario(String nickname);

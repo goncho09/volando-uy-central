@@ -1177,7 +1177,6 @@ public class Sistema implements ISistema {
     public void vaciarBD() {
         EntityTransaction tx = em.getTransaction();
         tx.begin();
-
         em.createQuery("DELETE FROM Aerolinea").executeUpdate();
         em.createQuery("DELETE FROM Reserva").executeUpdate();
         em.createQuery("DELETE FROM CompraPaquete").executeUpdate();
@@ -1190,7 +1189,6 @@ public class Sistema implements ISistema {
         em.createQuery("DELETE FROM Categoria").executeUpdate();
         em.createQuery("DELETE FROM Ciudad").executeUpdate();
         em.createQuery("DELETE FROM Paquete").executeUpdate();
-
         tx.commit();
     }
 }
