@@ -184,6 +184,7 @@ public class Main extends JFrame {
         
         //Inicializar Sistema
         s = Factory.getSistema();
+        s.cargarDatos();
 
         //Inicializar Auxiliar
         this.auxiliar = new AuxiliarFunctions(s);
