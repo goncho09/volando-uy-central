@@ -1,6 +1,7 @@
 package com.app.interfaces;
 
 import com.app.clases.Categoria;
+import com.app.datatypes.DtCategoria;
 import com.app.datatypes.DtRuta;
 import com.app.datatypes.DtVuelo;
 import com.app.enums.TipoImagen;
@@ -77,7 +78,7 @@ public class InfoRutaDeVuelo extends JFrame{
         if (ruta.getCategorias().isEmpty()){
             categoriasPanel.add(new JLabel("No hay categorías."));
         }else{
-            for (Categoria cat : ruta.getCategorias()) {
+            for (DtCategoria cat : ruta.getCategorias()) {
                 JLabel label = new JLabel(cat.getNombre());
                 categoriasPanel.add(label);
             }
