@@ -9,7 +9,6 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface ISistema {
-
     // ---------- USUARIOS ---------- //
     List<DtUsuario> listarUsuarios();
     void elegirUsuario(String nickname);
@@ -18,7 +17,6 @@ public interface ISistema {
     boolean validarUsuario(String nickname, String password);
     boolean existeUsuarioNickname(String nickname);
     boolean existeUsuarioEmail(String email);
-
     boolean clienteTienePaquete(String nickname, String nombrePaquete);
 
     List<DtCliente> listarClientes();

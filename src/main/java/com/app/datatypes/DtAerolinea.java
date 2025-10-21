@@ -11,7 +11,6 @@ public class DtAerolinea extends DtUsuario {
     private List<RutaDeVuelo> rutasDeVuelo;
 
     public DtAerolinea() {}
-
     public DtAerolinea(String nickname, String nombre, String email, String password, String urlImage, String descripcion) {
         super(nickname, nombre, email, password, urlImage);
         this.descripcion = descripcion;

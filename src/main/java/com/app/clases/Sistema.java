@@ -3,6 +3,7 @@ package com.app.clases;
 import com.app.DAOs.*;
 import com.app.datatypes.*;
 import com.app.enums.EstadoRuta;
+import com.app.enums.MetodoPago;
 import com.app.enums.TipoAsiento;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -10,6 +11,7 @@ import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Persistence;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -306,7 +308,8 @@ public class Sistema implements ISistema {
                         r.getPasajeros(),
                         c, // Cliente
                         r.getVuelo(),
-                        r.getPaquete()
+                        r.getPaquete(),
+                        r.getMetodoPago()
                 ));
             }
             return dtReservas;
@@ -688,9 +691,11 @@ public class Sistema implements ISistema {
         if (this.usuarios.containsKey(aerolinea.getNickname())) {
             throw new IllegalArgumentException("Este usuario ya existe.");
         }
-
         if(existeUsuarioEmail(aerolinea.getEmail())){
             throw new IllegalArgumentException("Ya existe un usuario con ese email.");
+        }
+        if(aerolinea.getDescripcion().equals("")) {
+            throw new IllegalArgumentException("La descripción no puede ser vacía.");
         }
         this.confirmarAltaUsuario(aerolinea);
     };
@@ -831,14 +836,15 @@ public class Sistema implements ISistema {
     }
 
     public void altaVuelo(DtVuelo vuelo){
-        if (vuelo == null) {
+        if (vuelo == null || vuelo.getNombre().equals("")) {
             throw new IllegalArgumentException("Ha ocurrido un error.");
         }
         if (this.vuelos.containsKey(vuelo.getNombre())) {
             throw new IllegalArgumentException("Ya existe un vuelo con ese nombre.");
         }
-
-
+        if(vuelo.getDuracion().equals(LocalTime.of(0,0))){
+            throw new IllegalArgumentException("La duracion debe ser mayor a 0.");
+        }
         RutaDeVuelo ruta = this.buscarRutaDeVuelo(vuelo.getRutaDeVuelo());
         if (ruta == null || ruta.getEstado() != EstadoRuta.APROBADA) {
             throw new IllegalArgumentException("Debe seleccionar una ruta válida");
@@ -912,8 +918,24 @@ public class Sistema implements ISistema {
     }
 
     public int agregarRutaAPaquete(DtPaquete paquete, DtRuta dataRuta, int cantidad, TipoAsiento tipoAsiento) {
+        //Validar parametros nulos
+        if (paquete == null || dataRuta == null || cantidad <= 0 || tipoAsiento == null) {
+            throw new IllegalArgumentException("Parámetros inválidos.");
+        }
+        //Validar que el paquete exista
         Paquete p = buscarPaquete(paquete);
+        if(p==null) {
+            throw new IllegalArgumentException("El paquete no existe.");
+        }
+
+        //Validar que la ruta existe y esta aprobada
         RutaDeVuelo ruta = buscarRutaDeVuelo(dataRuta);
+        if (ruta==null) {
+            throw new IllegalArgumentException("La ruta no existe.");
+        }
+        if (ruta.getEstado() != EstadoRuta.APROBADA) {
+            throw new IllegalArgumentException("La ruta no está aprobada aún.");
+        }
 
         float nuevoCosto = p.getCosto();
 
@@ -1041,6 +1063,26 @@ public class Sistema implements ISistema {
         float costoEquipaje = reserva.getEquipajeExtra() * v.getRutaDeVuelo().getEquipajeExtra();
         float costo = (costoAsiento * cantPasajes) + costoEquipaje;
 
+        if(reserva.getMetodoPago() == MetodoPago.PAQUETE){
+            int pasajesRestantes = cantPasajes;
+            List<DtPaquete> paquetesComprados = listarPaquetes(cliente);
+
+            for (DtPaquete p : paquetesComprados){
+                Paquete paq = buscarPaquete(p);
+                for (RutaEnPaquete rep : paq.getRutaEnPaquete()){
+                    if(rep.getRutaDeVuelo().equals(v.getRutaDeVuelo())) {
+                        int descontar = Math.min(pasajesRestantes, rep.getCantidad());
+                        rep.setCantidad(rep.getCantidad() - descontar);
+                        pasajesRestantes -= descontar;
+                        if (pasajesRestantes == 0) break;
+                    }
+                }
+                if(pasajesRestantes == 0) break;
+            }
+            costo = pasajesRestantes * (reserva.getTipoAsiento() == TipoAsiento.EJECUTIVO ? v.getRutaDeVuelo().getCostoEjecutivo() : v.getRutaDeVuelo().getCostoTurista());
+            costo += reserva.getEquipajeExtra() * v.getRutaDeVuelo().getEquipajeExtra();
+        }
+
         if (c.existeVueloReserva(v)) {
             throw new IllegalArgumentException("Ya existe una reserva para este vuelo. Cambie el Cliente, Aerolinea o RutaDeVuelo.");
         }
@@ -1156,7 +1198,6 @@ public class Sistema implements ISistema {
     }
 
     ;
-
     public boolean clienteTienePaquete(String nickname, String nombrePaquete){
         DtCliente c = getCliente(nickname);
         Cliente cliente = buscarCliente(c);
@@ -1194,7 +1235,6 @@ public class Sistema implements ISistema {
     public void vaciarBD() {
         EntityTransaction tx = em.getTransaction();
         tx.begin();
-
         em.createQuery("DELETE FROM Aerolinea").executeUpdate();
         em.createQuery("DELETE FROM Reserva").executeUpdate();
         em.createQuery("DELETE FROM CompraPaquete").executeUpdate();
@@ -1207,7 +1247,6 @@ public class Sistema implements ISistema {
         em.createQuery("DELETE FROM Categoria").executeUpdate();
         em.createQuery("DELETE FROM Ciudad").executeUpdate();
         em.createQuery("DELETE FROM Paquete").executeUpdate();
-
         tx.commit();
     }
 }

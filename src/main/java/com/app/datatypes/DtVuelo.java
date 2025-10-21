@@ -17,7 +17,6 @@ public class DtVuelo {
     private int cantReservas;
 
     public DtVuelo(){};
-
     public DtVuelo(String nombre, LocalDate fecha, LocalTime duracion, int maxTuristas, int maxEjecutivos, String urlImage,LocalDate fechaAlta,DtRuta rutaDeVuelo, int cantReservas) {
         this.nombre = nombre;
         this.fecha = fecha;

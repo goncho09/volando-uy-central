@@ -410,6 +410,23 @@ public class Main extends JFrame {
                     return;
                 }
 
+                MetodoPago metodoPago;
+                final DtPaquete[] paqueteSeleccionado = new DtPaquete[1];
+
+                if (pagoConPaqueteRadioButton.isSelected()) {
+                    metodoPago = MetodoPago.PAQUETE;
+                    paqueteSeleccionado[0] = (DtPaquete) JComboBoxSeleccionarPaqueteReserva.getSelectedItem();
+                    if (paqueteSeleccionado[0] == null) {
+                        new VentanaMensaje("Debe seleccionar un paquete");
+                        return;
+                    }
+                } else if (pagoGeneralRadioButton.isSelected()) {
+                    metodoPago = MetodoPago.GENERAL;
+                } else {
+                    new VentanaMensaje("Debe seleccionar un método de pago");
+                    return;
+                }
+
                 AgregarPasajero ventanaPasajes = new AgregarPasajero(pasajes);
                 setEnabled(false);
 
@@ -419,13 +436,29 @@ public class Main extends JFrame {
                         setEnabled(true);
                         List<DtPasajero> listaPasajes = ventanaPasajes.getPasajes();
                         if(listaPasajes.size() == pasajes){
-                            DtReserva reserva = new DtReserva(
-                                    fecha,
-                                    tipoAsiento,
-                                    pasajes,
-                                    equipajeExtra,
-                                    listaPasajes
-                            );
+                            DtReserva reserva;
+
+                            if (metodoPago == MetodoPago.PAQUETE) {
+                                reserva = new DtReserva(
+                                        fecha,
+                                        tipoAsiento,
+                                        pasajes,
+                                        equipajeExtra,
+                                        listaPasajes,
+                                        metodoPago,
+                                        paqueteSeleccionado[0]
+                                );
+                            } else {
+                                reserva = new DtReserva(
+                                        fecha,
+                                        tipoAsiento,
+                                        pasajes,
+                                        equipajeExtra,
+                                        listaPasajes,
+                                        metodoPago
+                                );
+                            }
+
                             try{
                                 s.altaReserva(reserva, cliente, vuelo);
                                 new VentanaMensaje("Reserva realizada exitosamente");
@@ -880,18 +913,19 @@ public class Main extends JFrame {
                             ciudadOrigen,
                             ciudadDestino);
 
-                        s.altaRutaDeVuelo(JComboBoxAerolineaAltaRutaVuelo.getSelectedItem().toString(), ruta);
-                        auxiliar.cargarRutasDeVueloComboBox();
-                        imagenTemporalRuta = null;
-                        selectedFileRutaCrear.setText("No se ha seleccionado Archivo");
-                        new VentanaMensaje("Ruta de vuelo creada correctamente.");
 
-                        auxiliar.limpiarJTextField(nombreAltaRutaDeVuelo, descripcionAltaRutaDeVuelo);
-                        for (int i = 0; i < categorias.size(); i++) {
-                            if (checkboxes.get(i).isSelected()) {
-                                checkboxes.get(i).setSelected(false);
-                            }
+                    s.altaRutaDeVuelo(JComboBoxAerolineaAltaRutaVuelo.getSelectedItem().toString(), ruta);
+                    auxiliar.cargarRutasDeVueloComboBox();
+                    imagenTemporalRuta = null;
+                    selectedFileRutaCrear.setText("No se ha seleccionado Archivo");
+                    new VentanaMensaje("Ruta de vuelo creada correctamente.");
+
+                    auxiliar.limpiarJTextField(nombreAltaRutaDeVuelo, descripcionAltaRutaDeVuelo);
+                    for (int i = 0; i < categorias.size(); i++) {
+                        if (checkboxes.get(i).isSelected()) {
+                            checkboxes.get(i).setSelected(false);
                         }
+                    }
 
                 } catch (Exception ex) {
                     new VentanaMensaje(ex.getMessage());
@@ -938,7 +972,7 @@ public class Main extends JFrame {
                         return;
                     }
 
-                    s.altaPaquete(new DtPaquete(nombreAltaPaquete.getText(),descripcionAltaPaquete.getText(),periodo,descuento));
+                    s.altaPaquete(new DtPaquete(nombreAltaPaquete.getText(),descripcionAltaPaquete.getText(),periodo,descuento,0, new ArrayList<>()));
                     new VentanaMensaje("Paquete creado correctamente.");
                     auxiliar.cargarPaqueteComboBox();
                     auxiliar.cargarPaqueteNoCompradoComboBox();
@@ -1152,7 +1186,6 @@ public class Main extends JFrame {
                         return;
                     }
 
-                    // Llenamos el combo de paquetes del cliente
                     auxiliar.cargarPaqueteClienteComboBox(cliente);
                     JComboBoxSeleccionarPaqueteReserva.setModel(auxiliar.getComboPaqueteClienteModel());
                     JComboBoxSeleccionarPaqueteReserva.setEnabled(true);
@@ -1495,6 +1528,8 @@ public class Main extends JFrame {
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new Main());
+        SwingUtilities.invokeLater(
+                () -> new Main()
+        );
     }
 }
