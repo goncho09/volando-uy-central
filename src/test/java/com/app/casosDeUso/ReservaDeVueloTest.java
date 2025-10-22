@@ -1,6 +1,7 @@
 package com.app.casosDeUso;
 
 import com.app.clases.ISistema;
+import com.app.datatypes.DtPasajero;
 import com.app.datatypes.DtReserva;
 import com.app.enums.MetodoPago;
 import com.app.enums.TipoAsiento;
@@ -23,17 +24,21 @@ public class ReservaDeVueloTest {
     // ------------------ Reserva de Vuelo ------------------ //
 
 //    @Test
-//    void crearReservaDeVuelo() {
+//    void validarCantPasajes() {
 //        DtReserva reserva = new DtReserva(
 //                LocalDate.now(),
-//                TipoAsiento.TURISTA,
-//                2,
+//                TipoAsiento.EJECUTIVO,
+//                0, // El rango debe ser 1 - maxReserva
 //                1,
-//                Arrays.asList(pasajeros.get(0), pasajeros.get(1)),
-//                clientes.get(1),
-//                vuelos.get(0),
+//                0,
+//                Arrays.asList(
+//                        new DtPasajero("Test", "Pasajes"),
+//                        new DtPasajero("Test", "Invalidos")
+//                        ),
+//                s.getCliente("power"),
+//                s.getVuelo("Vuelo_4"), // Este vuelo debe existir y no estar reservado por "power"
 //                MetodoPago.PAQUETE,
-//                paquetes.get(0)
+//                s.getPaquete("")
 //        );
 //
 //        s.altaReserva(reserva);

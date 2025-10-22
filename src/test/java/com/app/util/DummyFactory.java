@@ -128,16 +128,16 @@ public class DummyFactory {
             // -------------- Vuelos ---------------- //
 
             List<DtVuelo> vuelos = new ArrayList<>();
-            vuelos.add(new DtVuelo("Vuelo1", LocalDate.now().plusDays(1), LocalTime.of(2, 0), 100, 20, "default.png", LocalDate.now(), rutasAprobadas.get(0), 0));
-            vuelos.add(new DtVuelo("Vuelo2", LocalDate.now().plusDays(2), LocalTime.of(3, 0), 120, 25, "default.png", LocalDate.now(), rutasAprobadas.get(1), 0));
-            vuelos.add(new DtVuelo("Vuelo3", LocalDate.now().plusDays(3), LocalTime.of(1, 45), 80, 15, "default.png", LocalDate.now(), rutasAprobadas.get(2), 0));
-            vuelos.add(new DtVuelo("Vuelo4", LocalDate.now().plusDays(4), LocalTime.of(2, 30), 150, 30, "default.png", LocalDate.now(), rutasAprobadas.get(3), 0));
-            vuelos.add(new DtVuelo("Vuelo5", LocalDate.now().plusDays(5), LocalTime.of(2, 15), 90, 18, "default.png", LocalDate.now(), rutasAprobadas.get(4), 0));
-            vuelos.add(new DtVuelo("Vuelo6", LocalDate.now().plusDays(6), LocalTime.of(3, 15), 110, 22, "default.png", LocalDate.now(), rutasAprobadas.get(5), 0));
-            vuelos.add(new DtVuelo("Vuelo7", LocalDate.now().plusDays(7), LocalTime.of(1, 50), 95, 20, "default.png", LocalDate.now(), rutasAprobadas.get(2), 0));
-            vuelos.add(new DtVuelo("Vuelo8", LocalDate.now().plusDays(8), LocalTime.of(2, 45), 130, 28, "default.png", LocalDate.now(), rutasAprobadas.get(0), 0));
-            vuelos.add(new DtVuelo("Vuelo9", LocalDate.now().plusDays(9), LocalTime.of(2, 10), 105, 24, "default.png", LocalDate.now(), rutasAprobadas.get(1), 0));
-            vuelos.add(new DtVuelo("Vuelo10", LocalDate.now().plusDays(10), LocalTime.of(3, 0), 120, 26, "default.png", LocalDate.now(), rutasAprobadas.get(2), 0));
+            vuelos.add(new DtVuelo("Vuelo_1", LocalDate.now().plusDays(1), LocalTime.of(2, 0), 100, 20, "default.png", LocalDate.now(), rutasAprobadas.get(0), 0));
+            vuelos.add(new DtVuelo("Vuelo_2", LocalDate.now().plusDays(2), LocalTime.of(3, 0), 120, 25, "default.png", LocalDate.now(), rutasAprobadas.get(1), 0));
+            vuelos.add(new DtVuelo("Vuelo_3", LocalDate.now().plusDays(3), LocalTime.of(1, 45), 80, 15, "default.png", LocalDate.now(), rutasAprobadas.get(2), 0));
+            vuelos.add(new DtVuelo("Vuelo_4", LocalDate.now().plusDays(4), LocalTime.of(2, 30), 150, 30, "default.png", LocalDate.now(), rutasAprobadas.get(3), 0));
+            vuelos.add(new DtVuelo("Vuelo_5", LocalDate.now().plusDays(5), LocalTime.of(2, 15), 90, 18, "default.png", LocalDate.now(), rutasAprobadas.get(4), 0));
+            vuelos.add(new DtVuelo("Vuelo_6", LocalDate.now().plusDays(6), LocalTime.of(3, 15), 110, 22, "default.png", LocalDate.now(), rutasAprobadas.get(5), 0));
+            vuelos.add(new DtVuelo("Vuelo_7", LocalDate.now().plusDays(7), LocalTime.of(1, 50), 95, 20, "default.png", LocalDate.now(), rutasAprobadas.get(2), 0));
+            vuelos.add(new DtVuelo("Vuelo_8", LocalDate.now().plusDays(8), LocalTime.of(2, 45), 130, 28, "default.png", LocalDate.now(), rutasAprobadas.get(0), 0));
+            vuelos.add(new DtVuelo("Vuelo_9", LocalDate.now().plusDays(9), LocalTime.of(2, 10), 105, 24, "default.png", LocalDate.now(), rutasAprobadas.get(1), 0));
+            vuelos.add(new DtVuelo("Vuelo_10", LocalDate.now().plusDays(10), LocalTime.of(3, 0), 120, 26, "default.png", LocalDate.now(), rutasAprobadas.get(2), 0));
 
             for(DtVuelo vuelo: vuelos){
                 s.altaVuelo(vuelo);
@@ -208,16 +208,16 @@ public class DummyFactory {
 
             List<DtReserva> reservas = new ArrayList<>();
 
-            reservas.add(new DtReserva(LocalDate.now(), TipoAsiento.TURISTA, 2, 1, 0,Arrays.asList(pasajeros.get(0), pasajeros.get(1)), clientes.get(1), vuelos.get(0), MetodoPago.PAQUETE, paquetes.get(0)));
-            reservas.add(new DtReserva(LocalDate.now().plusDays(1), TipoAsiento.EJECUTIVO, 1, 0, 0,Arrays.asList(pasajeros.get(2)), clientes.get(0), vuelos.get(1), MetodoPago.PAQUETE, paquetes.get(1)));
-            reservas.add(new DtReserva(LocalDate.now().plusDays(2), TipoAsiento.TURISTA, 3, 2, 0,Arrays.asList(pasajeros.get(3), pasajeros.get(4), pasajeros.get(5)), clientes.get(1), vuelos.get(2), MetodoPago.PAQUETE, paquetes.get(2)));
-            reservas.add(new DtReserva(LocalDate.now().plusDays(3), TipoAsiento.EJECUTIVO, 2, 1, 0,Arrays.asList(pasajeros.get(6), pasajeros.get(7)), clientes.get(4), vuelos.get(3), MetodoPago.PAQUETE, paquetes.get(3)));
-            reservas.add(new DtReserva(LocalDate.now().plusDays(4), TipoAsiento.TURISTA, 3, 0, 0,Arrays.asList(pasajeros.get(8),pasajeros.get(18),pasajeros.get(19)), clientes.get(3), vuelos.get(4), MetodoPago.PAQUETE, paquetes.get(4)));
+            reservas.add(new DtReserva(LocalDate.now(), TipoAsiento.TURISTA, 2, 1, 0,Arrays.asList(pasajeros.get(0), pasajeros.get(1)), clientes.get(1), vuelos.get(5), MetodoPago.PAQUETE, paquetesParaRutas.get(0)));
+            reservas.add(new DtReserva(LocalDate.now().plusDays(1), TipoAsiento.EJECUTIVO, 1, 0, 0,Arrays.asList(pasajeros.get(2)), clientes.get(0), vuelos.get(6), MetodoPago.PAQUETE, paquetesParaRutas.get(1)));
+            reservas.add(new DtReserva(LocalDate.now().plusDays(2), TipoAsiento.TURISTA, 3, 2, 0,Arrays.asList(pasajeros.get(3), pasajeros.get(4), pasajeros.get(5)), clientes.get(1), vuelos.get(0), MetodoPago.PAQUETE, paquetesParaRutas.get(2)));
+            reservas.add(new DtReserva(LocalDate.now().plusDays(3), TipoAsiento.EJECUTIVO, 2, 1, 0,Arrays.asList(pasajeros.get(6), pasajeros.get(7)), clientes.get(4), vuelos.get(4), MetodoPago.PAQUETE, paquetesParaRutas.get(3)));
+            reservas.add(new DtReserva(LocalDate.now().plusDays(4), TipoAsiento.TURISTA, 3, 0, 0,Arrays.asList(pasajeros.get(8),pasajeros.get(18),pasajeros.get(19)), clientes.get(3), vuelos.get(8), MetodoPago.PAQUETE, paquetesParaRutas.get(4)));
 
-            reservas.add(new DtReserva(LocalDate.now().plusDays(5), TipoAsiento.TURISTA, 2, 0, 0,Arrays.asList(pasajeros.get(9), pasajeros.get(10)), clientes.get(0), vuelos.get(5), MetodoPago.GENERAL));
-            reservas.add(new DtReserva(LocalDate.now().plusDays(6), TipoAsiento.EJECUTIVO, 1, 1, 0,Arrays.asList(pasajeros.get(11)), clientes.get(1), vuelos.get(6), MetodoPago.GENERAL));
+            reservas.add(new DtReserva(LocalDate.now().plusDays(5), TipoAsiento.TURISTA, 2, 0, 0,Arrays.asList(pasajeros.get(9), pasajeros.get(10)), clientes.get(0), vuelos.get(1), MetodoPago.GENERAL));
+            reservas.add(new DtReserva(LocalDate.now().plusDays(6), TipoAsiento.EJECUTIVO, 1, 1, 0,Arrays.asList(pasajeros.get(11)), clientes.get(1), vuelos.get(2), MetodoPago.GENERAL));
             reservas.add(new DtReserva(LocalDate.now().plusDays(7), TipoAsiento.TURISTA, 3, 2, 0,Arrays.asList(pasajeros.get(12), pasajeros.get(13), pasajeros.get(14)), clientes.get(0), vuelos.get(7), MetodoPago.GENERAL));
-            reservas.add(new DtReserva(LocalDate.now().plusDays(8), TipoAsiento.EJECUTIVO, 2, 1, 0,Arrays.asList(pasajeros.get(15), pasajeros.get(16)), clientes.get(1), vuelos.get(8), MetodoPago.GENERAL));
+            reservas.add(new DtReserva(LocalDate.now().plusDays(8), TipoAsiento.EJECUTIVO, 2, 1, 0,Arrays.asList(pasajeros.get(15), pasajeros.get(16)), clientes.get(1), vuelos.get(3), MetodoPago.GENERAL));
             reservas.add(new DtReserva(LocalDate.now().plusDays(9), TipoAsiento.TURISTA, 1, 0, 0,Arrays.asList(pasajeros.get(17)), clientes.get(0), vuelos.get(9), MetodoPago.GENERAL));
 
 

@@ -48,7 +48,7 @@ public class AltaDeVueloTest {
     @Test
     void validarNombreExistenteAltaVuelo(){
         DtVuelo vuelo = new DtVuelo(
-                "Vuelo1", //Este nombre debería existir.
+                "Vuelo_1", //Este nombre debería existir.
                 LocalDate.now().plusDays(200),
                 LocalTime.of(2,30),
                 3,
@@ -210,7 +210,7 @@ public class AltaDeVueloTest {
     @Test
     void validarVueloInexistenteAltaVuelo(){
         DtVuelo vuelo = new DtVuelo(
-                "Vuelo11",
+                "Vuelo_11",
                 LocalDate.now().plusDays(200),
                 LocalTime.of(2,30),
                 3,
