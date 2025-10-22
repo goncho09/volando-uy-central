@@ -47,6 +47,8 @@ public interface ISistema {
     List <DtReserva> listarReservas(DtAerolinea aerolinea); // Devuelve las reservas de una aerolínea en específico
 
     void altaReserva(DtReserva reserva); //Reserva de un Vuelo
+    DtReserva getReservaCliente(DtVuelo vuelo, DtCliente cliente,LocalDate fechaReserva);
+    DtReserva getReservaAerolinea(DtVuelo vuelo, DtAerolinea aerolinea, LocalDate fechaReserva);
 
     List<DtReserva> mostrarReservas();
     List<DtPaquete> mostrarPaquetes();

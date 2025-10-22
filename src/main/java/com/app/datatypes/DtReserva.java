@@ -69,6 +69,18 @@ public class DtReserva {
         this.metodoPago = metodoPago;
     }
 
+    public DtReserva(LocalDate fecha, TipoAsiento tipoAsiento, int cantPasajes, int equipajeExtra,float costo,List<DtPasajero> pasajeros, DtCliente cliente, DtVuelo vuelo, MetodoPago metodoPago) {
+        this.fecha = fecha;
+        this.tipoAsiento = tipoAsiento;
+        this.cantPasajes = cantPasajes;
+        this.equipajeExtra = equipajeExtra;
+        this.pasajeros = pasajeros;
+        this.costo = costo;
+        this.cliente = cliente;
+        this.vuelo = vuelo;
+        this.metodoPago = metodoPago;
+    }
+
     public LocalDate getFecha() {
         return fecha;
     }

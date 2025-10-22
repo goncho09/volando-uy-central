@@ -166,7 +166,6 @@ public class Reserva {
                 this.pasajeros,
                 this.cliente.getDatos(),
                 this.vuelo.getDatos(),
-                this.paquete.getDatos(),
                 this.metodoPago
         );
     }

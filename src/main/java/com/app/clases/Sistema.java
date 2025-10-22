@@ -808,6 +808,26 @@ public class Sistema implements ISistema {
         return buscarCiudad(nombre, pais).getDatos();
     }
 
+    public DtReserva getReservaCliente(DtVuelo vuelo, DtCliente cliente,LocalDate fechaReserva){
+        Cliente c = buscarCliente(cliente);
+        for(Reserva r : c.getReservas()){
+            if(r.getVuelo().getNombre().equals(vuelo.getNombre()) && r.getFecha().equals(fechaReserva)){
+                return r.getDatos();
+            }
+        }
+        throw new IllegalArgumentException("No existe esta reserva para el cliente y vuelo indicados.");
+    }
+
+    public DtReserva getReservaAerolinea(DtVuelo vuelo, DtAerolinea aerolinea, LocalDate fechaReserva){
+        List<DtReserva> reservasAerolinea = this.listarReservas(aerolinea);
+        for(DtReserva r : reservasAerolinea){
+            if(r.getVuelo().getNombre().equals(vuelo.getNombre()) && r.getFecha().equals(fechaReserva)){
+                return r;
+            }
+        }
+        throw new IllegalArgumentException("No existe esta reserva para la aerolinea y vuelo indicados.");
+    }
+
     public Ciudad buscarCiudadPorNombreYPais(String nombre, String pais) {
         Ciudad c = this.ciudadDao.buscar(new CiudadId(nombre, pais));
         if (c == null) {
