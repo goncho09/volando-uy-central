@@ -946,9 +946,10 @@ public class Main extends JFrame {
                     return;
                 }
                     try{
+                        DtPaquete dataPaquete = s.buscarPaquete((DtPaquete) JComboBoxPaqueteConsultaPaqueteRutaVuelo.getSelectedItem()).getDatos();
 
-                        JFrame paquete = new InfoPaquete(s.buscarPaquete((DtPaquete) JComboBoxPaqueteConsultaPaqueteRutaVuelo.getSelectedItem()).getDatos(), auxiliar);
 
+                        JFrame paquete = new InfoPaquete(dataPaquete, auxiliar);
                         setEnabled(false);
 
                         paquete.addWindowListener(new WindowAdapter() {

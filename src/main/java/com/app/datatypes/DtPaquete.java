@@ -13,11 +13,11 @@ public class DtPaquete {
     private int validezDias;
     private float descuento;
     private float costo;
-    private List<RutaEnPaquete> rutaEnPaquete;
+    private List<DtRutaEnPaquete> rutaEnPaquete;
 
     public  DtPaquete(){};
 
-    public DtPaquete(String nombre, String descripcion, int validezDias, float descuento, float costo, List<RutaEnPaquete> rutaEnPaquete) {
+    public DtPaquete(String nombre, String descripcion, int validezDias, float descuento, float costo, List<DtRutaEnPaquete> rutaEnPaquete) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.validezDias = validezDias;
@@ -35,22 +35,8 @@ public class DtPaquete {
         this.rutaEnPaquete = new ArrayList<>();
     }
 
-    public RutaDeVuelo getRutaDeVuelo(String nombre){
-        for (RutaEnPaquete rp : this.rutaEnPaquete) {
-            if (rp.getRutaDeVuelo().getNombre().equals(nombre)){
-                return  rp.getRutaDeVuelo();
-            }
-        }
-        return  null;
-    }
-
-
-    public List<RutaEnPaquete> getRutaEnPaquete() {
+    public List<DtRutaEnPaquete> getRutaEnPaquete() {
         return rutaEnPaquete;
-    }
-
-    public void setRutaEnPaquete(List<RutaEnPaquete> rutaEnPaquete) {
-        this.rutaEnPaquete = rutaEnPaquete;
     }
 
     public float getCosto() {
