@@ -400,14 +400,9 @@ public class Sistema implements ISistema {
     public List<DtPaquete> listarPaquetesNoComprados() {
         List<DtPaquete> listaPaquetes = new ArrayList<>();
         for (Paquete p : this.getPaquetes()) {
-            boolean esComprado = false;
-            for (CompraPaquete cp : this.compras) {
-                if (cp.getPaquete().equals(p)) {
-                    esComprado = true;
-                    break;
-                }
-            }
-            if (!esComprado) listaPaquetes.add(p.getDatos());
+            if(!paqueteComprado(p.getDatos())){
+                listaPaquetes.add(p.getDatos());
+            };
         }
         return listaPaquetes;
 
@@ -555,9 +550,21 @@ public class Sistema implements ISistema {
         this.paquetes.put(p.getNombre(), p);
     }
 
-    public boolean existePaquete(String nombre) {
-        return this.paquetes.containsKey(nombre);
+    public boolean paqueteComprado(DtPaquete paquete) {
+        boolean esComprado = false;
+        for (CompraPaquete cp : this.compras) {
+            if (cp.getPaquete().getNombre().equals(paquete.getNombre())) {
+                esComprado = true;
+                break;
+            }
+        }
+        return esComprado;
     }
+
+    public boolean existePaquete(String nombre){
+        return this.paquetes.containsKey(nombre);
+    };
+
 
     public boolean existeUsuarioNickname(String nickname) {
         return this.usuarios.containsKey(nickname);
@@ -795,6 +802,10 @@ public class Sistema implements ISistema {
         Ciudad c = this.ciudadDao.buscar(ciudadId);
         if (c == null) throw new IllegalArgumentException("Esta ciudad no existe.");
         return c;
+    }
+
+    public DtCiudad getCiudad(String nombre, String pais) {
+        return buscarCiudad(nombre, pais).getDatos();
     }
 
     public Ciudad buscarCiudadPorNombreYPais(String nombre, String pais) {
@@ -1062,22 +1073,22 @@ public class Sistema implements ISistema {
         return v;
     }
 
-    public void altaReserva(DtReserva reserva, DtCliente cliente, DtVuelo vuelo) {
-        Cliente c = buscarCliente(cliente);
-        Vuelo v = buscarVuelo(vuelo);
-        float costoAsiento = reserva.getTipoAsiento() == TipoAsiento.EJECUTIVO ? v.getRutaDeVuelo().getCostoEjecutivo() : v.getRutaDeVuelo().getCostoTurista();
+    public void altaReserva(DtReserva reserva) {
+        Cliente cliente = buscarCliente(reserva.getCliente());
+        Vuelo vuelo = buscarVuelo(reserva.getVuelo());
+        float costoAsiento = reserva.getTipoAsiento() == TipoAsiento.EJECUTIVO ? vuelo.getRutaDeVuelo().getCostoEjecutivo() : vuelo.getRutaDeVuelo().getCostoTurista();
         int cantPasajes = reserva.getCantPasajes();
-        float costoEquipaje = reserva.getEquipajeExtra() * v.getRutaDeVuelo().getEquipajeExtra();
+        float costoEquipaje = reserva.getEquipajeExtra() * vuelo.getRutaDeVuelo().getEquipajeExtra();
         float costo = (costoAsiento * cantPasajes) + costoEquipaje;
 
         if(reserva.getMetodoPago() == MetodoPago.PAQUETE){
             int pasajesRestantes = cantPasajes;
-            List<DtPaquete> paquetesComprados = listarPaquetes(cliente);
+            List<DtPaquete> paquetesComprados = listarPaquetes(cliente.getDatos());
 
             for (DtPaquete p : paquetesComprados){
                 Paquete paq = buscarPaquete(p);
                 for (RutaEnPaquete rep : paq.getRutaEnPaquete()){
-                    if(rep.getRutaDeVuelo().equals(v.getRutaDeVuelo())) {
+                    if(rep.getRutaDeVuelo().equals(vuelo.getRutaDeVuelo())) {
                         int descontar = Math.min(pasajesRestantes, rep.getCantidad());
                         rep.setCantidad(rep.getCantidad() - descontar);
                         pasajesRestantes -= descontar;
@@ -1086,11 +1097,11 @@ public class Sistema implements ISistema {
                 }
                 if(pasajesRestantes == 0) break;
             }
-            costo = pasajesRestantes * (reserva.getTipoAsiento() == TipoAsiento.EJECUTIVO ? v.getRutaDeVuelo().getCostoEjecutivo() : v.getRutaDeVuelo().getCostoTurista());
-            costo += reserva.getEquipajeExtra() * v.getRutaDeVuelo().getEquipajeExtra();
+            costo = pasajesRestantes * (reserva.getTipoAsiento() == TipoAsiento.EJECUTIVO ? vuelo.getRutaDeVuelo().getCostoEjecutivo() : vuelo.getRutaDeVuelo().getCostoTurista());
+            costo += reserva.getEquipajeExtra() * vuelo.getRutaDeVuelo().getEquipajeExtra();
         }
 
-        if (c.existeVueloReserva(v)) {
+        if (cliente.existeVueloReserva(vuelo)) {
             throw new IllegalArgumentException("Ya existe una reserva para este vuelo. Cambie el Cliente, Aerolinea o RutaDeVuelo.");
         }
         ;
@@ -1106,17 +1117,17 @@ public class Sistema implements ISistema {
                 reserva.getEquipajeExtra(),
                 costo,
                 reserva.getPasajeros(),
-                c.getDatos(),
-                v.getDatos()
+                cliente.getDatos(),
+                vuelo.getDatos()
         );
 
-        Reserva nuevaReserva = new Reserva(r, c, v); // 'r' es DtReserva, 'c' es Cliente y 'v' es Vuelo.
+        Reserva nuevaReserva = new Reserva(r, cliente, vuelo); // 'r' es DtReserva, 'c' es Cliente y 'v' es Vuelo.
         this.reservas.add(nuevaReserva);
         this.reservaDao.guardar(nuevaReserva);
-        this.userDao.addReserva(c, nuevaReserva);
+        this.userDao.addReserva(cliente, nuevaReserva);
 
-        v.setCantReservas(v.getCantReservas() + 1);
-        this.vueloDao.actualizar(v);
+        vuelo.setCantReservas(vuelo.getCantReservas() + 1);
+        this.vueloDao.actualizar(vuelo);
 
         for (DtPasajero p : reserva.getPasajeros()) {
             this.pasajeroDao.guardar(p);

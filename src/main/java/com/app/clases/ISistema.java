@@ -46,7 +46,7 @@ public interface ISistema {
     List<DtReserva> listarReservas(DtCliente cliente, DtVuelo vuelo); // Devuelve las reservas de un cliente en un vuelo en específico
     List <DtReserva> listarReservas(DtAerolinea aerolinea); // Devuelve las reservas de una aerolínea en específico
 
-    void altaReserva(DtReserva reserva, DtCliente cliente, DtVuelo vuelo); //Reserva de un Vuelo
+    void altaReserva(DtReserva reserva); //Reserva de un Vuelo
 
     List<DtReserva> mostrarReservas();
     List<DtPaquete> mostrarPaquetes();
@@ -90,7 +90,10 @@ public interface ISistema {
     DtPaquete getPaquete();
     DtPaquete getPaquete(String nombre);
     Paquete buscarPaquete(DtPaquete paquete);
+
+    boolean paqueteComprado(DtPaquete paquete);
     boolean existePaquete(String nombre);
+
 
     void altaPaquete(DtPaquete paquete);
 
@@ -108,6 +111,7 @@ public interface ISistema {
     void altaCiudad(DtCiudad ciudad);
     List<DtCiudad> listarCiudades();
     Ciudad buscarCiudad(String nombre, String pais);
+    DtCiudad getCiudad(String nombre, String pais);
     List<Ciudad> getCiudades();
 
     // ---------- COMPRAS ---------- //
