@@ -204,7 +204,11 @@ public class Sistema implements ISistema {
     public void altaRutaDeVuelo(String nombreAerolinea, DtRuta datosRuta) {
         Aerolinea aerolinea = (Aerolinea) userDao.buscar(nombreAerolinea);
 
-        if (aerolinea == null) throw new IllegalArgumentException("Aerolinea no existe");
+        if (nombreAerolinea == null || nombreAerolinea.isEmpty())
+            throw new IllegalArgumentException("Aerolinea no puede ser vacía");
+
+        if( datosRuta.getNombre() == null || datosRuta.getNombre().isEmpty())
+            throw new IllegalArgumentException("Nombre de ruta no puede ser vacío");
 
         if (this.rutasDeVuelo.containsKey(datosRuta.getNombre()))
             throw new IllegalArgumentException("Ya existe esa ruta de vuelo.");
@@ -219,15 +223,29 @@ public class Sistema implements ISistema {
             categoriaList.add(nuevaCategoria);
         }
 
+        if (datosRuta.getCategorias() == null || datosRuta.getCategorias().isEmpty()) {
+            throw new IllegalArgumentException("Debe tener al menos una categoria");
+        }
+
         Ciudad origen = this.buscarCiudad(datosRuta.getCiudadOrigen().getNombre(), datosRuta.getCiudadOrigen().getPais());
-        if(origen == null){
+        if(origen == null ){
             throw new IllegalArgumentException("Ciudad Origen no existe");
         }
 
         Ciudad destino = this.buscarCiudad(datosRuta.getCiudadDestino().getNombre(), datosRuta.getCiudadDestino().getPais());
-        if(destino == null){
-            throw new IllegalArgumentException("Ciudad Destino no existe");
+        if(destino == null || destino == origen){
+            throw new IllegalArgumentException("Ciudad Destino no existe o es igual a la de Origen");
         }
+
+        if(datosRuta.getDuracion() == null || datosRuta.getDuracion().equals(LocalTime.of(0,0))){
+            throw new IllegalArgumentException("Duracion no puede ser 0");
+        }
+
+        if(datosRuta.getCostoTurista() <= 0 || datosRuta.getCostoEjecutivo() <= 0 || datosRuta.getEquipajeExtra() < 0){
+            throw new IllegalArgumentException("Costos no pueden ser negativos o 0");
+        }
+
+
 
         RutaDeVuelo nuevaRuta = new RutaDeVuelo(datosRuta, categoriaList, origen, destino);
 
