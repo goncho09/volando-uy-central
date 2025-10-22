@@ -50,16 +50,29 @@ public class Reserva {
     }
 
     public Reserva() {}
-    public Reserva(DtReserva reserva) {
+    public Reserva(DtReserva reserva, Cliente cliente, Vuelo vuelo) {
         this.fecha = reserva.getFecha();
         this.tipoAsiento = reserva.getTipoAsiento();
         this.cantPasajes = reserva.getCantPasajes();
         this.equipajeExtra = reserva.getEquipajeExtra();
         this.costo = reserva.getCosto();
         this.pasajeros = reserva.getPasajeros();
-        this.cliente = reserva.getCliente();
-        this.vuelo = reserva.getVuelo();
-        this.paquete = reserva.getPaquete();
+        this.cliente = cliente;
+        this.vuelo = vuelo;
+        this.paquete = null;
+        this.metodoPago = reserva.getMetodoPago();
+    }
+
+    public Reserva(DtReserva reserva, Cliente cliente, Paquete paquete) {
+        this.fecha = reserva.getFecha();
+        this.tipoAsiento = reserva.getTipoAsiento();
+        this.cantPasajes = reserva.getCantPasajes();
+        this.equipajeExtra = reserva.getEquipajeExtra();
+        this.costo = reserva.getCosto();
+        this.pasajeros = reserva.getPasajeros();
+        this.cliente = cliente;
+        this.vuelo = null;
+        this.paquete = paquete;
         this.metodoPago = reserva.getMetodoPago();
     }
 
@@ -151,9 +164,9 @@ public class Reserva {
                 this.equipajeExtra,
                 this.costo,
                 this.pasajeros,
-                this.cliente,
-                this.vuelo,
-                this.paquete,
+                this.cliente.getDatos(),
+                this.vuelo.getDatos(),
+                this.paquete.getDatos(),
                 this.metodoPago
         );
     }

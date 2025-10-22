@@ -98,9 +98,9 @@ public class Cliente extends Usuario{
                     reserva.getEquipajeExtra(),
                     reserva.getCosto(),
                     reserva.getPasajeros(),
-                    this,  // El cliente actual
-                    reserva.getVuelo(),
-                    reserva.getPaquete(),
+                    this.getDatos(),  // El cliente actual
+                    reserva.getVuelo().getDatos(),
+                    reserva.getPaquete().getDatos(),
                     reserva.getMetodoPago()
             ));
         }

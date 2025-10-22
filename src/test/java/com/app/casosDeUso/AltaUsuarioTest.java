@@ -3,16 +3,15 @@ package com.app.casosDeUso;
 import com.app.clases.ISistema;
 import com.app.datatypes.DtAerolinea;
 import com.app.datatypes.DtCliente;
-import com.app.datatypes.DtRuta;
-import com.app.datatypes.DtVuelo;
 import com.app.enums.TipoDocumento;
 import com.app.util.DummyFactory;
-import org.junit.jupiter.api.*;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.Arrays;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
-class CasosDeUsoTest {
+import java.time.LocalDate;
+
+class AltaUsuarioTest {
 
     static ISistema s;
 
@@ -48,8 +47,6 @@ class CasosDeUsoTest {
         );
     }
 
-    ;
-
     @Test
     void validarNicknameExistente() {
         LocalDate fechaNacimiento = LocalDate.of(1990, 1, 1);
@@ -72,8 +69,6 @@ class CasosDeUsoTest {
                 "El sistema no debería crear al usuario (mismo nickname) y debe lanzar una excepción" //Mensaje opcional por si falla el test, qué debería ocurrir
         );
     }
-
-    ;
 
     @Test
     void validarNombreVacio() {
@@ -98,8 +93,6 @@ class CasosDeUsoTest {
         );
     }
 
-    ;
-
     @Test
     void validarNombreSoloLetras() {
         LocalDate fechaNacimiento = LocalDate.of(1990, 1, 1);
@@ -122,8 +115,6 @@ class CasosDeUsoTest {
                 "El sistema no debería crear al usuario ya que su nombre contiene numeros" //Mensaje opcional por si falla el test, qué debería ocurrir
         );
     }
-
-    ;
 
     @Test
     void validarEmailVacio() {
@@ -148,8 +139,6 @@ class CasosDeUsoTest {
         );
     }
 
-    ;
-
     @Test
     void validarEmailExistente() {
         LocalDate fechaNacimiento = LocalDate.of(1990, 1, 1);
@@ -173,10 +162,8 @@ class CasosDeUsoTest {
         );
     }
 
-    ;
-
     @Test
-    void validarContraseñaVacia() {
+    void validarContraseniaVacia() {
         LocalDate fechaNacimiento = LocalDate.of(1990, 1, 1);
         DtCliente cliente = new DtCliente(
                 "power",
@@ -197,8 +184,6 @@ class CasosDeUsoTest {
                 "El sistema no debería crear al usuario (contraseña vacio) y debe lanzar una excepción" //Mensaje opcional por si falla el test, qué debería ocurrir
         );
     }
-
-    ;
 
     /* GENERALES */
 
@@ -255,8 +240,6 @@ class CasosDeUsoTest {
         );
     }
 
-    ;
-
     @Test
     void validarApellidoSoloLetras() {
         LocalDate fechaNacimiento = LocalDate.of(1990, 1, 1);
@@ -279,8 +262,6 @@ class CasosDeUsoTest {
                 "El sistema no debería crear al usuario ya que su apellido contiene numeros" //Mensaje opcional por si falla el test, qué debería ocurrir
         );
     }
-
-    ;
 
     @Test
     void validarNacionalidadVacio() {
@@ -305,8 +286,6 @@ class CasosDeUsoTest {
         );
     }
 
-    ;
-
     @Test
     void validarNacionalidadSoloLetras() {
         LocalDate fechaNacimiento = LocalDate.of(1990, 1, 1);
@@ -330,8 +309,6 @@ class CasosDeUsoTest {
         );
     }
 
-    ;
-
     @Test
     void validarCedulaCantidadNumeros() {
         LocalDate fechaNacimiento = LocalDate.of(1990, 1, 1);
@@ -354,8 +331,6 @@ class CasosDeUsoTest {
                 "El sistema no debería crear al usuario ya que su CI es invalida" //Mensaje opcional por si falla el test, qué debería ocurrir
         );
     }
-
-    ;
 
     @Test
     void validarFechaNacimiento() {
@@ -381,8 +356,6 @@ class CasosDeUsoTest {
         );
     }
 
-    ;
-
     /* CLIENTES */
 
     /* AEROLINEAS */
@@ -404,7 +377,7 @@ class CasosDeUsoTest {
                 () -> s.registrarAerolinea(aerolinea), //Acá colocamos la función que vamos a utilizar
                 "El sistema no debería crear a la aerolinea (descripcion vacio) y debe lanzar una excepción" //Mensaje opcional por si falla el test, qué debería ocurrir
         );
-    };
+    }
 
 //    @Test
 //    void crearAerolineaValida() {
@@ -429,219 +402,5 @@ class CasosDeUsoTest {
 //    };
 
     /* AEROLINEAS */
-
-    // ------------------ Modificar Datos de Usuario ------------------ //
-    // ------------------ Alta de Ruta de Vuelo ------------------ //
-    // ------------------ Alta de Vuelo ----------------- //
-
-    @Test
-    void validarNombreVacioAltaVuelo(){
-        DtVuelo vuelo = new DtVuelo(
-                "",
-                LocalDate.now().plusDays(200),
-                LocalTime.of(2,30),
-                3,
-                3,
-                "default.png",
-                LocalDate.now(),
-                s.getRutaDeVuelo("Lima-Montevideo Norte"), // Es una ruta con estado Aprobada.
-                0
-        );
-
-        Assertions.assertThrows(
-                IllegalArgumentException.class,
-                () -> s.altaVuelo(vuelo),
-                "El sistema no debería crear el vuelo ya que su nombre es vacío."
-        );
-
-    }
-
-    @Test
-    void validarNombreExistenteAltaVuelo(){
-        DtVuelo vuelo = new DtVuelo(
-                "Vuelo1", //Este nombre debería existir.
-                LocalDate.now().plusDays(200),
-                LocalTime.of(2,30),
-                3,
-                3,
-                "default.png",
-                LocalDate.now(),
-                s.getRutaDeVuelo("Lima-Montevideo Norte"), // Es una ruta con estado Aprobada.
-                0
-        );
-
-        Assertions.assertThrows(
-                IllegalArgumentException.class,
-                () -> s.altaVuelo(vuelo),
-                "El sistema no debería crear el vuelo ya que su nombre ya existe en el sistema."
-        );
-
-    }
-
-    @Test
-    void validarFechaInvalidaAltaVuelo(){
-        DtVuelo vuelo = new DtVuelo(
-                "VueloTestFecha",
-                LocalDate.now().minusDays(1), // Fecha inválida
-                LocalTime.of(2,30),
-                3,
-                3,
-                "default.png",
-                LocalDate.now(),
-                s.getRutaDeVuelo("Lima-Montevideo Norte"), // Es una ruta con estado Aprobada.
-                0
-        );
-
-        Assertions.assertThrows(
-                IllegalArgumentException.class,
-                () -> s.altaVuelo(vuelo),
-                "El sistema no debería crear el vuelo ya que su fecha de salida es 'antigua'."
-        );
-    }
-
-    @Test
-    void validarHoraInvalidaAltaVuelo(){
-        DtVuelo vuelo = new DtVuelo(
-                "VueloTestHora",
-                LocalDate.now().plusDays(200),
-                LocalTime.of(0,0), // Hora inválida
-                3,
-                3,
-                "default.png",
-                LocalDate.now(),
-                s.getRutaDeVuelo("Lima-Montevideo Norte"), // Es una ruta con estado Aprobada.
-                0
-        );
-
-        Assertions.assertThrows(
-                IllegalArgumentException.class,
-                () -> s.altaVuelo(vuelo),
-                "El sistema no debería crear el vuelo ya que su duración es de 0."
-        );
-    }
-
-    @Test
-    void validarCupoInvalidoAltaVuelo(){
-        DtVuelo vuelo = new DtVuelo(
-                "VueloTestCupo",
-                LocalDate.now().plusDays(200),
-                LocalTime.of(2,30),
-                0, // Entre ambos cupos
-                0, // Deberian sumar 1 o más.
-                "default.png",
-                LocalDate.now(),
-                s.getRutaDeVuelo("Lima-Montevideo Norte"), // Es una ruta con estado Aprobada.
-                0
-        );
-
-        Assertions.assertThrows(
-                IllegalArgumentException.class,
-                () -> s.altaVuelo(vuelo),
-                "El sistema no debería crear el vuelo ya que su cupo total es de 0."
-        );
-    }
-
-    @Test
-    void validarRutaInvalidaRechazadaAltaVuelo(){
-        DtVuelo vuelo = new DtVuelo(
-                "VueloTestRutaRechazada",
-                LocalDate.now().plusDays(200),
-                LocalTime.of(2,30),
-                3,
-                3,
-                "default.png",
-                LocalDate.now(),
-                s.getRutaDeVuelo("Montevideo Norte-Quito"), // Es una ruta con estado Rechazada.
-                0
-        );
-
-        Assertions.assertThrows(
-                IllegalArgumentException.class,
-                () -> s.altaVuelo(vuelo),
-                "El sistema no debería crear el vuelo ya que su rutaDeVuelo está rechazada."
-        );
-    }
-
-    @Test
-    void validarRutaInvalidaIngresadaAltaVuelo(){
-        DtVuelo vuelo = new DtVuelo(
-                "VueloTestRutaIngresada",
-                LocalDate.now().plusDays(200),
-                LocalTime.of(2,30),
-                3,
-                3,
-                "default.png",
-                LocalDate.now(),
-                s.getRutaDeVuelo("Santiago-Lima"), // Es una ruta con estado Ingresada.
-                0
-        );
-
-        Assertions.assertThrows(
-                IllegalArgumentException.class,
-                () -> s.altaVuelo(vuelo),
-                "El sistema no debería crear el vuelo ya que su rutaDeVuelo está Ingresada."
-        );
-    }
-
-    @Test
-    void validarRutaNoExistenteAltaVuelo(){
-        DtRuta ruta = new DtRuta( //Esta creación literalmente no sirve ni se persiste en la BD.
-                "Esto Es La Ruta Mas Inexistente Del Mundo Jeje",
-                "Ruta entre Bogotá y Santiago",
-                "Bogotá a Santiago",
-                LocalTime.of(5, 0),
-                250,
-                500,
-                30, LocalDate.now(),
-                "default.png",
-                Arrays.asList(s.buscarCategoria("Negocios")),
-                s.buscarCiudad("Santiago", "Chile").getDatos(),
-                s.buscarCiudad("Quito", "Ecuador").getDatos()
-        );
-
-        DtVuelo vuelo = new DtVuelo(
-                "VueloTestFecha",
-                LocalDate.now().plusDays(200),
-                LocalTime.of(2,30),
-                3,
-                3,
-                "default.png",
-                LocalDate.now(),
-                ruta, // Es una ruta con estado Ingresada.
-                0
-        );
-
-        Assertions.assertThrows(
-                IllegalArgumentException.class,
-                () -> s.altaVuelo(vuelo),
-                "El sistema no debería crear el vuelo ya que su rutaDeVuelo no está Ingresada en el sistema."
-        );
-    }
-
-    @Test
-    void validarVueloInexistenteAltaVuelo(){
-        DtVuelo vuelo = new DtVuelo(
-                "Vuelo11",
-                LocalDate.now().plusDays(200),
-                LocalTime.of(2,30),
-                3,
-                3,
-                "default.png",
-                LocalDate.now(),
-                s.getRutaDeVuelo("Rio de Janeiro-Bogotá"), // Es una ruta con estado Aprobada.
-                0
-        );
-
-        s.altaVuelo(vuelo);
-
-        Assertions.assertDoesNotThrow(() -> s.consultarVuelo("Vuelo11"),"El vuelo debería existir y no lanzar excepción");
-    }
-
-    // ------------------ Reserva de Vuelo ------------------ //
-    // ------------------ Alta de Ciudad ------------------ //
-    // ------------------ Crear Paquete de Rutas de Vuelo ------------------ //
-    // ------------------ Agregar Ruta de Vuelo a Paquete ------------------ //
-    // ------------------ Compra de Paquete -Alta de Categorías ------------------ //
-    // ------------------ Aceptar/Rechazar Ruta de Vuelo ------------------ //
 
 }
