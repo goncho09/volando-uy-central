@@ -937,6 +937,12 @@ public class Sistema implements ISistema {
     }
 
     public void compraPaquete(DtPaquete paquete, DtCliente cliente) {
+        if (cliente == null) {
+        throw new IllegalArgumentException("El cliente no puede ser nulo");
+    }
+    if (paquete == null) {
+        throw new IllegalArgumentException("El paquete no puede ser nulo");
+    }
         Cliente c = buscarCliente(cliente);
         Paquete p = buscarPaquete(paquete);
 
