@@ -1,5 +1,6 @@
 package com.app.clases;
 
+import com.app.datatypes.DtPaquete;
 import com.app.datatypes.DtPasajero;
 import com.app.datatypes.DtReserva;
 import com.app.enums.TipoAsiento;
@@ -149,6 +150,15 @@ public class Reserva {
     }
 
     public DtReserva getDatos() {
+        Paquete paquete = this.paquetePago;
+        DtPaquete paqueteData =  new DtPaquete();
+
+        if(paquete == null){
+            paqueteData = null;
+        }else{
+            paqueteData = paquete.getDatos();
+        }
+
         return new DtReserva(
                 this.fecha,
                 this.tipoAsiento,
@@ -159,7 +169,7 @@ public class Reserva {
                 this.cliente.getDatos(),
                 this.vuelo.getDatos(),
                 this.metodoPago,
-                this.paquetePago.getDatos()
+                paqueteData
         );
     }
 }

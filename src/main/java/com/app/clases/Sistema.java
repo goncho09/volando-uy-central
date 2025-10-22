@@ -1104,6 +1104,7 @@ public class Sistema implements ISistema {
         if(reserva.getMetodoPago() == MetodoPago.PAQUETE){
             int pasajesRestantes = cantPasajes;
             DtPaquete paqueteCompra = reserva.getPaquetePago();
+            System.out.println("Haciendo Reserva del vuelo " + vuelo.getNombre() + " para el cliente " + cliente.getNickname() + " con paquete " + paqueteCompra.getNombre());
             if(paqueteCompra == null || !clienteTienePaquete(cliente.nickname, paqueteCompra.getNombre())){
                 throw new IllegalArgumentException("El paquete no fue comprado por el cliente o no existe.");
             }
