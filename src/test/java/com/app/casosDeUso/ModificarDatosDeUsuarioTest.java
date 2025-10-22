@@ -138,7 +138,7 @@ public class ModificarDatosDeUsuarioTest {
     };
 
     @Test
-    void validarContraseñaVaciaModificarUsuario() {
+    void validarContraseniaVaciaModificarUsuario() {
         LocalDate fechaNacimiento = LocalDate.of(1990, 1, 1);
         DtCliente cliente = new DtCliente(
                 "power",

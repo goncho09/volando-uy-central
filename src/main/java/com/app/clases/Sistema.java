@@ -308,8 +308,8 @@ public class Sistema implements ISistema {
                         r.getPasajeros(),
                         c.getDatos(), // Cliente
                         r.getVuelo(),
-                        r.getPaquete(),
-                        r.getMetodoPago()
+                        r.getMetodoPago(),
+                        r.getPaquetePago()
                 ));
             }
             return dtReservas;
@@ -527,7 +527,7 @@ public class Sistema implements ISistema {
         }
 
         // Verificar si la ruta ya está en el paquete
-        for (DtRutaEnPaquete r : this.paqueteSeleccionado.getRutaEnPaquete()) {
+        for (DtRutaEnPaquete r : this.paqueteSeleccionado.getRutaEnPaqueteDatos()) {
             if (r.getRutaDeVuelo().getNombre().equals(ruta.getNombre())) {
                 throw new IllegalArgumentException("La ruta ya está asociada al paquete.");
             }
@@ -983,7 +983,7 @@ public class Sistema implements ISistema {
             nuevoCosto += ruta.getCostoTurista() * cantidad;
         }
 
-        for (DtRutaEnPaquete rep : p.getRutaEnPaquete()) {
+        for (DtRutaEnPaquete rep : p.getRutaEnPaqueteDatos()) {
             if (rep.getRutaDeVuelo().getNombre().equals(ruta.getNombre()) && rep.getTipoAsiento() == tipoAsiento) {
                 p.setCosto(nuevoCosto);
                 System.out.println(nuevoCosto);
@@ -1103,20 +1103,27 @@ public class Sistema implements ISistema {
 
         if(reserva.getMetodoPago() == MetodoPago.PAQUETE){
             int pasajesRestantes = cantPasajes;
-            List<DtPaquete> paquetesComprados = listarPaquetes(cliente.getDatos());
-
-            for (DtPaquete p : paquetesComprados){
-                Paquete paq = buscarPaquete(p);
-                for (DtRutaEnPaquete rep : paq.getRutaEnPaquete()){
-                    if(rep.getRutaDeVuelo().equals(vuelo.getRutaDeVuelo())) {
-                        int descontar = Math.min(pasajesRestantes, rep.getCantidad());
-                        rep.setCantidad(rep.getCantidad() - descontar);
-                        pasajesRestantes -= descontar;
-                        if (pasajesRestantes == 0) break;
-                    }
-                }
-                if(pasajesRestantes == 0) break;
+            DtPaquete paqueteCompra = reserva.getPaquetePago();
+            if(paqueteCompra == null || !clienteTienePaquete(cliente.nickname, paqueteCompra.getNombre())){
+                throw new IllegalArgumentException("El paquete no fue comprado por el cliente o no existe.");
             }
+
+            Paquete paq = buscarPaquete(paqueteCompra);
+            RutaEnPaquete rutaEnPaquete = null;
+            for(RutaEnPaquete rep : paq.getRutaEnPaquete()){
+                if(rep.getRutaDeVuelo().getNombre().equals(vuelo.getRutaDeVuelo().getNombre())){
+                    rutaEnPaquete = rep;
+                }
+            }
+
+            if(rutaEnPaquete == null){
+                throw new IllegalArgumentException("El paquete no tiene la ruta especificada.");
+            }
+
+            int descontar = Math.min(pasajesRestantes, rutaEnPaquete.getCantidad());
+            rutaEnPaquete.setCantidad(rutaEnPaquete.getCantidad() - descontar);
+            pasajesRestantes -= descontar;
+
             costo = pasajesRestantes * (reserva.getTipoAsiento() == TipoAsiento.EJECUTIVO ? vuelo.getRutaDeVuelo().getCostoEjecutivo() : vuelo.getRutaDeVuelo().getCostoTurista());
             costo += reserva.getEquipajeExtra() * vuelo.getRutaDeVuelo().getEquipajeExtra();
         }
@@ -1124,7 +1131,6 @@ public class Sistema implements ISistema {
         if (cliente.existeVueloReserva(vuelo)) {
             throw new IllegalArgumentException("Ya existe una reserva para este vuelo. Cambie el Cliente, Aerolinea o RutaDeVuelo.");
         }
-        ;
 
         if (cantPasajes != reserva.getPasajeros().size()) {
             throw new IllegalArgumentException("La cantidad de pasajeros no coincide");
@@ -1138,7 +1144,9 @@ public class Sistema implements ISistema {
                 costo,
                 reserva.getPasajeros(),
                 cliente.getDatos(),
-                vuelo.getDatos()
+                vuelo.getDatos(),
+                reserva.getMetodoPago(),
+                reserva.getPaquetePago()
         );
 
         Reserva nuevaReserva = new Reserva(r, cliente, vuelo); // 'r' es DtReserva

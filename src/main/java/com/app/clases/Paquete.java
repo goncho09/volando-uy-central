@@ -40,12 +40,16 @@ public class Paquete {
         this.rutaEnPaquete = new ArrayList<>();
     }
 
-    public List<DtRutaEnPaquete> getRutaEnPaquete() {
+    public List<DtRutaEnPaquete> getRutaEnPaqueteDatos() {
         List<DtRutaEnPaquete> ruta = new ArrayList<>();
         for(RutaEnPaquete r : this.rutaEnPaquete){
             ruta.add(r.getDatos());
         }
         return ruta;
+    }
+
+    public List<RutaEnPaquete> getRutaEnPaquete() {
+        return this.rutaEnPaquete;
     }
 
     public void setRutaEnPaquete(List<RutaEnPaquete> rutaEnPaquete) {
@@ -97,7 +101,7 @@ public class Paquete {
     };
 
     public DtPaquete getDatos(){
-        return new DtPaquete(this.getNombre(),this.getDescripcion(),this.getValidezDias(),this.getDescuento(),this.getCosto(),this.getRutaEnPaquete());
+        return new DtPaquete(this.getNombre(),this.getDescripcion(),this.getValidezDias(),this.getDescuento(),this.getCosto(),this.getRutaEnPaqueteDatos());
     }
 
     @Override

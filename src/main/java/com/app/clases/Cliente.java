@@ -118,7 +118,7 @@ public class Cliente extends Usuario{
                         paquete.getValidezDias(),
                         paquete.getDescuento(),
                         paquete.getCosto(),
-                        paquete.getRutaEnPaquete()
+                        paquete.getRutaEnPaqueteDatos()
                 ));
             }
         }
