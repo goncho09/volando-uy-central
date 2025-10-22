@@ -100,8 +100,8 @@ public class Cliente extends Usuario{
                     reserva.getPasajeros(),
                     this.getDatos(),  // El cliente actual
                     reserva.getVuelo().getDatos(),
-                    reserva.getPaquete().getDatos(),
-                    reserva.getMetodoPago()
+                    reserva.getMetodoPago(),
+                    reserva.getPaquetePago().getDatos()
             ));
         }
         return dtReservas;

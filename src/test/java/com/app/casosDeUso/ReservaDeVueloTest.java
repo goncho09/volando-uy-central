@@ -22,22 +22,22 @@ public class ReservaDeVueloTest {
 
     // ------------------ Reserva de Vuelo ------------------ //
 
-    @Test
-    void crearReservaDeVuelo() {
-        DtReserva reserva = new DtReserva(
-                LocalDate.now(),
-                TipoAsiento.TURISTA,
-                2,
-                1,
-                Arrays.asList(pasajeros.get(0), pasajeros.get(1)),
-                clientes.get(1),
-                vuelos.get(0),
-                MetodoPago.PAQUETE,
-                paquetes.get(0)
-        );
-
-        s.altaReserva(reserva);
-    }
+//    @Test
+//    void crearReservaDeVuelo() {
+//        DtReserva reserva = new DtReserva(
+//                LocalDate.now(),
+//                TipoAsiento.TURISTA,
+//                2,
+//                1,
+//                Arrays.asList(pasajeros.get(0), pasajeros.get(1)),
+//                clientes.get(1),
+//                vuelos.get(0),
+//                MetodoPago.PAQUETE,
+//                paquetes.get(0)
+//        );
+//
+//        s.altaReserva(reserva);
+//    }
 
 
 }

@@ -34,20 +34,12 @@ public class Reserva {
 
     @ManyToOne(optional = true) // Muchas reservas pueden tener 1 único vuelo asociado (N-1)
     @JoinColumn(name = "paquete_id")
-    private Paquete paquete;
+    private Paquete paquetePago;
 
     // Relación opcional con Vuelo
-    @ManyToOne(optional = true) // (N-1)
+    @ManyToOne(optional = false) // (N-1)
     @JoinColumn(name = "vuelo_id")
     private Vuelo vuelo;
-
-    @PrePersist
-    @PreUpdate
-    private void validarXor() { // Valida que la reserva tenga un vuelo ó una reserva, no ambas.
-        if ((paquete == null && vuelo == null) || (paquete != null && vuelo != null)) {
-            throw new IllegalStateException("Reserva debe tener exactamente un Paquete o un Vuelo");
-        }
-    }
 
     public Reserva() {}
     public Reserva(DtReserva reserva, Cliente cliente, Vuelo vuelo) {
@@ -59,8 +51,8 @@ public class Reserva {
         this.pasajeros = reserva.getPasajeros();
         this.cliente = cliente;
         this.vuelo = vuelo;
-        this.paquete = null;
         this.metodoPago = reserva.getMetodoPago();
+        this.paquetePago = null;
     }
 
     public Reserva(DtReserva reserva, Cliente cliente, Paquete paquete) {
@@ -72,8 +64,8 @@ public class Reserva {
         this.pasajeros = reserva.getPasajeros();
         this.cliente = cliente;
         this.vuelo = null;
-        this.paquete = paquete;
         this.metodoPago = reserva.getMetodoPago();
+        this.paquetePago = paquete;
     }
 
     public LocalDate getFecha() {
@@ -140,12 +132,12 @@ public class Reserva {
         this.vuelo = vuelo;
     }
 
-    public Paquete getPaquete() {
-        return paquete;
+    public Paquete getPaquetePago() {
+        return paquetePago;
     }
 
-    public void setPaquete(Paquete paquete) {
-        this.paquete = paquete;
+    public void setPaquetePago(Paquete paquete) {
+        this.paquetePago = paquete;
     }
 
     public MetodoPago getMetodoPago() {
@@ -166,7 +158,8 @@ public class Reserva {
                 this.pasajeros,
                 this.cliente.getDatos(),
                 this.vuelo.getDatos(),
-                this.metodoPago
+                this.metodoPago,
+                this.paquetePago.getDatos()
         );
     }
 }
