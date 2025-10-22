@@ -4,6 +4,7 @@ import com.app.clases.Aerolinea;
 import com.app.clases.Paquete;
 import com.app.clases.RutaDeVuelo;
 import com.app.clases.RutaEnPaquete;
+import com.app.datatypes.DtRutaEnPaquete;
 import jakarta.persistence.EntityManager;
 
 import java.util.Map;
@@ -19,7 +20,7 @@ public class PaqueteDao extends BaseDao<Paquete, String> {
     }
 
     public void addRutaEnPaquete(Paquete p, RutaEnPaquete rp){
-        p.getRutaEnPaquete().add(rp);
+        p.addRutaEnPaquete(rp);
         actualizar(p);
     }
 
@@ -28,7 +29,7 @@ public class PaqueteDao extends BaseDao<Paquete, String> {
         actualizar(p);
     }
 
-    public int actualizarCantidadRutaEnPaquete(Paquete p, RutaEnPaquete rp,int cantidad){
+    public int actualizarCantidadRutaEnPaquete(Paquete p, DtRutaEnPaquete rp, int cantidad){
         rp.setCantidad(rp.getCantidad() + cantidad);
         actualizar(p);
         return  rp.getCantidad();

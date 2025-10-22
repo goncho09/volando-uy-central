@@ -501,9 +501,9 @@ public class Sistema implements ISistema {
 
     public List<DtRuta> listarRutasDeVuelo(DtPaquete p) {
         List<DtRuta> listaRutas = new ArrayList<>();
-        List<RutaEnPaquete> rutasDelPaquete = p.getRutaEnPaquete();
-        for (RutaEnPaquete r : rutasDelPaquete) {
-            listaRutas.add(r.getRutaDeVuelo().getDatos());
+        List<DtRutaEnPaquete> rutasDelPaquete = p.getRutaEnPaquete();
+        for (DtRutaEnPaquete r : rutasDelPaquete) {
+            listaRutas.add(r.getRutaDeVuelo());
         }
         return listaRutas;
     }
@@ -527,7 +527,7 @@ public class Sistema implements ISistema {
         }
 
         // Verificar si la ruta ya está en el paquete
-        for (RutaEnPaquete r : this.paqueteSeleccionado.getRutaEnPaquete()) {
+        for (DtRutaEnPaquete r : this.paqueteSeleccionado.getRutaEnPaquete()) {
             if (r.getRutaDeVuelo().getNombre().equals(ruta.getNombre())) {
                 throw new IllegalArgumentException("La ruta ya está asociada al paquete.");
             }
@@ -536,7 +536,7 @@ public class Sistema implements ISistema {
         RutaEnPaquete tp = new RutaEnPaquete();
         tp.setCantidad(cantidad);
         tp.setTipoAsiento(tipoAsiento);
-        this.paqueteSeleccionado.getRutaEnPaquete().add(tp);
+        this.paqueteSeleccionado.addRutaEnPaquete(tp);
 
     }
 
@@ -929,7 +929,7 @@ public class Sistema implements ISistema {
 
         LocalDate vencimiento = LocalDate.now().plusDays(p.getValidezDias());
 
-        CompraPaquete nuevaCompra = new CompraPaquete(new DtCompraPaquete(LocalDate.now(), vencimiento, p.getCosto(), p, c));
+        CompraPaquete nuevaCompra = new CompraPaquete(new DtCompraPaquete(LocalDate.now(), vencimiento, p.getCosto()), p, c);
 
         this.compras.add(nuevaCompra);
         userDao.addCompraPaquete(c, nuevaCompra);
@@ -963,7 +963,7 @@ public class Sistema implements ISistema {
             nuevoCosto += ruta.getCostoTurista() * cantidad;
         }
 
-        for (RutaEnPaquete rep : p.getRutaEnPaquete()) {
+        for (DtRutaEnPaquete rep : p.getRutaEnPaquete()) {
             if (rep.getRutaDeVuelo().getNombre().equals(ruta.getNombre()) && rep.getTipoAsiento() == tipoAsiento) {
                 p.setCosto(nuevoCosto);
                 System.out.println(nuevoCosto);
@@ -1087,7 +1087,7 @@ public class Sistema implements ISistema {
 
             for (DtPaquete p : paquetesComprados){
                 Paquete paq = buscarPaquete(p);
-                for (RutaEnPaquete rep : paq.getRutaEnPaquete()){
+                for (DtRutaEnPaquete rep : paq.getRutaEnPaquete()){
                     if(rep.getRutaDeVuelo().equals(vuelo.getRutaDeVuelo())) {
                         int descontar = Math.min(pasajesRestantes, rep.getCantidad());
                         rep.setCantidad(rep.getCantidad() - descontar);

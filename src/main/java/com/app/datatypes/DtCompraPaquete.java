@@ -13,16 +13,23 @@ public class DtCompraPaquete {
     private LocalDate fechaCompra;
     private LocalDate fechaVencimiento;
     private float costo;
-    private Paquete paquete;
-    private Cliente cliente;
+    private DtPaquete paquete;
+    private DtCliente cliente;
 
     public DtCompraPaquete() {};
-    public DtCompraPaquete(LocalDate fechaCompra, LocalDate fechaVencimiento, float costo, Paquete paquete, Cliente cliente) {
+    public DtCompraPaquete(LocalDate fechaCompra, LocalDate fechaVencimiento, float costo, DtPaquete paquete, DtCliente cliente) {
         this.fechaCompra = fechaCompra;
         this.fechaVencimiento = fechaVencimiento;
         this.costo = costo;
         this.paquete = paquete;
         this.cliente = cliente;
+    }
+    public DtCompraPaquete(LocalDate fechaCompra, LocalDate fechaVencimiento, float costo) {
+        this.fechaCompra = fechaCompra;
+        this.fechaVencimiento = fechaVencimiento;
+        this.costo = costo;
+        this.paquete = null;
+        this.cliente = null;
     }
 
     public LocalDate getFechaCompra(){
@@ -37,11 +44,11 @@ public class DtCompraPaquete {
         return costo;
     }
 
-    public Paquete getPaquete() {
+    public DtPaquete getPaquete() {
         return paquete;
     }
 
-    public Cliente getCliente() {
+    public DtCliente getCliente() {
         return cliente;
     }
 

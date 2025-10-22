@@ -1,5 +1,6 @@
 package com.app.clases;
 
+import com.app.datatypes.DtRutaEnPaquete;
 import com.app.enums.TipoAsiento;
 import jakarta.persistence.*;
 
@@ -24,6 +25,14 @@ public class RutaEnPaquete {
         this.cantidad = cantidad;
         this.tipoAsiento = tipoAsiento;
         this.rutaDeVuelo = rutaDeVuelo;
+    }
+
+    public DtRutaEnPaquete getDatos(){
+        return new DtRutaEnPaquete(
+                this.getCantidad(),
+                this.getTipoAsiento(),
+                this.getRutaDeVuelo().getDatos()
+        );
     }
 
     public int getCantidad() {

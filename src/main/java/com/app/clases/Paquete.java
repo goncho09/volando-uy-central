@@ -1,6 +1,7 @@
 package com.app.clases;
 
 import com.app.datatypes.DtPaquete;
+import com.app.datatypes.DtRutaEnPaquete;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -36,11 +37,15 @@ public class Paquete {
         this.validezDias = paquete.getValidezDias();
         this.descuento = paquete.getDescuento();
         this.costo = paquete.getCosto();
-        this.rutaEnPaquete = paquete.getRutaEnPaquete();
+        this.rutaEnPaquete = new ArrayList<>();
     }
 
-    public List<RutaEnPaquete> getRutaEnPaquete() {
-        return rutaEnPaquete;
+    public List<DtRutaEnPaquete> getRutaEnPaquete() {
+        List<DtRutaEnPaquete> ruta = new ArrayList<>();
+        for(RutaEnPaquete r : this.rutaEnPaquete){
+            ruta.add(r.getDatos());
+        }
+        return ruta;
     }
 
     public void setRutaEnPaquete(List<RutaEnPaquete> rutaEnPaquete) {
@@ -86,6 +91,10 @@ public class Paquete {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
+
+    public void addRutaEnPaquete(RutaEnPaquete rutaEnPaquete) {
+        this.rutaEnPaquete.add(rutaEnPaquete);
+    };
 
     public DtPaquete getDatos(){
         return new DtPaquete(this.getNombre(),this.getDescripcion(),this.getValidezDias(),this.getDescuento(),this.getCosto(),this.getRutaEnPaquete());
