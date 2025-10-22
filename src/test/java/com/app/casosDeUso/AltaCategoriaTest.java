@@ -47,7 +47,7 @@ public class AltaCategoriaTest {
 
     @Test
     void altaCategoriaNombreExistente() {
-        // Usar una categoría que ya existe en DummyFactory
+        // Categoría que ya existe
         DtCategoria categoria = new DtCategoria("Turismo");
 
         Assertions.assertThrows(
@@ -94,7 +94,7 @@ public class AltaCategoriaTest {
 
     @Test
     void buscarCategoriaExistente() {
-        // Buscar una categoría que sabemos existe en DummyFactory
+        // Buscar una categoría que exista
         List<DtCategoria> categorias = s.buscarCategorias();
         DtCategoria categoria = categorias.get(0);
 
@@ -131,7 +131,7 @@ public class AltaCategoriaTest {
                 () -> s.altaCategoria(categoria1),
                 "Debería permitir crear categoría en mayúsculas");
 
-        // Intentar crear misma categoría en minúsculas (depende si es case-sensitive)
+        // Misma categoría en minúsculas
         Assertions.assertThrows(
                 IllegalArgumentException.class,
                 () -> s.altaCategoria(categoria2),
@@ -210,12 +210,12 @@ public class AltaCategoriaTest {
         // Crear categoría
         s.altaCategoria(categoria);
 
-        // Verificar que persiste en listados
+        // Verificar que persiste
         List<DtCategoria> categorias1 = s.buscarCategorias();
         boolean encontrada1 = categorias1.stream()
                 .anyMatch(c -> c.getNombre().equals("CategoriaPersistente"));
 
-        // Simular "recarga" del sistema (en realidad mismo sistema por @BeforeAll)
+        // Simular "recarga" del sistema
         List<DtCategoria> categorias2 = s.buscarCategorias();
         boolean encontrada2 = categorias2.stream()
                 .anyMatch(c -> c.getNombre().equals("CategoriaPersistente"));
