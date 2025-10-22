@@ -883,7 +883,7 @@ public class Sistema implements ISistema {
     }
 
     public void altaVuelo(DtVuelo vuelo){
-        if (vuelo == null || vuelo.getNombre().equals("")) {
+        if (vuelo == null || vuelo.getNombre().isEmpty()) {
             throw new IllegalArgumentException("Ha ocurrido un error.");
         }
         if (this.vuelos.containsKey(vuelo.getNombre())) {
@@ -1116,10 +1116,13 @@ public class Sistema implements ISistema {
         float costoEquipaje = reserva.getEquipajeExtra() * vuelo.getRutaDeVuelo().getEquipajeExtra();
         float costo = (costoAsiento * cantPasajes) + costoEquipaje;
 
+        if(cantPasajes > (vuelo.getMaxEjecutivos() + vuelo.getMaxTuristas())){
+            throw new IllegalArgumentException("La cantidad de pasajes no puede exceder el máximo de lugares.");
+        }
+
         if(reserva.getMetodoPago() == MetodoPago.PAQUETE){
             int pasajesRestantes = cantPasajes;
             DtPaquete paqueteCompra = reserva.getPaquetePago();
-            System.out.println("Haciendo Reserva del vuelo " + vuelo.getNombre() + " para el cliente " + cliente.getNickname() + " con paquete " + paqueteCompra.getNombre());
             if(paqueteCompra == null || !clienteTienePaquete(cliente.nickname, paqueteCompra.getNombre())){
                 throw new IllegalArgumentException("El paquete no fue comprado por el cliente o no existe.");
             }
@@ -1142,6 +1145,10 @@ public class Sistema implements ISistema {
 
             costo = pasajesRestantes * (reserva.getTipoAsiento() == TipoAsiento.EJECUTIVO ? vuelo.getRutaDeVuelo().getCostoEjecutivo() : vuelo.getRutaDeVuelo().getCostoTurista());
             costo += reserva.getEquipajeExtra() * vuelo.getRutaDeVuelo().getEquipajeExtra();
+        }else{
+            if(reserva.getMetodoPago() == MetodoPago.GENERAL && reserva.getPaquetePago() != null){
+                throw new IllegalArgumentException("El metodo de pago era general, pero se recibió un paquete.");
+            }
         }
 
         if (cliente.existeVueloReserva(vuelo)) {

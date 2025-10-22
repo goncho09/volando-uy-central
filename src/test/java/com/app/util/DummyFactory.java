@@ -220,8 +220,6 @@ public class DummyFactory {
             reservas.add(new DtReserva(LocalDate.now().plusDays(8), TipoAsiento.EJECUTIVO, 2, 1, 0,Arrays.asList(pasajeros.get(15), pasajeros.get(16)), clientes.get(1), vuelos.get(3), MetodoPago.GENERAL));
             reservas.add(new DtReserva(LocalDate.now().plusDays(9), TipoAsiento.TURISTA, 1, 0, 0,Arrays.asList(pasajeros.get(17)), clientes.get(0), vuelos.get(9), MetodoPago.GENERAL));
 
-
-
             for(DtReserva reserva : reservas) {
                 s.altaReserva(reserva);
             }
