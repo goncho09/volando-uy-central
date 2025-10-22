@@ -445,6 +445,8 @@ public class Main extends JFrame {
                                         pasajes,
                                         equipajeExtra,
                                         listaPasajes,
+                                        cliente,
+                                        vuelo,
                                         metodoPago,
                                         paqueteSeleccionado[0]
                                 );
@@ -455,12 +457,14 @@ public class Main extends JFrame {
                                         pasajes,
                                         equipajeExtra,
                                         listaPasajes,
+                                        cliente,
+                                        vuelo,
                                         metodoPago
                                 );
                             }
 
                             try{
-                                s.altaReserva(reserva, cliente, vuelo);
+                                s.altaReserva(reserva);
                                 new VentanaMensaje("Reserva realizada exitosamente");
                             } catch (Exception ex) {
                                 new VentanaMensaje(ex.getMessage());
@@ -703,6 +707,8 @@ public class Main extends JFrame {
 
                     auxiliar.validarNombreVuelo(nombre);
 
+                    DtRuta rutaDeVuelo = s.getRutaDeVuelo(ruta);
+
                     LocalDate fecha = LocalDate.of((Integer) JSpinnerAnioAltaVuelo.getValue(), (Integer)JSpinnerMesAltaVuelo.getValue(), (Integer)JSpinnerDiaAltaVuelo.getValue());
                     LocalTime hora = LocalTime.of((Integer) JSpinnerDuracionAltaVueloHora.getValue(), (Integer) JSpinnerDuracionAltaVueloMinuto.getValue());
 
@@ -726,7 +732,7 @@ public class Main extends JFrame {
 
                     String urlImage = imagenGuardada.getName();
 
-                    DtVuelo dtVuelo = new DtVuelo(nombre, fecha, hora, (Integer)JSpinnerTuristasAltaVuelo.getValue(), (Integer)JSpinnerEjecutivosAltaVuelo.getValue(), urlImage, LocalDate.now(), null, 0);
+                    DtVuelo dtVuelo = new DtVuelo(nombre, fecha, hora, (Integer)JSpinnerTuristasAltaVuelo.getValue(), (Integer)JSpinnerEjecutivosAltaVuelo.getValue(), urlImage, LocalDate.now(), rutaDeVuelo, 0);
 
                     try {
                         s.altaVuelo(dtVuelo);
