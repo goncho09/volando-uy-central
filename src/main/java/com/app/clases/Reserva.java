@@ -157,17 +157,35 @@ public class Reserva {
     }
 
     public DtReserva getDatos() {
-        return new DtReserva(
-                this.fecha,
-                this.tipoAsiento,
-                this.cantPasajes,
-                this.equipajeExtra,
-                this.costo,
-                this.pasajeros,
-                this.cliente.getDatos(),
-                this.vuelo.getDatos(),
-                this.paquete.getDatos(),
-                this.metodoPago
-        );
+        DtReserva dataReserva;
+        if(this.paquete != null){
+            dataReserva = new DtReserva(
+                    this.fecha,
+                    this.tipoAsiento,
+                    this.cantPasajes,
+                    this.equipajeExtra,
+                    this.costo,
+                    this.pasajeros,
+                    this.cliente.getDatos(),
+                    this.vuelo.getDatos(),
+                    this.paquete.getDatos(),
+                    this.metodoPago
+            );
+        }else{
+            dataReserva = new DtReserva(
+                    this.fecha,
+                    this.tipoAsiento,
+                    this.cantPasajes,
+                    this.equipajeExtra,
+                    this.costo,
+                    this.pasajeros,
+                    this.cliente.getDatos(),
+                    this.vuelo.getDatos(),
+                    null,
+                    this.metodoPago
+            );
+        }
+
+        return dataReserva;
     }
 }

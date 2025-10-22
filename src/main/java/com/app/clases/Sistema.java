@@ -1121,7 +1121,7 @@ public class Sistema implements ISistema {
                 vuelo.getDatos()
         );
 
-        Reserva nuevaReserva = new Reserva(r, cliente, vuelo); // 'r' es DtReserva, 'c' es Cliente y 'v' es Vuelo.
+        Reserva nuevaReserva = new Reserva(r, cliente, vuelo); // 'r' es DtReserva
         this.reservas.add(nuevaReserva);
         this.reservaDao.guardar(nuevaReserva);
         this.userDao.addReserva(cliente, nuevaReserva);
