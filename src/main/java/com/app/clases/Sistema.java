@@ -580,9 +580,18 @@ public class Sistema implements ISistema {
     }
 
     public void altaCategoria(DtCategoria categoria) {
+        if (categoria.getNombre() == null || categoria.getNombre().trim().isEmpty()) {
+        throw new IllegalArgumentException("El nombre de la categoría no puede estar vacío");
+    }
         if (categoriaDao.buscar(categoria.getNombre()) != null) {
             throw new IllegalArgumentException("Ya existe una categoría con ese nombre.");
         }
+        String nombreNormalizado = categoria.getNombre().toLowerCase().trim();
+    for (Categoria c : this.getCategorias()) {
+        if (c.getNombre().toLowerCase().equals(nombreNormalizado)) {
+            throw new IllegalArgumentException("Ya existe una categoría con ese nombre.");
+        }
+    }
         Categoria c = new Categoria(categoria);
         this.categorias.put(c.getNombre(), c);
         categoriaDao.guardar(c);
@@ -604,9 +613,9 @@ public class Sistema implements ISistema {
 
 
     public List<Categoria> getCategorias() {
-        if (categoriaDao.listar().isEmpty()) {
-            throw new IllegalArgumentException("No hay categorias.");
-        }
+        //if (categoriaDao.listar().isEmpty()) {
+          //  throw new IllegalArgumentException("No hay categorias.");
+        //}
         return categoriaDao.listar();
     }
 
