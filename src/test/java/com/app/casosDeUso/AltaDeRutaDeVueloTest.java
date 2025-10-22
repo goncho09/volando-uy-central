@@ -1,0 +1,18 @@
+package com.app.casosDeUso;
+
+import com.app.clases.ISistema;
+import com.app.util.DummyFactory;
+import org.junit.jupiter.api.BeforeAll;
+
+public class AltaDeRutaDeVueloTest {
+
+    static ISistema s;
+
+    @BeforeAll
+    static void setUp() {
+        s = DummyFactory.crearSistema();
+    }
+
+    // ------------------ Alta de Ruta de Vuelo ------------------ //
+
+}

@@ -306,7 +306,7 @@ public class Sistema implements ISistema {
                         r.getEquipajeExtra(),
                         r.getCosto(),
                         r.getPasajeros(),
-                        c, // Cliente
+                        c.getDatos(), // Cliente
                         r.getVuelo(),
                         r.getPaquete(),
                         r.getMetodoPago()
@@ -1106,11 +1106,11 @@ public class Sistema implements ISistema {
                 reserva.getEquipajeExtra(),
                 costo,
                 reserva.getPasajeros(),
-                c,
-                v
+                c.getDatos(),
+                v.getDatos()
         );
 
-        Reserva nuevaReserva = new Reserva(r);
+        Reserva nuevaReserva = new Reserva(r, c, v); // 'r' es DtReserva, 'c' es Cliente y 'v' es Vuelo.
         this.reservas.add(nuevaReserva);
         this.reservaDao.guardar(nuevaReserva);
         this.userDao.addReserva(c, nuevaReserva);
