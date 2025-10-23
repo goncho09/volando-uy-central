@@ -122,9 +122,7 @@ public interface ISistema {
     void compraPaquete(DtPaquete paquete, DtCliente cliente);
 
     // -------- Pasajeros --------- //
-    List<DtPasajero> listarPasajeros();
     List<DtPasajero> listarPasajeros(DtReserva reserva);
-
 
     void validarTextoSoloLetra(String nombre);
 

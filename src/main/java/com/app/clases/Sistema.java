@@ -1119,10 +1119,6 @@ public class Sistema implements ISistema {
         return listaReservas;
     }
 
-    public List<DtPasajero> listarPasajeros() {
-        return this.pasajes;
-    }
-
     public List<DtPasajero> listarPasajeros(DtReserva reserva) {
         return reserva.getPasajeros();
     }

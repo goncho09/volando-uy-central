@@ -1143,9 +1143,11 @@ public class Main extends JFrame {
                 TipoDocumento tipoDocumento = tipoDocumentoClienteModificar.getSelectedItem().toString().equals("Cedula") ? TipoDocumento.CEDULA : TipoDocumento.PASAPORTE;
 
                 DtCliente cliente = new DtCliente(
-                        nicknameModificarCliente.getText(),
-                        nombreClienteModificar.getText(),
-                        correoClienteModificar.getText(),
+                        new DtUsuario(
+                                   nicknameModificarCliente.getText(),
+                                nombreClienteModificar.getText(),
+                                correoClienteModificar.getText()
+                        ),
                         apellidoClienteModificar.getText(),
                         fecha,
                         nacionalidadClienteModificar.getText(),

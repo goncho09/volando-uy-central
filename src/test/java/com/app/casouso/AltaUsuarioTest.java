@@ -189,33 +189,30 @@ class AltaUsuarioTest {
 
     /* CLIENTES */
 
-//    @Test
-//    void crearClienteValido(){
-//        LocalDate fechaNacimiento = LocalDate.of(1990, 1, 1);
-//        DtCliente cliente = new DtCliente(
-//                "nuevoCliente",
-//                "Pedro",
-//                "nuevo@gmail.com",
-//                "1234",
-//                "default.png",
-//                "Gomez",
-//                fechaNacimiento,
-//                "Tokyo",
-//                TipoDocumento.CEDULA,
-//                12345678
-//        );
-//        s.registrarCliente(cliente);
-//        Cliente c = s.buscarCliente(cliente);
-//        Assertions.assertEquals(cliente.getNickname(), c.getNickname());
-//        Assertions.assertEquals(cliente.getNombre(), c.getNombre());
-//        Assertions.assertEquals(cliente.getEmail(), c.getEmail());
-//        Assertions.assertEquals(cliente.getApellido(), c.getApellido());
-//        Assertions.assertEquals(cliente.getFechaNacimiento(), c.getFechaNacimiento());
-//        Assertions.assertEquals(cliente.getNacionalidad(), c.getNacionalidad());
-//        Assertions.assertEquals(0,c.getComprasPaquetes().size());
-//        Assertions.assertEquals(0,c.getComprasPaquetes().size());
-//
-//    };
+    @Test
+    void crearClienteValido(){
+        LocalDate fechaNacimiento = LocalDate.of(1990, 1, 1);
+        DtCliente cliente = new DtCliente(
+                "nuevoCliente",
+                "Pedro",
+                "nuevo@gmail.com",
+                "1234",
+                "default.png",
+                "Gomez",
+                fechaNacimiento,
+                "Tokyo",
+                TipoDocumento.CEDULA,
+                12345678
+        );
+
+        s.registrarCliente(cliente);
+
+        Assertions.assertEquals(
+                s.buscarCliente(cliente).getDatos().getNickname(),
+                s.getCliente(cliente.getNickname()).getNickname(),
+                "El sistema crea al cliente"
+        );
+    };
 
     @Test
     void validarApellidoVacio() {
@@ -379,27 +376,26 @@ class AltaUsuarioTest {
         );
     }
 
-//    @Test
-//    void crearAerolineaValida() {
-//        DtAerolinea aerolinea = new DtAerolinea(
-//                "aerolinea1122",
-//                "AeroX",
-//                "aerox1122@gmail.com",
-//                "1234",
-//                "aerox.png",
-//                "descripcionn",
-//                "http://aerox.com"
-//        );
-//
-//        s.registrarAerolinea(aerolinea);
-//        Aerolinea a = s.buscarAerolinea(aerolinea);
-//        Assertions.assertEquals(a.getNickname(), aerolinea.getNickname());
-//        Assertions.assertEquals(a.getNombre(), aerolinea.getNombre());
-//        Assertions.assertEquals(a.getEmail(), aerolinea.getEmail());
-//        Assertions.assertEquals(a.getDescripcion(), aerolinea.getDescripcion());
-//        Assertions.assertEquals(a.getLinkWeb(), aerolinea.getLinkWeb());
-//        Assertions.assertEquals(0, a.getRutasDeVuelo().size());
-//    };
+    @Test
+    void crearAerolineaValida() {
+        DtAerolinea aerolinea = new DtAerolinea(
+                "aerolinea1122",
+                "AeroX",
+                "aerox1122@gmail.com",
+                "1234",
+                "aerox.png",
+                "descripcionn",
+                "http://aerox.com"
+        );
+
+        s.registrarAerolinea(aerolinea);
+
+        Assertions.assertEquals(
+                s.buscarAerolinea(aerolinea).getDatos().getNickname(),
+                s.getAerolinea(aerolinea.getNickname()).getNickname(),
+                "El sistema crea a la aerolinea"
+        );
+    };
 
     /* AEROLINEAS */
 
