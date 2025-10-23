@@ -32,12 +32,11 @@ public class CompraPaquete {
 
     public CompraPaquete() {}
     public CompraPaquete(DtCompraPaquete dto, Paquete paquete, Cliente cliente) {
-
-        this.fechaCompra = dto.getFechaCompra();
-        this.fechaVencimiento = dto.getFechaVencimiento();
-        this.costo = dto.getCosto();  
-        this.paquete = paquete;
-        this.cliente = cliente;
+        this.setFechaCompra(dto.getFechaCompra());
+        this.setFechaVencimiento(dto.getFechaVencimiento());
+        this.setCosto(dto.getCosto());
+        this.setPaquete(paquete);
+        this.setCliente(cliente);
     }
 
     public DtCompraPaquete getDatos(){
