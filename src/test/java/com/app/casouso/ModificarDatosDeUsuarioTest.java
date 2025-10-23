@@ -301,6 +301,27 @@ public class ModificarDatosDeUsuarioTest {
                 () -> s.modificarCliente(cliente), //Acá colocamos la función que vamos a utilizar
                 "El sistema no debería crear al usuario ya que su fecha de nacimiento es futura" //Mensaje opcional por si falla el test, qué debería ocurrir
         );
+    }
+
+    @Test
+    void ModificarDatosClienteConExito() {
+        DtCliente cliente = new DtCliente(
+                "power",
+                "Bloody",
+                "laSanguinaria@gmail.com",
+                "1234",
+                "difolt.png",
+                "Mary",
+                LocalDate.of(1990, 5, 12),
+                "Tokyo",
+                TipoDocumento.CEDULA,
+                12345678
+        );
+
+        Assertions.assertDoesNotThrow(
+                () -> s.modificarCliente(cliente), //Acá colocamos la función que vamos a utilizar
+                "El sistema no debería crear al usuario ya que su fecha de nacimiento es futura" //Mensaje opcional por si falla el test, qué debería ocurrir
+        );
     };
 
     /* CLIENTES */
@@ -326,5 +347,22 @@ public class ModificarDatosDeUsuarioTest {
         );
     };
 
+    @Test
+    void ModificarAerolineaConExito() {
+        DtAerolinea aerolinea = new DtAerolinea(
+                "aeroDream",
+                "SuenioVolatil",
+                "soporte@aerodream.com",
+                "1234",
+                "default.png",
+                "Deja que tus sueños te acompañen",
+                "feisbuc.com"
+        );
+
+        Assertions.assertDoesNotThrow(
+                () -> s.modificarAerolinea(aerolinea), //Acá colocamos la función que vamos a utilizar
+                "El sistema debería crear a la aerolinea" //Mensaje opcional por si falla el test, qué debería ocurrir
+        );
+    };
     /* AEROLINEAS */
 }

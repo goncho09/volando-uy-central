@@ -3,13 +3,6 @@ package com.app.clases;
 import java.time.LocalDate;
 import java.util.List;
 
-import com.app.daos.CategoriaDao;
-import com.app.daos.RutaDeVueloDao;
-import com.app.daos.UserDao;
-import com.app.daos.VueloDao;
-import com.app.daos.CiudadDao;
-import com.app.daos.PaqueteDao;
-
 import com.app.datatypes.DtAerolinea;
 import com.app.datatypes.DtCliente;
 import com.app.datatypes.DtReserva;
@@ -28,9 +21,7 @@ import com.app.enums.TipoAsiento;
 public interface ISistema {
     // ---------- USUARIOS ---------- //
     List<DtUsuario> listarUsuarios();
-    void elegirUsuario(String nickname);
-    DtUsuario getUsuarioSeleccionado();
-    void borrarUsuarioSeleccionado();
+    DtUsuario getUsuario(String nickname);
     boolean validarUsuario(String nickname, String password);
     boolean existeUsuarioNickname(String nickname);
     boolean existeUsuarioEmail(String email);
@@ -67,24 +58,19 @@ public interface ISistema {
     DtReserva getReservaCliente(DtVuelo vuelo, DtCliente cliente, LocalDate fechaReserva);
     DtReserva getReservaAerolinea(DtVuelo vuelo, DtAerolinea aerolinea, LocalDate fechaReserva);
 
-    List<DtReserva> mostrarReservas();
-    List<DtPaquete> mostrarPaquetes();
-    List<DtReserva> listarReservaDeVuelo(String nombreVuelo);
-
 
     // ---------- RUTAS DE VUELO ---------- //
+    RutaDeVuelo buscarRutaDeVuelo(DtRuta ruta);
+    List<RutaDeVuelo> getRutasDeVuelo();
     List<DtRuta> listarRutasDeVuelo(); // Devuelve TODAS las rutas de vuelo
     List<DtRuta> listarRutasDeVuelo(DtAerolinea aerolinea); // Devuelve TODAS las rutas de vuelo de una aerolínea en específico
     List<DtRuta> listarRutasDeVuelo(DtPaquete paquete); // Devuelve TODAS las rutas de un paquete en específico
     DtRuta consultarRuta(String nombre);
-    void actualizarEstadoRuta(DtRuta ruta, EstadoRuta estado);
-
-    boolean containsCategoria(DtRuta ruta, String categoria);
-
-    boolean existeRuta(String nombre);
     DtRuta getRutaDeVuelo(String nombre);
-    RutaDeVuelo buscarRutaDeVuelo(DtRuta ruta);
+    void actualizarEstadoRuta(DtRuta ruta, EstadoRuta estado);
     void altaRutaDeVuelo(String nickname, DtRuta datosRuta);
+    boolean containsCategoria(DtRuta ruta, String categoria);
+    boolean existeRuta(String nombre);
 
     // ---------- VUELOS ---------- //
     List<DtVuelo> listarVuelos();
@@ -145,12 +131,7 @@ public interface ISistema {
     // ---------- BD ---------- //
     void vaciarBD();
     void cargarDatos();
-    UserDao getUserDao();
-    RutaDeVueloDao getRutaDeVueloDao();
-    CategoriaDao getCategoriaDao();
-    CiudadDao getCiudadDao();
-    PaqueteDao getPaqueteDao();
-    VueloDao getVueloDao();
 
-    List<RutaDeVuelo> getRutasDeVuelo();
+
+
 }

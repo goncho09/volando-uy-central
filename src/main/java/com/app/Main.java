@@ -652,8 +652,7 @@ public class Main extends JFrame {
                 }
                 String nickname = jComboBoxSeleccionarUsuarioConsultar.getSelectedItem().toString();
 
-                s.elegirUsuario(nickname);
-                DtUsuario dtUsuario = s.getUsuarioSeleccionado();
+                DtUsuario dtUsuario = s.getUsuario(nickname);
 
                 if (dtUsuario == null) {
                     new VentanaMensaje("Usuario no encontrado");

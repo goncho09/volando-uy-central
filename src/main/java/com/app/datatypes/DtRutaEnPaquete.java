@@ -37,4 +37,7 @@ public class DtRutaEnPaquete {
     public void setRutaDeVuelo(DtRuta rutaDeVuelo) {
         this.rutaDeVuelo = rutaDeVuelo;
     }
+
+    @Override
+    public String toString() {return this.rutaDeVuelo.getNombre(); }
 }
