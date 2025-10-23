@@ -1185,6 +1185,10 @@ public class Sistema implements ISistema {
                     * (reserva.getTipoAsiento() == TipoAsiento.EJECUTIVO ? vuelo.getRutaDeVuelo().getCostoEjecutivo()
                             : vuelo.getRutaDeVuelo().getCostoTurista());
             costo += reserva.getEquipajeExtra() * vuelo.getRutaDeVuelo().getEquipajeExtra();
+        } else {
+            if (reserva.getPaquetePago() != null) {
+                throw new IllegalArgumentException("Metodo de pago General (efectivo) y se recibe un paquetePago.");
+            }
         }
 
         if (cliente.existeVueloReserva(vuelo)) {
