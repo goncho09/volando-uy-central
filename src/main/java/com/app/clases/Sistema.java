@@ -16,7 +16,6 @@ import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Persistence;
 
 import com.app.daos.UserDao;
-import com.app.daos.RutaDeVueloDao;
 import com.app.daos.CategoriaDao;
 import com.app.daos.CiudadDao;
 import com.app.daos.PaqueteDao;
@@ -24,6 +23,7 @@ import com.app.daos.VueloDao;
 import com.app.daos.ReservaDao;
 import com.app.daos.PasajerosDao;
 import com.app.daos.CompraPaqueteDao;
+import com.app.daos.RutaDeVueloDao;
 
 import com.app.datatypes.DtPasajero;
 import com.app.datatypes.DtCategoria;
