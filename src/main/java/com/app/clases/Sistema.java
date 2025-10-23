@@ -648,6 +648,14 @@ public class Sistema implements ISistema {
         CiudadId id = new CiudadId(ciudad.getNombre(), ciudad.getPais());
         Ciudad existente = ciudadDao.buscar(id);
 
+        if (ciudad.getNombre() == null || ciudad.getNombre().trim().isEmpty()) {
+            throw new IllegalArgumentException("El nombre no puede estar vacío");
+        }
+
+        if (ciudad.getPais() == null || ciudad.getPais().trim().isEmpty()) {
+            throw new IllegalArgumentException("El país no puede estar vacío");
+        }
+
         if (existente != null) {
             throw new IllegalArgumentException("Ya existe una ciudad con ese nombre en ese país.");
         }
