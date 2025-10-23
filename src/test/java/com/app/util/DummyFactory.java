@@ -20,13 +20,13 @@ public class DummyFactory {
 
     public static ISistema crearSistema(){
         boolean crearDatos = true; // Cambiar a False si ya hay datos, para una rápida ejecución. Si se han roto datos cambiar a True para hacer un reset.
-        if(s != null){
+        if (s != null){
             return s;
         }
         s = Factory.getSistema();
 
 
-        if(crearDatos){
+        if (crearDatos){
             s.vaciarBD();
             s.cargarDatos();
 
@@ -38,7 +38,7 @@ public class DummyFactory {
             aerolineas.add(new DtAerolinea("sunFly", "SunFly", "reservas@sunfly.com", "1234", "default.png", "Viajes soleados para todos"));
             aerolineas.add(new DtAerolinea("aeroDream", "AeroDream", "soporte@aerodream.com", "1234", "default.png", "Hacemos realidad tus sueños de volar", "www.aerodream.com"));
 
-            for(DtAerolinea a : aerolineas){
+            for (DtAerolinea a : aerolineas){
                 s.registrarAerolinea(a);
             }
 
@@ -50,7 +50,7 @@ public class DummyFactory {
             clientes.add(new DtCliente("luisRamirez", "Luis", "luis.ramirez@gmail.com", "1234", "default.png", "Ramirez", LocalDate.of(1988, 1, 30), "Brasil", TipoDocumento.CEDULA, 34567890));
 
 
-            for(DtCliente c : clientes){
+            for (DtCliente c : clientes){
                 s.registrarCliente(c);
             }
 
@@ -67,7 +67,7 @@ public class DummyFactory {
             ciudades.add(new DtCiudad("Quito", "Ecuador", "Aeropuerto Mariscal Sucre", "Capital ecuatoriana en los Andes", "www.aeropuertomariscal.com", LocalDate.now()));
             ciudades.add(new DtCiudad("Bogotá", "Colombia", "Aeropuerto El Dorado", "Capital de Colombia, importante hub aéreo", "www.aeropuertobogota.com", LocalDate.now()));
 
-            for(DtCiudad c : ciudades){
+            for (DtCiudad c : ciudades){
                 s.altaCiudad(c);
             }
 
@@ -79,7 +79,7 @@ public class DummyFactory {
             categorias.add(new DtCategoria("Familiar"));
             categorias.add(new DtCategoria("Lujo"));
 
-            for(DtCategoria c : categorias){
+            for (DtCategoria c : categorias){
                 s.altaCategoria(c);
             }
 
@@ -117,10 +117,10 @@ public class DummyFactory {
             for (int i = 0; i < rutas.size(); i++) {
                 DtAerolinea aerolinea = aerolineasAsignar.get(i % aerolineasAsignar.size());
                 s.altaRutaDeVuelo(aerolinea.getNickname(), rutas.get(i));
-                if(aerolinea.getNickname().equals("crystalMotus")){
+                if (aerolinea.getNickname().equals("crystalMotus")){
                     s.actualizarEstadoRuta(rutas.get(i), EstadoRuta.APROBADA);
                     rutasAprobadas.add(rutas.get(i));
-                }else if(aerolinea.getNickname().equals("skyHigh")){
+                }else if (aerolinea.getNickname().equals("skyHigh")){
                     s.actualizarEstadoRuta(rutas.get(i), EstadoRuta.RECHAZADA);
                 }
             }
@@ -139,7 +139,7 @@ public class DummyFactory {
             vuelos.add(new DtVuelo("Vuelo_9", LocalDate.now().plusDays(9), LocalTime.of(2, 10), 105, 24, "default.png", LocalDate.now(), rutasAprobadas.get(1), 0));
             vuelos.add(new DtVuelo("Vuelo_10", LocalDate.now().plusDays(10), LocalTime.of(3, 0), 120, 26, "default.png", LocalDate.now(), rutasAprobadas.get(2), 0));
 
-            for(DtVuelo vuelo: vuelos){
+            for (DtVuelo vuelo: vuelos){
                 s.altaVuelo(vuelo);
             }
 
@@ -159,9 +159,9 @@ public class DummyFactory {
 
             List<DtPaquete> paquetesParaRutas = new ArrayList<>();
 
-            for(DtPaquete p : paquetes){
+            for (DtPaquete p : paquetes){
                 s.altaPaquete(p);
-                if(p.getDescuento() == 0 || p.getNombre().equals("VueloExpress") || p.getNombre().equals("LujoMundial") || p.getNombre().equals("EcoVuelo")){
+                if (p.getDescuento() == 0 || p.getNombre().equals("VueloExpress") || p.getNombre().equals("LujoMundial") || p.getNombre().equals("EcoVuelo")){
                     paquetesParaRutas.add(p);
                 }
             }
@@ -222,7 +222,7 @@ public class DummyFactory {
 
 
 
-            for(DtReserva reserva : reservas) {
+            for (DtReserva reserva : reservas) {
                 s.altaReserva(reserva);
             }
         }

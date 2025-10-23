@@ -1,12 +1,29 @@
 package com.app.clases;
 
-import com.app.DAOs.*;
-import com.app.datatypes.*;
+import java.time.LocalDate;
+import java.util.List;
+
+import com.app.DAOs.CategoriaDao;
+import com.app.DAOs.RutaDeVueloDao;
+import com.app.DAOs.UserDao;
+import com.app.DAOs.VueloDao;
+import com.app.DAOs.CiudadDao;
+import com.app.DAOs.PaqueteDao;
+
+import com.app.datatypes.DtAerolinea;
+import com.app.datatypes.DtCliente;
+import com.app.datatypes.DtReserva;
+import com.app.datatypes.DtUsuario;
+import com.app.datatypes.DtVuelo;
+import com.app.datatypes.DtRuta;
+import com.app.datatypes.DtPaquete;
+import com.app.datatypes.DtCiudad;
+import com.app.datatypes.DtCategoria;
+import com.app.datatypes.DtPasajero;
 import com.app.enums.EstadoRuta;
 import com.app.enums.TipoAsiento;
 
-import java.time.LocalDate;
-import java.util.List;
+
 
 public interface ISistema {
     // ---------- USUARIOS ---------- //
@@ -34,7 +51,7 @@ public interface ISistema {
     void modificarAerolineaImagen(DtAerolinea aerolinea, String urlImagen);
     Aerolinea buscarAerolinea(DtAerolinea aerolinea);
     DtAerolinea getAerolinea(String nickname);
-    boolean aerolineaTieneRuta(DtAerolinea aerolinea,String nombre);
+    boolean aerolineaTieneRuta(DtAerolinea aerolinea, String nombre);
 
     void cancelarAltaUsuario();
     void confirmarAltaUsuario(DtUsuario user);
@@ -44,10 +61,10 @@ public interface ISistema {
     List<DtReserva> listarReservas(DtVuelo vuelo); // Devuelve las reservas de un vuelo en específico
     List<DtReserva> listarReservas(DtCliente cliente); // Devuelve las reservas de un cliente en específico
     List<DtReserva> listarReservas(DtCliente cliente, DtVuelo vuelo); // Devuelve las reservas de un cliente en un vuelo en específico
-    List <DtReserva> listarReservas(DtAerolinea aerolinea); // Devuelve las reservas de una aerolínea en específico
+    List<DtReserva> listarReservas(DtAerolinea aerolinea); // Devuelve las reservas de una aerolínea en específico
 
     void altaReserva(DtReserva reserva); //Reserva de un Vuelo
-    DtReserva getReservaCliente(DtVuelo vuelo, DtCliente cliente,LocalDate fechaReserva);
+    DtReserva getReservaCliente(DtVuelo vuelo, DtCliente cliente, LocalDate fechaReserva);
     DtReserva getReservaAerolinea(DtVuelo vuelo, DtAerolinea aerolinea, LocalDate fechaReserva);
 
     List<DtReserva> mostrarReservas();
@@ -80,7 +97,7 @@ public interface ISistema {
 
     void altaVuelo(DtVuelo vuelo);
 
-    List <DtVuelo> getVuelosRutaDeVuelo(DtRuta ruta);
+    List<DtVuelo> getVuelosRutaDeVuelo(DtRuta ruta);
 
     // ---------- PAQUETES ---------- //
     List<DtPaquete> listarPaquetes();
@@ -100,12 +117,11 @@ public interface ISistema {
     void altaPaquete(DtPaquete paquete);
 
     // ---------- CATEGORIAS ---------- //
-    Categoria getCategoria(String nombre);
-    List<Categoria> getCategorias();
-    List<Categoria> getCategoriasPorNombre(List<String> nombres);
+    DtCategoria getCategoria(String nombre);
+    List<DtCategoria> getCategorias();
 
     void altaCategoria(DtCategoria categoria);
-    DtCategoria buscarCategoria(String nombre);
+    Categoria buscarCategoria(String nombre);
     List<DtCategoria> buscarCategorias();
     List<DtCategoria> buscarCategoriasPorNombre(List<String> nombres);
 
@@ -117,7 +133,7 @@ public interface ISistema {
     List<Ciudad> getCiudades();
 
     // ---------- COMPRAS ---------- //
-    void compraPaquete(DtPaquete paquete,DtCliente cliente);
+    void compraPaquete(DtPaquete paquete, DtCliente cliente);
 
     // -------- Pasajeros --------- //
     List<DtPasajero> listarPasajeros();

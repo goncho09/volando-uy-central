@@ -1,14 +1,22 @@
 package com.app.interfaces;
 
-import com.app.enums.TipoImagen;
-import com.app.utils.AuxiliarFunctions;
-
-import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import java.awt.*;
+import javax.swing.JFrame;
+import javax.swing.JButton;
+import javax.swing.JPanel;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import javax.swing.JLabel;
+
+import java.awt.Image;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import java.io.File;
+
+import com.app.enums.TipoImagen;
+import com.app.utils.AuxiliarFunctions;
 
 public class SubirImagen extends JFrame {
     private JButton confirmarButton;
@@ -26,13 +34,13 @@ public class SubirImagen extends JFrame {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         imgType = tipo;
 
-        try{
+        try {
             if (!abrirFileChooser()) {
                 selectedFile = null;
                 dispose();
                 return;
             }
-        }catch(Exception e){
+        } catch (Exception e){
             selectedFile = null;
             dispose();
             return;
@@ -82,7 +90,7 @@ public class SubirImagen extends JFrame {
             Image imgScaled = imgRaw.getScaledInstance(175, 175, Image.SCALE_SMOOTH);
             profileImage = new ImageIcon(imgScaled);
 
-            if(imgType == TipoImagen.USUARIO){
+            if (imgType == TipoImagen.USUARIO){
                 profileImage = AuxiliarFunctions.createRoundImageIcon(profileImage);
             }
 

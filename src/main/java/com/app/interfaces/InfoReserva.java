@@ -3,7 +3,14 @@ package com.app.interfaces;
 import com.app.datatypes.DtReserva;
 import com.app.utils.AuxiliarFunctions;
 
-import javax.swing.*;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JLabel;
+import javax.swing.JComboBox;
+//import javax.swing.;
+//import javax.swing.;
+//import javax.swing.;
+//import javax.swing.;
 
 public class InfoReserva extends JFrame{
 
@@ -11,7 +18,7 @@ public class InfoReserva extends JFrame{
 
     private JPanel dataReservaPanel;
     private JPanel dataReservaDisplay;
-    private JComboBox JComboBoxPasajeros;
+    private JComboBox jComboBoxPasajeros;
     private JLabel clienteLabel;
     private JLabel fechaLabel;
     private JLabel asientosLabel;
@@ -37,7 +44,7 @@ public class InfoReserva extends JFrame{
         equipajeLabel.setText(Integer.toString(dataReserva.getEquipajeExtra()));
         costoLabel.setText(Float.toString(dataReserva.getCosto()));
 
-        JComboBoxPasajeros.setModel(a.getComboPasajerosReserva());
+        jComboBoxPasajeros.setModel(a.getComboPasajerosReserva());
         a.cargarPasajeros(dataReserva);
 
     }

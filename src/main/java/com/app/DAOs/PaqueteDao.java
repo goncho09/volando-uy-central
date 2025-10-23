@@ -1,13 +1,13 @@
 package com.app.DAOs;
 
-import com.app.clases.Aerolinea;
-import com.app.clases.Paquete;
-import com.app.clases.RutaDeVuelo;
-import com.app.clases.RutaEnPaquete;
-import com.app.datatypes.DtRutaEnPaquete;
+import java.util.Map;
+
 import jakarta.persistence.EntityManager;
 
-import java.util.Map;
+import com.app.clases.Paquete;
+import com.app.clases.RutaEnPaquete;
+
+import com.app.datatypes.DtRutaEnPaquete;
 
 public class PaqueteDao extends BaseDao<Paquete, String> {
 

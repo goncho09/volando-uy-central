@@ -1,23 +1,40 @@
 package com.app.interfaces;
 
-import com.app.datatypes.*;
-import com.app.enums.TipoImagen;
-import com.app.utils.AuxiliarFunctions;
-
-import javax.swing.*;
-import java.awt.event.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
+
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.ImageIcon;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowAdapter;
+
+import com.app.datatypes.DtUsuario;
+import com.app.datatypes.DtCliente;
+import com.app.datatypes.DtAerolinea;
+import com.app.datatypes.DtReserva;
+import com.app.datatypes.DtPaquete;
+import com.app.datatypes.DtRuta;
+
+import com.app.enums.TipoImagen;
+
+import com.app.utils.AuxiliarFunctions;
 
 public class InfoUsuario extends JFrame {
 
     private AuxiliarFunctions a;
 
-    private JPanel PanelGlobal;
+    private JPanel panelGlobal;
     private JLabel nicknameConsultaUsuario;
     private JLabel nombreConsultaUsuario;
     private JLabel emailConsultaUsuario;
-    private JPanel PanelAerolinea;
+    private JPanel panelAerolinea;
     private JButton cancelarButton;
     private JLabel apellidoConsultaUsuario;
     private JLabel fechaNacConsultaUsuario;
@@ -26,19 +43,19 @@ public class InfoUsuario extends JFrame {
     private JLabel nacionalidadConsultaUsuario;
     private JLabel descripcionAerolineaConsultaUsuario;
     private JLabel sitioAerolineaConsultaUsuario;
-    private JPanel PanelUsuario;
-    private JPanel PanelCliente;
-    private JComboBox JComboBoxRutasDeVuelo;
+    private JPanel panelUsuario;
+    private JPanel panelCliente;
+    private JComboBox jComboBoxRutasDeVuelo;
     private JButton verRuta;
-    private JComboBox JComboBoxReservas;
-    private JComboBox JComboBoxPaquetes;
+    private JComboBox jComboBoxReservas;
+    private JComboBox jComboBoxPaquetes;
     private JButton verReserva;
     private JButton verPaquete;
     private JPanel imagenPanel;
     private ImageIcon profileImage;
 
     public InfoUsuario(DtUsuario usuario, AuxiliarFunctions auxiliar) {
-        setContentPane(PanelGlobal);
+        setContentPane(panelGlobal);
         setTitle("Datos de Usuario: " + usuario.getNickname());
         setResizable(false);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -53,7 +70,7 @@ public class InfoUsuario extends JFrame {
 
         try {
             Path userImg = AuxiliarFunctions.getImagePath(usuario.getUrlImage(), TipoImagen.USUARIO);
-            if(!Files.exists(userImg)) {
+            if (!Files.exists(userImg)) {
                 throw new Exception("No se encontro el imagen");
             }
             profileImage = new ImageIcon(userImg.toAbsolutePath().toString());
@@ -66,29 +83,29 @@ public class InfoUsuario extends JFrame {
 
         if (usuario instanceof DtCliente) {
             DtCliente cliente = (DtCliente) usuario;
-            PanelCliente.setVisible(true);
-            PanelAerolinea.setVisible(false);
+            panelCliente.setVisible(true);
+            panelAerolinea.setVisible(false);
             apellidoConsultaUsuario.setText(cliente.getApellido());
             nacionalidadConsultaUsuario.setText(cliente.getNacionalidad());
             tipoDocConsultaUsuario.setText(cliente.getTipoDocumento().toString());
             numDocumentoConsultaCliente.setText(String.valueOf(cliente.getNumeroDocumento()));
             fechaNacConsultaUsuario.setText(cliente.getFechaNacimiento().toString());
 
-            JComboBoxReservas.setModel(a.getComboReservaVueloClienteModel());
+            jComboBoxReservas.setModel(a.getComboReservaVueloClienteModel());
             a.cargarDatosReservaComboBox(cliente);
 
-            JComboBoxPaquetes.setModel(a.getComboPaqueteClienteModel());
+            jComboBoxPaquetes.setModel(a.getComboPaqueteClienteModel());
             a.cargarPaqueteClienteComboBox(cliente);
 
         } else if (usuario instanceof DtAerolinea) {
             DtAerolinea aerolinea = (DtAerolinea) usuario;
-            PanelAerolinea.setVisible(true);
-            PanelCliente.setVisible(false);
+            panelAerolinea.setVisible(true);
+            panelCliente.setVisible(false);
 
             descripcionAerolineaConsultaUsuario.setText(aerolinea.getDescripcion());
             sitioAerolineaConsultaUsuario.setText(aerolinea.getLinkWeb());
 
-            JComboBoxRutasDeVuelo.setModel(a.getComboRutaDeVueloAerolineaModel());
+            jComboBoxRutasDeVuelo.setModel(a.getComboRutaDeVueloAerolineaModel());
             a.cargarRutasDeVueloComboBoxAerolinea(aerolinea);
         }
 
@@ -99,11 +116,11 @@ public class InfoUsuario extends JFrame {
         verReserva.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(JComboBoxReservas.getSelectedItem() == null || JComboBoxReservas.getSelectedItem().toString().equals("N/A")){
+                if (jComboBoxReservas.getSelectedItem() == null || jComboBoxReservas.getSelectedItem().toString().equals("N/A")){
                     new VentanaMensaje("Seleccione una reserva");
                     return;
                 }
-                DtReserva r = (DtReserva) JComboBoxReservas.getSelectedItem();
+                DtReserva r = (DtReserva) jComboBoxReservas.getSelectedItem();
                 InfoReserva ventanaReserva = new InfoReserva(r, a);
                 setEnabled(false);
 
@@ -119,11 +136,11 @@ public class InfoUsuario extends JFrame {
         verPaquete.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(JComboBoxPaquetes.getSelectedItem() == null || JComboBoxPaquetes.getSelectedItem().toString().equals("N/A")){
+                if (jComboBoxPaquetes.getSelectedItem() == null || jComboBoxPaquetes.getSelectedItem().toString().equals("N/A")){
                     new VentanaMensaje("Seleccione un paquete");
                     return;
                 }
-                DtPaquete p = (DtPaquete) JComboBoxPaquetes.getSelectedItem();
+                DtPaquete p = (DtPaquete) jComboBoxPaquetes.getSelectedItem();
                 InfoPaquete ventanaPaquete = new InfoPaquete(p, a);
                 setEnabled(false);
 
@@ -138,11 +155,11 @@ public class InfoUsuario extends JFrame {
         verRuta.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(JComboBoxRutasDeVuelo.getSelectedItem() == null || JComboBoxRutasDeVuelo.getSelectedItem().toString().equals("N/A")){
+                if (jComboBoxRutasDeVuelo.getSelectedItem() == null || jComboBoxRutasDeVuelo.getSelectedItem().toString().equals("N/A")){
                     new VentanaMensaje("Seleccione una ruta");
                     return;
                 }
-                DtRuta ruta =  (DtRuta) JComboBoxRutasDeVuelo.getSelectedItem();
+                DtRuta ruta =  (DtRuta) jComboBoxRutasDeVuelo.getSelectedItem();
                 InfoRutaDeVuelo ventanaRuta = new InfoRutaDeVuelo(ruta, a);
                 setEnabled(false);
 

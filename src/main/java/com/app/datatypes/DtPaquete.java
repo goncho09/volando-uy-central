@@ -1,9 +1,5 @@
 package com.app.datatypes;
 
-import com.app.clases.RutaDeVuelo;
-import com.app.clases.RutaEnPaquete;
-
-
 import java.util.ArrayList;
 import java.util.List;
 

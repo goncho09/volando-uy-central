@@ -1,7 +1,5 @@
 package com.app.datatypes;
 
-import com.app.clases.RutaDeVuelo;
-
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -17,7 +15,7 @@ public class DtVuelo {
     private int cantReservas;
 
     public DtVuelo(){};
-    public DtVuelo(String nombre, LocalDate fecha, LocalTime duracion, int maxTuristas, int maxEjecutivos, String urlImage,LocalDate fechaAlta, DtRuta rutaDeVuelo, int cantReservas) {
+    public DtVuelo(String nombre, LocalDate fecha, LocalTime duracion, int maxTuristas, int maxEjecutivos, String urlImage, LocalDate fechaAlta, DtRuta rutaDeVuelo, int cantReservas) {
         this.nombre = nombre;
         this.fecha = fecha;
         this.duracion = duracion;
@@ -30,7 +28,7 @@ public class DtVuelo {
     }
 
     public DtVuelo getDatos() {
-        return new DtVuelo(this.nombre,this.fecha,this.duracion,this.maxTuristas,this.maxEjecutivos,this.urlImage,this.fechaAlta,this.rutaDeVuelo, this.cantReservas);
+        return new DtVuelo(this.nombre, this.fecha, this.duracion, this.maxTuristas, this.maxEjecutivos, this.urlImage, this.fechaAlta, this.rutaDeVuelo, this.cantReservas);
     }
 
     public String getNombre() {
@@ -73,9 +71,9 @@ public class DtVuelo {
         this.maxEjecutivos = maxEjecutivos;
     }
 
-    public String getUrlImage() {return this.urlImage;};
+    public String getUrlImage() {return this.urlImage; };
 
-    public void setUrlImage(String urlImage) {this.urlImage = urlImage;}
+    public void setUrlImage(String urlImage) {this.urlImage = urlImage; }
 
     public LocalDate getFechaAlta() {
         return fechaAlta;
@@ -98,5 +96,5 @@ public class DtVuelo {
     }
 
     @Override
-    public String toString() {return this.nombre;}
+    public String toString() {return this.nombre; }
 }

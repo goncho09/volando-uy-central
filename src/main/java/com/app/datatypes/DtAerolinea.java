@@ -32,7 +32,7 @@ public class DtAerolinea extends DtUsuario {
         this.rutasDeVuelo = new ArrayList<>();
     }
 
-    public DtAerolinea(String nickname, String nombre, String email, String password, String urlImage, String descripcion, String linkWeb,List<RutaDeVuelo> rutasDeVuelo) {
+    public DtAerolinea(String nickname, String nombre, String email, String password, String urlImage, String descripcion, String linkWeb, List<RutaDeVuelo> rutasDeVuelo) {
         super(nickname, nombre, email, password, urlImage);
         this.descripcion = descripcion;
         this.linkWeb = linkWeb;
@@ -53,7 +53,7 @@ public class DtAerolinea extends DtUsuario {
 
     public List<DtRuta> listarRutasDeVuelo() {
         List<DtRuta> listaRutas = new ArrayList<>();
-        for( RutaDeVuelo r : this.getRutasDeVuelo()){
+        for ( RutaDeVuelo r : this.getRutasDeVuelo()){
             listaRutas.add(r.getDatos());
         }
         return listaRutas;
@@ -71,6 +71,6 @@ public class DtAerolinea extends DtUsuario {
         this.rutasDeVuelo = rutasDeVuelo;
     }
 
-    public void mostrarDatos(){ System.out.println("Datos de la aerolinea: " + this.getNickname() + " - " + this.getNombre() + " - " + this.getEmail() + " - " + this.getDescripcion() + " - " + this.getLinkWeb());}
+    public void mostrarDatos(){ System.out.println("Datos de la aerolinea: " + this.getNickname() + " - " + this.getNombre() + " - " + this.getEmail() + " - " + this.getDescripcion() + " - " + this.getLinkWeb()); }
 
 }

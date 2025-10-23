@@ -4,9 +4,6 @@ import com.app.clases.Reserva;
 import com.app.datatypes.DtPasajero;
 import jakarta.persistence.EntityManager;
 
-import java.util.List;
-import java.util.Map;
-
 public class ReservaDao extends BaseDao<Reserva, String> {
 
     public ReservaDao(EntityManager em) {

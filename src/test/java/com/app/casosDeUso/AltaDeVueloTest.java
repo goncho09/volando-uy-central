@@ -183,7 +183,7 @@ public class AltaDeVueloTest {
                 500,
                 30, LocalDate.now(),
                 "default.png",
-                Arrays.asList(s.buscarCategoria("Negocios")),
+                Arrays.asList(s.getCategoria("Negocios")),
                 s.buscarCiudad("Santiago", "Chile").getDatos(),
                 s.buscarCiudad("Quito", "Ecuador").getDatos()
         );

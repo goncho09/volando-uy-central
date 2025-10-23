@@ -36,7 +36,7 @@ public class AltaDeRutaDeVueloTest {
                 50,
                 LocalDate.now(),
                 "default.png",
-                Arrays.asList(s.buscarCategoria("Turismo"), s.buscarCategoria("Lujo")),
+                Arrays.asList(s.getCategoria("Turismo"), s.getCategoria("Lujo")),
                 s.getCiudad("Lima", "Perú"),
                 s.getCiudad("Montevideo", "Uruguay")
         );
@@ -61,7 +61,7 @@ public class AltaDeRutaDeVueloTest {
                 50,
                 LocalDate.now(),
                 "default.png",
-                Arrays.asList(s.buscarCategoria("Turismo"), s.buscarCategoria("Lujo")),
+                Arrays.asList(s.getCategoria("Turismo"), s.getCategoria("Lujo")),
                 s.getCiudad("Lima", "Perú"),
                 s.getCiudad("Montevideo", "Uruguay")
         );
@@ -84,7 +84,7 @@ public class AltaDeRutaDeVueloTest {
                 50,
                 LocalDate.now(),
                 "default.png",
-                Arrays.asList(s.buscarCategoria("Turismo"), s.buscarCategoria("Lujo")),
+                Arrays.asList(s.getCategoria("Turismo"), s.getCategoria("Lujo")),
                 s.getCiudad("Lima", "Perú"),
                 s.getCiudad("Montevideo", "Uruguay")
         );
@@ -107,7 +107,7 @@ public class AltaDeRutaDeVueloTest {
                 50,
                 LocalDate.now(),
                 "default.png",
-                Arrays.asList(s.buscarCategoria("Turismo"), s.buscarCategoria("Lujo")),
+                Arrays.asList(s.getCategoria("Turismo"), s.getCategoria("Lujo")),
                 s.getCiudad("Lima", "Perú"),
                 s.getCiudad("Lima", "Perú") // Ciudades iguales
         );
@@ -154,7 +154,7 @@ public class AltaDeRutaDeVueloTest {
                 -10, // Equipaje extra negativo
                 LocalDate.now(),
                 "default.png",
-                Arrays.asList(s.buscarCategoria("Turismo"), s.buscarCategoria("Lujo")),
+                Arrays.asList(s.getCategoria("Turismo"), s.getCategoria("Lujo")),
                 s.getCiudad("Lima", "Perú"),
                 s.getCiudad("Montevideo", "Uruguay")
         );
@@ -178,7 +178,7 @@ public class AltaDeRutaDeVueloTest {
                 50,
                 LocalDate.now(),
                 "default.png",
-                Arrays.asList(s.buscarCategoria("Turismo"), s.buscarCategoria("Lujo")),
+                Arrays.asList(s.getCategoria("Turismo"), s.getCategoria("Lujo")),
                 s.getCiudad("Lima", "Perú"),
                 s.getCiudad("Montevideo", "Uruguay")
         );
@@ -201,7 +201,7 @@ public class AltaDeRutaDeVueloTest {
                 50,
                 LocalDate.now(),
                 "default.png",
-                Arrays.asList(s.buscarCategoria("Turismo"), s.buscarCategoria("Lujo")),
+                Arrays.asList(s.getCategoria("Turismo"), s.getCategoria("Lujo")),
                 s.getCiudad("Lima", "Perú"),
                 s.getCiudad("Montevideo", "Uruguay")
         );
@@ -225,7 +225,7 @@ public class AltaDeRutaDeVueloTest {
                 50,
                 LocalDate.now(),
                 "default.png",
-                Arrays.asList(s.buscarCategoria("Turismo"), s.buscarCategoria("Lujo")),
+                Arrays.asList(s.getCategoria("Turismo"), s.getCategoria("Lujo")),
                 s.getCiudad("Lima", "Perú"),
                 s.getCiudad("Montevideo", "Uruguay")
         );
@@ -249,7 +249,7 @@ public class AltaDeRutaDeVueloTest {
                 50,
                 LocalDate.now(),
                 "default.png",
-                Arrays.asList(s.buscarCategoria("Turismo"), s.buscarCategoria("Lujo")),
+                Arrays.asList(s.getCategoria("Turismo"), s.getCategoria("Lujo")),
                 s.getCiudad("Lima", "Perú"),
                 s.getCiudad("Montevideo", "Uruguay")
         );

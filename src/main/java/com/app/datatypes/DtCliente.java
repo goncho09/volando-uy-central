@@ -47,7 +47,7 @@ public class DtCliente extends DtUsuario{
     }
 
 
-    public String getApellido() {return apellido;}
+    public String getApellido() {return apellido; }
 
     public void setApellido(String apellido) {
         this.apellido = apellido;

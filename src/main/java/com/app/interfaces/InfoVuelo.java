@@ -1,17 +1,26 @@
 package com.app.interfaces;
 
-import com.app.datatypes.DtVuelo;
-import com.app.datatypes.DtReserva;
-import com.app.enums.TipoImagen;
-import com.app.utils.AuxiliarFunctions;
-
-import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+
 import java.nio.file.Files;
 import java.nio.file.Path;
+
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JComboBox;
+import javax.swing.JButton;
+import javax.swing.ImageIcon;
+
+import com.app.datatypes.DtVuelo;
+import com.app.datatypes.DtReserva;
+
+import com.app.enums.TipoImagen;
+
+import com.app.utils.AuxiliarFunctions;
 
 public class InfoVuelo extends JFrame {
 
@@ -28,7 +37,7 @@ public class InfoVuelo extends JFrame {
     private JLabel cantReservas;
     private JLabel capacidadRestante;
     private JPanel dataVueloDisplay;
-    private JComboBox JComboBoxReservas;
+    private JComboBox jComboBoxReservas;
     private JPanel imagenVueloPanel;
     private ImageIcon imagen;
 
@@ -51,13 +60,13 @@ public class InfoVuelo extends JFrame {
         cantReservas.setText(Integer.toString(cantidadReservas));
         capacidadRestante.setText(Integer.toString(capacidadMaxima - cantidadReservas));
 
-        JComboBoxReservas.setModel(a.getComboReservaVueloModel());
+        jComboBoxReservas.setModel(a.getComboReservaVueloModel());
 
         //new VentanaMensaje(dataVuelo.getUrlImage());
 
         try {
             Path userImg = AuxiliarFunctions.getImagePath(dataVuelo.getUrlImage(), TipoImagen.VUELO);
-            if(!Files.exists(userImg)) {
+            if (!Files.exists(userImg)) {
                 throw new Exception("No se encontró la imagen");
             }
             imagen = new ImageIcon(userImg.toAbsolutePath().toString());
@@ -75,12 +84,12 @@ public class InfoVuelo extends JFrame {
         consultarReservasButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(JComboBoxReservas.getSelectedItem() == null || JComboBoxReservas.getSelectedItem().toString().equals("N/A")){
+                if (jComboBoxReservas.getSelectedItem() == null || jComboBoxReservas.getSelectedItem().toString().equals("N/A")){
                     new VentanaMensaje("Seleccione una reserva.");
                     return;
                 }
 
-                DtReserva reserva = (DtReserva) JComboBoxReservas.getSelectedItem();
+                DtReserva reserva = (DtReserva) jComboBoxReservas.getSelectedItem();
                 InfoReserva ventanaReserva = new InfoReserva(reserva, a);
                 setEnabled(false);
 

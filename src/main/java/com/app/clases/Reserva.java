@@ -1,15 +1,25 @@
 package com.app.clases;
 
-import com.app.datatypes.DtPaquete;
-import com.app.datatypes.DtPasajero;
-import com.app.datatypes.DtReserva;
-import com.app.enums.TipoAsiento;
-import com.app.enums.MetodoPago;
-import jakarta.persistence.*;
-
 import java.time.LocalDate;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+
+
+import com.app.datatypes.DtPasajero;
+import com.app.datatypes.DtReserva;
+import com.app.datatypes.DtPaquete;
+
+import com.app.enums.TipoAsiento;
+import com.app.enums.MetodoPago;
 
 @Entity
 //@Table(name="reserva")
@@ -153,9 +163,9 @@ public class Reserva {
         Paquete paquete = this.paquetePago;
         DtPaquete paqueteData =  new DtPaquete();
 
-        if(paquete == null){
+        if (paquete == null){
             paqueteData = null;
-        }else{
+        } else {
             paqueteData = paquete.getDatos();
         }
 

@@ -1,10 +1,12 @@
 package com.app.clases;
 
-import com.app.datatypes.DtCiudad;
-import jakarta.persistence.*;
-
-import java.io.Serializable;
 import java.time.LocalDate;
+
+import jakarta.persistence.EmbeddedId;
+import jakarta.persistence.Entity;
+
+import com.app.datatypes.DtCiudad;
+
 
 @Entity
 // @Table(name="ciudad") <- Se toma por defecto el nombre de la clase "Ciudad"
@@ -31,7 +33,7 @@ public class Ciudad {
         return id;
     }
 
-    public void setId(CiudadId id) {this.id = id;}
+    public void setId(CiudadId id) {this.id = id; }
 
     public String listarId() {
         return id.toString();

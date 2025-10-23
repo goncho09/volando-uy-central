@@ -1,16 +1,22 @@
 package com.app.clases;
 
-import com.app.datatypes.DtRutaEnPaquete;
-import com.app.enums.TipoAsiento;
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.app.datatypes.DtRutaEnPaquete;
+
+import com.app.enums.TipoAsiento;
+
 
 @Entity
 //@Table(name = "rutaEnPaquete")
 public class RutaEnPaquete {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     private int cantidad;
@@ -51,12 +57,12 @@ public class RutaEnPaquete {
         this.tipoAsiento = tipoAsiento;
     }
 
-    public RutaDeVuelo getRutaDeVuelo() {return rutaDeVuelo;}
+    public RutaDeVuelo getRutaDeVuelo() {return rutaDeVuelo; }
 
     public void setRutaDeVuelo(RutaDeVuelo rutaDeVuelo) {
         this.rutaDeVuelo = rutaDeVuelo;
     }
 
     @Override
-    public String toString() {return this.rutaDeVuelo.getNombre();}
+    public String toString() {return this.rutaDeVuelo.getNombre(); }
 }

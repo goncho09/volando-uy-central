@@ -1,11 +1,18 @@
 package com.app.clases;
 
-import com.app.datatypes.DtPaquete;
-import com.app.datatypes.DtRutaEnPaquete;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.CascadeType;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.app.datatypes.DtPaquete;
+import com.app.datatypes.DtRutaEnPaquete;
+
 
 @Entity
 //@Table(name = "paquete")
@@ -42,7 +49,7 @@ public class Paquete {
 
     public List<DtRutaEnPaquete> getRutaEnPaqueteDatos() {
         List<DtRutaEnPaquete> ruta = new ArrayList<>();
-        for(RutaEnPaquete r : this.rutaEnPaquete){
+        for (RutaEnPaquete r : this.rutaEnPaquete){
             ruta.add(r.getDatos());
         }
         return ruta;
@@ -101,7 +108,7 @@ public class Paquete {
     };
 
     public DtPaquete getDatos(){
-        return new DtPaquete(this.getNombre(),this.getDescripcion(),this.getValidezDias(),this.getDescuento(),this.getCosto(),this.getRutaEnPaqueteDatos());
+        return new DtPaquete(this.getNombre(), this.getDescripcion(), this.getValidezDias(), this.getDescuento(), this.getCosto(), this.getRutaEnPaqueteDatos());
     }
 
     @Override

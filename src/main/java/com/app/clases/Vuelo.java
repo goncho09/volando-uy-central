@@ -1,9 +1,15 @@
 package com.app.clases;
 
-import com.app.datatypes.DtVuelo;
-import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+
+import com.app.datatypes.DtVuelo;
+
 
 @Entity
 //@Table(name="vuelo")
@@ -37,7 +43,7 @@ public class Vuelo {
     private RutaDeVuelo rutaDeVuelo;
 
     public DtVuelo getDatos() {
-        return new DtVuelo(this.nombre,this.fecha,this.duracion,this.maxTuristas,this.maxEjecutivos,this.urlImage,this.fechaAlta,this.rutaDeVuelo.getDatos(), this.cantReservas);
+        return new DtVuelo(this.nombre, this.fecha, this.duracion, this.maxTuristas, this.maxEjecutivos, this.urlImage, this.fechaAlta, this.rutaDeVuelo.getDatos(), this.cantReservas);
     }
 
     public Vuelo() {}
@@ -94,9 +100,9 @@ public class Vuelo {
         this.maxEjecutivos = maxEjecutivos;
     }
 
-    public String getUrlImage() {return urlImage;}
+    public String getUrlImage() {return urlImage; }
 
-    public void  setUrlImage(String urlImage) {this.urlImage = urlImage;}
+    public void  setUrlImage(String urlImage) {this.urlImage = urlImage; }
 
     public LocalDate getFechaAlta() {
         return fechaAlta;

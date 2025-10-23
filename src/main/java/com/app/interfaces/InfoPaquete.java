@@ -1,11 +1,20 @@
 package com.app.interfaces;
 
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
 import com.app.datatypes.DtPaquete;
 import com.app.datatypes.DtRuta;
-import com.app.utils.AuxiliarFunctions;
 
-import javax.swing.*;
-import java.awt.event.*;
+import com.app.utils.AuxiliarFunctions;
 
 public class InfoPaquete extends JFrame {
     private AuxiliarFunctions a;
@@ -16,9 +25,9 @@ public class InfoPaquete extends JFrame {
     private JLabel descuento;
     private JLabel costo;
     private JLabel cantidadRutas;
-    private JComboBox JComboBoxRutasVuelo;
+    private JComboBox jComboBoxRutasVuelo;
     private JPanel dataPaquetePanel;
-    private JButton ButtonVerRutaDeVuelo;
+    private JButton buttonVerRutaDeVuelo;
     private JPanel dataPaqueteDisplay;
 
     public InfoPaquete(DtPaquete paquete, AuxiliarFunctions auxiliar) {
@@ -39,19 +48,19 @@ public class InfoPaquete extends JFrame {
             costo.setText(Float.toString(paquete.getCosto()));
             cantidadRutas.setText(Integer.toString(paquete.getRutaEnPaquete().size()));
 
-            JComboBoxRutasVuelo.setModel(a.getComboRutaPaquete());
+            jComboBoxRutasVuelo.setModel(a.getComboRutaPaquete());
             a.cargarRutasPaquete(paquete);
 
 
-        ButtonVerRutaDeVuelo.addActionListener(new ActionListener() {
+        buttonVerRutaDeVuelo.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(JComboBoxRutasVuelo.getSelectedItem() == null || JComboBoxRutasVuelo.getSelectedItem().toString().equals("N/A")){
+                if (jComboBoxRutasVuelo.getSelectedItem() == null || jComboBoxRutasVuelo.getSelectedItem().toString().equals("N/A")){
                     new VentanaMensaje("Debe seleccionar una ruta de vuelo para ver su información");
                     return;
                 }
-                try{
-                    DtRuta ruta = (DtRuta) JComboBoxRutasVuelo.getSelectedItem();
+                try {
+                    DtRuta ruta = (DtRuta) jComboBoxRutasVuelo.getSelectedItem();
                     InfoRutaDeVuelo ventanaRuta = new InfoRutaDeVuelo(ruta, a);
                     setEnabled(false);
 

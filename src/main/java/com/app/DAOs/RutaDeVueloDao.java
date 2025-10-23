@@ -1,17 +1,13 @@
 package com.app.DAOs;
 
-import com.app.clases.Categoria;
-import com.app.clases.Ciudad;
-import com.app.clases.Paquete;
-import com.app.clases.RutaDeVuelo;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityTransaction;
-
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
-public class RutaDeVueloDao extends BaseDao<RutaDeVuelo, String>{
+import jakarta.persistence.EntityManager;
+
+import com.app.clases.Categoria;
+import com.app.clases.RutaDeVuelo;
+
+public class RutaDeVueloDao extends BaseDao<RutaDeVuelo, String> {
 
     public RutaDeVueloDao(EntityManager em) {
         super(em, RutaDeVuelo.class);

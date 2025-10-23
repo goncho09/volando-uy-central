@@ -1,21 +1,41 @@
 package com.app.utils;
 
-import com.app.clases.*;
-import com.app.datatypes.*;
-import com.app.enums.TipoImagen;
+import java.util.List;
+import java.util.UUID;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
+import javax.swing.JTextField;
+import javax.swing.ImageIcon;
+import javax.swing.JPanel;
+import javax.swing.JLabel;
+
 import java.awt.geom.Ellipse2D;
+import java.awt.Image;
 import java.awt.image.BufferedImage;
+import java.awt.FlowLayout;
+import java.awt.Shape;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
-import java.util.List;
-import java.util.UUID;
+
+import com.app.clases.ISistema;
+import com.app.datatypes.DtAerolinea;
+import com.app.datatypes.DtCliente;
+import com.app.datatypes.DtRuta;
+import com.app.datatypes.DtUsuario;
+import com.app.datatypes.DtVuelo;
+import com.app.datatypes.DtPasajero;
+import com.app.datatypes.DtCiudad;
+import com.app.datatypes.DtPaquete;
+import com.app.datatypes.DtReserva;
+import com.app.enums.TipoImagen;
 
 public class AuxiliarFunctions {
 
@@ -63,7 +83,7 @@ public class AuxiliarFunctions {
     public DefaultComboBoxModel<DtReserva> getComboReservaModel() { return comboReserva; }
     public DefaultComboBoxModel<DtReserva> getComboReservaVueloModel() { return comboReservaVuelo; }
     public DefaultComboBoxModel<DtReserva> getComboReservaVueloClienteModel() { return comboReservaCliente; }
-    public DefaultComboBoxModel<DtVuelo> getComboVuelosModel() {return comboVuelos;}
+    public DefaultComboBoxModel<DtVuelo> getComboVuelosModel() {return comboVuelos; }
     public DefaultComboBoxModel<DtPasajero> getComboPasajerosReserva() { return comboPasajerosReserva; }
     public DefaultComboBoxModel<DtRuta> getComboRutaPaquete() { return comboRutaPaquete; }
 
@@ -107,11 +127,11 @@ public class AuxiliarFunctions {
     public void cargarUsuariosComboBox() {
         comboUser.removeAllElements();
         List<DtUsuario> usuarios = sistema.listarUsuarios();
-        if(usuarios != null && !usuarios.isEmpty()){
+        if (usuarios != null && !usuarios.isEmpty()){
             for (DtUsuario u : usuarios) {
                 comboUser.addElement(u);
             }
-        }else{
+        } else {
             comboUser.addElement(new DtUsuario() {
                 @Override
                 public String toString() { return "N/A"; }
@@ -122,14 +142,14 @@ public class AuxiliarFunctions {
     public void cargarUsuariosComboBox(DtUsuario usuario) {
         comboUser.removeAllElements();
         List<DtUsuario> usuarios = sistema.listarUsuarios();
-        if(usuarios != null  && !usuarios.isEmpty()){
+        if (usuarios != null  && !usuarios.isEmpty()){
             for (DtUsuario u : usuarios) {
                 comboUser.addElement(u);
-                if(u.getNickname().equals(usuario.getNickname())){
+                if (u.getNickname().equals(usuario.getNickname())){
                     comboUser.setSelectedItem(u);
                 }
             }
-        }else{
+        } else {
             comboUser.addElement(new DtUsuario() {
                 @Override
                 public String toString() { return "N/A"; }
@@ -140,12 +160,11 @@ public class AuxiliarFunctions {
     public void cargarAerolineasComboBox() {
         comboAerolinea.removeAllElements();
             List<DtAerolinea> aerolineas = sistema.listarAerolineas();
-            if(aerolineas != null && !aerolineas.isEmpty()){
+            if (aerolineas != null && !aerolineas.isEmpty()){
                 for (DtAerolinea a : aerolineas) {
                     comboAerolinea.addElement(a);
                 }
-            }
-            else {
+            } else {
                 comboAerolinea.addElement(new DtAerolinea() {
                 @Override
                 public String toString() { return "N/A"; }
@@ -156,12 +175,11 @@ public class AuxiliarFunctions {
     public void cargarClientesComboBox() {
         comboCliente.removeAllElements();
         List<DtCliente> clientes = sistema.listarClientes();
-        if(clientes != null && !clientes.isEmpty()){
+        if (clientes != null && !clientes.isEmpty()){
             for (DtCliente c : clientes) {
                 comboCliente.addElement(c);
             }
-        }
-        else {
+        } else {
             comboCliente.addElement(new DtCliente() {
                 @Override
                 public String toString() { return "N/A"; }
@@ -172,11 +190,11 @@ public class AuxiliarFunctions {
     public void cargarRutasDeVueloComboBox() {
         comboRutaDeVuelo.removeAllElements();
         List<DtRuta> rt = sistema.listarRutasDeVuelo();
-        if(rt != null && !rt.isEmpty()) {
+        if (rt != null && !rt.isEmpty()) {
             for (DtRuta rtv : rt) {
                 comboRutaDeVuelo.addElement(rtv);
             }
-        }else{
+        } else {
             comboRutaDeVuelo.addElement(new DtRuta() {
                 @Override
                 public String toString() { return "N/A"; }
@@ -187,11 +205,11 @@ public class AuxiliarFunctions {
     public void cargarRutasDeVueloComboBoxAerolinea(DtAerolinea aerolinea) {
         comboRutaDeVueloAerolinea.removeAllElements();
         List<DtRuta> rutas = sistema.listarRutasDeVuelo(aerolinea);
-        if(rutas != null && !rutas.isEmpty()) {
+        if (rutas != null && !rutas.isEmpty()) {
             for (DtRuta r : rutas) {
                 comboRutaDeVueloAerolinea.addElement(r);
             }
-        }else{
+        } else {
             comboRutaDeVueloAerolinea.addElement(new DtRuta() {
                 @Override
                 public String toString() { return "N/A"; }
@@ -202,14 +220,14 @@ public class AuxiliarFunctions {
     public void cargarRutasDeVueloComboBoxAerolinea(DtAerolinea aerolinea, DtRuta ruta) {
         comboRutaDeVueloAerolinea.removeAllElements();
         List<DtRuta> rutas = sistema.listarRutasDeVuelo(aerolinea);
-        if(rutas != null && !rutas.isEmpty()) {
+        if (rutas != null && !rutas.isEmpty()) {
             for (DtRuta r : rutas) {
                 comboRutaDeVueloAerolinea.addElement(r);
-                if(r.getNombre().equals(ruta.getNombre())){
+                if (r.getNombre().equals(ruta.getNombre())){
                     comboRutaDeVueloAerolinea.setSelectedItem(r);
                 }
             }
-        }else{
+        } else {
             comboRutaDeVueloAerolinea.addElement(new DtRuta() {
                 @Override
                 public String toString() { return "N/A"; }
@@ -222,12 +240,12 @@ public class AuxiliarFunctions {
         comboCiudadDestino.removeAllElements();
 
         List<DtCiudad> c = sistema.listarCiudades();
-        if(c != null && !c.isEmpty()) {
+        if (c != null && !c.isEmpty()) {
             for (DtCiudad ciudad : c) {
                 comboCiudadOrigen.addElement(ciudad);
                 comboCiudadDestino.addElement(ciudad);
             }
-        }else{
+        } else {
             comboCiudadOrigen.addElement(new DtCiudad() {
                 @Override
                 public String toString() { return "N/A"; }
@@ -242,11 +260,11 @@ public class AuxiliarFunctions {
     public void cargarPaqueteComboBox() {
         comboPaquete.removeAllElements();
         List<DtPaquete> p = sistema.listarPaquetes();
-        if(p != null && !p.isEmpty()) {
+        if (p != null && !p.isEmpty()) {
             for (DtPaquete pqt : p) {
                 comboPaquete.addElement(pqt);
             }
-        }else{
+        } else {
             comboPaquete.addElement(new DtPaquete() {
                 @Override
                 public String toString() { return "N/A"; }
@@ -257,11 +275,11 @@ public class AuxiliarFunctions {
     public void cargarPaqueteNoCompradoComboBox() {
         comboPaqueteNoComprado.removeAllElements();
         List<DtPaquete> p = sistema.listarPaquetesNoComprados();
-        if(p != null && !p.isEmpty()) {
+        if (p != null && !p.isEmpty()) {
             for (DtPaquete pqt : p) {
                 comboPaqueteNoComprado.addElement(pqt);
             }
-        }else{
+        } else {
             comboPaqueteNoComprado.addElement(new DtPaquete() {
                 @Override
                 public String toString() { return "N/A"; }
@@ -272,11 +290,11 @@ public class AuxiliarFunctions {
     public void cargarPaquetesConRutasComboBox() {
         comboPaquetesConRutas.removeAllElements();
         List<DtPaquete> p = sistema.listarPaquetesConRutas();
-        if(p != null && !p.isEmpty()) {
+        if (p != null && !p.isEmpty()) {
             for (DtPaquete pqt : p) {
                 comboPaquetesConRutas.addElement(pqt);
             }
-        }else{
+        } else {
             comboPaquetesConRutas.addElement(new DtPaquete() {
                 @Override
                 public String toString() { return "N/A"; }
@@ -287,11 +305,11 @@ public class AuxiliarFunctions {
     public void cargarPaqueteClienteComboBox(DtCliente cliente) {
         comboPaqueteCliente.removeAllElements();
         List<DtPaquete> p = sistema.listarPaquetes(cliente);
-        if(p != null && !p.isEmpty()) {
+        if (p != null && !p.isEmpty()) {
             for (DtPaquete pqt : p) {
                 comboPaqueteCliente.addElement(pqt);
             }
-        }else{
+        } else {
             comboPaqueteCliente.addElement(new DtPaquete() {
                 @Override
                 public String toString() { return "N/A"; }
@@ -347,11 +365,11 @@ public class AuxiliarFunctions {
     public void cargarVuelosComboBoxRuta(String nombre){
         comboVueloRutaDeVuelo.removeAllElements();
         List<DtVuelo> vuelos = sistema.listarVuelos(nombre);
-        if(vuelos != null && !vuelos.isEmpty()) {
-            for(DtVuelo v : vuelos){
+        if (vuelos != null && !vuelos.isEmpty()) {
+            for (DtVuelo v : vuelos){
                 comboVueloRutaDeVuelo.addElement(v);
             }
-        }else{
+        } else {
             comboVueloRutaDeVuelo.addElement(new DtVuelo() {
                 @Override
                 public String toString() { return "N/A"; }
@@ -363,11 +381,11 @@ public class AuxiliarFunctions {
     public void cargarPasajeros(DtReserva r){
         comboPasajerosReserva.removeAllElements();
         List<DtPasajero> pasajeros = sistema.listarPasajeros(r);
-        if(pasajeros != null && !pasajeros.isEmpty()) {
-            for(DtPasajero p : pasajeros){
+        if (pasajeros != null && !pasajeros.isEmpty()) {
+            for (DtPasajero p : pasajeros){
                 comboPasajerosReserva.addElement(p);
             }
-        }else{
+        } else {
             comboPasajerosReserva.addElement(new DtPasajero() {
                 @Override
                 public String toString() { return "N/A"; }
@@ -378,11 +396,11 @@ public class AuxiliarFunctions {
     public void cargarRutasPaquete(DtPaquete p){
         comboRutaPaquete.removeAllElements();
         List<DtRuta> rutas = sistema.listarRutasDeVuelo(p);
-        if(rutas != null && !rutas.isEmpty()) {
-            for(DtRuta r : rutas){
+        if (rutas != null && !rutas.isEmpty()) {
+            for (DtRuta r : rutas){
                 comboRutaPaquete.addElement(r);
             }
-        }else{
+        } else {
             comboRutaPaquete.addElement(new DtRuta() {
                 @Override
                 public String toString() { return "N/A"; }
@@ -414,7 +432,7 @@ public class AuxiliarFunctions {
     }
 
     public void validarDocumento(String documentoCi){
-        if(!documentoCi.matches("^\\d{8}$")){
+        if (!documentoCi.matches("^\\d{8}$")){
             throw new IllegalArgumentException("El documento no es valido");
         }
     }
@@ -518,7 +536,7 @@ public class AuxiliarFunctions {
         Image imgScaled = imgRaw.getScaledInstance(ancho, largo, Image.SCALE_SMOOTH);
         imagen = new ImageIcon(imgScaled);
 
-        if(tipo == TipoImagen.USUARIO){
+        if (tipo == TipoImagen.USUARIO){
             imagen = AuxiliarFunctions.createRoundImageIcon(imagen);
         }
 

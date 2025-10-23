@@ -1,13 +1,26 @@
 package com.app.clases;
 
-import com.app.datatypes.DtCategoria;
-import com.app.datatypes.DtRuta;
-import com.app.enums.EstadoRuta;
-import jakarta.persistence.*;
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.JoinColumns;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.CascadeType;
+
+import com.app.datatypes.DtCategoria;
+import com.app.datatypes.DtRuta;
+
+import com.app.enums.EstadoRuta;
+
 
 @Entity
 //@Table(name="rutaDeVuelo")
@@ -49,7 +62,7 @@ public class RutaDeVuelo {
             joinColumns = @JoinColumn(name = "ruta_nombre"),
             inverseJoinColumns = @JoinColumn(name = "categoria_nombre")
     )
-    private List<Categoria> categorias = new ArrayList<>();;
+    private List<Categoria> categorias = new ArrayList<>();
 
     @ManyToOne
     @JoinColumns({
@@ -99,7 +112,7 @@ public class RutaDeVuelo {
         this.descripcion = descripcion;
     }
 
-    public String getDescripcionCorta() {return descripcionCorta;}
+    public String getDescripcionCorta() {return descripcionCorta; }
 
     public void setDescripcionCorta(String descripcionCorta) {
         this.descripcionCorta = descripcionCorta;
@@ -145,13 +158,13 @@ public class RutaDeVuelo {
         this.fechaAlta = fechaAlta;
     }
 
-    public String getUrlImagen() {return urlImagen;};
+    public String getUrlImagen() {return urlImagen; };
 
-    public void setUrlImagen(String urlImagen){this.urlImagen = urlImagen;};
+    public void setUrlImagen(String urlImagen){this.urlImagen = urlImagen; };
 
-    public  EstadoRuta getEstado() {return estado;}
+    public  EstadoRuta getEstado() {return estado; }
 
-    public void setEstado(EstadoRuta estado) {this.estado = estado;};
+    public void setEstado(EstadoRuta estado) {this.estado = estado; };
 
     public List<Categoria> getCategorias() {
         return categorias;
