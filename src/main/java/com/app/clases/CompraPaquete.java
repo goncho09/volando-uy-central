@@ -34,7 +34,7 @@ public class CompraPaquete {
     public CompraPaquete(DtCompraPaquete dto, Paquete paquete, Cliente cliente) {
         this.fechaCompra = dto.getFechaCompra();
         this.fechaVencimiento = dto.getFechaVencimiento();
-        this.costo = dto.getCosto();
+        this.costo = dto.getCosto();  
         this.paquete = paquete;
         this.cliente = cliente;
     }
