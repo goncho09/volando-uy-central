@@ -1393,7 +1393,18 @@ public class Main extends JFrame {
                         DtCliente cliente = (DtCliente) jComboBoxSeleccionarUsuarioModificar.getSelectedItem();
                         if (imagenTemporalUsuario != null){
                             try {
-                                AuxiliarFunctions.borrarImagen(cliente.getUrlImage(), TipoImagen.USUARIO);
+                                if(cliente == null){
+                                    throw new IllegalArgumentException("El cliente no existe");
+                                }
+
+                                String urlABorrar;
+
+                                if(cliente.getUrlImage() != null && !cliente.getUrlImage().isEmpty()){
+                                    urlABorrar = cliente.getUrlImage();
+                                }else{
+                                    urlABorrar = "estoEsUnArchivoCualquieraQueNoExiste.png";
+                                }
+                                AuxiliarFunctions.borrarImagen(urlABorrar, TipoImagen.USUARIO);
                                 File imagen = AuxiliarFunctions.guardarImagen(imagenTemporalUsuario, TipoImagen.USUARIO);
                                 s.modificarClienteImagen(cliente, imagen.getName());
                                 auxiliar.cargarUsuariosComboBox(cliente);
@@ -1447,7 +1458,18 @@ public class Main extends JFrame {
                         DtAerolinea aerolinea = (DtAerolinea) jComboBoxSeleccionarUsuarioModificar.getSelectedItem();
                         if (imagenTemporalUsuario != null){
                             try {
-                                AuxiliarFunctions.borrarImagen(aerolinea.getUrlImage(), TipoImagen.USUARIO);
+                                if(aerolinea == null){
+                                    throw new IllegalArgumentException("El cliente no existe");
+                                }
+
+                                String urlABorrar;
+
+                                if(aerolinea.getUrlImage() != null && !aerolinea.getUrlImage().isEmpty()){
+                                    urlABorrar = aerolinea.getUrlImage();
+                                }else{
+                                    urlABorrar = "estoEsUnArchivoCualquieraQueNoExiste.png";
+                                }
+                                AuxiliarFunctions.borrarImagen(urlABorrar, TipoImagen.USUARIO);
                                 File imagen = AuxiliarFunctions.guardarImagen(imagenTemporalUsuario, TipoImagen.USUARIO);
                                 s.modificarAerolineaImagen(aerolinea, imagen.getName());
                                 auxiliar.cargarUsuariosComboBox(aerolinea);

@@ -39,8 +39,8 @@ public class DtCliente extends DtUsuario{
         this.reservas = new ArrayList<>();
     }
 
-    public DtCliente(String nickname, String nombre, String email, String apellido, LocalDate fechaNacimiento, String nacionalidad, TipoDocumento tipoDocumento, int numeroDocumento, List<DtCompraPaquete> paquetes, List<DtReserva> reservas) {
-        super(nickname, nombre, email);
+    public DtCliente(String nickname, String nombre, String email, String password, String urlImage, String apellido, LocalDate fechaNacimiento, String nacionalidad, TipoDocumento tipoDocumento, int numeroDocumento, List<DtCompraPaquete> paquetes, List<DtReserva> reservas) {
+        super(nickname, nombre, email, password, urlImage);
         this.apellido = apellido;
         this.fechaNacimiento = fechaNacimiento;
         this.nacionalidad = nacionalidad;

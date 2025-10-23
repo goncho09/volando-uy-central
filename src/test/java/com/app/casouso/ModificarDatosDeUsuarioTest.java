@@ -137,29 +137,6 @@ public class ModificarDatosDeUsuarioTest {
         );
     };
 
-    @Test
-    void validarContraseniaVaciaModificarUsuario() {
-        LocalDate fechaNacimiento = LocalDate.of(1990, 1, 1);
-        DtCliente cliente = new DtCliente(
-                "power",
-                "Bloody",
-                "laSanguinaria@gmail.com",
-                "",
-                "default.png",
-                "Mary",
-                fechaNacimiento,
-                "Tokyo",
-                TipoDocumento.CEDULA,
-                12345678
-        );
-
-        Assertions.assertThrows(
-                IllegalArgumentException.class, //Acá definimos el tipo de Throw que debería mandar nuestra función
-                () -> s.modificarCliente(cliente), //Acá colocamos la función que vamos a utilizar
-                "El sistema no debería crear al usuario (contraseña vacio) y debe lanzar una excepción" //Mensaje opcional por si falla el test, qué debería ocurrir
-        );
-    };
-
     /* GENERALES */
 
     /* CLIENTES */

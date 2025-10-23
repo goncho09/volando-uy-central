@@ -690,8 +690,7 @@ public class Sistema implements ISistema {
         this.validarTextoSoloLetra(aerolinea.getNombre());
 
         if (aerolinea.getNickname().isEmpty() || aerolinea.getDescripcion().isEmpty() || aerolinea.getEmail().isEmpty()
-                || aerolinea.getNombre().isEmpty() || aerolinea.getPassword().isEmpty()
-                || aerolinea.getUrlImage().isEmpty()) {
+                || aerolinea.getNombre().isEmpty()) {
             throw new IllegalArgumentException("Los campos no pueden estar vacíos.");
         }
 
@@ -716,8 +715,6 @@ public class Sistema implements ISistema {
         a.setUrlImage(urlImagen);
         userDao.actualizar(a);
     }
-
-    ;
 
     public void confirmarAltaUsuario(DtUsuario usuario) {
         if (usuario instanceof DtCliente) {
@@ -1185,7 +1182,7 @@ public class Sistema implements ISistema {
     };
 
     public void validarTextoSoloLetra(String nombre) {
-        if (!nombre.matches("^[a-zA-Z ]+$")) {
+        if (!nombre.matches("^[\\p{L} ]+$")) {
             throw new IllegalArgumentException("El nombre solo puede contener letras, números y espacios.");
         }
     }
