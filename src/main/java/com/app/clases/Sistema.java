@@ -240,6 +240,10 @@ public class Sistema implements ISistema {
         if (this.rutasDeVuelo.containsKey(datosRuta.getNombre()))
             throw new IllegalArgumentException("Ya existe esa ruta de vuelo.");
 
+        if(datosRuta.getDuracion().isBefore(LocalTime.of(0,1))){
+            throw new IllegalArgumentException("La duracion debe ser > 0 minutos");
+        }
+
         List<Categoria> categoriaList = new ArrayList();
 
         for (DtCategoria c : datosRuta.getCategorias()) {

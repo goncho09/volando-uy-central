@@ -42,22 +42,32 @@ public class Vuelo {
     @ManyToOne(optional = false)
     private RutaDeVuelo rutaDeVuelo;
 
-    public DtVuelo getDatos() {
-        return new DtVuelo(this.nombre, this.fecha, this.duracion, this.maxTuristas, this.maxEjecutivos, this.urlImage, this.fechaAlta, this.rutaDeVuelo.getDatos(), this.cantReservas);
-    }
-
     public Vuelo() {}
 
     public Vuelo(DtVuelo vuelo, RutaDeVuelo rutaDeVuelo) {
-        this.nombre = vuelo.getNombre();
-        this.fecha = vuelo.getFecha();
-        this.duracion = vuelo.getDuracion();
-        this.maxTuristas = vuelo.getMaxTuristas();
-        this.maxEjecutivos = vuelo.getMaxEjecutivos();
-        this.urlImage = vuelo.getUrlImage();
-        this.fechaAlta = vuelo.getFechaAlta();
-        this.rutaDeVuelo = rutaDeVuelo;
-        this.cantReservas = vuelo.getCantReservas();
+        this.setNombre(vuelo.getNombre());
+        this.setFecha(vuelo.getFecha());
+        this.setDuracion(vuelo.getDuracion());
+        this.setMaxTuristas(vuelo.getMaxTuristas());
+        this.setMaxEjecutivos(vuelo.getMaxEjecutivos());
+        this.setUrlImage(vuelo.getUrlImage());
+        this.setFechaAlta(vuelo.getFechaAlta());
+        this.setRutaDeVuelo(rutaDeVuelo);
+        this.setCantReservas(vuelo.getCantReservas());
+    }
+
+    public DtVuelo getDatos() {
+        return new DtVuelo(
+                this.getNombre(),
+                this.getFecha(),
+                this.getDuracion(),
+                this.getMaxTuristas(),
+                this.getMaxEjecutivos(),
+                this.getUrlImage(),
+                this.getFechaAlta(),
+                this.getRutaDeVuelo().getDatos(),
+                this.getCantReservas()
+        );
     }
 
     public String getNombre() {
@@ -100,9 +110,13 @@ public class Vuelo {
         this.maxEjecutivos = maxEjecutivos;
     }
 
-    public String getUrlImage() {return urlImage; }
+    public String getUrlImage() {
+        return urlImage;
+    }
 
-    public void  setUrlImage(String urlImage) {this.urlImage = urlImage; }
+    public void setUrlImage(String urlImage) {
+        this.urlImage = urlImage;
+    }
 
     public LocalDate getFechaAlta() {
         return fechaAlta;

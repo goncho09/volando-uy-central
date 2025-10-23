@@ -29,11 +29,11 @@ public abstract class Usuario {
 
     public Usuario() {}
     public Usuario(DtUsuario usuario){
-        this.nickname = usuario.getNickname();
-        this.nombre = usuario.getNombre();
-        this.email = usuario.getEmail();
-        this.password = usuario.getPassword();
-        this.urlImage = usuario.getUrlImage();
+        this.setNickname(usuario.getNickname());
+        this.setNombre(usuario.getNombre());
+        this.setEmail(usuario.getEmail());
+        this.setPassword(usuario.getPassword());
+        this.setUrlImage(usuario.getUrlImage());
     }
 
     public String getNickname() {
@@ -78,11 +78,11 @@ public abstract class Usuario {
 
     public DtUsuario getDatos() {
         return new DtUsuario(
-                this.nickname,
-                this.nombre,
-                this.email,
-                this.password,
-                this.urlImage
+                this.getNickname(),
+                this.getNombre(),
+                this.getEmail(),
+                this.getPassword(),
+                this.getUrlImage()
         );
     }
 

@@ -54,29 +54,29 @@ public class Reserva {
 
     public Reserva() {}
     public Reserva(DtReserva reserva, Cliente cliente, Vuelo vuelo) {
-        this.fecha = reserva.getFecha();
-        this.tipoAsiento = reserva.getTipoAsiento();
-        this.cantPasajes = reserva.getCantPasajes();
-        this.equipajeExtra = reserva.getEquipajeExtra();
-        this.costo = reserva.getCosto();
-        this.pasajeros = reserva.getPasajeros();
-        this.cliente = cliente;
-        this.vuelo = vuelo;
-        this.metodoPago = reserva.getMetodoPago();
-        this.paquetePago = null;
+        this.setFecha(reserva.getFecha());
+        this.setTipoAsiento(reserva.getTipoAsiento());
+        this.setCantPasajes(reserva.getCantPasajes());
+        this.setEquipajeExtra(reserva.getEquipajeExtra());
+        this.setCosto(reserva.getCosto());
+        this.setPasajeros(reserva.getPasajeros());
+        this.setCliente(cliente);
+        this.setVuelo(vuelo);
+        this.setMetodoPago(reserva.getMetodoPago());
+        this.setPaquetePago(null);
     }
 
     public Reserva(DtReserva reserva, Cliente cliente, Paquete paquete) {
-        this.fecha = reserva.getFecha();
-        this.tipoAsiento = reserva.getTipoAsiento();
-        this.cantPasajes = reserva.getCantPasajes();
-        this.equipajeExtra = reserva.getEquipajeExtra();
-        this.costo = reserva.getCosto();
-        this.pasajeros = reserva.getPasajeros();
-        this.cliente = cliente;
-        this.vuelo = null;
-        this.metodoPago = reserva.getMetodoPago();
-        this.paquetePago = paquete;
+        this.setFecha(reserva.getFecha());
+        this.setTipoAsiento(reserva.getTipoAsiento());
+        this.setCantPasajes(reserva.getCantPasajes());
+        this.setEquipajeExtra(reserva.getEquipajeExtra());
+        this.setCosto(reserva.getCosto());
+        this.setPasajeros(reserva.getPasajeros());
+        this.setCliente(cliente);
+        this.setVuelo(null);
+        this.setMetodoPago(reserva.getMetodoPago());
+        this.setPaquetePago(paquete);
     }
 
     public LocalDate getFecha() {
@@ -160,8 +160,8 @@ public class Reserva {
     }
 
     public DtReserva getDatos() {
-        Paquete paquete = this.paquetePago;
-        DtPaquete paqueteData =  new DtPaquete();
+        Paquete paquete = this.getPaquetePago();
+        DtPaquete paqueteData;
 
         if (paquete == null){
             paqueteData = null;
@@ -170,15 +170,15 @@ public class Reserva {
         }
 
         return new DtReserva(
-                this.fecha,
-                this.tipoAsiento,
-                this.cantPasajes,
-                this.equipajeExtra,
-                this.costo,
-                this.pasajeros,
-                this.cliente.getDatos(),
-                this.vuelo.getDatos(),
-                this.metodoPago,
+                this.getFecha(),
+                this.getTipoAsiento(),
+                this.getCantPasajes(),
+                this.getEquipajeExtra(),
+                this.getCosto(),
+                this.getPasajeros(),
+                this.getCliente().getDatos(),
+                this.getVuelo().getDatos(),
+                this.getMetodoPago(),
                 paqueteData
         );
     }

@@ -28,9 +28,9 @@ public class Aerolinea extends Usuario {
     public Aerolinea() {}
     public Aerolinea(DtAerolinea aerolinea) {
         super(new DtUsuario(aerolinea.getNickname(), aerolinea.getNombre(), aerolinea.getEmail(), aerolinea.getPassword(), aerolinea.getUrlImage()));
-        this.descripcion = aerolinea.getDescripcion();
-        this.linkWeb = aerolinea.getLinkWeb();
-        this.rutasDeVuelo = new ArrayList<>();
+        this.setDescripcion(aerolinea.getDescripcion());
+        this.setLinkWeb(aerolinea.getLinkWeb());
+        this.setRutasDeVuelo(new ArrayList<>());
     }
 
     public String getDescripcion() {
@@ -49,16 +49,27 @@ public class Aerolinea extends Usuario {
         this.linkWeb = linkWeb;
     }
 
-    public List<RutaDeVuelo> getRutasDeVuelo() {
-        return this.rutasDeVuelo;
+    public List<RutaDeVuelo> getRutasDeVuelo() {return this.rutasDeVuelo;}
+
+    public void setRutasDeVuelo(List<RutaDeVuelo> rutas) {
+        this.rutasDeVuelo = rutas;
     }
 
     public DtAerolinea getDatos(){
-        return new DtAerolinea(this.getNickname(), this.getNombre(), this.getEmail(), this.getPassword(), this.getUrlImage(), this.getDescripcion(), this.getLinkWeb(), this.getRutasDeVuelo());
+        return new DtAerolinea(
+                this.getNickname(),
+                this.getNombre(),
+                this.getEmail(),
+                this.getPassword(),
+                this.getUrlImage(),
+                this.getDescripcion(),
+                this.getLinkWeb(),
+                this.getRutasDeVuelo()
+        );
     }
 
     public void addRuta(RutaDeVuelo ruta) {
-        this.rutasDeVuelo.add(ruta);
+        this.getRutasDeVuelo().add(ruta);
     }
 
     @Override

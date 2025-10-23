@@ -28,9 +28,9 @@ public class RutaEnPaquete {
 
     public RutaEnPaquete(){}
     public RutaEnPaquete(int cantidad, TipoAsiento tipoAsiento, RutaDeVuelo rutaDeVuelo) {
-        this.cantidad = cantidad;
-        this.tipoAsiento = tipoAsiento;
-        this.rutaDeVuelo = rutaDeVuelo;
+        this.setCantidad(cantidad);
+        this.setTipoAsiento(tipoAsiento);
+        this.setRutaDeVuelo(rutaDeVuelo);
     }
 
     public DtRutaEnPaquete getDatos(){

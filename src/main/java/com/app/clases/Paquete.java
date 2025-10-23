@@ -39,17 +39,17 @@ public class Paquete {
 
     public Paquete() {}
     public Paquete(DtPaquete paquete) {
-        this.nombre = paquete.getNombre();
-        this.descripcion = paquete.getDescripcion();
-        this.validezDias = paquete.getValidezDias();
-        this.descuento = paquete.getDescuento();
-        this.costo = paquete.getCosto();
-        this.rutaEnPaquete = new ArrayList<>();
+        this.setNombre(paquete.getNombre());
+        this.setDescripcion(paquete.getDescripcion());
+        this.setValidezDias(paquete.getValidezDias());
+        this.setDescuento(paquete.getDescuento());
+        this.setCosto(paquete.getCosto());
+        this.setRutaEnPaquete(new ArrayList<>());
     }
 
     public List<DtRutaEnPaquete> getRutaEnPaqueteDatos() {
         List<DtRutaEnPaquete> ruta = new ArrayList<>();
-        for (RutaEnPaquete r : this.rutaEnPaquete){
+        for (RutaEnPaquete r : this.getRutaEnPaquete()){
             ruta.add(r.getDatos());
         }
         return ruta;
@@ -108,7 +108,14 @@ public class Paquete {
     };
 
     public DtPaquete getDatos(){
-        return new DtPaquete(this.getNombre(), this.getDescripcion(), this.getValidezDias(), this.getDescuento(), this.getCosto(), this.getRutaEnPaqueteDatos());
+        return new DtPaquete(
+                this.getNombre(),
+                this.getDescripcion(),
+                this.getValidezDias(),
+                this.getDescuento(),
+                this.getCosto(),
+                this.getRutaEnPaqueteDatos()
+        );
     }
 
     @Override

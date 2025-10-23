@@ -13,11 +13,11 @@ public class Categoria {
 
     public Categoria() {}
     public Categoria(DtCategoria categoria) {
-        this.nombre = categoria.getNombre();
+        this.setNombre(categoria.getNombre());
     }
 
     public DtCategoria getDatos(){
-        return new DtCategoria(this.nombre);
+        return new DtCategoria(getNombre());
     }
 
     public String getNombre() {

@@ -81,19 +81,19 @@ public class RutaDeVuelo {
 
     public RutaDeVuelo() {}
     public RutaDeVuelo(DtRuta ruta, List<Categoria> categorias, Ciudad origen, Ciudad destino) {
-        this.nombre = ruta.getNombre();
-        this.descripcion = ruta.getDescripcion();
-        this.descripcionCorta = ruta.getDescripcionCorta();
-        this.duracion = ruta.getDuracion();
-        this.costoTurista = ruta.getCostoTurista();
-        this.costoEjecutivo = ruta.getCostoEjecutivo();
-        this.equipajeExtra = ruta.getEquipajeExtra();
-        this.fechaAlta = ruta.getFechaAlta();
-        this.urlImagen = ruta.getUrlImagen();
-        this.estado = ruta.getEstado();
-        this.categorias = categorias;
-        this.ciudadOrigen = origen;
-        this.ciudadDestino = destino;
+        this.setNombre(ruta.getNombre());
+        this.setDescripcion(ruta.getDescripcion());
+        this.setDescripcionCorta(ruta.getDescripcionCorta());
+        this.setDuracion(ruta.getDuracion());
+        this.setCostoTurista(ruta.getCostoTurista());
+        this.setCostoEjecutivo(ruta.getCostoEjecutivo());
+        this.setEquipajeExtra(ruta.getEquipajeExtra());
+        this.setFechaAlta(ruta.getFechaAlta());
+        this.setUrlImagen(ruta.getUrlImagen());
+        this.setEstado(ruta.getEstado());
+        this.setCategorias(categorias);
+        this.setCiudadOrigen(origen);
+        this.setCiudadDestino(destino);
     }
 
     public String getNombre() {
@@ -192,7 +192,7 @@ public class RutaDeVuelo {
 
     public DtRuta getDatos() {
         List<DtCategoria> categoriaList = new ArrayList<>();
-        for (Categoria categoria : this.categorias) {
+        for (Categoria categoria : this.getCategorias()) {
             categoriaList.add(categoria.getDatos());
         }
         return new DtRuta(

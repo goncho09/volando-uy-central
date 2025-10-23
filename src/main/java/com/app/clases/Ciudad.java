@@ -22,11 +22,11 @@ public class Ciudad {
     public Ciudad() {};
 
     public Ciudad(DtCiudad ciudad) {
-        this.aeropuerto = ciudad.getAeropuerto();
-        this.descripcion = ciudad.getDescripcion();
-        this.sitioWeb = ciudad.getSitioWeb();
-        this.fechaAlta = ciudad.getFechaAlta();
-        this.id = new CiudadId(ciudad.getNombre(), ciudad.getPais());
+        this.setAeropuerto(ciudad.getAeropuerto());
+        this.setDescripcion(ciudad.getDescripcion());
+        this.setSitioWeb(ciudad.getSitioWeb());
+        this.setFechaAlta(ciudad.getFechaAlta());
+        this.setId(new CiudadId(ciudad.getNombre(), ciudad.getPais()));
     }
 
     public CiudadId getId() {
@@ -88,7 +88,14 @@ public class Ciudad {
     }
 
     public DtCiudad getDatos(){
-        return new DtCiudad(this.getNombre(), this.getPais(), this.getAeropuerto(), this.getDescripcion(), this.getSitioWeb(), this.getFechaAlta());
+        return new DtCiudad(
+                this.getNombre(),
+                this.getPais(),
+                this.getAeropuerto(),
+                this.getDescripcion(),
+                this.getSitioWeb(),
+                this.getFechaAlta()
+        );
     }
 
     @Override
