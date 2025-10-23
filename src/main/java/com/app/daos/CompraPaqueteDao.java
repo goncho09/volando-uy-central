@@ -1,4 +1,4 @@
-package com.app.DAOs;
+package com.app.daos;
 
 import com.app.clases.CompraPaquete;
 import jakarta.persistence.EntityManager;

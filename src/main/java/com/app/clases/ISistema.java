@@ -3,12 +3,12 @@ package com.app.clases;
 import java.time.LocalDate;
 import java.util.List;
 
-import com.app.DAOs.CategoriaDao;
-import com.app.DAOs.RutaDeVueloDao;
-import com.app.DAOs.UserDao;
-import com.app.DAOs.VueloDao;
-import com.app.DAOs.CiudadDao;
-import com.app.DAOs.PaqueteDao;
+import com.app.daos.CategoriaDao;
+import com.app.daos.RutaDeVueloDao;
+import com.app.daos.UserDao;
+import com.app.daos.VueloDao;
+import com.app.daos.CiudadDao;
+import com.app.daos.PaqueteDao;
 
 import com.app.datatypes.DtAerolinea;
 import com.app.datatypes.DtCliente;
