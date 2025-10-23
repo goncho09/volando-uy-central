@@ -13,7 +13,8 @@ public class DtCliente extends DtUsuario{
     private String nacionalidad;
     private TipoDocumento tipoDocumento;
     private int numeroDocumento;
-    private List<CompraPaquete> comprasPaquetes;
+    private List<DtCompraPaquete> comprasPaquetes;
+    private List<DtReserva> reservas;
 
     public DtCliente() {}
     public DtCliente(String nickname, String nombre, String email, String password, String urlImage, String apellido, LocalDate fechaNacimiento, String nacionalidad, TipoDocumento tipoDocumento, int numeroDocumento) {
@@ -24,6 +25,7 @@ public class DtCliente extends DtUsuario{
         this.tipoDocumento = tipoDocumento;
         this.numeroDocumento = numeroDocumento;
         this.comprasPaquetes = new ArrayList<>();
+        this.reservas = new ArrayList<>();
     }
 
     public DtCliente(DtUsuario usuario, String apellido, LocalDate fechaNacimiento, String nacionalidad, TipoDocumento tipoDocumento, int numeroDocumento) {
@@ -34,16 +36,18 @@ public class DtCliente extends DtUsuario{
         this.tipoDocumento = tipoDocumento;
         this.numeroDocumento = numeroDocumento;
         this.comprasPaquetes = new ArrayList<>();
+        this.reservas = new ArrayList<>();
     }
 
-    public DtCliente(String nickname, String nombre, String email, String apellido, LocalDate fechaNacimiento, String nacionalidad, TipoDocumento tipoDocumento, int numeroDocumento) {
+    public DtCliente(String nickname, String nombre, String email, String apellido, LocalDate fechaNacimiento, String nacionalidad, TipoDocumento tipoDocumento, int numeroDocumento, List<DtCompraPaquete> paquetes, List<DtReserva> reservas) {
         super(nickname, nombre, email);
         this.apellido = apellido;
         this.fechaNacimiento = fechaNacimiento;
         this.nacionalidad = nacionalidad;
         this.tipoDocumento = tipoDocumento;
         this.numeroDocumento = numeroDocumento;
-        this.comprasPaquetes = new ArrayList<>();
+        this.comprasPaquetes = paquetes;
+        this.reservas = reservas;
     }
 
 
@@ -85,11 +89,15 @@ public class DtCliente extends DtUsuario{
         this.numeroDocumento = numeroDocumento;
     }
 
-    public List<CompraPaquete> getComprasPaquetes() {
+    public List<DtCompraPaquete> getComprasPaquetes() {
         return comprasPaquetes;
     }
 
-    public void setComprasPaquetes(List<CompraPaquete> comprasPaquetes) {
+    public void setComprasPaquetes(List<DtCompraPaquete> comprasPaquetes) {
         this.comprasPaquetes = comprasPaquetes;
     }
+
+    public List<DtReserva> getReservas() {return reservas;}
+
+    public void setReservas(List<DtReserva> reservas) {this.reservas = reservas;}
 }

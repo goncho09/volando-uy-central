@@ -5,15 +5,12 @@ import java.util.List;
 
 import java.time.LocalDate;
 
+import com.app.datatypes.*;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 
-import com.app.datatypes.DtCliente;
-import com.app.datatypes.DtPaquete;
-import com.app.datatypes.DtUsuario;
-import com.app.datatypes.DtReserva;
 import com.app.enums.TipoDocumento;
 
 @Entity
@@ -83,9 +80,7 @@ public class Cliente extends Usuario{
         this.numeroDocumento = numeroDocumento;
     }
 
-    public List<CompraPaquete> getComprasPaquetes() {
-        return comprasPaquetes;
-    }
+    public List<CompraPaquete> getComprasPaquetes() {return comprasPaquetes;}
 
     public void setComprasPaquetes(List<CompraPaquete> comprasPaquetes) {
         this.comprasPaquetes = comprasPaquetes;
@@ -99,55 +94,28 @@ public class Cliente extends Usuario{
         this.reservas = reservas;
     }
 
-    public List<DtReserva> getDtReservas() {
-        List<DtReserva> dtReservas = new ArrayList<>();
-        for (Reserva reserva : this.reservas) {
-            dtReservas.add(new DtReserva(
-                    reserva.getFecha(),
-                    reserva.getTipoAsiento(),
-                    reserva.getCantPasajes(),
-                    reserva.getEquipajeExtra(),
-                    reserva.getCosto(),
-                    reserva.getPasajeros(),
-                    this.getDatos(),  // El cliente actual
-                    reserva.getVuelo().getDatos(),
-                    reserva.getMetodoPago(),
-                    reserva.getPaquetePago().getDatos()
-            ));
-        }
-        return dtReservas;
-    }
-
-    public List<DtPaquete> getPaquetesAdquiridos() {
-        List<DtPaquete> dtPaquetes = new ArrayList<>();
-        if (comprasPaquetes != null) {
-            for (CompraPaquete compra : comprasPaquetes) {
-                Paquete paquete = compra.getPaquete();
-                dtPaquetes.add(new DtPaquete(
-                        paquete.getNombre(),
-                        paquete.getDescripcion(),
-                        paquete.getValidezDias(),
-                        paquete.getDescuento(),
-                        paquete.getCosto(),
-                        paquete.getRutaEnPaqueteDatos()
-                ));
-            }
-        }
-        return dtPaquetes;
-    }
-
     public DtCliente getDatos(){
+        List<DtCompraPaquete> paquetesList = new ArrayList<>();
+        for(CompraPaquete cp : this.getComprasPaquetes()){
+            paquetesList.add(cp.getDatos());
+        }
+
+        List<DtReserva> reservasList = new ArrayList<>();
+        for(Reserva r : this.getReservas()){
+            reservasList.add(r.getDatos());
+        }
+
         return new DtCliente(
                 this.getNickname(),
                 this.getNombre(),
                 this.getEmail(),
-                this.getPassword(),
-                this.getUrlImage(),
                 this.getApellido(),
                 this.getFechaNacimiento(),
                 this.getNacionalidad(),
                 this.getTipoDocumento(),
-                this.getNumeroDocumento()
+                this.getNumeroDocumento(),
+                paquetesList,
+                reservasList
         );
     }
 

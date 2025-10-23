@@ -56,13 +56,13 @@ public class SistemaTest {
 
     @Test
     void listarPaquetesClienteExistenteSinPaquetes(){
-        List<DtPaquete> paqueteList = s.listarPaquetes(s.getCliente("carlosSanchez")); // carlosSanchez NO tiene paquetes
+        List<DtPaquete> paqueteList = s.listarPaquetes(s.getCliente("nuevoCliente")); // nuevoCliente NO tiene paquetes
 
-        Assertions.assertEquals(
+        Assertions.assertTrue(
                 paqueteList == null || paqueteList.isEmpty(),
-                paqueteList,
-                "La lista debe estar vacia o nula"
+                "La lista debe estar vacía o nula"
         );
+
     }
 
     @Test
@@ -97,9 +97,8 @@ public class SistemaTest {
     void listarVuelosDeRutaConFechaInvaldia(){
         List<DtVuelo> listVuelo = s.listarVuelos("Bogotá-Montevideo", LocalDate.now().plusDays(700));
 
-        Assertions.assertEquals(
+        Assertions.assertTrue(
                 listVuelo == null || listVuelo.isEmpty(),
-                listVuelo,
                 "La lista debe ser nula o vacía."
         );
     }
@@ -143,20 +142,26 @@ public class SistemaTest {
     @Test
     void listarPaquetesAerolinea(){
         List<DtPaquete> packages = s.listarPaquetes(s.getAerolinea("skyHigh"));
-        Assertions.assertEquals(
+        Assertions.assertTrue(
                 packages == null || packages.isEmpty(),
-                packages,
                 "La lista debe ser nula o vacía."
         );
     }
 
     @Test
     void getReservaCliente(){
-        Assertions.assertNotNull(s.getReservaCliente(s.getVuelo("Vuelo_6"),s.getCliente("zacgamer"),LocalDate.of(2025,10,28)));
+        Assertions.assertNotNull(s.getReservaCliente(s.getVuelo("Vuelo_7"),s.getCliente("power"),LocalDate.of(2025,10,24)));
     }
 
     @Test
     void getReservaAerolinea(){
-        Assertions.assertNotNull(s.getReservaAerolinea(s.getVuelo("Vuelo_6"),s.getAerolinea("crystalMotus"),LocalDate.of(2025,10,28)));
+        Assertions.assertNotNull(s.getReservaAerolinea(s.getVuelo("Vuelo_7"),s.getAerolinea("crystalMotus"),LocalDate.of(2025,10,24)));
     }
+
+    @Test
+    void listarReservasClienteVuelo(){
+        Assertions.assertNotNull(s.listarReservas(s.getCliente("power"), s.getVuelo("Vuelo_7")));
+    }
+
+
 }

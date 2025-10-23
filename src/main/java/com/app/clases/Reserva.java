@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.app.datatypes.*;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -13,10 +14,6 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
-
-import com.app.datatypes.DtPasajero;
-import com.app.datatypes.DtReserva;
-import com.app.datatypes.DtPaquete;
 
 import com.app.enums.TipoAsiento;
 import com.app.enums.MetodoPago;
@@ -169,6 +166,19 @@ public class Reserva {
             paqueteData = paquete.getDatos();
         }
 
+        DtCliente cliente = new DtCliente(
+                new DtUsuario(
+                        this.cliente.getNickname(),
+                        this.cliente.getNombre(),
+                        this.cliente.getEmail()
+                ),
+                this.cliente.getApellido(),
+                this.cliente.getFechaNacimiento(),
+                this.cliente.getNacionalidad(),
+                this.cliente.getTipoDocumento(),
+                this.cliente.getNumeroDocumento()
+        );
+
         return new DtReserva(
                 this.getFecha(),
                 this.getTipoAsiento(),
@@ -176,7 +186,7 @@ public class Reserva {
                 this.getEquipajeExtra(),
                 this.getCosto(),
                 this.getPasajeros(),
-                this.getCliente().getDatos(),
+                cliente,
                 this.getVuelo().getDatos(),
                 this.getMetodoPago(),
                 paqueteData

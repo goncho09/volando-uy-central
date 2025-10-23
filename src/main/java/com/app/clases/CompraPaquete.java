@@ -1,7 +1,10 @@
 package com.app.clases;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
+import com.app.datatypes.DtCliente;
+import com.app.datatypes.DtUsuario;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -40,12 +43,24 @@ public class CompraPaquete {
     }
 
     public DtCompraPaquete getDatos(){
+        DtCliente cliente = new DtCliente(
+                new DtUsuario(
+                        this.cliente.getNickname(),
+                        this.cliente.getNombre(),
+                        this.cliente.getEmail()
+                ),
+                this.cliente.getApellido(),
+                this.cliente.getFechaNacimiento(),
+                this.cliente.getNacionalidad(),
+                this.cliente.getTipoDocumento(),
+                this.cliente.getNumeroDocumento()
+        );
         return new DtCompraPaquete(
                 this.getFechaCompra(),
                 this.getFechaVencimiento(),
                 this.getCosto(),
                 this.getPaquete().getDatos(),
-                this.getCliente().getDatos()
+                cliente
         );
     }
 

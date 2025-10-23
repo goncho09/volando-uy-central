@@ -170,7 +170,7 @@ void altaCategoriaValida() {
 
     @Test
     void altaCategoriaConTildes() {
-        DtCategoria categoria = new DtCategoria("CategoríaConTildesÉÍÓ");
+        DtCategoria categoria = new DtCategoria("CategoríaConTildesíeéó");
 
         Assertions.assertDoesNotThrow(
                 () -> s.altaCategoria(categoria),
