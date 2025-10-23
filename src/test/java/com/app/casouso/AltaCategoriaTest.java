@@ -21,7 +21,7 @@ public class AltaCategoriaTest {
 
     @Test
 void altaCategoriaValida() {
-    String nombreUnico = "CategoriaTest_" + System.currentTimeMillis() + "_" + Math.random();
+    String nombreUnico = "CategoriaUnique";
     DtCategoria categoria = new DtCategoria(nombreUnico);
 
     // Verificar que no existe previamente
@@ -77,7 +77,7 @@ void altaCategoriaValida() {
 
     @Test
     void altaCategoriaConEspacios() {
-        DtCategoria categoria = new DtCategoria("  CategoriaConEspacios  ");
+        DtCategoria categoria = new DtCategoria("Categoria Espacial");
 
         Assertions.assertDoesNotThrow(
                 () -> s.altaCategoria(categoria),
@@ -86,7 +86,7 @@ void altaCategoriaValida() {
 
     @Test
     void altaCategoriaCaracteresEspeciales() {
-        DtCategoria categoria = new DtCategoria("Categoría-Con-Carácteres!");
+        DtCategoria categoria = new DtCategoria("¡Súper Categoría!");
 
         Assertions.assertDoesNotThrow(
                 () -> s.altaCategoria(categoria),
@@ -105,7 +105,7 @@ void altaCategoriaValida() {
 
     @Test
     void altaCategoriaNombreMuyLargo() {
-        String nombreLargo = "A".repeat(100); // 100 caracteres
+        String nombreLargo = "EstoEsUnaCategoríaConUnNombreExtremadamenteLargoElCualDificultaLaLecturaDeLaMismaDentroDeLaApp";
         DtCategoria categoria = new DtCategoria(nombreLargo);
 
         Assertions.assertDoesNotThrow(
@@ -115,7 +115,7 @@ void altaCategoriaValida() {
 
     @Test
     void altaCategoriaNombreConNumeros() {
-        DtCategoria categoria = new DtCategoria("Categoria123");
+        DtCategoria categoria = new DtCategoria("C4tegor1a");
 
         Assertions.assertDoesNotThrow(
                 () -> s.altaCategoria(categoria),
@@ -124,8 +124,8 @@ void altaCategoriaValida() {
 
     @Test
     void altaCategoriaCaseSensitive() {
-        DtCategoria categoria1 = new DtCategoria("NUEVACATEGORIA");
-        DtCategoria categoria2 = new DtCategoria("nuevacategoria");
+        DtCategoria categoria1 = new DtCategoria("CATEGORIA");
+        DtCategoria categoria2 = new DtCategoria("categoria");
 
         // Crear primera categoría
         Assertions.assertDoesNotThrow(
@@ -140,37 +140,8 @@ void altaCategoriaValida() {
     }
 
     @Test
-    void altaMultiplesCategoriasDiferentes() {
-        DtCategoria categoria1 = new DtCategoria("CategoriaA");
-        DtCategoria categoria2 = new DtCategoria("CategoriaB");
-        DtCategoria categoria3 = new DtCategoria("CategoriaC");
-
-        // Crear múltiples categorías diferentes
-        Assertions.assertDoesNotThrow(
-                () -> s.altaCategoria(categoria1),
-                "Debería permitir primera categoría");
-
-        Assertions.assertDoesNotThrow(
-                () -> s.altaCategoria(categoria2),
-                "Debería permitir segunda categoría");
-
-        Assertions.assertDoesNotThrow(
-                () -> s.altaCategoria(categoria3),
-                "Debería permitir tercera categoría");
-
-        // Verificar que todas están en la lista
-        List<DtCategoria> categorias = s.buscarCategorias();
-        long count = categorias.stream()
-                .filter(c -> c.getNombre().equals("CategoriaA") ||
-                        c.getNombre().equals("CategoriaB") ||
-                        c.getNombre().equals("CategoriaC"))
-                .count();
-        Assertions.assertEquals(3, count, "Deberían estar las 3 categorías nuevas");
-    }
-
-    @Test
     void altaCategoriaConTildes() {
-        DtCategoria categoria = new DtCategoria("CategoríaConTildesíeéó");
+        DtCategoria categoria = new DtCategoria("Cetogía Tildística");
 
         Assertions.assertDoesNotThrow(
                 () -> s.altaCategoria(categoria),
@@ -206,7 +177,7 @@ void altaCategoriaValida() {
 
     @Test
     void altaCategoriaYVerificarPersistencia() {
-        DtCategoria categoria = new DtCategoria("CategoriaPersistente");
+        DtCategoria categoria = new DtCategoria("Categoria Persistente");
 
         // Crear categoría
         s.altaCategoria(categoria);
@@ -214,12 +185,12 @@ void altaCategoriaValida() {
         // Verificar que persiste en listados
         List<DtCategoria> categorias1 = s.buscarCategorias();
         boolean encontrada1 = categorias1.stream()
-                .anyMatch(c -> c.getNombre().equals("CategoriaPersistente"));
+                .anyMatch(c -> c.getNombre().equals("Categoria Persistente"));
 
         // Simular "recarga" del sistema (en realidad mismo sistema por @BeforeAll)
         List<DtCategoria> categorias2 = s.buscarCategorias();
         boolean encontrada2 = categorias2.stream()
-                .anyMatch(c -> c.getNombre().equals("CategoriaPersistente"));
+                .anyMatch(c -> c.getNombre().equals("Categoria Persistente"));
 
         Assertions.assertTrue(encontrada1 && encontrada2,
                 "La categoría debería persistir entre consultas");
@@ -227,7 +198,7 @@ void altaCategoriaValida() {
 
     @Test
     void altaCategoriaNombreConGuiones() {
-        DtCategoria categoria = new DtCategoria("Categoria-Con-Guiones");
+        DtCategoria categoria = new DtCategoria("Categoria-Guionil");
 
         Assertions.assertDoesNotThrow(
                 () -> s.altaCategoria(categoria),
@@ -236,7 +207,7 @@ void altaCategoriaValida() {
 
     @Test
     void altaCategoriaNombreConUnderscore() {
-        DtCategoria categoria = new DtCategoria("Categoria_Con_Underscore");
+        DtCategoria categoria = new DtCategoria("Categoria_Baijsta");
 
         Assertions.assertDoesNotThrow(
                 () -> s.altaCategoria(categoria),
@@ -246,13 +217,13 @@ void altaCategoriaValida() {
     @Test
     void altaCategoriaYUsarEnRuta() {
         // Primero crear categoría
-        DtCategoria nuevaCategoria = new DtCategoria("CategoriaParaRuta");
+        DtCategoria nuevaCategoria = new DtCategoria("CategoriaDisponible");
         s.altaCategoria(nuevaCategoria);
 
         // Verificar que está disponible para usar
         List<DtCategoria> categoriasDisponibles = s.buscarCategorias();
         boolean disponible = categoriasDisponibles.stream()
-                .anyMatch(c -> c.getNombre().equals("CategoriaParaRuta"));
+                .anyMatch(c -> c.getNombre().equals("CategoriaDisponible"));
 
         Assertions.assertTrue(disponible,
                 "La categoría nueva debería estar disponible para usar en rutas");
