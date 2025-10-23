@@ -30,21 +30,4 @@ public class CiudadId implements Serializable {
 
     public void setPais(String pais) { this.pais = pais; }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        CiudadId ciudadId = (CiudadId) o;
-        return Objects.equals(nombre, ciudadId.nombre) && Objects.equals(pais, ciudadId.pais);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(nombre, pais);
-    }
-
-    @Override
-    public String toString() {
-        return pais + ", " + nombre;
-    }
 }
