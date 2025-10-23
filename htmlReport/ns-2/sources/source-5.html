@@ -1,0 +1,268 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > Cliente</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.app.clases</a>
+</div>
+
+<h1>Coverage Summary for Class: Cliente (com.app.clases)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Cliente</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (18/18)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (8/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    97,7%
+  </span>
+  <span class="absValue">
+    (43/44)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">Cliente$HibernateInstantiator$qQBvV4AY</td>
+  </tr>
+  <tr>
+    <td class="name">Cliente$HibernateProxy$NU3s1cP4</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (18/18)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (8/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    97,7%
+  </span>
+  <span class="absValue">
+    (43/44)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.app.clases;
+&nbsp;
+&nbsp;import java.util.ArrayList;
+&nbsp;import java.util.List;
+&nbsp;
+&nbsp;import java.time.LocalDate;
+&nbsp;
+&nbsp;import com.app.datatypes.*;
+&nbsp;import jakarta.persistence.CascadeType;
+&nbsp;import jakarta.persistence.DiscriminatorValue;
+&nbsp;import jakarta.persistence.Entity;
+&nbsp;import jakarta.persistence.OneToMany;
+&nbsp;
+&nbsp;import com.app.enums.TipoDocumento;
+&nbsp;
+&nbsp;@Entity
+&nbsp;@DiscriminatorValue(&quot;Cliente&quot;) // Cuando se haga la tabla de usuarios, éste en particular será &quot;userType&quot; Cliente
+&nbsp;public class Cliente extends Usuario{
+&nbsp;    private String apellido;
+&nbsp;    private LocalDate fechaNacimiento;
+&nbsp;    private String nacionalidad;
+&nbsp;    private TipoDocumento tipoDocumento;
+&nbsp;    private int numeroDocumento;
+&nbsp;
+<b class="fc">&nbsp;    @OneToMany(mappedBy = &quot;cliente&quot;, cascade = CascadeType.ALL, orphanRemoval = true)// 1 - N (un cliente tiene muchas &quot;compras&quot;</b>
+&nbsp;    private List&lt;CompraPaquete&gt; comprasPaquetes = new ArrayList&lt;&gt;();
+&nbsp;
+<b class="fc">&nbsp;    @OneToMany(mappedBy = &quot;cliente&quot;) // 1 - N (un cliente tiene muchas &quot;reservas&quot;</b>
+&nbsp;    private List&lt;Reserva&gt; reservas = new ArrayList&lt;&gt;();
+&nbsp;
+<b class="nc">&nbsp;    public Cliente(){}</b>
+&nbsp;    public Cliente(DtCliente cliente) {
+<b class="fc">&nbsp;        super(new DtUsuario(cliente.getNickname(), cliente.getNombre(), cliente.getEmail(), cliente.getPassword(), cliente.getUrlImage()));</b>
+<b class="fc">&nbsp;        this.setApellido(cliente.getApellido());</b>
+<b class="fc">&nbsp;        this.setFechaNacimiento(cliente.getFechaNacimiento());</b>
+<b class="fc">&nbsp;        this.setNacionalidad(cliente.getNacionalidad());</b>
+<b class="fc">&nbsp;        this.setTipoDocumento(cliente.getTipoDocumento());</b>
+<b class="fc">&nbsp;        this.setNumeroDocumento(cliente.getNumeroDocumento());</b>
+<b class="fc">&nbsp;        this.setComprasPaquetes(new ArrayList&lt;&gt;());</b>
+<b class="fc">&nbsp;        this.setReservas(new ArrayList&lt;&gt;());</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public String getApellido() {
+<b class="fc">&nbsp;        return apellido;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setApellido(String apellido) {
+<b class="fc">&nbsp;        this.apellido = apellido;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public LocalDate getFechaNacimiento() {
+<b class="fc">&nbsp;        return fechaNacimiento;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setFechaNacimiento(LocalDate fechaNacimiento) {
+<b class="fc">&nbsp;        this.fechaNacimiento = fechaNacimiento;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public String getNacionalidad() {
+<b class="fc">&nbsp;        return nacionalidad;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setNacionalidad(String nacionalidad) {
+<b class="fc">&nbsp;        this.nacionalidad = nacionalidad;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public TipoDocumento getTipoDocumento() {
+<b class="fc">&nbsp;        return tipoDocumento;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setTipoDocumento(TipoDocumento tipoDocumento) {
+<b class="fc">&nbsp;        this.tipoDocumento = tipoDocumento;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public int getNumeroDocumento() {
+<b class="fc">&nbsp;        return numeroDocumento;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setNumeroDocumento(int numeroDocumento) {
+<b class="fc">&nbsp;        this.numeroDocumento = numeroDocumento;</b>
+&nbsp;    }
+&nbsp;
+<b class="fc">&nbsp;    public List&lt;CompraPaquete&gt; getComprasPaquetes() {return comprasPaquetes;}</b>
+&nbsp;
+&nbsp;    public void setComprasPaquetes(List&lt;CompraPaquete&gt; comprasPaquetes) {
+<b class="fc">&nbsp;        this.comprasPaquetes = comprasPaquetes;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public List&lt;Reserva&gt; getReservas(){
+<b class="fc">&nbsp;        return this.reservas;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setReservas(List&lt;Reserva&gt; reservas){
+<b class="fc">&nbsp;        this.reservas = reservas;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public DtCliente getDatos(){
+<b class="fc">&nbsp;        List&lt;DtCompraPaquete&gt; paquetesList = new ArrayList&lt;&gt;();</b>
+<b class="fc">&nbsp;        for(CompraPaquete cp : this.getComprasPaquetes()){</b>
+<b class="fc">&nbsp;            paquetesList.add(cp.getDatos());</b>
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        List&lt;DtReserva&gt; reservasList = new ArrayList&lt;&gt;();</b>
+<b class="fc">&nbsp;        for(Reserva r : this.getReservas()){</b>
+<b class="fc">&nbsp;            reservasList.add(r.getDatos());</b>
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        return new DtCliente(</b>
+<b class="fc">&nbsp;                this.getNickname(),</b>
+<b class="fc">&nbsp;                this.getNombre(),</b>
+<b class="fc">&nbsp;                this.getEmail(),</b>
+<b class="fc">&nbsp;                this.getApellido(),</b>
+<b class="fc">&nbsp;                this.getFechaNacimiento(),</b>
+<b class="fc">&nbsp;                this.getNacionalidad(),</b>
+<b class="fc">&nbsp;                this.getTipoDocumento(),</b>
+<b class="fc">&nbsp;                this.getNumeroDocumento(),</b>
+&nbsp;                paquetesList,
+&nbsp;                reservasList
+&nbsp;        );
+&nbsp;    }
+&nbsp;
+&nbsp;    public boolean existeVueloReserva(Vuelo vuelo){
+<b class="fc">&nbsp;        for (Reserva r : this.getReservas()) {</b>
+<b class="fc">&nbsp;            if (r.getVuelo().getNombre().equals(vuelo.getNombre())){</b>
+<b class="fc">&nbsp;                return true;</b>
+&nbsp;            }
+&nbsp;        }
+<b class="fc">&nbsp;        return false;</b>
+&nbsp;    }
+&nbsp;}
+&nbsp;
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-10-23 02:50</div>
+</div>
+</body>
+</html>

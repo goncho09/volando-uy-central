@@ -1,0 +1,219 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > CompraPaquete</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.app.clases</a>
+</div>
+
+<h1>Coverage Summary for Class: CompraPaquete (com.app.clases)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">CompraPaquete</td>
+<td class="coverageStat">
+  <span class="percent">
+    92,3%
+  </span>
+  <span class="absValue">
+    (12/13)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    96,8%
+  </span>
+  <span class="absValue">
+    (30/31)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">CompraPaquete$HibernateInstantiator$GpNBtUo6</td>
+  </tr>
+  <tr>
+    <td class="name">CompraPaquete$HibernateProxy$uJdz0kOQ</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    92,3%
+  </span>
+  <span class="absValue">
+    (12/13)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    96,8%
+  </span>
+  <span class="absValue">
+    (30/31)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.app.clases;
+&nbsp;
+&nbsp;import java.time.LocalDate;
+&nbsp;import java.util.ArrayList;
+&nbsp;
+&nbsp;import com.app.datatypes.DtCliente;
+&nbsp;import com.app.datatypes.DtUsuario;
+&nbsp;import jakarta.persistence.Entity;
+&nbsp;import jakarta.persistence.GeneratedValue;
+&nbsp;import jakarta.persistence.GenerationType;
+&nbsp;import jakarta.persistence.Id;
+&nbsp;import jakarta.persistence.ManyToOne;
+&nbsp;import jakarta.persistence.JoinColumn;
+&nbsp;
+&nbsp;import com.app.datatypes.DtCompraPaquete;
+&nbsp;
+&nbsp;
+&nbsp;@Entity
+&nbsp;// @Table(name=&quot;compraPaquete&quot;)
+&nbsp;public class CompraPaquete {
+&nbsp;    @Id
+&nbsp;    @GeneratedValue(strategy= GenerationType.IDENTITY)
+&nbsp;    private long id;
+&nbsp;    private LocalDate fechaCompra;
+&nbsp;    private  LocalDate fechaVencimiento;
+&nbsp;    private float costo;
+&nbsp;
+&nbsp;    @ManyToOne
+&nbsp;    @JoinColumn(name = &quot;paquete_name&quot;, nullable = false)
+&nbsp;    private Paquete paquete;
+&nbsp;
+&nbsp;    @ManyToOne(optional = false) // Indica que sí o sí debe existir un cliente asociado
+&nbsp;    @JoinColumn(name=&quot;cliente_nickName&quot;)
+&nbsp;    private Cliente cliente;
+&nbsp;
+<b class="fc">&nbsp;    public CompraPaquete() {}</b>
+<b class="fc">&nbsp;    public CompraPaquete(DtCompraPaquete dto, Paquete paquete, Cliente cliente) {</b>
+<b class="fc">&nbsp;        this.setFechaCompra(dto.getFechaCompra());</b>
+<b class="fc">&nbsp;        this.setFechaVencimiento(dto.getFechaVencimiento());</b>
+<b class="fc">&nbsp;        this.setCosto(dto.getCosto());</b>
+<b class="fc">&nbsp;        this.setPaquete(paquete);</b>
+<b class="fc">&nbsp;        this.setCliente(cliente);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public DtCompraPaquete getDatos(){
+<b class="fc">&nbsp;        DtCliente cliente = new DtCliente(</b>
+&nbsp;                new DtUsuario(
+<b class="fc">&nbsp;                        this.cliente.getNickname(),</b>
+<b class="fc">&nbsp;                        this.cliente.getNombre(),</b>
+<b class="fc">&nbsp;                        this.cliente.getEmail()</b>
+&nbsp;                ),
+<b class="fc">&nbsp;                this.cliente.getApellido(),</b>
+<b class="fc">&nbsp;                this.cliente.getFechaNacimiento(),</b>
+<b class="fc">&nbsp;                this.cliente.getNacionalidad(),</b>
+<b class="fc">&nbsp;                this.cliente.getTipoDocumento(),</b>
+<b class="fc">&nbsp;                this.cliente.getNumeroDocumento()</b>
+&nbsp;        );
+<b class="fc">&nbsp;        return new DtCompraPaquete(</b>
+<b class="fc">&nbsp;                this.getFechaCompra(),</b>
+<b class="fc">&nbsp;                this.getFechaVencimiento(),</b>
+<b class="fc">&nbsp;                this.getCosto(),</b>
+<b class="fc">&nbsp;                this.getPaquete().getDatos(),</b>
+&nbsp;                cliente
+&nbsp;        );
+&nbsp;    }
+&nbsp;
+&nbsp;    public LocalDate getFechaCompra() {
+<b class="fc">&nbsp;        return fechaCompra;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setFechaCompra(LocalDate fechaCompra) {
+<b class="fc">&nbsp;        this.fechaCompra = fechaCompra;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public LocalDate getFechaVencimiento() {
+<b class="fc">&nbsp;        return fechaVencimiento;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setFechaVencimiento(LocalDate fechaVencimiento) {
+<b class="fc">&nbsp;        this.fechaVencimiento = fechaVencimiento;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public float getCosto() {
+<b class="fc">&nbsp;        return costo;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setCosto(float costo) {
+<b class="fc">&nbsp;        this.costo = costo;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public Paquete getPaquete() {
+<b class="fc">&nbsp;        return paquete;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setPaquete(Paquete paquete) {
+<b class="fc">&nbsp;        this.paquete = paquete;</b>
+&nbsp;    }
+&nbsp;
+<b class="nc">&nbsp;    public Cliente getCliente() {return cliente; }</b>
+&nbsp;
+<b class="fc">&nbsp;    public void setCliente(Cliente cliente) {this.cliente = cliente; }</b>
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-10-23 02:50</div>
+</div>
+</body>
+</html>

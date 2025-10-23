@@ -1,0 +1,1344 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > Sistema</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.app.clases</a>
+</div>
+
+<h1>Coverage Summary for Class: Sistema (com.app.clases)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Sistema</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    73,9%
+  </span>
+  <span class="absValue">
+    (68/92)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    64,4%
+  </span>
+  <span class="absValue">
+    (277/430)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    74,9%
+  </span>
+  <span class="absValue">
+    (450/601)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.app.clases;
+&nbsp;
+&nbsp;import java.time.LocalDate;
+&nbsp;import java.time.LocalTime;
+&nbsp;
+&nbsp;import java.util.stream.Collectors;
+&nbsp;import java.util.List;
+&nbsp;import java.util.Map;
+&nbsp;import java.util.ArrayList;
+&nbsp;import java.util.Set;
+&nbsp;import java.util.Collections;
+&nbsp;
+&nbsp;import jakarta.persistence.EntityManager;
+&nbsp;import jakarta.persistence.EntityManagerFactory;
+&nbsp;import jakarta.persistence.EntityTransaction;
+&nbsp;import jakarta.persistence.Persistence;
+&nbsp;
+&nbsp;import com.app.daos.UserDao;
+&nbsp;import com.app.daos.CategoriaDao;
+&nbsp;import com.app.daos.CiudadDao;
+&nbsp;import com.app.daos.PaqueteDao;
+&nbsp;import com.app.daos.VueloDao;
+&nbsp;import com.app.daos.ReservaDao;
+&nbsp;import com.app.daos.PasajerosDao;
+&nbsp;import com.app.daos.CompraPaqueteDao;
+&nbsp;import com.app.daos.RutaDeVueloDao;
+&nbsp;
+&nbsp;import com.app.datatypes.DtPasajero;
+&nbsp;import com.app.datatypes.DtCategoria;
+&nbsp;import com.app.datatypes.DtVuelo;
+&nbsp;import com.app.datatypes.DtRuta;
+&nbsp;import com.app.datatypes.DtUsuario;
+&nbsp;import com.app.datatypes.DtReserva;
+&nbsp;import com.app.datatypes.DtPaquete;
+&nbsp;import com.app.datatypes.DtCliente;
+&nbsp;import com.app.datatypes.DtAerolinea;
+&nbsp;import com.app.datatypes.DtCiudad;
+&nbsp;import com.app.datatypes.DtCompraPaquete;
+&nbsp;import com.app.datatypes.DtRutaEnPaquete;
+&nbsp;
+&nbsp;import com.app.enums.EstadoRuta;
+&nbsp;import com.app.enums.MetodoPago;
+&nbsp;import com.app.enums.TipoAsiento;
+&nbsp;
+&nbsp;public class Sistema implements ISistema {
+&nbsp;    private static Sistema instancia;
+&nbsp;
+&nbsp;    private EntityManagerFactory emf;
+&nbsp;    private EntityManager em;
+&nbsp;    private UserDao userDao;
+&nbsp;    private RutaDeVueloDao rutaDeVueloDao;
+&nbsp;    private CategoriaDao categoriaDao;
+&nbsp;    private CiudadDao ciudadDao;
+&nbsp;    private PaqueteDao paqueteDao;
+&nbsp;    private VueloDao vueloDao;
+&nbsp;    private ReservaDao reservaDao;
+&nbsp;    private PasajerosDao pasajeroDao;
+&nbsp;    private CompraPaqueteDao compraDao;
+&nbsp;
+&nbsp;    private Map&lt;String, Categoria&gt; categorias;
+&nbsp;    private Map&lt;String, Ciudad&gt; ciudades;
+&nbsp;    private Map&lt;String, Usuario&gt; usuarios;
+&nbsp;    private Map&lt;String, Paquete&gt; paquetes;
+&nbsp;    private Map&lt;String, Vuelo&gt; vuelos;
+&nbsp;    private Map&lt;String, RutaDeVuelo&gt; rutasDeVuelo;
+&nbsp;
+&nbsp;    private List&lt;CompraPaquete&gt; compraPaquetes;
+&nbsp;    private List&lt;Reserva&gt; reservas;
+&nbsp;    private List&lt;DtPasajero&gt; pasajes;
+&nbsp;
+<b class="fc">&nbsp;    private List&lt;Vuelo&gt; consultaVuelos = new ArrayList&lt;&gt;();</b>
+<b class="fc">&nbsp;    private List&lt;Usuario&gt; consultaUsuarios = new ArrayList&lt;&gt;();</b>
+<b class="fc">&nbsp;    private List&lt;CompraPaquete&gt; compras = new ArrayList&lt;&gt;();</b>
+&nbsp;
+&nbsp;    private Usuario usuarioSeleccionado; // Guarda selección actual
+&nbsp;    private Paquete paqueteSeleccionado;
+&nbsp;    private DtCliente clienteTemporal;
+&nbsp;    private DtAerolinea aerolineaTemporal;
+&nbsp;    private Aerolinea aerolineaTemporalClase;
+&nbsp;    private DtPaquete paqueteTemp;
+&nbsp;
+<b class="fc">&nbsp;    private Sistema() {</b>
+&nbsp;        // Inicializar JPA
+<b class="fc">&nbsp;        this.emf = Persistence.createEntityManagerFactory(&quot;pepitoElLaburador&quot;);</b>
+<b class="fc">&nbsp;        this.em = emf.createEntityManager(); // Inicializamos el &quot;controlador&quot; global de la BD</b>
+<b class="fc">&nbsp;        this.userDao = new UserDao(em); // Inicializamos &quot;controlador&quot; de usuarios</b>
+<b class="fc">&nbsp;        this.rutaDeVueloDao = new RutaDeVueloDao(em);</b>
+<b class="fc">&nbsp;        this.categoriaDao = new CategoriaDao(em);</b>
+<b class="fc">&nbsp;        this.ciudadDao = new CiudadDao(em);</b>
+<b class="fc">&nbsp;        this.paqueteDao = new PaqueteDao(em);</b>
+<b class="fc">&nbsp;        this.vueloDao = new VueloDao(em);</b>
+<b class="fc">&nbsp;        this.reservaDao = new ReservaDao(em);</b>
+<b class="fc">&nbsp;        this.pasajeroDao = new PasajerosDao(em);</b>
+<b class="fc">&nbsp;        this.compraDao = new CompraPaqueteDao(em);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public static Sistema getInstancia() {
+<b class="pc">&nbsp;        if (instancia == null) {</b>
+<b class="fc">&nbsp;            instancia = new Sistema();</b>
+&nbsp;        }
+<b class="fc">&nbsp;        return instancia;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public List&lt;DtAerolinea&gt; listarAerolineas() {
+<b class="fc">&nbsp;        List&lt;DtAerolinea&gt; nuevaLista = new ArrayList&lt;&gt;();</b>
+<b class="fc">&nbsp;        for (Aerolinea a : this.getAerolineas()) {</b>
+<b class="fc">&nbsp;            nuevaLista.add(a.getDatos());</b>
+&nbsp;        }
+<b class="fc">&nbsp;        return nuevaLista;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public List&lt;DtRuta&gt; listarRutasDeVuelo(DtAerolinea aerolinea) {
+<b class="nc">&nbsp;        List&lt;DtRuta&gt; listaRutas = new ArrayList&lt;&gt;();</b>
+<b class="nc">&nbsp;        Aerolinea a = (Aerolinea) this.usuarios.get(aerolinea.getNickname());</b>
+<b class="nc">&nbsp;        if (a == null) {</b>
+<b class="nc">&nbsp;            return listaRutas;</b>
+&nbsp;        }
+<b class="nc">&nbsp;        List&lt;RutaDeVuelo&gt; rutasAerolinea = a.getRutasDeVuelo();</b>
+<b class="nc">&nbsp;        for (RutaDeVuelo r : rutasAerolinea) {</b>
+<b class="nc">&nbsp;            listaRutas.add(r.getDatos());</b>
+&nbsp;        }
+<b class="nc">&nbsp;        return listaRutas;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public DtUsuario getUsuario(String nickname){
+<b class="nc">&nbsp;        Usuario u = usuarios.get(nickname);</b>
+<b class="nc">&nbsp;        if (u == null) throw new IllegalArgumentException(&quot;El usuario no existe&quot;);</b>
+<b class="nc">&nbsp;        return u.getDatos();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public List&lt;DtReserva&gt; listarReservas(DtCliente cliente, DtVuelo vuelo) {
+<b class="fc">&nbsp;        List&lt;DtReserva&gt; listaReservas = new ArrayList&lt;&gt;();</b>
+<b class="fc">&nbsp;        Cliente c = (Cliente) this.usuarios.get(cliente.getNickname());</b>
+<b class="pc">&nbsp;        if (c == null) {</b>
+<b class="nc">&nbsp;            return listaReservas;</b>
+&nbsp;        }
+<b class="fc">&nbsp;        for (Reserva r : c.getReservas()) {</b>
+<b class="fc">&nbsp;            if (r.getVuelo().getNombre().equals(vuelo.getNombre())) {</b>
+<b class="fc">&nbsp;                listaReservas.add(r.getDatos());</b>
+&nbsp;            }
+&nbsp;        }
+<b class="fc">&nbsp;        return listaReservas;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public boolean aerolineaTieneRuta(DtAerolinea aerolinea, String nombre) {
+<b class="fc">&nbsp;        Aerolinea a = (Aerolinea) this.usuarios.get(aerolinea.getNickname());</b>
+<b class="pc">&nbsp;        if (a == null) {</b>
+<b class="nc">&nbsp;            return false;</b>
+&nbsp;        }
+<b class="pc">&nbsp;        for (RutaDeVuelo r : a.getRutasDeVuelo()) {</b>
+<b class="fc">&nbsp;            if (r.getNombre().equals(nombre)) {</b>
+<b class="fc">&nbsp;                return true;</b>
+&nbsp;            }
+&nbsp;        }
+<b class="nc">&nbsp;        return false;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public List&lt;DtReserva&gt; listarReservas(DtAerolinea aerolinea) {
+<b class="fc">&nbsp;        List&lt;DtReserva&gt; listaReservas = new ArrayList&lt;&gt;();</b>
+<b class="fc">&nbsp;        Aerolinea a = (Aerolinea) this.usuarios.get(aerolinea.getNickname());</b>
+<b class="pc">&nbsp;        if (a == null) {</b>
+<b class="nc">&nbsp;            return listaReservas;</b>
+&nbsp;        }
+<b class="fc">&nbsp;        for (Reserva r : this.reservas) {</b>
+<b class="pc">&nbsp;            if (this.aerolineaTieneRuta(aerolinea, r.getVuelo().getRutaDeVuelo().getNombre())) {</b>
+<b class="fc">&nbsp;                listaReservas.add(r.getDatos());</b>
+&nbsp;            }
+&nbsp;        }
+<b class="fc">&nbsp;        return listaReservas;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public DtCliente getCliente(String nickname) {
+<b class="fc">&nbsp;        Usuario u = this.usuarios.get(nickname);</b>
+<b class="pc">&nbsp;        if (u == null) {</b>
+<b class="nc">&nbsp;            throw new IllegalArgumentException(&quot;No existe un usuario con ese nickname.&quot;);</b>
+&nbsp;        }
+<b class="pc">&nbsp;        if (u instanceof Cliente c) {</b>
+<b class="fc">&nbsp;            return c.getDatos();</b>
+&nbsp;        } else {
+<b class="nc">&nbsp;            throw new IllegalArgumentException(&quot;El usuario no es un cliente.&quot;);</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    public DtRuta consultarRuta(String nombre) {
+<b class="pc">&nbsp;        if (!this.rutasDeVuelo.containsKey(nombre))</b>
+<b class="nc">&nbsp;            throw new IllegalArgumentException(&quot;No existe esta ruta&quot;);</b>
+<b class="fc">&nbsp;        return this.rutasDeVuelo.get(nombre).getDatos();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public DtVuelo consultarVuelo(String nombre) {
+<b class="fc">&nbsp;        for (Vuelo v : consultaVuelos) {</b>
+<b class="pc">&nbsp;            if (v.getNombre().equals(nombre)) {</b>
+<b class="nc">&nbsp;                return v.getDatos();</b>
+&nbsp;            }
+&nbsp;        }
+<b class="fc">&nbsp;        return null;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public boolean existeRuta(String nombre) {
+<b class="fc">&nbsp;        for (RutaDeVuelo r : this.getRutasDeVuelo()) {</b>
+<b class="pc">&nbsp;            if (r.getNombre().equals(nombre)) {</b>
+<b class="nc">&nbsp;                return true;</b>
+&nbsp;            }
+&nbsp;        }
+<b class="fc">&nbsp;        return false;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void altaRutaDeVuelo(String nombreAerolinea, DtRuta datosRuta) {
+<b class="fc">&nbsp;        Aerolinea aerolinea = (Aerolinea) userDao.buscar(nombreAerolinea);</b>
+&nbsp;
+<b class="pc">&nbsp;        if (nombreAerolinea == null || nombreAerolinea.isEmpty())</b>
+<b class="nc">&nbsp;            throw new IllegalArgumentException(&quot;Aerolinea no puede ser vacía&quot;);</b>
+&nbsp;
+<b class="pc">&nbsp;        if (datosRuta.getNombre() == null || datosRuta.getNombre().isEmpty())</b>
+<b class="fc">&nbsp;            throw new IllegalArgumentException(&quot;Nombre de ruta no puede ser vacío&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        if (this.rutasDeVuelo.containsKey(datosRuta.getNombre()))</b>
+<b class="fc">&nbsp;            throw new IllegalArgumentException(&quot;Ya existe esa ruta de vuelo.&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        if (datosRuta.getDuracion().isBefore(LocalTime.of(0, 1))){</b>
+<b class="fc">&nbsp;            throw new IllegalArgumentException(&quot;La duracion debe ser &gt; 0 minutos&quot;);</b>
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        List&lt;Categoria&gt; categoriaList = new ArrayList&lt;&gt;();</b>
+&nbsp;
+<b class="fc">&nbsp;        for (DtCategoria c : datosRuta.getCategorias()) {</b>
+<b class="fc">&nbsp;            Categoria nuevaCategoria = this.buscarCategoria(c.getNombre());</b>
+<b class="pc">&nbsp;            if (nuevaCategoria == null) {</b>
+<b class="nc">&nbsp;                throw new IllegalArgumentException(&quot;Categoria no existe&quot;);</b>
+&nbsp;            }
+<b class="fc">&nbsp;            categoriaList.add(nuevaCategoria);</b>
+&nbsp;        }
+&nbsp;
+<b class="pc">&nbsp;        if (datosRuta.getCategorias() == null || datosRuta.getCategorias().isEmpty()) {</b>
+<b class="fc">&nbsp;            throw new IllegalArgumentException(&quot;Debe tener al menos una categoria&quot;);</b>
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        Ciudad origen = this.buscarCiudad(datosRuta.getCiudadOrigen().getNombre(),</b>
+<b class="fc">&nbsp;                datosRuta.getCiudadOrigen().getPais());</b>
+<b class="pc">&nbsp;        if (origen == null) {</b>
+<b class="nc">&nbsp;            throw new IllegalArgumentException(&quot;Ciudad Origen no existe&quot;);</b>
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        Ciudad destino = this.buscarCiudad(datosRuta.getCiudadDestino().getNombre(),</b>
+<b class="fc">&nbsp;                datosRuta.getCiudadDestino().getPais());</b>
+<b class="pc">&nbsp;        if (destino == null || destino == origen) {</b>
+<b class="fc">&nbsp;            throw new IllegalArgumentException(&quot;Ciudad Destino no existe o es igual a la de Origen&quot;);</b>
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        if (datosRuta.getCostoTurista() &lt;= 0 || datosRuta.getCostoEjecutivo() &lt;= 0</b>
+<b class="fc">&nbsp;                || datosRuta.getEquipajeExtra() &lt; 0) {</b>
+<b class="fc">&nbsp;            throw new IllegalArgumentException(&quot;Costos no pueden ser negativos o 0&quot;);</b>
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        RutaDeVuelo nuevaRuta = new RutaDeVuelo(datosRuta, categoriaList, origen, destino);</b>
+&nbsp;
+<b class="pc">&nbsp;        if (aerolinea.getRutasDeVuelo().contains(nuevaRuta))</b>
+<b class="nc">&nbsp;            throw new IllegalArgumentException(&quot;Ya existe esa ruta de vuelo en esa aerolinea&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        this.rutasDeVuelo.put(nuevaRuta.getNombre(), nuevaRuta); // Guardas la ruta en el sistema</b>
+<b class="fc">&nbsp;        this.rutaDeVueloDao.guardar(nuevaRuta); // Persistimos la nuevaRuta</b>
+<b class="fc">&nbsp;        this.userDao.addRutaDeVuelo(aerolinea, nuevaRuta); // La agregamos a su aerolinea</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public boolean validarUsuario(String nickname, String password) {
+<b class="fc">&nbsp;        Usuario u = this.usuarios.get(nickname);</b>
+<b class="pc">&nbsp;        if (u == null)</b>
+<b class="nc">&nbsp;            return false;</b>
+<b class="fc">&nbsp;        return u.getPassword().equals(password);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public List&lt;DtUsuario&gt; listarUsuarios() {
+<b class="fc">&nbsp;        List&lt;DtUsuario&gt; usuarios = new ArrayList&lt;&gt;();</b>
+<b class="fc">&nbsp;        for (Usuario u : this.getUsuarios()) {</b>
+<b class="fc">&nbsp;            usuarios.add(u.getDatos());</b>
+&nbsp;        }
+<b class="fc">&nbsp;        return usuarios;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public List&lt;DtCiudad&gt; listarCiudades() {
+<b class="nc">&nbsp;        List&lt;DtCiudad&gt; listaCiudades = new ArrayList&lt;&gt;();</b>
+<b class="nc">&nbsp;        for (Ciudad c : this.getCiudades()) {</b>
+<b class="nc">&nbsp;            listaCiudades.add(c.getDatos());</b>
+&nbsp;        }
+<b class="nc">&nbsp;        return listaCiudades;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public List&lt;DtPaquete&gt; listarPaquetes() {
+<b class="fc">&nbsp;        List&lt;DtPaquete&gt; listaPaquetes = new ArrayList&lt;&gt;();</b>
+<b class="fc">&nbsp;        for (Paquete p : this.getPaquetes()) {</b>
+<b class="fc">&nbsp;            listaPaquetes.add(p.getDatos());</b>
+&nbsp;        }
+<b class="fc">&nbsp;        return listaPaquetes;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public List&lt;DtPaquete&gt; listarPaquetes(DtCliente c) {
+<b class="fc">&nbsp;        Cliente cliente = (Cliente) this.usuarios.get(c.getNickname());</b>
+<b class="pc">&nbsp;        if (cliente == null) {</b>
+<b class="nc">&nbsp;            throw new RuntimeException(&quot;Cliente no encontrado&quot;);</b>
+&nbsp;        }
+<b class="fc">&nbsp;        List&lt;DtPaquete&gt; listaPaquetes = new ArrayList&lt;&gt;();</b>
+<b class="fc">&nbsp;        for (CompraPaquete cp : cliente.getComprasPaquetes()) {</b>
+<b class="fc">&nbsp;            listaPaquetes.add(cp.getPaquete().getDatos());</b>
+&nbsp;        }
+<b class="fc">&nbsp;        return listaPaquetes;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public List&lt;DtPaquete&gt; listarPaquetes(DtAerolinea a) {
+<b class="fc">&nbsp;        Aerolinea aerolinea = (Aerolinea) this.usuarios.get(a.getNickname());</b>
+<b class="pc">&nbsp;        if (aerolinea == null) {</b>
+<b class="nc">&nbsp;            throw new RuntimeException(&quot;Aerolinea no encontrada&quot;);</b>
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        List&lt;DtRuta&gt; rutasAerolinea = a.listarRutasDeVuelo();</b>
+<b class="pc">&nbsp;        if (rutasAerolinea == null || rutasAerolinea.isEmpty()) {</b>
+<b class="nc">&nbsp;            return Collections.emptyList();</b>
+&nbsp;        }
+&nbsp;
+&nbsp;        // Conjunto de nombres de rutas de la aerolínea para búsqueda rápida
+<b class="fc">&nbsp;        Set&lt;String&gt; nombresRutas = rutasAerolinea.stream()</b>
+<b class="fc">&nbsp;                .map(DtRuta::getNombre)</b>
+<b class="fc">&nbsp;                .collect(Collectors.toSet());</b>
+&nbsp;
+&nbsp;        // Filtrar paquetes que contengan alguna de esas rutas
+<b class="fc">&nbsp;        return this.listarPaquetes().stream()</b>
+<b class="fc">&nbsp;                .filter(p -&gt; p.getRutaEnPaquete().stream()</b>
+<b class="fc">&nbsp;                        .anyMatch(rp -&gt; nombresRutas.contains(rp.getRutaDeVuelo().getNombre())))</b>
+<b class="fc">&nbsp;                .collect(Collectors.toList());</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public List&lt;DtPaquete&gt; listarPaquetesNoComprados() {
+<b class="fc">&nbsp;        List&lt;DtPaquete&gt; listaPaquetes = new ArrayList&lt;&gt;();</b>
+<b class="fc">&nbsp;        for (Paquete p : this.getPaquetes()) {</b>
+<b class="fc">&nbsp;            if (!paqueteComprado(p.getDatos())) {</b>
+<b class="fc">&nbsp;                listaPaquetes.add(p.getDatos());</b>
+&nbsp;            }
+&nbsp;        }
+<b class="fc">&nbsp;        return listaPaquetes;</b>
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;    public List&lt;DtPaquete&gt; listarPaquetesConRutas() {
+<b class="nc">&nbsp;        List&lt;DtPaquete&gt; listaPaquetes = new ArrayList&lt;&gt;();</b>
+<b class="nc">&nbsp;        for (Paquete p : this.getPaquetes()) {</b>
+<b class="nc">&nbsp;            if (!p.getRutaEnPaquete().isEmpty()) {</b>
+<b class="nc">&nbsp;                listaPaquetes.add(p.getDatos());</b>
+&nbsp;            }
+&nbsp;        }
+<b class="nc">&nbsp;        return listaPaquetes;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public List&lt;DtCliente&gt; listarClientes() {
+<b class="fc">&nbsp;        List&lt;DtCliente&gt; listaClientes = new ArrayList&lt;&gt;();</b>
+<b class="fc">&nbsp;        for (Cliente c : this.getClientes()) {</b>
+<b class="fc">&nbsp;            listaClientes.add(c.getDatos());</b>
+&nbsp;        }
+<b class="fc">&nbsp;        return listaClientes;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public List&lt;Ciudad&gt; getCiudades() {
+<b class="nc">&nbsp;        return new ArrayList&lt;&gt;(this.ciudades.values());</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public List&lt;Paquete&gt; getPaquetes() {
+<b class="fc">&nbsp;        return new ArrayList&lt;&gt;(this.paquetes.values());</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public List&lt;Vuelo&gt; getVuelos() {
+<b class="fc">&nbsp;        return new ArrayList&lt;&gt;(this.vuelos.values());</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public List&lt;RutaDeVuelo&gt; getRutasDeVuelo() {
+<b class="fc">&nbsp;        return new ArrayList&lt;&gt;(this.rutasDeVuelo.values());</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public List&lt;Usuario&gt; getUsuarios() {
+<b class="fc">&nbsp;        return new ArrayList&lt;&gt;(this.usuarios.values());</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    ;
+&nbsp;
+&nbsp;    public List&lt;Cliente&gt; getClientes() {
+<b class="fc">&nbsp;        List&lt;Usuario&gt; usuarios = this.getUsuarios();</b>
+<b class="fc">&nbsp;        List&lt;Cliente&gt; clientes = new ArrayList&lt;&gt;();</b>
+<b class="fc">&nbsp;        for (Usuario u : usuarios) {</b>
+<b class="fc">&nbsp;            if (u instanceof Cliente) {</b>
+<b class="fc">&nbsp;                clientes.add((Cliente) u);</b>
+&nbsp;            }
+&nbsp;        }
+<b class="fc">&nbsp;        return clientes;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    ;
+&nbsp;
+&nbsp;    public List&lt;Aerolinea&gt; getAerolineas() {
+<b class="fc">&nbsp;        List&lt;Aerolinea&gt; listaAerolineas = new ArrayList&lt;&gt;();</b>
+<b class="fc">&nbsp;        List&lt;Usuario&gt; listaUsuarios = this.getUsuarios();</b>
+<b class="fc">&nbsp;        for (Usuario u : listaUsuarios) {</b>
+<b class="fc">&nbsp;            if (u instanceof Aerolinea) {</b>
+<b class="fc">&nbsp;                Aerolinea a = (Aerolinea) u;</b>
+<b class="fc">&nbsp;                listaAerolineas.add(a);</b>
+&nbsp;            }
+&nbsp;        }
+<b class="fc">&nbsp;        return listaAerolineas;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public DtPaquete getPaquete() {
+<b class="nc">&nbsp;        return this.paqueteSeleccionado.getDatos();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void seleccionarAeroLinea(String nickname) {
+<b class="nc">&nbsp;        Aerolinea aerolinea = null;</b>
+<b class="nc">&nbsp;        for (Aerolinea a : this.getAerolineas()) {</b>
+<b class="nc">&nbsp;            if (a.getNickname().equals(nickname)) {</b>
+<b class="nc">&nbsp;                aerolinea = a;</b>
+&nbsp;                break;
+&nbsp;            }
+&nbsp;        }
+<b class="nc">&nbsp;        if (aerolinea == null) {</b>
+<b class="nc">&nbsp;            throw new IllegalArgumentException(&quot;No existe una aerolinea con ese nombre.&quot;);</b>
+&nbsp;        }
+<b class="nc">&nbsp;        this.aerolineaTemporalClase = aerolinea;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public List&lt;DtRuta&gt; listarRutasDeVuelo() {
+<b class="nc">&nbsp;        List&lt;DtRuta&gt; listaRutas = new ArrayList&lt;&gt;();</b>
+<b class="nc">&nbsp;        for (RutaDeVuelo r : this.getRutasDeVuelo()) {</b>
+<b class="nc">&nbsp;            listaRutas.add(r.getDatos());</b>
+&nbsp;        }
+<b class="nc">&nbsp;        return listaRutas;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public List&lt;DtRuta&gt; listarRutasDeVuelo(DtPaquete p) {
+<b class="nc">&nbsp;        List&lt;DtRuta&gt; listaRutas = new ArrayList&lt;&gt;();</b>
+<b class="nc">&nbsp;        List&lt;DtRutaEnPaquete&gt; rutasDelPaquete = p.getRutaEnPaquete();</b>
+<b class="nc">&nbsp;        for (DtRutaEnPaquete r : rutasDelPaquete) {</b>
+<b class="nc">&nbsp;            listaRutas.add(r.getRutaDeVuelo());</b>
+&nbsp;        }
+<b class="nc">&nbsp;        return listaRutas;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void seleccionarRutaDeVuelo(String nombre, int cantidad, TipoAsiento tipoAsiento) {
+<b class="nc">&nbsp;        if (this.aerolineaTemporal == null) {</b>
+<b class="nc">&nbsp;            throw new IllegalArgumentException(&quot;No hay una aerolinea seleccionada.&quot;);</b>
+&nbsp;        }
+<b class="nc">&nbsp;        RutaDeVuelo ruta = null;</b>
+<b class="nc">&nbsp;        for (RutaDeVuelo r : this.aerolineaTemporal.getRutasDeVuelo()) {</b>
+<b class="nc">&nbsp;            if (r.getNombre().equals(nombre)) {</b>
+<b class="nc">&nbsp;                ruta = r;</b>
+&nbsp;                break;
+&nbsp;            }
+&nbsp;        }
+<b class="nc">&nbsp;        if (ruta == null) {</b>
+<b class="nc">&nbsp;            throw new IllegalArgumentException(&quot;No existe una ruta de vuelo con ese nombre para esta aerolinea.&quot;);</b>
+&nbsp;        }
+<b class="nc">&nbsp;        if (this.paqueteSeleccionado == null) {</b>
+<b class="nc">&nbsp;            throw new IllegalArgumentException(&quot;No hay un paquete seleccionado.&quot;);</b>
+&nbsp;        }
+&nbsp;
+&nbsp;        // Verificar si la ruta ya está en el paquete
+<b class="nc">&nbsp;        for (DtRutaEnPaquete r : this.paqueteSeleccionado.getRutaEnPaqueteDatos()) {</b>
+<b class="nc">&nbsp;            if (r.getRutaDeVuelo().getNombre().equals(ruta.getNombre())) {</b>
+<b class="nc">&nbsp;                throw new IllegalArgumentException(&quot;La ruta ya está asociada al paquete.&quot;);</b>
+&nbsp;            }
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        RutaEnPaquete tp = new RutaEnPaquete();</b>
+<b class="nc">&nbsp;        tp.setCantidad(cantidad);</b>
+<b class="nc">&nbsp;        tp.setTipoAsiento(tipoAsiento);</b>
+<b class="nc">&nbsp;        this.paqueteSeleccionado.addRutaEnPaquete(tp);</b>
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;    public void altaPaquete(DtPaquete paquete) {
+<b class="fc">&nbsp;        if (this.paquetes.containsKey(paquete.getNombre())) {</b>
+<b class="fc">&nbsp;            throw new IllegalArgumentException(&quot;Ya existe un paquete con ese nombre.&quot;);</b>
+&nbsp;        }
+&nbsp;
+<b class="pc">&nbsp;        if (paquete.getNombre() == null || paquete.getNombre().trim().isEmpty()) {</b>
+<b class="fc">&nbsp;            throw new IllegalArgumentException(&quot;El nombre no puede estar vacío&quot;);</b>
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        if (paquete.getValidezDias() &lt;= 0) {</b>
+<b class="fc">&nbsp;            throw new IllegalArgumentException(&quot;La validez del paquete debe ser mayor a 0&quot;);</b>
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        Paquete p = new Paquete(paquete);</b>
+<b class="fc">&nbsp;        paqueteDao.guardar(p);</b>
+<b class="fc">&nbsp;        this.paquetes.put(p.getNombre(), p);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public boolean paqueteComprado(DtPaquete paquete) {
+<b class="fc">&nbsp;        boolean esComprado = false;</b>
+<b class="fc">&nbsp;        for (CompraPaquete cp : this.compras) {</b>
+<b class="fc">&nbsp;            if (cp.getPaquete().getNombre().equals(paquete.getNombre())) {</b>
+<b class="fc">&nbsp;                esComprado = true;</b>
+&nbsp;                break;
+&nbsp;            }
+&nbsp;        }
+<b class="fc">&nbsp;        return esComprado;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public boolean existePaquete(String nombre) {
+<b class="fc">&nbsp;        return this.paquetes.containsKey(nombre);</b>
+&nbsp;    };
+&nbsp;
+&nbsp;    public boolean existeUsuarioNickname(String nickname) {
+<b class="fc">&nbsp;        return this.usuarios.containsKey(nickname);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public boolean existeUsuarioEmail(String email) {
+<b class="fc">&nbsp;        for (Usuario u : this.usuarios.values()) {</b>
+<b class="fc">&nbsp;            if (u.getEmail().equals(email)) {</b>
+<b class="fc">&nbsp;                return true;</b>
+&nbsp;            }
+&nbsp;        }
+<b class="fc">&nbsp;        return false;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void altaCategoria(DtCategoria categoria) {
+<b class="fc">&nbsp;        if (categoria.getNombre() == null || categoria.getNombre().trim().isEmpty()) {</b>
+<b class="fc">&nbsp;            throw new IllegalArgumentException(&quot;El nombre de la categoría no puede estar vacío&quot;);</b>
+&nbsp;        }
+&nbsp;
+&nbsp;        // Primera validación: buscar en DAO
+<b class="fc">&nbsp;        if (categoriaDao.buscar(categoria.getNombre()) != null) {</b>
+<b class="fc">&nbsp;            throw new IllegalArgumentException(&quot;Ya existe una categoría con ese nombre.&quot;);</b>
+&nbsp;        }
+&nbsp;
+&nbsp;        // Segunda validación: buscar en lista local con DtCategoria
+<b class="fc">&nbsp;        String nombreNormalizado = categoria.getNombre().toLowerCase().trim();</b>
+<b class="fc">&nbsp;        for (DtCategoria c : this.buscarCategorias()) {</b>
+<b class="fc">&nbsp;            if (c.getNombre().toLowerCase().equals(nombreNormalizado)) {</b>
+<b class="fc">&nbsp;                throw new IllegalArgumentException(&quot;Ya existe una categoría con ese nombre.&quot;);</b>
+&nbsp;            }
+&nbsp;        }
+<b class="fc">&nbsp;        Categoria c = new Categoria(categoria);</b>
+<b class="fc">&nbsp;        this.categorias.put(c.getNombre(), c);</b>
+<b class="fc">&nbsp;        categoriaDao.guardar(c);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void altaCiudad(DtCiudad ciudad) {
+<b class="fc">&nbsp;        CiudadId id = new CiudadId(ciudad.getNombre(), ciudad.getPais());</b>
+<b class="fc">&nbsp;        Ciudad existente = ciudadDao.buscar(id);</b>
+&nbsp;
+<b class="pc">&nbsp;        if (ciudad.getNombre() == null || ciudad.getNombre().trim().isEmpty()) {</b>
+<b class="fc">&nbsp;            throw new IllegalArgumentException(&quot;El nombre no puede estar vacío&quot;);</b>
+&nbsp;        }
+&nbsp;
+<b class="pc">&nbsp;        if (ciudad.getPais() == null || ciudad.getPais().trim().isEmpty()) {</b>
+<b class="fc">&nbsp;            throw new IllegalArgumentException(&quot;El país no puede estar vacío&quot;);</b>
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        if (existente != null) {</b>
+<b class="fc">&nbsp;            throw new IllegalArgumentException(&quot;Ya existe una ciudad con ese nombre en ese país.&quot;);</b>
+&nbsp;        }
+&nbsp;
+&nbsp;        // Si no existe, crear
+<b class="fc">&nbsp;        Ciudad c = new Ciudad(ciudad);</b>
+<b class="fc">&nbsp;        this.ciudades.put(c.getNombre(), c);</b>
+<b class="fc">&nbsp;        ciudadDao.guardar(c);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public List&lt;DtCategoria&gt; getCategorias() {
+<b class="nc">&nbsp;        if (categoriaDao.listar().isEmpty()) {</b>
+<b class="nc">&nbsp;            throw new IllegalArgumentException(&quot;No hay categorias.&quot;);</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        List&lt;DtCategoria&gt; categorias = new ArrayList&lt;&gt;();</b>
+<b class="nc">&nbsp;        for (Categoria c : this.categorias.values()) {</b>
+<b class="nc">&nbsp;            categorias.add(c.getDatos());</b>
+&nbsp;        }
+<b class="nc">&nbsp;        return categorias;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public List&lt;DtCategoria&gt; buscarCategorias() {
+<b class="fc">&nbsp;        List&lt;DtCategoria&gt; categoriaList = new ArrayList&lt;&gt;();</b>
+&nbsp;       // if (categoriaDao.listar().isEmpty()) {
+&nbsp;         //   throw new IllegalArgumentException(&quot;No hay categorias.&quot;);
+&nbsp;        //}
+<b class="fc">&nbsp;        for (Categoria c : categoriaDao.listar()) {</b>
+<b class="fc">&nbsp;            categoriaList.add(c.getDatos());</b>
+&nbsp;        }
+<b class="fc">&nbsp;        return categoriaList;</b>
+&nbsp;    };
+&nbsp;
+&nbsp;    public void consultaVuelo(DtVuelo vuelo) {
+<b class="nc">&nbsp;        Vuelo v = this.vuelos.get(vuelo.getNombre());</b>
+<b class="nc">&nbsp;        if (v == null) {</b>
+<b class="nc">&nbsp;            throw new IllegalArgumentException(&quot;Vuelo no encontrado.&quot;);</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    public void registrarCliente(DtCliente cliente) {
+<b class="pc">&nbsp;        if (this.usuarios.containsKey(cliente.getNickname()) || userDao.buscar(cliente.getNickname()) != null) {</b>
+<b class="fc">&nbsp;            throw new IllegalArgumentException(&quot;Este usuario ya existe.&quot;);</b>
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        if (existeUsuarioEmail(cliente.getEmail())) {</b>
+<b class="fc">&nbsp;            throw new IllegalArgumentException(&quot;Ya existe un usuario con ese email.&quot;);</b>
+&nbsp;        }
+&nbsp;
+<b class="pc">&nbsp;        if (cliente.getNombre().equals(&quot;&quot;) || cliente.getApellido().equals(&quot;&quot;) || cliente.getNickname().equals(&quot;&quot;)</b>
+<b class="pc">&nbsp;                || cliente.getEmail().equals(&quot;&quot;) || cliente.getPassword().equals(&quot;&quot;)</b>
+<b class="pc">&nbsp;                || cliente.getNacionalidad().equals(&quot;&quot;) || cliente.getNumeroDocumento() == 0</b>
+<b class="pc">&nbsp;                || cliente.getUrlImage().equals(&quot;&quot;)) {</b>
+<b class="nc">&nbsp;            throw new IllegalArgumentException(&quot;Los campos no pueden estar vacíos.&quot;);</b>
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        confirmarAltaUsuario(cliente);</b>
+&nbsp;    };
+&nbsp;
+&nbsp;    public void modificarCliente(DtCliente cliente) {
+<b class="fc">&nbsp;        Usuario u = this.usuarios.get(cliente.getNickname());</b>
+<b class="fc">&nbsp;        if (u == null) {</b>
+<b class="fc">&nbsp;            throw new IllegalArgumentException(&quot;Este usuario no existe.&quot;);</b>
+&nbsp;        }
+&nbsp;
+<b class="pc">&nbsp;        if (cliente.getNickname().isEmpty() || cliente.getEmail().isEmpty() || cliente.getNombre().isEmpty()</b>
+<b class="fc">&nbsp;                || cliente.getApellido().isEmpty() || cliente.getPassword().isEmpty()</b>
+<b class="pc">&nbsp;                || cliente.getNacionalidad().isEmpty() || cliente.getNumeroDocumento() == 0</b>
+<b class="pc">&nbsp;                || cliente.getUrlImage().isEmpty()) {</b>
+<b class="fc">&nbsp;            throw new IllegalArgumentException(&quot;Los campos no pueden estar vacíos.&quot;);</b>
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        this.validarTextoSoloLetra(cliente.getNombre());</b>
+<b class="fc">&nbsp;        this.validarTextoSoloLetra(cliente.getApellido());</b>
+<b class="fc">&nbsp;        this.validarTextoSoloLetra(cliente.getNacionalidad());</b>
+&nbsp;
+<b class="fc">&nbsp;        if (cliente.getFechaNacimiento().isAfter(LocalDate.now())) {</b>
+<b class="fc">&nbsp;            throw new IllegalArgumentException(&quot;La fecha de nacimiento no puede ser en el futuro.&quot;);</b>
+&nbsp;        }
+&nbsp;
+<b class="pc">&nbsp;        if (u instanceof Cliente c) {</b>
+<b class="fc">&nbsp;            c.setNombre(cliente.getNombre());</b>
+<b class="fc">&nbsp;            c.setApellido(cliente.getApellido());</b>
+<b class="fc">&nbsp;            c.setEmail(cliente.getEmail());</b>
+<b class="fc">&nbsp;            c.setFechaNacimiento(cliente.getFechaNacimiento());</b>
+<b class="fc">&nbsp;            c.setNacionalidad(cliente.getNacionalidad());</b>
+<b class="fc">&nbsp;            c.setTipoDocumento(cliente.getTipoDocumento());</b>
+<b class="fc">&nbsp;            c.setNumeroDocumento(cliente.getNumeroDocumento());</b>
+<b class="fc">&nbsp;            userDao.actualizar(c);</b>
+&nbsp;        } else {
+<b class="nc">&nbsp;            throw new IllegalArgumentException(&quot;Este usuario es aerolinea.&quot;);</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    ;
+&nbsp;
+&nbsp;    public DtAerolinea getAerolinea(String nickname) {
+<b class="fc">&nbsp;        Usuario u = this.usuarios.get(nickname);</b>
+<b class="pc">&nbsp;        if (u == null) {</b>
+<b class="nc">&nbsp;            throw new IllegalArgumentException(&quot;No existe un usuario con ese nickname.&quot;);</b>
+&nbsp;        }
+<b class="pc">&nbsp;        if (u instanceof Aerolinea a) {</b>
+<b class="fc">&nbsp;            return a.getDatos();</b>
+&nbsp;        } else {
+<b class="nc">&nbsp;            throw new IllegalArgumentException(&quot;El usuario no es una aerolínea.&quot;);</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    public void modificarClienteImagen(DtCliente cliente, String urlImagen) {
+<b class="nc">&nbsp;        Cliente c = this.buscarCliente(cliente);</b>
+<b class="nc">&nbsp;        if (c == null) {</b>
+<b class="nc">&nbsp;            throw new IllegalArgumentException(&quot;Este usuario no existe.&quot;);</b>
+&nbsp;        }
+<b class="nc">&nbsp;        c.setUrlImage(urlImagen);</b>
+<b class="nc">&nbsp;        userDao.actualizar(c);</b>
+&nbsp;    };
+&nbsp;
+&nbsp;    public void registrarAerolinea(DtAerolinea aerolinea) {
+<b class="pc">&nbsp;        if (this.usuarios.containsKey(aerolinea.getNickname())) {</b>
+<b class="nc">&nbsp;            throw new IllegalArgumentException(&quot;Este usuario ya existe.&quot;);</b>
+&nbsp;        }
+<b class="pc">&nbsp;        if (existeUsuarioEmail(aerolinea.getEmail())) {</b>
+<b class="nc">&nbsp;            throw new IllegalArgumentException(&quot;Ya existe un usuario con ese email.&quot;);</b>
+&nbsp;        }
+<b class="pc">&nbsp;        if (aerolinea.getDescripcion().equals(&quot;&quot;) || aerolinea.getNombre().equals(&quot;&quot;)</b>
+<b class="pc">&nbsp;                || aerolinea.getNickname().equals(&quot;&quot;) || aerolinea.getEmail().equals(&quot;&quot;)</b>
+<b class="pc">&nbsp;                || aerolinea.getPassword().equals(&quot;&quot;) || aerolinea.getUrlImage().equals(&quot;&quot;)) {</b>
+<b class="fc">&nbsp;            throw new IllegalArgumentException(&quot;Los campos no pueden estar vacíos.&quot;);</b>
+&nbsp;        }
+<b class="fc">&nbsp;        this.confirmarAltaUsuario(aerolinea);</b>
+&nbsp;    };
+&nbsp;
+&nbsp;    public void modificarAerolinea(DtAerolinea aerolinea) {
+<b class="fc">&nbsp;        Usuario u = this.usuarios.get(aerolinea.getNickname());</b>
+<b class="fc">&nbsp;        if (u == null) {</b>
+<b class="fc">&nbsp;            throw new IllegalArgumentException(&quot;Este usuario no existe.&quot;);</b>
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        this.validarTextoSoloLetra(aerolinea.getNombre());</b>
+&nbsp;
+<b class="pc">&nbsp;        if (aerolinea.getNickname().isEmpty() || aerolinea.getDescripcion().isEmpty() || aerolinea.getEmail().isEmpty()</b>
+<b class="pc">&nbsp;                || aerolinea.getNombre().isEmpty() || aerolinea.getPassword().isEmpty()</b>
+<b class="pc">&nbsp;                || aerolinea.getUrlImage().isEmpty()) {</b>
+<b class="nc">&nbsp;            throw new IllegalArgumentException(&quot;Los campos no pueden estar vacíos.&quot;);</b>
+&nbsp;        }
+&nbsp;
+<b class="pc">&nbsp;        if (u instanceof Aerolinea a) {</b>
+<b class="fc">&nbsp;            a.setNombre(aerolinea.getNombre());</b>
+<b class="fc">&nbsp;            a.setEmail(aerolinea.getEmail());</b>
+<b class="fc">&nbsp;            a.setDescripcion(aerolinea.getDescripcion());</b>
+<b class="fc">&nbsp;            a.setLinkWeb(aerolinea.getLinkWeb());</b>
+<b class="fc">&nbsp;            userDao.actualizar(a);</b>
+&nbsp;        } else {
+<b class="nc">&nbsp;            throw new IllegalArgumentException(&quot;Este usuario es cliente.&quot;);</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    ;
+&nbsp;
+&nbsp;    public void modificarAerolineaImagen(DtAerolinea aerolinea, String urlImagen) {
+<b class="nc">&nbsp;        Aerolinea a = this.buscarAerolinea(aerolinea);</b>
+<b class="nc">&nbsp;        if (a == null) {</b>
+<b class="nc">&nbsp;            throw new IllegalArgumentException(&quot;Este usuario no existe.&quot;);</b>
+&nbsp;        }
+<b class="nc">&nbsp;        a.setUrlImage(urlImagen);</b>
+<b class="nc">&nbsp;        userDao.actualizar(a);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    ;
+&nbsp;
+&nbsp;    public void confirmarAltaUsuario(DtUsuario usuario) {
+<b class="fc">&nbsp;        if (usuario instanceof DtCliente) {</b>
+<b class="fc">&nbsp;            Cliente newUser = new Cliente((DtCliente) usuario);</b>
+<b class="fc">&nbsp;            this.usuarios.put(newUser.getNickname(), newUser);</b>
+<b class="fc">&nbsp;            userDao.guardar(newUser);</b>
+&nbsp;            // newUser.mostrarDatos(); //Debug
+<b class="pc">&nbsp;        } else if (usuario instanceof DtAerolinea) {</b>
+<b class="fc">&nbsp;            Aerolinea newUser = new Aerolinea((DtAerolinea) usuario);</b>
+<b class="fc">&nbsp;            this.usuarios.put(newUser.getNickname(), newUser);</b>
+<b class="fc">&nbsp;            userDao.guardar(newUser);</b>
+&nbsp;            // newUser.mostrarDatos(); //Debug
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    public List&lt;DtCategoria&gt; buscarCategoriasPorNombre(List&lt;String&gt; nombres) {
+<b class="nc">&nbsp;        List&lt;DtCategoria&gt; categoriasSeleccionadas = new ArrayList&lt;&gt;();</b>
+<b class="nc">&nbsp;        for (String nombreCategoria : nombres) {</b>
+<b class="nc">&nbsp;            for (DtCategoria c : this.getCategorias()) {</b>
+<b class="nc">&nbsp;                if (c.getNombre().equals(nombreCategoria)) {</b>
+<b class="nc">&nbsp;                    categoriasSeleccionadas.add(c);</b>
+&nbsp;                    break;
+&nbsp;                }
+&nbsp;            }
+&nbsp;        }
+<b class="nc">&nbsp;        return categoriasSeleccionadas;</b>
+&nbsp;    };
+&nbsp;
+&nbsp;    public void cancelarAltaUsuario() {
+<b class="nc">&nbsp;        this.clienteTemporal = null;</b>
+<b class="nc">&nbsp;        this.aerolineaTemporal = null;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public Ciudad buscarCiudad(String nombre, String pais) {
+<b class="fc">&nbsp;        CiudadId ciudadId = new CiudadId(nombre, pais);</b>
+<b class="fc">&nbsp;        Ciudad c = this.ciudadDao.buscar(ciudadId);</b>
+<b class="pc">&nbsp;        if (c == null)</b>
+<b class="nc">&nbsp;            throw new IllegalArgumentException(&quot;Esta ciudad no existe.&quot;);</b>
+<b class="fc">&nbsp;        return c;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public DtCiudad getCiudad(String nombre, String pais) {
+<b class="fc">&nbsp;        return buscarCiudad(nombre, pais).getDatos();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public DtReserva getReservaCliente(DtVuelo vuelo, DtCliente cliente, LocalDate fechaReserva) {
+<b class="fc">&nbsp;        Cliente c = buscarCliente(cliente);</b>
+<b class="pc">&nbsp;        for (Reserva r : c.getReservas()) {</b>
+<b class="pc">&nbsp;            if (r.getVuelo().getNombre().equals(vuelo.getNombre()) &amp;&amp; r.getFecha().equals(fechaReserva)) {</b>
+<b class="fc">&nbsp;                return r.getDatos();</b>
+&nbsp;            }
+&nbsp;        }
+<b class="nc">&nbsp;        throw new IllegalArgumentException(&quot;No existe esta reserva para el cliente y vuelo indicados.&quot;);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public DtReserva getReservaAerolinea(DtVuelo vuelo, DtAerolinea aerolinea, LocalDate fechaReserva) {
+<b class="fc">&nbsp;        List&lt;DtReserva&gt; reservasAerolinea = this.listarReservas(aerolinea);</b>
+<b class="pc">&nbsp;        for (DtReserva r : reservasAerolinea) {</b>
+<b class="pc">&nbsp;            if (r.getVuelo().getNombre().equals(vuelo.getNombre()) &amp;&amp; r.getFecha().equals(fechaReserva)) {</b>
+<b class="fc">&nbsp;                return r;</b>
+&nbsp;            }
+&nbsp;        }
+<b class="nc">&nbsp;        throw new IllegalArgumentException(&quot;No existe esta reserva para la aerolinea y vuelo indicados.&quot;);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // ---------- ALTA DE VUELO ---------- //
+&nbsp;
+&nbsp;    public boolean existeVuelo(String nombre) {
+<b class="fc">&nbsp;        return this.vuelos.containsKey(nombre);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public DtRuta getRutaDeVuelo(String nombre) {
+<b class="pc">&nbsp;        if (!this.rutasDeVuelo.containsKey(nombre))</b>
+<b class="nc">&nbsp;            throw new IllegalArgumentException(&quot;No existe esta ruta&quot;);</b>
+<b class="fc">&nbsp;        return this.rutasDeVuelo.get(nombre).getDatos();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void altaVuelo(DtVuelo vuelo) {
+<b class="pc">&nbsp;        if (vuelo == null || vuelo.getNombre().equals(&quot;&quot;)) {</b>
+<b class="fc">&nbsp;            throw new IllegalArgumentException(&quot;Ha ocurrido un error.&quot;);</b>
+&nbsp;        }
+<b class="fc">&nbsp;        if (this.vuelos.containsKey(vuelo.getNombre())) {</b>
+<b class="fc">&nbsp;            throw new IllegalArgumentException(&quot;Ya existe un vuelo con ese nombre.&quot;);</b>
+&nbsp;        }
+<b class="fc">&nbsp;        if (vuelo.getDuracion().equals(LocalTime.of(0, 0))) {</b>
+<b class="fc">&nbsp;            throw new IllegalArgumentException(&quot;La duracion debe ser mayor a 0.&quot;);</b>
+&nbsp;        }
+<b class="fc">&nbsp;        RutaDeVuelo ruta = this.buscarRutaDeVuelo(vuelo.getRutaDeVuelo());</b>
+<b class="pc">&nbsp;        if (ruta == null || ruta.getEstado() != EstadoRuta.APROBADA) {</b>
+<b class="fc">&nbsp;            throw new IllegalArgumentException(&quot;Debe seleccionar una ruta válida&quot;);</b>
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        Vuelo nuevo = new Vuelo(vuelo, ruta);</b>
+&nbsp;
+<b class="fc">&nbsp;        this.vuelos.put(nuevo.getNombre(), nuevo);</b>
+<b class="fc">&nbsp;        this.consultaVuelos.add(nuevo);</b>
+<b class="fc">&nbsp;        this.vueloDao.guardar(nuevo);</b>
+&nbsp;    };
+&nbsp;
+&nbsp;    public DtVuelo getVuelo(String nombre) {
+<b class="pc">&nbsp;        for (Vuelo v : this.getVuelos()) {</b>
+<b class="fc">&nbsp;            if (v.getNombre().trim().equals(nombre.trim())) {</b>
+<b class="fc">&nbsp;                return v.getDatos();</b>
+&nbsp;            }
+&nbsp;        }
+<b class="nc">&nbsp;        throw new IllegalArgumentException(&quot;No existe este vuelo&quot;);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // ---------- COMPRA PAQUETE ---------- //
+&nbsp;    public Cliente buscarCliente(DtCliente c) {
+<b class="fc">&nbsp;        Cliente cliente = (Cliente) this.usuarios.get(c.getNickname());</b>
+<b class="fc">&nbsp;        if (cliente == null) {</b>
+<b class="fc">&nbsp;            throw new IllegalArgumentException(&quot;El cliente no existe&quot;);</b>
+&nbsp;        }
+<b class="fc">&nbsp;        return cliente;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public Paquete buscarPaquete(DtPaquete paquete) {
+<b class="fc">&nbsp;        Paquete p = this.paquetes.get(paquete.getNombre());</b>
+<b class="fc">&nbsp;        if (p == null) {</b>
+<b class="fc">&nbsp;            throw new IllegalArgumentException(&quot;El paquete no existe&quot;);</b>
+&nbsp;        }
+<b class="fc">&nbsp;        return p;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public RutaDeVuelo buscarRutaDeVuelo(DtRuta ruta) {
+<b class="fc">&nbsp;        RutaDeVuelo r = this.rutasDeVuelo.get(ruta.getNombre());</b>
+<b class="fc">&nbsp;        if (r == null) {</b>
+<b class="fc">&nbsp;            throw new IllegalArgumentException(&quot;La ruta de vuelo no existe&quot;);</b>
+&nbsp;        }
+<b class="fc">&nbsp;        return r;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void compraPaquete(DtPaquete paquete, DtCliente cliente) {
+<b class="fc">&nbsp;        if (cliente == null) {</b>
+<b class="fc">&nbsp;        throw new IllegalArgumentException(&quot;El cliente no puede ser nulo&quot;);</b>
+&nbsp;    }
+<b class="fc">&nbsp;    if (paquete == null) {</b>
+<b class="fc">&nbsp;        throw new IllegalArgumentException(&quot;El paquete no puede ser nulo&quot;);</b>
+&nbsp;    }
+<b class="fc">&nbsp;        Cliente c = buscarCliente(cliente);</b>
+<b class="fc">&nbsp;        Paquete p = buscarPaquete(paquete);</b>
+&nbsp;
+<b class="fc">&nbsp;        for (CompraPaquete cp : c.getComprasPaquetes()) {</b>
+<b class="fc">&nbsp;            if (cp.getPaquete().equals(p)) {</b>
+<b class="fc">&nbsp;                throw new IllegalArgumentException(&quot;El cliente ya ha comprado este paquete.&quot;);</b>
+&nbsp;            }
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        LocalDate vencimiento = LocalDate.now().plusDays(p.getValidezDias());</b>
+&nbsp;
+<b class="fc">&nbsp;        CompraPaquete nuevaCompra = new CompraPaquete(new DtCompraPaquete(LocalDate.now(), vencimiento, p.getCosto()),</b>
+&nbsp;                p, c);
+&nbsp;
+<b class="fc">&nbsp;        this.compras.add(nuevaCompra);</b>
+<b class="fc">&nbsp;        userDao.addCompraPaquete(c, nuevaCompra);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public int agregarRutaAPaquete(DtPaquete paquete, DtRuta dataRuta, int cantidad, TipoAsiento tipoAsiento) {
+&nbsp;        // Validar parametros nulos
+<b class="pc">&nbsp;        if (paquete == null || dataRuta == null || cantidad &lt;= 0 || tipoAsiento == null) {</b>
+<b class="fc">&nbsp;            throw new IllegalArgumentException(&quot;Parámetros inválidos.&quot;);</b>
+&nbsp;        }
+&nbsp;        // Validar que el paquete exista
+<b class="fc">&nbsp;        Paquete p = buscarPaquete(paquete);</b>
+<b class="pc">&nbsp;        if (p == null) {</b>
+<b class="nc">&nbsp;            throw new IllegalArgumentException(&quot;El paquete no existe.&quot;);</b>
+&nbsp;        }
+&nbsp;
+&nbsp;        // Validar que la ruta existe y esta aprobada
+<b class="fc">&nbsp;        RutaDeVuelo ruta = buscarRutaDeVuelo(dataRuta);</b>
+<b class="pc">&nbsp;        if (ruta == null) {</b>
+<b class="nc">&nbsp;            throw new IllegalArgumentException(&quot;La ruta no existe.&quot;);</b>
+&nbsp;        }
+<b class="fc">&nbsp;        if (ruta.getEstado() != EstadoRuta.APROBADA) {</b>
+<b class="fc">&nbsp;            throw new IllegalArgumentException(&quot;La ruta no está aprobada aún.&quot;);</b>
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        float nuevoCosto = p.getCosto();</b>
+&nbsp;
+<b class="fc">&nbsp;        if (tipoAsiento == TipoAsiento.EJECUTIVO) {</b>
+<b class="fc">&nbsp;            nuevoCosto += ruta.getCostoEjecutivo() * cantidad;</b>
+<b class="pc">&nbsp;        } else if (tipoAsiento == TipoAsiento.TURISTA) {</b>
+<b class="fc">&nbsp;            nuevoCosto += ruta.getCostoTurista() * cantidad;</b>
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        for (DtRutaEnPaquete rep : p.getRutaEnPaqueteDatos()) {</b>
+<b class="fc">&nbsp;            if (rep.getRutaDeVuelo().getNombre().equals(ruta.getNombre()) &amp;&amp; rep.getTipoAsiento() == tipoAsiento) {</b>
+<b class="fc">&nbsp;                p.setCosto(nuevoCosto);</b>
+<b class="fc">&nbsp;                System.out.println(nuevoCosto);</b>
+<b class="fc">&nbsp;                return paqueteDao.actualizarCantidadRutaEnPaquete(p, rep, cantidad);</b>
+&nbsp;            }
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        RutaEnPaquete rp = new RutaEnPaquete(cantidad, tipoAsiento, ruta);</b>
+<b class="fc">&nbsp;        p.setCosto(nuevoCosto);</b>
+<b class="fc">&nbsp;        System.out.println(nuevoCosto);</b>
+&nbsp;
+<b class="fc">&nbsp;        paqueteDao.addRutaEnPaquete(p, rp);</b>
+&nbsp;
+<b class="fc">&nbsp;        return 0;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public List&lt;DtVuelo&gt; getVuelosRutaDeVuelo(DtRuta ruta) {
+<b class="fc">&nbsp;        List&lt;DtVuelo&gt; vuelos = new ArrayList&lt;&gt;();</b>
+&nbsp;
+<b class="fc">&nbsp;        for (Vuelo v : this.getVuelos()) {</b>
+<b class="fc">&nbsp;            if (v.getRutaDeVuelo().getNombre().equals(ruta.getNombre())) {</b>
+<b class="fc">&nbsp;                vuelos.add(v.getDatos());</b>
+&nbsp;            }
+&nbsp;        }
+<b class="fc">&nbsp;        return vuelos;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public DtPaquete getPaquete(String nombre) {
+<b class="fc">&nbsp;        Paquete p = this.paquetes.get(nombre);</b>
+<b class="fc">&nbsp;        if (p == null) {</b>
+<b class="fc">&nbsp;            throw new IllegalArgumentException(&quot;El paquete no existe&quot;);</b>
+&nbsp;        }
+<b class="fc">&nbsp;        return p.getDatos();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public List&lt;DtReserva&gt; listarReservaDeVuelo(String nombreVuelo) {
+<b class="nc">&nbsp;        List&lt;DtReserva&gt; reservasVuelo = new ArrayList&lt;&gt;();</b>
+&nbsp;
+<b class="nc">&nbsp;        for (Reserva r : this.reservas) {</b>
+<b class="nc">&nbsp;            if (r.getVuelo() != null &amp;&amp; r.getVuelo().getNombre().equals(nombreVuelo)) {</b>
+<b class="nc">&nbsp;                reservasVuelo.add(r.getDatos());</b>
+&nbsp;            }
+&nbsp;        }
+<b class="nc">&nbsp;        return reservasVuelo;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public List&lt;DtVuelo&gt; listarVuelos() {
+<b class="fc">&nbsp;        List&lt;DtVuelo&gt; vuelos = new ArrayList&lt;&gt;();</b>
+<b class="fc">&nbsp;        for (Vuelo v : this.getVuelos()) {</b>
+<b class="fc">&nbsp;            vuelos.add(v.getDatos());</b>
+&nbsp;        }
+<b class="fc">&nbsp;        return vuelos;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public List&lt;DtVuelo&gt; listarVuelos(String nombreRuta) {
+<b class="fc">&nbsp;        List&lt;DtVuelo&gt; vuelos = new ArrayList&lt;&gt;();</b>
+<b class="fc">&nbsp;        for (Vuelo v : this.getVuelos()) {</b>
+<b class="pc">&nbsp;            if (v.getRutaDeVuelo().getNombre().equals(nombreRuta) &amp;&amp; v.getFecha().isAfter(LocalDate.now())) {</b>
+<b class="fc">&nbsp;                vuelos.add(v.getDatos());</b>
+&nbsp;            }
+&nbsp;        }
+<b class="fc">&nbsp;        return vuelos;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public List&lt;DtVuelo&gt; listarVuelos(String nombreRuta, LocalDate fecha) {
+<b class="fc">&nbsp;        List&lt;DtVuelo&gt; vuelos = new ArrayList&lt;&gt;();</b>
+<b class="fc">&nbsp;        for (Vuelo v : this.getVuelos()) {</b>
+<b class="pc">&nbsp;            boolean condicionFecha = fecha == null || v.getFecha().isAfter(fecha);</b>
+<b class="pc">&nbsp;            if (v.getRutaDeVuelo().getNombre().equals(nombreRuta) &amp;&amp; v.getFecha().isAfter(LocalDate.now()) &amp;&amp; condicionFecha) {</b>
+<b class="fc">&nbsp;                vuelos.add(v.getDatos());</b>
+&nbsp;            }
+&nbsp;        }
+<b class="fc">&nbsp;        return vuelos;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void crearPaqueteDeRutas(DtPaquete datosPaquete) {
+<b class="nc">&nbsp;        Paquete paquete = paqueteDao.buscar(datosPaquete.getNombre());</b>
+<b class="nc">&nbsp;        if (paquete == null) { // Si el paquete no existe</b>
+<b class="nc">&nbsp;            this.paqueteTemp = datosPaquete;</b>
+&nbsp;        } else {
+<b class="nc">&nbsp;            throw new IllegalArgumentException(&quot;El paquete ya existe.&quot;);</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    public void confirmarAltaPaquete() {
+<b class="nc">&nbsp;        if (this.paqueteTemp == null) {</b>
+<b class="nc">&nbsp;            throw new IllegalArgumentException(&quot;Debe ingresar datos del paquete&quot;);</b>
+&nbsp;        }
+<b class="nc">&nbsp;        Paquete nuevo = new Paquete(paqueteTemp);</b>
+&nbsp;
+<b class="nc">&nbsp;        paqueteDao.guardar(nuevo);</b>
+&nbsp;
+<b class="nc">&nbsp;        this.paquetes.put(nuevo.getNombre(), nuevo);</b>
+<b class="nc">&nbsp;        this.paqueteTemp = null;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void cancelarAltaPquete() {
+<b class="nc">&nbsp;        paqueteTemp = null;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public Vuelo buscarVuelo(DtVuelo vuelo) {
+<b class="fc">&nbsp;        Vuelo v = (Vuelo) this.vuelos.get(vuelo.getNombre());</b>
+<b class="fc">&nbsp;        if (v == null) {</b>
+<b class="fc">&nbsp;            throw new IllegalArgumentException(&quot;El vuelo no existe.&quot;);</b>
+&nbsp;        }
+<b class="fc">&nbsp;        return v;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void altaReserva(DtReserva reserva) {
+<b class="fc">&nbsp;        Cliente cliente = buscarCliente(reserva.getCliente());</b>
+<b class="fc">&nbsp;        Vuelo vuelo = buscarVuelo(reserva.getVuelo());</b>
+<b class="fc">&nbsp;        float costoAsiento = reserva.getTipoAsiento() == TipoAsiento.EJECUTIVO</b>
+<b class="fc">&nbsp;                ? vuelo.getRutaDeVuelo().getCostoEjecutivo()</b>
+<b class="fc">&nbsp;                : vuelo.getRutaDeVuelo().getCostoTurista();</b>
+<b class="fc">&nbsp;        int cantPasajes = reserva.getCantPasajes();</b>
+<b class="fc">&nbsp;        float costoEquipaje = reserva.getEquipajeExtra() * vuelo.getRutaDeVuelo().getEquipajeExtra();</b>
+<b class="fc">&nbsp;        float costo = (costoAsiento * cantPasajes) + costoEquipaje;</b>
+&nbsp;
+<b class="fc">&nbsp;        if (reserva.getMetodoPago() == MetodoPago.PAQUETE) {</b>
+<b class="fc">&nbsp;            int pasajesRestantes = cantPasajes;</b>
+<b class="fc">&nbsp;            DtPaquete paqueteCompra = reserva.getPaquetePago();</b>
+&nbsp;
+<b class="pc">&nbsp;            if (paqueteCompra == null || !clienteTienePaquete(cliente.getNickname(), paqueteCompra.getNombre())){</b>
+<b class="fc">&nbsp;                throw new IllegalArgumentException(&quot;El paquete no fue comprado por el cliente o no existe.&quot;);</b>
+&nbsp;            }
+&nbsp;
+<b class="fc">&nbsp;            Paquete paq = buscarPaquete(paqueteCompra);</b>
+<b class="fc">&nbsp;            RutaEnPaquete rutaEnPaquete = null;</b>
+<b class="fc">&nbsp;            for (RutaEnPaquete rep : paq.getRutaEnPaquete()) {</b>
+<b class="fc">&nbsp;                if (rep.getRutaDeVuelo().getNombre().equals(vuelo.getRutaDeVuelo().getNombre())) {</b>
+<b class="fc">&nbsp;                    rutaEnPaquete = rep;</b>
+&nbsp;                }
+&nbsp;            }
+&nbsp;
+<b class="fc">&nbsp;            if (rutaEnPaquete == null) {</b>
+<b class="fc">&nbsp;                throw new IllegalArgumentException(&quot;El paquete no tiene la ruta especificada.&quot;);</b>
+&nbsp;            }
+&nbsp;
+<b class="fc">&nbsp;            int descontar = Math.min(pasajesRestantes, rutaEnPaquete.getCantidad());</b>
+<b class="fc">&nbsp;            rutaEnPaquete.setCantidad(rutaEnPaquete.getCantidad() - descontar);</b>
+<b class="fc">&nbsp;            pasajesRestantes -= descontar;</b>
+&nbsp;
+<b class="fc">&nbsp;            costo = pasajesRestantes</b>
+<b class="fc">&nbsp;                    * (reserva.getTipoAsiento() == TipoAsiento.EJECUTIVO ? vuelo.getRutaDeVuelo().getCostoEjecutivo()</b>
+<b class="fc">&nbsp;                            : vuelo.getRutaDeVuelo().getCostoTurista());</b>
+<b class="fc">&nbsp;            costo += reserva.getEquipajeExtra() * vuelo.getRutaDeVuelo().getEquipajeExtra();</b>
+&nbsp;        } else {
+<b class="fc">&nbsp;            if (reserva.getPaquetePago() != null) {</b>
+<b class="fc">&nbsp;                throw new IllegalArgumentException(&quot;Metodo de pago General (efectivo) y se recibe un paquetePago.&quot;);</b>
+&nbsp;            }
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        if (cliente.existeVueloReserva(vuelo)) {</b>
+<b class="fc">&nbsp;            throw new IllegalArgumentException(</b>
+&nbsp;                    &quot;Ya existe una reserva para este vuelo. Cambie el Cliente, Aerolinea o RutaDeVuelo.&quot;);
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        if (cantPasajes != reserva.getPasajeros().size()) {</b>
+<b class="fc">&nbsp;            throw new IllegalArgumentException(&quot;La cantidad de pasajeros no coincide&quot;);</b>
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        DtReserva r = new DtReserva(</b>
+<b class="fc">&nbsp;                reserva.getFecha(),</b>
+<b class="fc">&nbsp;                reserva.getTipoAsiento(),</b>
+&nbsp;                cantPasajes,
+<b class="fc">&nbsp;                reserva.getEquipajeExtra(),</b>
+&nbsp;                costo,
+<b class="fc">&nbsp;                reserva.getPasajeros(),</b>
+<b class="fc">&nbsp;                cliente.getDatos(),</b>
+<b class="fc">&nbsp;                vuelo.getDatos(),</b>
+<b class="fc">&nbsp;                reserva.getMetodoPago(),</b>
+<b class="fc">&nbsp;                reserva.getPaquetePago());</b>
+&nbsp;
+<b class="fc">&nbsp;        Reserva nuevaReserva = new Reserva(r, cliente, vuelo); // &#39;r&#39; es DtReserva</b>
+<b class="fc">&nbsp;        this.reservas.add(nuevaReserva);</b>
+<b class="fc">&nbsp;        this.reservaDao.guardar(nuevaReserva);</b>
+<b class="fc">&nbsp;        this.userDao.addReserva(cliente, nuevaReserva);</b>
+&nbsp;
+<b class="fc">&nbsp;        vuelo.setCantReservas(vuelo.getCantReservas() + 1);</b>
+<b class="fc">&nbsp;        this.vueloDao.actualizar(vuelo);</b>
+&nbsp;
+<b class="fc">&nbsp;        for (DtPasajero p : reserva.getPasajeros()) {</b>
+<b class="fc">&nbsp;            this.pasajeroDao.guardar(p);</b>
+&nbsp;        }
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;    public List&lt;DtReserva&gt; listarReservas() {
+<b class="nc">&nbsp;        List&lt;DtReserva&gt; listaReservas = new ArrayList&lt;&gt;();</b>
+<b class="nc">&nbsp;        for (Reserva r : this.reservas) {</b>
+<b class="nc">&nbsp;            listaReservas.add(r.getDatos());</b>
+&nbsp;        }
+<b class="nc">&nbsp;        return listaReservas;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    ;
+&nbsp;
+&nbsp;    public List&lt;DtReserva&gt; listarReservas(DtVuelo vuelo) {
+<b class="nc">&nbsp;        String nombre = vuelo.getNombre();</b>
+<b class="nc">&nbsp;        List&lt;DtReserva&gt; listaReservas = new ArrayList&lt;&gt;();</b>
+<b class="nc">&nbsp;        for (Reserva r : this.reservas) {</b>
+<b class="nc">&nbsp;            if (r.getVuelo().getNombre().equals(nombre)) {</b>
+<b class="nc">&nbsp;                listaReservas.add(r.getDatos());</b>
+&nbsp;            }
+&nbsp;        }
+<b class="nc">&nbsp;        return listaReservas;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    ;
+&nbsp;
+&nbsp;    public List&lt;DtReserva&gt; listarReservas(DtCliente cliente) {
+<b class="nc">&nbsp;        String nickname = cliente.getNickname();</b>
+<b class="nc">&nbsp;        List&lt;DtReserva&gt; listaReservas = new ArrayList&lt;&gt;();</b>
+<b class="nc">&nbsp;        for (Reserva r : this.reservas) {</b>
+<b class="nc">&nbsp;            if (r.getCliente().getNickname().equals(nickname)) {</b>
+<b class="nc">&nbsp;                listaReservas.add(r.getDatos());</b>
+&nbsp;            }
+&nbsp;        }
+<b class="nc">&nbsp;        return listaReservas;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public List&lt;DtPasajero&gt; listarPasajeros(DtReserva reserva) {
+<b class="nc">&nbsp;        return reserva.getPasajeros();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    public Aerolinea buscarAerolinea(DtAerolinea a) {
+<b class="fc">&nbsp;        Aerolinea aerolinea = (Aerolinea) this.usuarios.get(a.getNickname());</b>
+<b class="pc">&nbsp;        if (aerolinea == null) {</b>
+<b class="nc">&nbsp;            throw new IllegalArgumentException(&quot;El cliente no existe&quot;);</b>
+&nbsp;        }
+<b class="fc">&nbsp;        return aerolinea;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void actualizarEstadoRuta(DtRuta ruta, EstadoRuta estado) {
+&nbsp;
+<b class="fc">&nbsp;        RutaDeVuelo rdv = buscarRutaDeVuelo(ruta);</b>
+<b class="pc">&nbsp;        if (rdv == null) {</b>
+<b class="nc">&nbsp;            throw  new IllegalArgumentException(&quot;no existe la ruta de vuelo.&quot;);</b>
+&nbsp;        }
+&nbsp;
+<b class="pc">&nbsp;        if (rdv.getEstado() != EstadoRuta.INGRESADA) {</b>
+<b class="nc">&nbsp;            throw  new IllegalArgumentException(&quot;No se puede cambiar una ruta que a sido rechazada o aprobada.&quot;);</b>
+&nbsp;        }
+&nbsp;
+&nbsp;
+<b class="fc">&nbsp;        rdv.setEstado(estado);</b>
+<b class="fc">&nbsp;        rutaDeVueloDao.actualizar(rdv);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    ;
+&nbsp;
+&nbsp;    public Categoria buscarCategoria(String nombre) {
+<b class="fc">&nbsp;        return this.categorias.get(nombre);</b>
+&nbsp;    };
+&nbsp;
+&nbsp;    public boolean containsCategoria(DtRuta ruta, String categoria) {
+<b class="pc">&nbsp;        for (DtCategoria c : ruta.getCategorias()) {</b>
+<b class="pc">&nbsp;            if (c.getNombre().equals(categoria)) {</b>
+<b class="fc">&nbsp;                return true;</b>
+&nbsp;            }
+&nbsp;        }
+<b class="nc">&nbsp;        return false;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    ;
+&nbsp;
+&nbsp;    public boolean clienteTienePaquete(String nickname, String nombrePaquete) {
+<b class="fc">&nbsp;        DtCliente c = getCliente(nickname);</b>
+<b class="fc">&nbsp;        Cliente cliente = buscarCliente(c);</b>
+<b class="fc">&nbsp;        DtPaquete paquete = getPaquete(nombrePaquete);</b>
+<b class="fc">&nbsp;        for (CompraPaquete paquetesComprados : cliente.getComprasPaquetes()) {</b>
+<b class="fc">&nbsp;            if (paquetesComprados.getPaquete().getNombre().equals(paquete.getNombre())) {</b>
+<b class="fc">&nbsp;                return true;</b>
+&nbsp;            }
+&nbsp;        }
+<b class="fc">&nbsp;        return false;</b>
+&nbsp;    };
+&nbsp;
+&nbsp;    public void validarTextoSoloLetra(String nombre) {
+<b class="fc">&nbsp;        if (!nombre.matches(&quot;^[a-zA-Z ]+$&quot;)) {</b>
+<b class="fc">&nbsp;            throw new IllegalArgumentException(&quot;El nombre solo puede contener letras, números y espacios.&quot;);</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    public DtCategoria getCategoria(String nombre) {
+<b class="fc">&nbsp;        return this.categorias.get(nombre).getDatos();</b>
+&nbsp;    };
+&nbsp;
+&nbsp;    public void cargarDatos() {
+<b class="fc">&nbsp;        this.categorias = categoriaDao.obtenerCategorias();</b>
+<b class="fc">&nbsp;        this.ciudades = ciudadDao.obtenerCiudades();</b>
+<b class="fc">&nbsp;        this.usuarios = userDao.obtenerUsuarios();</b>
+<b class="fc">&nbsp;        this.paquetes = paqueteDao.obtenerPaquetes();</b>
+<b class="fc">&nbsp;        this.rutasDeVuelo = rutaDeVueloDao.obtenerRutasDeVuelo();</b>
+<b class="fc">&nbsp;        this.vuelos = vueloDao.obtenerVuelos();</b>
+<b class="fc">&nbsp;        this.reservas = reservaDao.listar();</b>
+<b class="fc">&nbsp;        this.pasajes = pasajeroDao.listar();</b>
+<b class="fc">&nbsp;        this.compras = compraDao.listar();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void vaciarBD() {
+<b class="fc">&nbsp;        EntityTransaction tx = em.getTransaction();</b>
+<b class="fc">&nbsp;        tx.begin();</b>
+<b class="fc">&nbsp;        em.createQuery(&quot;DELETE FROM Aerolinea&quot;).executeUpdate();</b>
+<b class="fc">&nbsp;        em.createQuery(&quot;DELETE FROM Reserva&quot;).executeUpdate();</b>
+<b class="fc">&nbsp;        em.createQuery(&quot;DELETE FROM CompraPaquete&quot;).executeUpdate();</b>
+<b class="fc">&nbsp;        em.createQuery(&quot;DELETE FROM Cliente&quot;).executeUpdate();</b>
+<b class="fc">&nbsp;        em.createQuery(&quot;DELETE FROM DtPasajero &quot;).executeUpdate();</b>
+<b class="fc">&nbsp;        em.createQuery(&quot;DELETE FROM Vuelo&quot;).executeUpdate();</b>
+<b class="fc">&nbsp;        em.createQuery(&quot;DELETE FROM Usuario&quot;).executeUpdate();</b>
+<b class="fc">&nbsp;        em.createQuery(&quot;DELETE FROM RutaEnPaquete&quot;).executeUpdate();</b>
+<b class="fc">&nbsp;        em.createQuery(&quot;DELETE FROM RutaDeVuelo &quot;).executeUpdate();</b>
+<b class="fc">&nbsp;        em.createQuery(&quot;DELETE FROM Categoria&quot;).executeUpdate();</b>
+<b class="fc">&nbsp;        em.createQuery(&quot;DELETE FROM Ciudad&quot;).executeUpdate();</b>
+<b class="fc">&nbsp;        em.createQuery(&quot;DELETE FROM Paquete&quot;).executeUpdate();</b>
+<b class="fc">&nbsp;        tx.commit();</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-10-23 02:50</div>
+</div>
+</body>
+</html>

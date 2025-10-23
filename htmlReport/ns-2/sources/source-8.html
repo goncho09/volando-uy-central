@@ -1,0 +1,262 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > Paquete</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.app.clases</a>
+</div>
+
+<h1>Coverage Summary for Class: Paquete (com.app.clases)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Paquete</td>
+<td class="coverageStat">
+  <span class="percent">
+    94,4%
+  </span>
+  <span class="absValue">
+    (17/18)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (2/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    94,1%
+  </span>
+  <span class="absValue">
+    (32/34)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">Paquete$HibernateInstantiator$pnwIyogn</td>
+  </tr>
+  <tr>
+    <td class="name">Paquete$HibernateProxy$XmRDg8Hk</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    94,4%
+  </span>
+  <span class="absValue">
+    (17/18)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (2/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    94,1%
+  </span>
+  <span class="absValue">
+    (32/34)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.app.clases;
+&nbsp;
+&nbsp;import jakarta.persistence.Column;
+&nbsp;import jakarta.persistence.Entity;
+&nbsp;import jakarta.persistence.Id;
+&nbsp;import jakarta.persistence.OneToMany;
+&nbsp;import jakarta.persistence.JoinColumn;
+&nbsp;import jakarta.persistence.CascadeType;
+&nbsp;
+&nbsp;import java.util.ArrayList;
+&nbsp;import java.util.List;
+&nbsp;
+&nbsp;import com.app.datatypes.DtPaquete;
+&nbsp;import com.app.datatypes.DtRutaEnPaquete;
+&nbsp;
+&nbsp;
+&nbsp;@Entity
+&nbsp;//@Table(name = &quot;paquete&quot;)
+&nbsp;public class Paquete {
+&nbsp;    @Id
+&nbsp;    @Column(nullable = false, length = 50)
+&nbsp;    private String nombre;
+&nbsp;
+&nbsp;    @Column(nullable = false)
+&nbsp;    private String descripcion;
+&nbsp;
+&nbsp;    @Column(nullable = false)
+&nbsp;    private int validezDias;
+&nbsp;
+&nbsp;    @Column(nullable = false)
+&nbsp;    private float descuento;
+&nbsp;
+&nbsp;    @Column(nullable = false)
+&nbsp;    private float costo;
+&nbsp;
+<b class="fc">&nbsp;    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)</b>
+&nbsp;    @JoinColumn(name=&quot;paquete_name&quot;)
+&nbsp;    private List&lt;RutaEnPaquete&gt; rutaEnPaquete = new ArrayList&lt;&gt;();
+&nbsp;
+<b class="nc">&nbsp;    public Paquete() {}</b>
+<b class="fc">&nbsp;    public Paquete(DtPaquete paquete) {</b>
+<b class="fc">&nbsp;        this.setNombre(paquete.getNombre());</b>
+<b class="fc">&nbsp;        this.setDescripcion(paquete.getDescripcion());</b>
+<b class="fc">&nbsp;        this.setValidezDias(paquete.getValidezDias());</b>
+<b class="fc">&nbsp;        this.setDescuento(paquete.getDescuento());</b>
+<b class="fc">&nbsp;        this.setCosto(paquete.getCosto());</b>
+<b class="fc">&nbsp;        this.setRutaEnPaquete(new ArrayList&lt;&gt;());</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public List&lt;DtRutaEnPaquete&gt; getRutaEnPaqueteDatos() {
+<b class="fc">&nbsp;        List&lt;DtRutaEnPaquete&gt; ruta = new ArrayList&lt;&gt;();</b>
+<b class="fc">&nbsp;        for (RutaEnPaquete r : this.getRutaEnPaquete()){</b>
+<b class="fc">&nbsp;            ruta.add(r.getDatos());</b>
+&nbsp;        }
+<b class="fc">&nbsp;        return ruta;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public List&lt;RutaEnPaquete&gt; getRutaEnPaquete() {
+<b class="fc">&nbsp;        return this.rutaEnPaquete;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setRutaEnPaquete(List&lt;RutaEnPaquete&gt; rutaEnPaquete) {
+<b class="fc">&nbsp;        this.rutaEnPaquete = rutaEnPaquete;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public float getCosto() {
+<b class="fc">&nbsp;        return costo;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setCosto(float costo) {
+<b class="fc">&nbsp;        this.costo = costo;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public float getDescuento() {
+<b class="fc">&nbsp;        return descuento;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setDescuento(float descuento) {
+<b class="fc">&nbsp;        this.descuento = descuento;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public int getValidezDias() {
+<b class="fc">&nbsp;        return validezDias;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setValidezDias(int validezDias) {
+<b class="fc">&nbsp;        this.validezDias = validezDias;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public String getDescripcion() {
+<b class="fc">&nbsp;        return descripcion;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setDescripcion(String descripcion) {
+<b class="fc">&nbsp;        this.descripcion = descripcion;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public String getNombre() {
+<b class="fc">&nbsp;        return nombre;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setNombre(String nombre) {
+<b class="fc">&nbsp;        this.nombre = nombre;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void addRutaEnPaquete(RutaEnPaquete rutaEnPaquete) {
+<b class="fc">&nbsp;        this.rutaEnPaquete.add(rutaEnPaquete);</b>
+&nbsp;    };
+&nbsp;
+&nbsp;    public DtPaquete getDatos(){
+<b class="fc">&nbsp;        return new DtPaquete(</b>
+<b class="fc">&nbsp;                this.getNombre(),</b>
+<b class="fc">&nbsp;                this.getDescripcion(),</b>
+<b class="fc">&nbsp;                this.getValidezDias(),</b>
+<b class="fc">&nbsp;                this.getDescuento(),</b>
+<b class="fc">&nbsp;                this.getCosto(),</b>
+<b class="fc">&nbsp;                this.getRutaEnPaqueteDatos()</b>
+&nbsp;        );
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public String toString() {
+<b class="nc">&nbsp;        return this.nombre;</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-10-23 02:50</div>
+</div>
+</body>
+</html>

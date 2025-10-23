@@ -1,0 +1,356 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > RutaDeVuelo</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.app.clases</a>
+</div>
+
+<h1>Coverage Summary for Class: RutaDeVuelo (com.app.clases)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">RutaDeVuelo</td>
+<td class="coverageStat">
+  <span class="percent">
+    96,7%
+  </span>
+  <span class="absValue">
+    (29/30)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (2/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    96,6%
+  </span>
+  <span class="absValue">
+    (57/59)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">RutaDeVuelo$HibernateInstantiator$yIVCxHvI</td>
+  </tr>
+  <tr>
+    <td class="name">RutaDeVuelo$HibernateProxy$CClbMDyK</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    96,7%
+  </span>
+  <span class="absValue">
+    (29/30)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (2/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    96,6%
+  </span>
+  <span class="absValue">
+    (57/59)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.app.clases;
+&nbsp;
+&nbsp;import java.util.ArrayList;
+&nbsp;import java.util.List;
+&nbsp;
+&nbsp;import java.time.LocalDate;
+&nbsp;import java.time.LocalTime;
+&nbsp;
+&nbsp;import jakarta.persistence.Column;
+&nbsp;import jakarta.persistence.Entity;
+&nbsp;import jakarta.persistence.Id;
+&nbsp;import jakarta.persistence.ManyToMany;
+&nbsp;import jakarta.persistence.ManyToOne;
+&nbsp;import jakarta.persistence.JoinTable;
+&nbsp;import jakarta.persistence.JoinColumns;
+&nbsp;import jakarta.persistence.JoinColumn;
+&nbsp;import jakarta.persistence.CascadeType;
+&nbsp;
+&nbsp;import com.app.datatypes.DtCategoria;
+&nbsp;import com.app.datatypes.DtRuta;
+&nbsp;
+&nbsp;import com.app.enums.EstadoRuta;
+&nbsp;
+&nbsp;
+&nbsp;@Entity
+&nbsp;//@Table(name=&quot;rutaDeVuelo&quot;)
+&nbsp;public class RutaDeVuelo {
+&nbsp;    @Id
+&nbsp;    @Column(nullable = false, length = 50)
+&nbsp;    private String nombre;
+&nbsp;
+&nbsp;    @Column( nullable = false)
+&nbsp;    private String descripcion;
+&nbsp;
+&nbsp;    @Column( nullable = true)
+&nbsp;    private String descripcionCorta;
+&nbsp;
+&nbsp;    @Column( nullable = false)
+&nbsp;    private LocalTime duracion;
+&nbsp;
+&nbsp;    @Column( nullable = false)
+&nbsp;    private float costoTurista;
+&nbsp;
+&nbsp;    @Column( nullable = false)
+&nbsp;    private float costoEjecutivo;
+&nbsp;
+&nbsp;    @Column( nullable = false)
+&nbsp;    private float equipajeExtra;
+&nbsp;
+&nbsp;    @Column( nullable = false)
+&nbsp;    private LocalDate fechaAlta;
+&nbsp;
+&nbsp;    @Column( nullable = true)
+&nbsp;    private String urlImagen;
+&nbsp;
+&nbsp;    @Column( nullable = true)
+&nbsp;    private EstadoRuta estado;
+&nbsp;
+<b class="fc">&nbsp;    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})</b>
+&nbsp;    @JoinTable(
+&nbsp;            name = &quot;ruta_categoria&quot;,
+&nbsp;            joinColumns = @JoinColumn(name = &quot;ruta_nombre&quot;),
+&nbsp;            inverseJoinColumns = @JoinColumn(name = &quot;categoria_nombre&quot;)
+&nbsp;    )
+&nbsp;    private List&lt;Categoria&gt; categorias = new ArrayList&lt;&gt;();
+&nbsp;
+&nbsp;    @ManyToOne
+&nbsp;    @JoinColumns({
+&nbsp;            @JoinColumn(name = &quot;ciudadDestino_nombre&quot;, referencedColumnName = &quot;nombreCiudad&quot;),
+&nbsp;            @JoinColumn(name = &quot;ciudadDestino_pais&quot;, referencedColumnName = &quot;paisCiudad&quot;)
+&nbsp;    })
+&nbsp;    private Ciudad ciudadDestino;
+&nbsp;
+&nbsp;    @ManyToOne
+&nbsp;    @JoinColumns({
+&nbsp;            @JoinColumn(name = &quot;ciudadOrigen_nombre&quot;, referencedColumnName = &quot;nombreCiudad&quot;),
+&nbsp;            @JoinColumn(name = &quot;ciudadOrigen_pais&quot;, referencedColumnName = &quot;paisCiudad&quot;)
+&nbsp;    })
+&nbsp;    private Ciudad ciudadOrigen;
+&nbsp;
+&nbsp;
+<b class="nc">&nbsp;    public RutaDeVuelo() {}</b>
+<b class="fc">&nbsp;    public RutaDeVuelo(DtRuta ruta, List&lt;Categoria&gt; categorias, Ciudad origen, Ciudad destino) {</b>
+<b class="fc">&nbsp;        this.setNombre(ruta.getNombre());</b>
+<b class="fc">&nbsp;        this.setDescripcion(ruta.getDescripcion());</b>
+<b class="fc">&nbsp;        this.setDescripcionCorta(ruta.getDescripcionCorta());</b>
+<b class="fc">&nbsp;        this.setDuracion(ruta.getDuracion());</b>
+<b class="fc">&nbsp;        this.setCostoTurista(ruta.getCostoTurista());</b>
+<b class="fc">&nbsp;        this.setCostoEjecutivo(ruta.getCostoEjecutivo());</b>
+<b class="fc">&nbsp;        this.setEquipajeExtra(ruta.getEquipajeExtra());</b>
+<b class="fc">&nbsp;        this.setFechaAlta(ruta.getFechaAlta());</b>
+<b class="fc">&nbsp;        this.setUrlImagen(ruta.getUrlImagen());</b>
+<b class="fc">&nbsp;        this.setEstado(ruta.getEstado());</b>
+<b class="fc">&nbsp;        this.setCategorias(categorias);</b>
+<b class="fc">&nbsp;        this.setCiudadOrigen(origen);</b>
+<b class="fc">&nbsp;        this.setCiudadDestino(destino);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public String getNombre() {
+<b class="fc">&nbsp;        return nombre;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setNombre(String nombre) {
+<b class="fc">&nbsp;        this.nombre = nombre;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public String getDescripcion() {
+<b class="fc">&nbsp;        return descripcion;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setDescripcion(String descripcion) {
+<b class="fc">&nbsp;        this.descripcion = descripcion;</b>
+&nbsp;    }
+&nbsp;
+<b class="fc">&nbsp;    public String getDescripcionCorta() {return descripcionCorta; }</b>
+&nbsp;
+&nbsp;    public void setDescripcionCorta(String descripcionCorta) {
+<b class="fc">&nbsp;        this.descripcionCorta = descripcionCorta;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public LocalTime getDuracion() {
+<b class="fc">&nbsp;        return duracion;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setDuracion(LocalTime duracion) {
+<b class="fc">&nbsp;        this.duracion = duracion;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public float getCostoTurista() {
+<b class="fc">&nbsp;        return costoTurista;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setCostoTurista(float costoTurista) {
+<b class="fc">&nbsp;        this.costoTurista = costoTurista;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public float getCostoEjecutivo() {
+<b class="fc">&nbsp;        return costoEjecutivo;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setCostoEjecutivo(float costoEjecutivo) {
+<b class="fc">&nbsp;        this.costoEjecutivo = costoEjecutivo;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public float getEquipajeExtra() {
+<b class="fc">&nbsp;        return equipajeExtra;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setEquipajeExtra(float equipajeExtra) {
+<b class="fc">&nbsp;        this.equipajeExtra = equipajeExtra;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public LocalDate getFechaAlta() {
+<b class="fc">&nbsp;        return fechaAlta;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setFechaAlta(LocalDate fechaAlta) {
+<b class="fc">&nbsp;        this.fechaAlta = fechaAlta;</b>
+&nbsp;    }
+&nbsp;
+<b class="fc">&nbsp;    public String getUrlImagen() {return urlImagen; };</b>
+&nbsp;
+<b class="fc">&nbsp;    public void setUrlImagen(String urlImagen){this.urlImagen = urlImagen; };</b>
+&nbsp;
+<b class="fc">&nbsp;    public  EstadoRuta getEstado() {return estado; }</b>
+&nbsp;
+<b class="fc">&nbsp;    public void setEstado(EstadoRuta estado) {this.estado = estado; };</b>
+&nbsp;
+&nbsp;    public List&lt;Categoria&gt; getCategorias() {
+<b class="fc">&nbsp;        return categorias;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setCategorias(List&lt;Categoria&gt; categorias) {
+<b class="fc">&nbsp;        this.categorias = categorias;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public Ciudad getCiudadOrigen() {
+<b class="fc">&nbsp;        return ciudadOrigen;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setCiudadOrigen(Ciudad ciudadOrigen) {
+<b class="fc">&nbsp;        this.ciudadOrigen = ciudadOrigen;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public Ciudad getCiudadDestino() {
+<b class="fc">&nbsp;        return ciudadDestino;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setCiudadDestino(Ciudad ciudadDestino) {
+<b class="fc">&nbsp;        this.ciudadDestino = ciudadDestino;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public DtRuta getDatos() {
+<b class="fc">&nbsp;        List&lt;DtCategoria&gt; categoriaList = new ArrayList&lt;&gt;();</b>
+<b class="fc">&nbsp;        for (Categoria categoria : this.getCategorias()) {</b>
+<b class="fc">&nbsp;            categoriaList.add(categoria.getDatos());</b>
+&nbsp;        }
+<b class="fc">&nbsp;        return new DtRuta(</b>
+<b class="fc">&nbsp;                this.getNombre(),</b>
+<b class="fc">&nbsp;                this.getDescripcion(),</b>
+<b class="fc">&nbsp;                this.getDescripcionCorta(),</b>
+<b class="fc">&nbsp;                this.getDuracion(),</b>
+<b class="fc">&nbsp;                this.getCostoTurista(),</b>
+<b class="fc">&nbsp;                this.getCostoEjecutivo(),</b>
+<b class="fc">&nbsp;                this.getEquipajeExtra(),</b>
+<b class="fc">&nbsp;                this.getFechaAlta(),</b>
+<b class="fc">&nbsp;                this.getUrlImagen(),</b>
+<b class="fc">&nbsp;                this.getEstado(),</b>
+&nbsp;                categoriaList,
+<b class="fc">&nbsp;                this.getCiudadOrigen().getDatos(),</b>
+<b class="fc">&nbsp;                this.getCiudadDestino().getDatos()</b>
+&nbsp;        );
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public String toString() {
+<b class="nc">&nbsp;        return this.nombre;</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-10-23 02:50</div>
+</div>
+</body>
+</html>
