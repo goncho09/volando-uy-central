@@ -589,6 +589,15 @@ public class Sistema implements ISistema {
         if (this.paquetes.containsKey(paquete.getNombre())) {
             throw new IllegalArgumentException("Ya existe un paquete con ese nombre.");
         }
+
+        if (paquete.getNombre() == null || paquete.getNombre().trim().isEmpty()) {
+            throw new IllegalArgumentException("El nombre no puede estar vacío");
+        }
+
+        if (paquete.getValidezDias() <= 0) {
+            throw new IllegalArgumentException("La validez del paquete debe ser mayor a 0");
+        }
+
         Paquete p = new Paquete(paquete);
         paqueteDao.guardar(p);
         this.paquetes.put(p.getNombre(), p);
