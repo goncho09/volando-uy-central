@@ -1239,7 +1239,17 @@ public class Sistema implements ISistema {
     }
 
     public void actualizarEstadoRuta(DtRuta ruta, EstadoRuta estado) {
+
         RutaDeVuelo rdv = buscarRutaDeVuelo(ruta);
+        if (rdv == null) {
+            throw  new IllegalArgumentException("no existe la ruta de vuelo.");
+        }
+
+        if (rdv.getEstado() != EstadoRuta.INGRESADA) {
+            throw  new IllegalArgumentException(("No se puede cambiar una ruta que a sido rechazada o aprobada."));
+        }
+
+
         rdv.setEstado(estado);
         rutaDeVueloDao.actualizar(rdv);
     }
