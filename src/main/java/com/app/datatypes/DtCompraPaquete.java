@@ -1,12 +1,6 @@
 package com.app.datatypes;
 
-import com.app.clases.Cliente;
-import com.app.clases.Paquete;
-
 import java.time.LocalDate;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class DtCompraPaquete {
     private long id;

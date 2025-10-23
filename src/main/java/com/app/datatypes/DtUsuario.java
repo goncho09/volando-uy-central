@@ -8,7 +8,7 @@ public class DtUsuario {
     protected String urlImage;
 
     public DtUsuario() {}
-    public DtUsuario(String nickname,String nombre, String email, String password, String urlImage){
+    public DtUsuario(String nickname, String nombre, String email, String password, String urlImage){
         this.nickname = nickname;
         this.nombre = nombre;
         this.email = email;
@@ -16,7 +16,7 @@ public class DtUsuario {
         this.urlImage = urlImage;
     }
 
-    public DtUsuario(String nickname,String nombre, String email, String urlImage){
+    public DtUsuario(String nickname, String nombre, String email, String urlImage){
         this.nickname = nickname;
         this.nombre = nombre;
         this.email = email;
@@ -24,7 +24,7 @@ public class DtUsuario {
         this.urlImage = urlImage;
     }
 
-    public DtUsuario(String nickname,String nombre, String email){
+    public DtUsuario(String nickname, String nombre, String email){
         this.nickname = nickname;
         this.nombre = nombre;
         this.email = email;
@@ -52,9 +52,9 @@ public class DtUsuario {
         return email;
     }
 
-    public String getPassword() {return password;}
+    public String getPassword() {return password; }
 
-    public String getUrlImage() {return urlImage;}
+    public String getUrlImage() {return urlImage; }
 
     public void setNickname(String nickname) {
         this.nickname = nickname;
@@ -68,9 +68,9 @@ public class DtUsuario {
         this.email = email;
     }
 
-    public void setPassword(String password) {this.password = password;}
+    public void setPassword(String password) {this.password = password; }
 
-    public void setUrlImage(String urlImage) {this.urlImage = urlImage;}
+    public void setUrlImage(String urlImage) {this.urlImage = urlImage; }
 
     @Override
     public String toString() { return this.nickname; }

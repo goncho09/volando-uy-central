@@ -1,14 +1,22 @@
 package com.app.clases;
 
-import com.app.datatypes.DtCompraPaquete;
-import jakarta.persistence.*;
-
 import java.time.LocalDate;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.JoinColumn;
+
+import com.app.datatypes.DtCompraPaquete;
+
 
 @Entity
 // @Table(name="compraPaquete")
 public class CompraPaquete {
-    @Id @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private long id;
     private LocalDate fechaCompra;
     private  LocalDate fechaVencimiento;
@@ -73,7 +81,7 @@ public class CompraPaquete {
         this.paquete = paquete;
     }
 
-    public Cliente getCliente() {return cliente;}
+    public Cliente getCliente() {return cliente; }
 
-    public void setCliente(Cliente cliente) {this.cliente = cliente;}
+    public void setCliente(Cliente cliente) {this.cliente = cliente; }
 }

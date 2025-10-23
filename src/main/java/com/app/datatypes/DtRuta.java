@@ -1,12 +1,10 @@
 package com.app.datatypes;
 
-import com.app.clases.Categoria;
-import com.app.clases.Ciudad;
-import com.app.enums.EstadoRuta;
-
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
+
+import com.app.enums.EstadoRuta;
 
 public class DtRuta {
     private String nombre;
@@ -116,13 +114,13 @@ public class DtRuta {
         this.fechaAlta = fechaAlta;
     }
 
-    public String getUrlImagen() {return urlImagen;}
+    public String getUrlImagen() {return urlImagen; }
 
-    public void setUrlImagen(String urlImagen) {this.urlImagen = urlImagen;}
+    public void setUrlImagen(String urlImagen) {this.urlImagen = urlImagen; }
 
-    public EstadoRuta getEstado() {return estado;}
+    public EstadoRuta getEstado() {return estado; }
 
-    public void setEstado(EstadoRuta estado) {this.estado = estado;}
+    public void setEstado(EstadoRuta estado) {this.estado = estado; }
 
     public List<DtCategoria> getCategorias() {
         return categorias;

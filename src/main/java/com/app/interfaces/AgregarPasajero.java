@@ -1,14 +1,19 @@
 package com.app.interfaces;
 
-import com.app.datatypes.DtPasajero;
-
-import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AgregarPasajero extends JFrame{
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.JButton;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import com.app.datatypes.DtPasajero;
+
+public class AgregarPasajero extends JFrame {
 
     private int contador;
     private int cantidad;
@@ -41,14 +46,14 @@ public class AgregarPasajero extends JFrame{
                 String nombre = nombrePasajero.getText().trim();
                 String apellido = apellidoPasajero.getText().trim();
 
-                if(nombre.isEmpty() || apellido.isEmpty()) {
+                if (nombre.isEmpty() || apellido.isEmpty()) {
                     new VentanaMensaje("No puedes dejar campos vacíos..");
                     return;
                 }
 
                 // Crear el objeto pasaje (podés usar tu DtPasaje o Pasaje)
                 DtPasajero p = new DtPasajero(nombre, apellido);
-                if(listPasajes.contains(p)){
+                if (listPasajes.contains(p)){
                     new VentanaMensaje("No puedes crear 2 pasajes iguales");
                     dispose();
                     return;
@@ -56,9 +61,9 @@ public class AgregarPasajero extends JFrame{
                 listPasajes.add(p);
                 contador++;
 
-                if(contador == cantidad){
+                if (contador == cantidad){
                     dispose();
-                }else{
+                } else {
                     nombrePasajero.setText("");
                     apellidoPasajero.setText("");
                     new VentanaMensaje("Pasaje creado con éxito");

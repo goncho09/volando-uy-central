@@ -1,12 +1,18 @@
 package com.app.DAOs;
 
-import com.app.clases.*;
-import com.app.clases.Usuario;
+
 import jakarta.persistence.EntityManager;
+
+import com.app.clases.Usuario;
+import com.app.clases.Aerolinea;
+import com.app.clases.RutaDeVuelo;
+import com.app.clases.Cliente;
+import com.app.clases.Reserva;
+import com.app.clases.CompraPaquete;
 
 import java.util.Map;
 
-public class UserDao extends BaseDao<Usuario, String>{
+public class UserDao extends BaseDao<Usuario, String> {
 
     public UserDao(EntityManager em) {
         super(em, Usuario.class);

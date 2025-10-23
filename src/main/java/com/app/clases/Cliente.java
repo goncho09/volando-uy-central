@@ -1,13 +1,20 @@
 package com.app.clases;
 
-import com.app.datatypes.*;
-import com.app.enums.*;
-import jakarta.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 
-import java.util.List;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.DiscriminatorValue;
+import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
+
+import com.app.datatypes.DtCliente;
+import com.app.datatypes.DtPaquete;
+import com.app.datatypes.DtUsuario;
+import com.app.datatypes.DtReserva;
+import com.app.enums.TipoDocumento;
 
 @Entity
 @DiscriminatorValue("Cliente") // Cuando se haga la tabla de usuarios, éste en particular será "userType" Cliente
@@ -18,7 +25,7 @@ public class Cliente extends Usuario{
     private TipoDocumento tipoDocumento;
     private int numeroDocumento;
 
-    @OneToMany(mappedBy = "cliente",cascade = CascadeType.ALL, orphanRemoval = true)// 1 - N (un cliente tiene muchas "compras"
+    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true)// 1 - N (un cliente tiene muchas "compras"
     private List<CompraPaquete> comprasPaquetes = new ArrayList<>();
 
     @OneToMany(mappedBy = "cliente") // 1 - N (un cliente tiene muchas "reservas"
@@ -141,8 +148,8 @@ public class Cliente extends Usuario{
     }
 
     public boolean existeVueloReserva(Vuelo vuelo){
-        for(Reserva r : this.getReservas()){
-            if(r.getVuelo().getNombre().equals(vuelo.getNombre())){
+        for (Reserva r : this.getReservas()) {
+            if (r.getVuelo().getNombre().equals(vuelo.getNombre())){
                 return true;
             }
         }

@@ -1,10 +1,16 @@
 package com.app.clases;
 
-import com.app.datatypes.*;
-import jakarta.persistence.*;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.CascadeType;
+
+import com.app.datatypes.DtAerolinea;
+import com.app.datatypes.DtUsuario;
 
 @Entity
 public class Aerolinea extends Usuario {
@@ -48,7 +54,7 @@ public class Aerolinea extends Usuario {
     }
 
     public DtAerolinea getDatos(){
-        return new DtAerolinea(this.getNickname(), this.getNombre(), this.getEmail(),this.getPassword(), this.getUrlImage(), this.getDescripcion(), this.getLinkWeb(), this.getRutasDeVuelo());
+        return new DtAerolinea(this.getNickname(), this.getNombre(), this.getEmail(), this.getPassword(), this.getUrlImage(), this.getDescripcion(), this.getLinkWeb(), this.getRutasDeVuelo());
     }
 
     public void addRuta(RutaDeVuelo ruta) {

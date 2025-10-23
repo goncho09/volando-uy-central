@@ -1,17 +1,28 @@
 package com.app.interfaces;
 
-import com.app.clases.Categoria;
+import java.nio.file.Files;
+import java.nio.file.Path;
+
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JComboBox;
+import javax.swing.JButton;
+import javax.swing.ImageIcon;
+
 import com.app.datatypes.DtCategoria;
 import com.app.datatypes.DtRuta;
 import com.app.datatypes.DtVuelo;
-import com.app.enums.TipoImagen;
-import com.app.utils.AuxiliarFunctions;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
+import com.app.enums.TipoImagen;
+
+import com.app.utils.AuxiliarFunctions;
 
 public class InfoRutaDeVuelo extends JFrame{
     private AuxiliarFunctions a;
@@ -28,8 +39,8 @@ public class InfoRutaDeVuelo extends JFrame{
     private JLabel ciudadDestino;
     private JPanel dataRutaPanel;
     private JPanel categoriasPanel;
-    private JComboBox JComboBoxVuelos;
-    private JButton ButtonVerVuelo;
+    private JComboBox jComboBoxVuelos;
+    private JButton buttonVerVuelo;
     private JPanel imagenRutaPanel;
     private JLabel estado;
     private JLabel descripcionCorta;
@@ -43,7 +54,7 @@ public class InfoRutaDeVuelo extends JFrame{
 
         a = auxiliar;
 
-        JComboBoxVuelos.setModel(a.getComboVueloRutaDeVueloModel());
+        jComboBoxVuelos.setModel(a.getComboVueloRutaDeVueloModel());
         a.cargarVuelosComboBoxRuta(ruta.getNombre());
 
         nombre.setText(ruta.getNombre());
@@ -65,7 +76,7 @@ public class InfoRutaDeVuelo extends JFrame{
 
         try {
             Path userImg = AuxiliarFunctions.getImagePath(ruta.getUrlImagen(), TipoImagen.RUTA);
-            if(!Files.exists(userImg)) {
+            if (!Files.exists(userImg)) {
                 throw new Exception("No se encontró la imagen");
             }
             imagen = new ImageIcon(userImg.toAbsolutePath().toString());
@@ -77,7 +88,7 @@ public class InfoRutaDeVuelo extends JFrame{
 
         if (ruta.getCategorias().isEmpty()){
             categoriasPanel.add(new JLabel("No hay categorías."));
-        }else{
+        } else {
             for (DtCategoria cat : ruta.getCategorias()) {
                 JLabel label = new JLabel(cat.getNombre());
                 categoriasPanel.add(label);
@@ -88,15 +99,15 @@ public class InfoRutaDeVuelo extends JFrame{
         setLocationRelativeTo(null);
         setVisible(true);
 
-        ButtonVerVuelo.addActionListener(new ActionListener() {
+        buttonVerVuelo.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(JComboBoxVuelos.getSelectedItem() == null || JComboBoxVuelos.getSelectedItem().toString().equals("N/A")){
+                if (jComboBoxVuelos.getSelectedItem() == null || jComboBoxVuelos.getSelectedItem().toString().equals("N/A")){
                     new VentanaMensaje("Seleccione un vuelo para poder verlo.");
                     return;
                 }
 
-                DtVuelo v =  (DtVuelo) JComboBoxVuelos.getSelectedItem();
+                DtVuelo v =  (DtVuelo) jComboBoxVuelos.getSelectedItem();
                 InfoVuelo ventanaVuelo = new InfoVuelo(v.getDatos(), a);
                 setEnabled(false);
 
