@@ -617,9 +617,7 @@ public class Sistema implements ISistema {
         }
 
         if (cliente.getNickname().isEmpty() || cliente.getEmail().isEmpty() || cliente.getNombre().isEmpty()
-                || cliente.getApellido().isEmpty() || cliente.getPassword().isEmpty()
-                || cliente.getNacionalidad().isEmpty() || cliente.getNumeroDocumento() == 0
-                || cliente.getUrlImage().isEmpty()) {
+                || cliente.getApellido().isEmpty() || cliente.getNacionalidad().isEmpty() || cliente.getNumeroDocumento() == 0) {
             throw new IllegalArgumentException("Los campos no pueden estar vacíos.");
         }
 
