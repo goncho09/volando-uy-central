@@ -49,7 +49,7 @@ public class Aerolinea extends Usuario {
         this.linkWeb = linkWeb;
     }
 
-    public List<RutaDeVuelo> getRutasDeVuelo() {return this.rutasDeVuelo;}
+    public List<RutaDeVuelo> getRutasDeVuelo() {return this.rutasDeVuelo; }
 
     public void setRutasDeVuelo(List<RutaDeVuelo> rutas) {
         this.rutasDeVuelo = rutas;
@@ -74,11 +74,6 @@ public class Aerolinea extends Usuario {
 
     @Override
     public String toString() {
-        return this.nombre;
-    }
-
-    public void mostrarDatos() {
-        System.out.println("Datos: " + nickname + " - " + nombre + " - " +
-                email + " - " + descripcion + " - " + linkWeb);
+        return this.getNombre();
     }
 }

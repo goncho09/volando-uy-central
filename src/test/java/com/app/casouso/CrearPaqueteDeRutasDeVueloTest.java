@@ -1,10 +1,10 @@
-package com.app.casosDeUso;
+package com.app.casouso;
 
 import com.app.clases.ISistema;
 import com.app.util.DummyFactory;
 import org.junit.jupiter.api.BeforeAll;
 
-public class CompraDePaqueteTest {
+public class CrearPaqueteDeRutasDeVueloTest {
 
     static ISistema s;
 
@@ -12,6 +12,9 @@ public class CompraDePaqueteTest {
     static void setUp() {
         s = DummyFactory.crearSistema();
     }
+
+    // ------------------ Crear Paquete de Rutas de Vuelo ------------------ //
+
 
 
 }

@@ -240,11 +240,11 @@ public class Sistema implements ISistema {
         if (this.rutasDeVuelo.containsKey(datosRuta.getNombre()))
             throw new IllegalArgumentException("Ya existe esa ruta de vuelo.");
 
-        if(datosRuta.getDuracion().isBefore(LocalTime.of(0,1))){
+        if (datosRuta.getDuracion().isBefore(LocalTime.of(0, 1))){
             throw new IllegalArgumentException("La duracion debe ser > 0 minutos");
         }
 
-        List<Categoria> categoriaList = new ArrayList();
+        List<Categoria> categoriaList = new ArrayList<>();
 
         for (DtCategoria c : datosRuta.getCategorias()) {
             Categoria nuevaCategoria = this.buscarCategoria(c.getNombre());
@@ -780,7 +780,6 @@ public class Sistema implements ISistema {
             a.setDescripcion(aerolinea.getDescripcion());
             a.setLinkWeb(aerolinea.getLinkWeb());
             userDao.actualizar(a);
-            a.mostrarDatos();
         } else {
             throw new IllegalArgumentException("Este usuario es cliente.");
         }
@@ -1138,7 +1137,7 @@ public class Sistema implements ISistema {
         if (reserva.getMetodoPago() == MetodoPago.PAQUETE){
             int pasajesRestantes = cantPasajes;
             DtPaquete paqueteCompra = reserva.getPaquetePago();
-            if (paqueteCompra == null || !clienteTienePaquete(cliente.nickname, paqueteCompra.getNombre())){
+            if (paqueteCompra == null || !clienteTienePaquete(cliente.getNickname(), paqueteCompra.getNombre())){
                 throw new IllegalArgumentException("El paquete no fue comprado por el cliente o no existe.");
             }
 

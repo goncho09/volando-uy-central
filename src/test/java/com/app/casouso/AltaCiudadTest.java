@@ -1,10 +1,10 @@
-package com.app.casosDeUso;
+package com.app.casouso;
 
 import com.app.clases.ISistema;
 import com.app.util.DummyFactory;
 import org.junit.jupiter.api.BeforeAll;
 
-public class CrearPaqueteDeRutasDeVueloTest {
+public class AltaCiudadTest {
 
     static ISistema s;
 
@@ -13,8 +13,6 @@ public class CrearPaqueteDeRutasDeVueloTest {
         s = DummyFactory.crearSistema();
     }
 
-    // ------------------ Crear Paquete de Rutas de Vuelo ------------------ //
-
-
+    // ------------------ Alta de Ciudad ------------------ //
 
 }

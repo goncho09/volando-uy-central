@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 
 public abstract class BaseDao<T, ID> {
 
-    protected EntityManager em;
+    private EntityManager em;
     private final Class<T> entityClass;
 
     public BaseDao(EntityManager em, Class<T> entityClass) {

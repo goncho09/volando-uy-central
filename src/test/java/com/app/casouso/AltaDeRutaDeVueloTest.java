@@ -1,7 +1,6 @@
-package com.app.casosDeUso;
+package com.app.casouso;
 
 import com.app.clases.ISistema;
-import com.app.datatypes.DtCategoria;
 import com.app.datatypes.DtRuta;
 import com.app.util.DummyFactory;
 import org.junit.jupiter.api.Assertions;

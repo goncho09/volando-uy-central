@@ -1,11 +1,11 @@
 package com.app.datatypes;
 
 public class DtUsuario {
-    protected String nickname;
-    protected String nombre;
-    protected String email;
-    protected String password;
-    protected String urlImage;
+    private String nickname;
+    private String nombre;
+    private String email;
+    private String password;
+    private String urlImage;
 
     public DtUsuario() {}
     public DtUsuario(String nickname, String nombre, String email, String password, String urlImage){

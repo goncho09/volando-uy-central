@@ -13,19 +13,19 @@ import com.app.datatypes.DtUsuario;
 @Inheritance(strategy = InheritanceType.JOINED) // Esto indica que es una herencia, por ende tendrá subclases, utilizará el método Join para crear las "subtablas"
 @DiscriminatorColumn(name = "userType") // Indica que creará una columna para diferenciar las clases. El valor depende de las subclases.
 public abstract class Usuario {
-    @Id protected String nickname; // Indica que nickname será la id
+    @Id private String nickname; // Indica que nickname será la id
 
     @Column(nullable = false, length = 50) // Indica que será una columna no nula
-    protected String nombre;
+    private String nombre;
 
     @Column(nullable = false, unique = true)
-    protected String email;
+    private String email;
 
     @Column(nullable = false)
-    protected String password;
+    private String password;
 
     @Column(nullable = false)
-    protected String urlImage;
+    private String urlImage;
 
     public Usuario() {}
     public Usuario(DtUsuario usuario){

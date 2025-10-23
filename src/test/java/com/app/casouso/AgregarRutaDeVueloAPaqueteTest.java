@@ -1,4 +1,4 @@
-package com.app.casosDeUso;
+package com.app.casouso;
 
 import com.app.clases.ISistema;
 import com.app.datatypes.DtCiudad;
@@ -27,7 +27,6 @@ public class AgregarRutaDeVueloAPaqueteTest {
                 DtPaquete paquete = s.getPaquete("ExploraSur");
                 DtRuta ruta = s.getRutaDeVuelo("Montevideo-Buenos Aires");
 
-                int cantidadInicial = 0;
                 float costoInicial = paquete.getCosto();
 
                 // Ejecutar el caso de uso

@@ -1,4 +1,4 @@
-package com.app.casosDeUso;
+package com.app.casouso;
 
 import com.app.clases.ISistema;
 import com.app.util.DummyFactory;
