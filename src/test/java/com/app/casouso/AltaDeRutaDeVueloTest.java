@@ -2,6 +2,7 @@ package com.app.casouso;
 
 import com.app.clases.ISistema;
 import com.app.datatypes.DtRuta;
+import com.app.enums.EstadoRuta;
 import com.app.util.DummyFactory;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
@@ -257,6 +258,64 @@ public class AltaDeRutaDeVueloTest {
         Assertions.assertDoesNotThrow(
                 () -> s.altaRutaDeVuelo("aeroDream", ruta),
                 "El sistema debería crear la ruta de vuelo correctamente con costos en formato float."
+        );
+    }
+    @Test
+    void validarEstadoInicialAltaRutaDeVuelo() {
+
+        DtRuta ruta = new DtRuta(
+                "Ruta-Estado-Inicial",
+                "Ruta de Vuelo para Testeo de Estado Inicial",
+                "Ruta funcional",
+                LocalTime.of(2, 30),
+                150,
+                300,
+                50,
+                LocalDate.now(),
+                "default.png",
+                Arrays.asList(s.buscarCategoria("Turismo"), s.buscarCategoria("Lujo")),
+                s.getCiudad("Lima", "Perú"),
+                s.getCiudad("Montevideo", "Uruguay")
+        );
+
+        s.altaRutaDeVuelo("aeroDream", ruta);
+
+        DtRuta rutaCreada = s.consultarRuta("Ruta-Estado-Inicial");
+
+        Assertions.assertEquals(
+                EstadoRuta.INGRESADA,
+                rutaCreada.getEstado(),
+                "El sistema debería crear la ruta de vuelo con el estado inicial 'INGRESADA'."
+        );
+    }
+
+    @Test
+    void CambiarEstadoRechazadaAAprobada() {
+        DtRuta ruta = new DtRuta(
+                "Ruta-Cambio-Estado",
+                "Ruta de Vuelo para Testeo de Cambio de Estado",
+                "Ruta funcional",
+                LocalTime.of(2, 30),
+                150,
+                300,
+                50,
+                LocalDate.now(),
+                "default.png",
+                Arrays.asList(s.buscarCategoria("Turismo"), s.buscarCategoria("Lujo")),
+                s.getCiudad("Lima", "Perú"),
+                s.getCiudad("Montevideo", "Uruguay")
+        );
+
+        s.altaRutaDeVuelo("aeroDream", ruta);
+        s.actualizarEstadoRuta(ruta, EstadoRuta.RECHAZADA);
+        s.actualizarEstadoRuta(ruta, EstadoRuta.APROBADA);
+
+        DtRuta rutaActualizada = s.consultarRuta("Ruta-Cambio-Estado");
+
+        Assertions.assertEquals(
+                EstadoRuta.APROBADA,
+                rutaActualizada.getEstado(),
+                "El sistema no debería actualizar el estado de la ruta de vuelo a 'APROBADA' desde 'RECHAZADA'."
         );
     }
 }
