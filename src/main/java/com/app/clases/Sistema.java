@@ -15,15 +15,15 @@ import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Persistence;
 
-import com.app.DAOs.UserDao;
-import com.app.DAOs.RutaDeVueloDao;
-import com.app.DAOs.CategoriaDao;
-import com.app.DAOs.CiudadDao;
-import com.app.DAOs.PaqueteDao;
-import com.app.DAOs.VueloDao;
-import com.app.DAOs.ReservaDao;
-import com.app.DAOs.PasajerosDao;
-import com.app.DAOs.CompraPaqueteDao;
+import com.app.daos.UserDao;
+import com.app.daos.RutaDeVueloDao;
+import com.app.daos.CategoriaDao;
+import com.app.daos.CiudadDao;
+import com.app.daos.PaqueteDao;
+import com.app.daos.VueloDao;
+import com.app.daos.ReservaDao;
+import com.app.daos.PasajerosDao;
+import com.app.daos.CompraPaqueteDao;
 
 import com.app.datatypes.DtPasajero;
 import com.app.datatypes.DtCategoria;

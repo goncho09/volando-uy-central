@@ -444,8 +444,6 @@ public class Main extends JFrame {
                     return;
                 }
                 // Valores que maneja la reserva
-                String aerolinea = jComboBoxseleccionarAerolineaReserva.getSelectedItem().toString();
-                String rutaDeVuelo = jComboBoxrutaDeVueloReserva.getSelectedItem().toString();
                 DtVuelo vuelo = (DtVuelo) jComboBoxvueloReserva.getSelectedItem();
                 DtCliente cliente = (DtCliente) jComboBoxSeleccionarClienteReserva.getSelectedItem();
                 TipoAsiento tipoAsiento = jComboBoxtipoAsientoReserva.getSelectedItem().toString() == "Turista" ? TipoAsiento.TURISTA : TipoAsiento.EJECUTIVO;
@@ -753,7 +751,6 @@ public class Main extends JFrame {
                         return;
                     }
 
-                    String aerolinea = jComboBoxAerolineaAltaVuelo.getSelectedItem().toString();
                     String ruta = jComboBoxRutaVueloAltaVuelo.getSelectedItem().toString();
                     String nombre = nombreAltaVuelo.getText();
 
