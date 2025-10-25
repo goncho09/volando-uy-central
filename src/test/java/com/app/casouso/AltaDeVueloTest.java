@@ -184,8 +184,8 @@ public class AltaDeVueloTest {
                 30, LocalDate.now(),
                 "default.png",
                 Arrays.asList(s.getCategoria("Negocios")),
-                s.buscarCiudad("Santiago", "Chile").getDatos(),
-                s.buscarCiudad("Quito", "Ecuador").getDatos()
+                s.getCiudad("Santiago", "Chile"),
+                s.getCiudad("Quito", "Ecuador")
         );
 
         DtVuelo vuelo = new DtVuelo(
@@ -223,7 +223,7 @@ public class AltaDeVueloTest {
 
         s.altaVuelo(vuelo);
 
-        Assertions.assertDoesNotThrow(() -> s.consultarVuelo("Vuelo11"),"El vuelo debería existir y no lanzar excepción");
+        Assertions.assertDoesNotThrow(() -> s.getRutaDeVuelo("Vuelo11"),"El vuelo debería existir y no lanzar excepción");
     }
 
 }

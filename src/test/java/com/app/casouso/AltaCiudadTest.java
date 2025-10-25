@@ -70,7 +70,7 @@ public class AltaCiudadTest {
         );
 
         Assertions.assertNotNull(
-                s.buscarCiudad("São Paulo", "Brasil"),
+                s.getCiudad("São Paulo", "Brasil"),
                 "La ciudad debería existir luego de ser creada."
         );
     }

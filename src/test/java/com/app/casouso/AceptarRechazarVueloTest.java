@@ -28,9 +28,9 @@ public class AceptarRechazarVueloTest {
     @Test
     void CambioDeEstadoAprobado() {
 
-        DtRuta rutaCreada = s.consultarRuta("Rio de Janeiro-Asunción");
+        DtRuta rutaCreada = s.getRutaDeVuelo("Rio de Janeiro-Asunción");
         s.actualizarEstadoRuta(rutaCreada, EstadoRuta.APROBADA);
-        rutaCreada = s.consultarRuta("Rio de Janeiro-Asunción");
+        rutaCreada = s.getRutaDeVuelo("Rio de Janeiro-Asunción");
 
         Assertions.assertEquals(
                 EstadoRuta.APROBADA,
@@ -43,9 +43,9 @@ public class AceptarRechazarVueloTest {
     @Test
     void CambioDeEstadoRechazado() {
 
-        DtRuta rutaCreada = s.consultarRuta("Santiago-Lima");
+        DtRuta rutaCreada = s.getRutaDeVuelo("Santiago-Lima");
         s.actualizarEstadoRuta(rutaCreada, EstadoRuta.RECHAZADA);
-        rutaCreada = s.consultarRuta("Santiago-Lima");
+        rutaCreada = s.getRutaDeVuelo("Santiago-Lima");
         Assertions.assertEquals(
                 EstadoRuta.RECHAZADA,
                 rutaCreada.getEstado(),
@@ -55,9 +55,9 @@ public class AceptarRechazarVueloTest {
 
     @Test
     void ActualizarEstadoAlmismoEstado(){
-        DtRuta rutaCreada = s.consultarRuta("Santiago-Lima");
+        DtRuta rutaCreada = s.getRutaDeVuelo("Santiago-Lima");
         s.actualizarEstadoRuta(rutaCreada, EstadoRuta.INGRESADA);
-        rutaCreada = s.consultarRuta("Santiago-Lima");
+        rutaCreada = s.getRutaDeVuelo("Santiago-Lima");
 
         Assertions.assertEquals(
                 EstadoRuta.INGRESADA,
