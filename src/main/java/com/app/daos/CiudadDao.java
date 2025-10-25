@@ -15,5 +15,4 @@ public class CiudadDao extends BaseDao<Ciudad, CiudadId> {
     public Map<String, Ciudad> obtenerCiudades() {
         return super.obtener(Ciudad::listarId);
     }
-
 }

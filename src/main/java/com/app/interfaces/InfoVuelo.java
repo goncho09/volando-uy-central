@@ -67,15 +67,15 @@ public class InfoVuelo extends JFrame {
         try {
             Path userImg = AuxiliarFunctions.getImagePath(dataVuelo.getUrlImage(), TipoImagen.VUELO);
             if (!Files.exists(userImg)) {
-                throw new Exception("No se encontró la imagen");
+                throw new IllegalArgumentException("No se encontró la imagen");
             }
             imagen = new ImageIcon(userImg.toAbsolutePath().toString());
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             imagen = new ImageIcon(getClass().getResource("/pictures/vuelos/default.jpg"));
         }
 
         AuxiliarFunctions.mostrarFoto(imagenVueloPanel, imagen, 175, 175, TipoImagen.VUELO);
-        a.cargarDatosReservaComboBox(dataVuelo);
+        a.cargarDatosReservaVueloComboBox(dataVuelo.getNombre());
 
         pack();
         setLocationRelativeTo(null);
@@ -89,16 +89,20 @@ public class InfoVuelo extends JFrame {
                     return;
                 }
 
-                DtReserva reserva = (DtReserva) jComboBoxReservas.getSelectedItem();
-                InfoReserva ventanaReserva = new InfoReserva(reserva, a);
-                setEnabled(false);
+                try {
+                    DtReserva reserva = (DtReserva) jComboBoxReservas.getSelectedItem();
+                    InfoReserva ventanaReserva = new InfoReserva(reserva, a);
+                    setEnabled(false);
 
-                ventanaReserva.addWindowListener(new WindowAdapter() {
-                    @Override
-                    public void windowClosed(WindowEvent e){
-                        setEnabled(true);
-                    }
-                });
+                    ventanaReserva.addWindowListener(new WindowAdapter() {
+                        @Override
+                        public void windowClosed(WindowEvent e){
+                            setEnabled(true);
+                        }
+                    });
+                } catch (IllegalArgumentException ex) {
+                    new VentanaMensaje(ex.getMessage());
+                }
             }
         });
     }

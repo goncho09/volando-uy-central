@@ -208,7 +208,7 @@ class AltaUsuarioTest {
         s.registrarCliente(cliente);
 
         Assertions.assertEquals(
-                s.buscarCliente(cliente).getDatos().getNickname(),
+                s.buscarCliente(cliente.getNickname()).getDatos().getNickname(),
                 s.getCliente(cliente.getNickname()).getNickname(),
                 "El sistema crea al cliente"
         );
@@ -391,7 +391,7 @@ class AltaUsuarioTest {
         s.registrarAerolinea(aerolinea);
 
         Assertions.assertEquals(
-                s.buscarAerolinea(aerolinea).getDatos().getNickname(),
+                s.buscarAerolinea(aerolinea.getNickname()).getDatos().getNickname(),
                 s.getAerolinea(aerolinea.getNickname()).getNickname(),
                 "El sistema crea a la aerolinea"
         );

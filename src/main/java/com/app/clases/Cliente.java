@@ -96,12 +96,12 @@ public class Cliente extends Usuario{
 
     public DtCliente getDatos(){
         List<DtCompraPaquete> paquetesList = new ArrayList<>();
-        for(CompraPaquete cp : this.getComprasPaquetes()){
+        for (CompraPaquete cp : this.getComprasPaquetes()){
             paquetesList.add(cp.getDatos());
         }
 
         List<DtReserva> reservasList = new ArrayList<>();
-        for(Reserva r : this.getReservas()){
+        for (Reserva r : this.getReservas()){
             reservasList.add(r.getDatos());
         }
 
@@ -129,5 +129,6 @@ public class Cliente extends Usuario{
         }
         return false;
     }
+
 }
 

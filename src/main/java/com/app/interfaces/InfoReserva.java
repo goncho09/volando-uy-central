@@ -7,10 +7,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JComboBox;
-//import javax.swing.;
-//import javax.swing.;
-//import javax.swing.;
-//import javax.swing.;
 
 public class InfoReserva extends JFrame{
 
@@ -46,7 +42,5 @@ public class InfoReserva extends JFrame{
 
         jComboBoxPasajeros.setModel(a.getComboPasajerosReserva());
         a.cargarPasajeros(dataReserva);
-
     }
-
 }

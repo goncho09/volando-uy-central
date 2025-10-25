@@ -11,6 +11,7 @@ import jakarta.persistence.CascadeType;
 
 import com.app.datatypes.DtAerolinea;
 import com.app.datatypes.DtUsuario;
+import com.app.datatypes.DtRuta;
 
 @Entity
 public class Aerolinea extends Usuario {
@@ -49,7 +50,17 @@ public class Aerolinea extends Usuario {
         this.linkWeb = linkWeb;
     }
 
-    public List<RutaDeVuelo> getRutasDeVuelo() {return this.rutasDeVuelo; }
+    public List<RutaDeVuelo> getRutasDeVuelo() {
+        return this.rutasDeVuelo;
+    }
+
+    public List<DtRuta> getRutasDeVueloDatos() {
+        List<DtRuta> rutasList = new ArrayList<>();
+        for (RutaDeVuelo ruta : this.rutasDeVuelo) {
+            rutasList.add(ruta.getDatos());
+        }
+        return rutasList;
+    }
 
     public void setRutasDeVuelo(List<RutaDeVuelo> rutas) {
         this.rutasDeVuelo = rutas;

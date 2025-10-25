@@ -47,17 +47,18 @@ public class Paquete {
         this.setRutaEnPaquete(new ArrayList<>());
     }
 
-    public List<DtRutaEnPaquete> getRutaEnPaqueteDatos() {
-        List<DtRutaEnPaquete> ruta = new ArrayList<>();
-        for (RutaEnPaquete r : this.getRutaEnPaquete()){
-            ruta.add(r.getDatos());
-        }
-        return ruta;
+    public List<RutaEnPaquete> getRutaEnPaquete() {
+        return rutaEnPaquete;
     }
 
-    public List<RutaEnPaquete> getRutaEnPaquete() {
-        return this.rutaEnPaquete;
+    public List<DtRutaEnPaquete> getRutaEnPaqueteDatos() {
+        List<DtRutaEnPaquete> rutaEnPaqueteDatos = new ArrayList<>();
+        for (RutaEnPaquete rp : this.rutaEnPaquete) {
+            rutaEnPaqueteDatos.add(rp.getDatos());
+        }
+        return rutaEnPaqueteDatos;
     }
+
 
     public void setRutaEnPaquete(List<RutaEnPaquete> rutaEnPaquete) {
         this.rutaEnPaquete = rutaEnPaquete;

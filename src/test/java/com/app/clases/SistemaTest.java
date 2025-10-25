@@ -49,14 +49,14 @@ public class SistemaTest {
 
     @Test
     void listarPaquetesClienteExistenteConPaquetes(){
-        List<DtPaquete> paqueteList = s.listarPaquetes(s.getCliente("zacgamer")); // zacgamer tiene paquetes
+        List<DtPaquete> paqueteList = s.listarPaquetesCliente(s.getCliente("zacgamer").getNickname()); // zacgamer tiene paquetes
 
         Assertions.assertNotNull(paqueteList, "La lista no debe ser null");
     }
 
     @Test
     void listarPaquetesClienteExistenteSinPaquetes(){
-        List<DtPaquete> paqueteList = s.listarPaquetes(s.getCliente("nuevoCliente")); // nuevoCliente NO tiene paquetes
+        List<DtPaquete> paqueteList = s.listarPaquetesCliente(s.getCliente("nuevoCliente").getNickname()); // nuevoCliente NO tiene paquetes
 
         Assertions.assertTrue(
                 paqueteList == null || paqueteList.isEmpty(),
@@ -74,28 +74,28 @@ public class SistemaTest {
 
     @Test
     void listarVuelosDeRuta(){
-        List<DtVuelo> listVuelo = s.listarVuelos("Bogotá-Montevideo"); // Esta ruta existe
+        List<DtVuelo> listVuelo = s.listarVuelosRuta("Bogotá-Montevideo"); // Esta ruta existe
 
         Assertions.assertNotNull(listVuelo);
     }
 
     @Test
     void listarVuelosDeRutaInexistente(){
-        List<DtVuelo> listVuelo = s.listarVuelos("Esta ruta no existe uwu"); // Esta ruta existe
+        List<DtVuelo> listVuelo = s.listarVuelosRuta("Esta ruta no existe uwu"); // Esta ruta existe
 
         Assertions.assertNotNull(listVuelo);
     }
 
     @Test
     void listarVuelosDeRutaConFechaValdia(){
-        List<DtVuelo> listVuelo = s.listarVuelos("Bogotá-Montevideo", LocalDate.now()); // Se supone que los vuelos de dicha ruta están programados par luego de "ahora"
+        List<DtVuelo> listVuelo = s.listarVuelosRutaFecha("Bogotá-Montevideo", LocalDate.now()); // Se supone que los vuelos de dicha ruta están programados par luego de "ahora"
 
         Assertions.assertNotNull(listVuelo);
     }
 
     @Test
     void listarVuelosDeRutaConFechaInvaldia(){
-        List<DtVuelo> listVuelo = s.listarVuelos("Bogotá-Montevideo", LocalDate.now().plusDays(700));
+        List<DtVuelo> listVuelo = s.listarVuelosRutaFecha("Bogotá-Montevideo", LocalDate.now().plusDays(700));
 
         Assertions.assertTrue(
                 listVuelo == null || listVuelo.isEmpty(),
@@ -110,12 +110,12 @@ public class SistemaTest {
 
     @Test
     void usuarioExiste(){
-        Assertions.assertFalse(s.existeUsuarioNickname("power12321"),"El cliente no existe");
+        Assertions.assertFalse(s.existeUsuario("power12321"),"El cliente no existe");
     }
 
     @Test
     void contieneCategoria(){
-        Assertions.assertTrue(s.containsCategoria(s.getRutaDeVuelo("Bogotá-Montevideo"),"Aventura"),"La categoria existe en esa ruta");
+        Assertions.assertTrue(s.rutaContieneCategoria(s.getRutaDeVuelo("Bogotá-Montevideo"),"Aventura"),"La categoria existe en esa ruta");
     }
 
     @Test
@@ -141,7 +141,7 @@ public class SistemaTest {
 
     @Test
     void listarPaquetesAerolinea(){
-        List<DtPaquete> packages = s.listarPaquetes(s.getAerolinea("skyHigh"));
+        List<DtPaquete> packages = s.listarPaquetesAerolinea(s.getAerolinea("skyHigh").getNickname());
         Assertions.assertTrue(
                 packages == null || packages.isEmpty(),
                 "La lista debe ser nula o vacía."
@@ -160,7 +160,7 @@ public class SistemaTest {
 
     @Test
     void listarReservasClienteVuelo(){
-        Assertions.assertNotNull(s.listarReservas(s.getCliente("power"), s.getVuelo("Vuelo_7")));
+        Assertions.assertNotNull(s.listarReservasClienteVuelo(s.getCliente("power"), s.getVuelo("Vuelo_7")));
     }
 
 

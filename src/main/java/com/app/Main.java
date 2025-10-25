@@ -1,23 +1,25 @@
 package com.app;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JComboBox;
-import javax.swing.JButton;
-import javax.swing.ImageIcon;
-import javax.swing.JCheckBox;
 import javax.swing.JTabbedPane;
+import javax.swing.JComboBox;
 import javax.swing.JTextField;
 import javax.swing.JSpinner;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JPasswordField;
+import javax.swing.JLabel;
 import javax.swing.JRadioButton;
-import javax.swing.UIManager;
-import javax.swing.SwingUtilities;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 import com.app.utils.AuxiliarFunctions;
@@ -71,7 +73,7 @@ import com.app.enums.EstadoRuta;
 public class Main extends JFrame {
 
     //Declaración de variables "importantes"
-    private ISistema s;
+    private static ISistema s;
     private AuxiliarFunctions auxiliar;
     private List<JCheckBox> checkboxes;
 
@@ -231,10 +233,10 @@ public class Main extends JFrame {
 
 
     public Main() {
-        
+
         //Inicializar Sistema
-        s = Factory.getSistema();
-        s.cargarDatos();
+//        s = Factory.getSistema();
+//        s.cargarDatos();
 
         //Inicializar Auxiliar
         this.auxiliar = new AuxiliarFunctions(s);
@@ -245,9 +247,8 @@ public class Main extends JFrame {
 
         try {
             UIManager.setLookAndFeel(new FlatLightLaf());
-        } catch (Exception ex) {
+        } catch (IllegalArgumentException | UnsupportedLookAndFeelException ex) {
             System.err.println("No se pudo cargar FlatLaf: " + ex);
-            throw new RuntimeException();
         }
 
         // Configuración del JFrame
@@ -378,11 +379,10 @@ public class Main extends JFrame {
         jComboBoxRutaVueloAgregarRuta.setSelectedIndex(-1);
 
 
-
         consultarVueloButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (auxiliar.estanVaciosJComboBox(jComboBoxConsultaVueloAerolinea, jComboBoxConsultaVueloRutaDeVuelo, jComboBoxConsultaVueloVuelo)){
+                if (auxiliar.estanVaciosJComboBox(jComboBoxConsultaVueloAerolinea, jComboBoxConsultaVueloRutaDeVuelo, jComboBoxConsultaVueloVuelo)) {
                     new VentanaMensaje("Faltan argumentos");
                     return;
                 }
@@ -401,9 +401,11 @@ public class Main extends JFrame {
 
                 vuelo.addWindowListener(new WindowAdapter() {
                     @Override
-                    public void windowClosing(WindowEvent e){
+                    public void windowClosing(WindowEvent e) {
                         setEnabled(true);
-                    };
+                    }
+
+                    ;
                 });
 
             }
@@ -412,25 +414,16 @@ public class Main extends JFrame {
         btnConfirmarAltaCiudad.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                if (auxiliar.estanVaciosJTextField(nombreAltaCiudad, paisAltaCiudad, aeropuertoAltaCiudad, descripcionAltaCiudad)) {
+                    new VentanaMensaje("Faltan argumentos");
+                    return;
+                }
                 try {
-                    if (auxiliar.estanVaciosJTextField(nombreAltaCiudad, paisAltaCiudad, aeropuertoAltaCiudad, descripcionAltaCiudad)) {
-                        new VentanaMensaje("Faltan argumentos");
-                        return;
-                    }
-                    try {
-                        s.altaCiudad(new DtCiudad(nombreAltaCiudad.getText(), paisAltaCiudad.getText(), aeropuertoAltaCiudad.getText(), descripcionAltaCiudad.getText(), webAltaCiudad.getText(), LocalDate.now()));
-                    } catch (Exception ex) {
-                        new VentanaMensaje("Ha fallado el alta ciudad");
-                        return;
-                    }
+                    s.altaCiudad(new DtCiudad(nombreAltaCiudad.getText(), paisAltaCiudad.getText(), aeropuertoAltaCiudad.getText(), descripcionAltaCiudad.getText(), webAltaCiudad.getText(), LocalDate.now()));
                     new VentanaMensaje("Ciudad registrada exitosamente: " + nombreAltaCiudad.getText());
-
                     auxiliar.cargarCiudadesComboBox();
-
                 } catch (IllegalArgumentException ex) {
                     new VentanaMensaje("Error " + ex.getMessage()); //de validacion
-            } catch (Exception ex) {
-                new VentanaMensaje("Error al registrar ciudad: " + ex.getMessage());
                 }
             }
         });
@@ -439,106 +432,116 @@ public class Main extends JFrame {
         hacerReservaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (auxiliar.estanVaciosJComboBox(jComboBoxseleccionarAerolineaReserva, jComboBoxrutaDeVueloReserva, jComboBoxvueloReserva, jComboBoxSeleccionarClienteReserva, jComboBoxtipoAsientoReserva)){
+                if (auxiliar.estanVaciosJComboBox(jComboBoxseleccionarAerolineaReserva, jComboBoxrutaDeVueloReserva, jComboBoxvueloReserva, jComboBoxSeleccionarClienteReserva, jComboBoxtipoAsientoReserva)) {
                     new VentanaMensaje("Faltan argumentos");
                     return;
                 }
-                // Valores que maneja la reserva
-                DtVuelo vuelo = (DtVuelo) jComboBoxvueloReserva.getSelectedItem();
-                DtCliente cliente = (DtCliente) jComboBoxSeleccionarClienteReserva.getSelectedItem();
-                TipoAsiento tipoAsiento = jComboBoxtipoAsientoReserva.getSelectedItem().toString() == "Turista" ? TipoAsiento.TURISTA : TipoAsiento.EJECUTIVO;
+                try {
+                    // Valores que maneja la reserva
+                    DtVuelo vuelo = s.getVuelo(jComboBoxvueloReserva.getSelectedItem().toString());
+                    DtCliente cliente = s.getCliente(jComboBoxSeleccionarClienteReserva.getSelectedItem().toString());
+                    TipoAsiento tipoAsiento = jComboBoxtipoAsientoReserva.getSelectedItem().toString() == "Turista" ? TipoAsiento.TURISTA : TipoAsiento.EJECUTIVO;
 
-                int pasajes = (Integer) jSpinnerCantPasajesReserva.getValue();
-                int equipajeExtra = (Integer) jSpinnerCantEquipajeExtraReserva.getValue();
+                    int pasajes = (Integer) jSpinnerCantPasajesReserva.getValue();
 
-                LocalDate fecha = LocalDate.now();
-
-                if (pasajes <= 0){
-                    new VentanaMensaje("Pasajes de reservas debe ser mayor a 0");
-                    return;
-                }
-
-                MetodoPago metodoPago;
-                final DtPaquete[] paqueteSeleccionado = new DtPaquete[1];
-
-                if (pagoConPaqueteRadioButton.isSelected()) {
-                    metodoPago = MetodoPago.PAQUETE;
-                    paqueteSeleccionado[0] = (DtPaquete) jComboBoxSeleccionarPaqueteReserva.getSelectedItem();
-                    if (paqueteSeleccionado[0] == null) {
-                        new VentanaMensaje("Debe seleccionar un paquete");
+                    if (pasajes <= 0) {
+                        new VentanaMensaje("Pasajes de reservas debe ser mayor a 0");
                         return;
                     }
-                } else if (pagoGeneralRadioButton.isSelected()) {
-                    metodoPago = MetodoPago.GENERAL;
-                } else {
-                    new VentanaMensaje("Debe seleccionar un método de pago");
-                    return;
-                }
 
-                AgregarPasajero ventanaPasajes = new AgregarPasajero(pasajes);
-                setEnabled(false);
+                    int equipajeExtra = (Integer) jSpinnerCantEquipajeExtraReserva.getValue();
 
-                ventanaPasajes.addWindowListener(new WindowAdapter() {
-                    @Override
-                    public void windowClosed(WindowEvent e){
-                        setEnabled(true);
-                        List<DtPasajero> listaPasajes = ventanaPasajes.getPasajes();
-                        if (listaPasajes.size() == pasajes){
-                            DtReserva reserva;
+                    LocalDate fecha = LocalDate.now();
 
-                            if (metodoPago == MetodoPago.PAQUETE) {
-                                reserva = new DtReserva(
-                                        fecha,
-                                        tipoAsiento,
-                                        pasajes,
-                                        equipajeExtra,
-                                        0,
-                                        listaPasajes,
-                                        cliente,
-                                        vuelo,
-                                        metodoPago,
-                                        paqueteSeleccionado[0]
-                                );
-                            } else {
-                                reserva = new DtReserva(
-                                        fecha,
-                                        tipoAsiento,
-                                        pasajes,
-                                        equipajeExtra,
-                                        0,
-                                        listaPasajes,
-                                        cliente,
-                                        vuelo,
-                                        metodoPago
-                                );
-                            }
+                    MetodoPago metodoPago;
+                    DtPaquete paqueteSeleccionado;
 
-                            try {
-                                s.altaReserva(reserva);
-                                new VentanaMensaje("Reserva realizada exitosamente");
-                            } catch (Exception ex) {
-                                new VentanaMensaje(ex.getMessage());
-                            }
+                    if (pagoConPaqueteRadioButton.isSelected()) {
+                        metodoPago = MetodoPago.PAQUETE;
+                        if (jComboBoxSeleccionarPaqueteReserva.getSelectedItem() == null) {
+                            new VentanaMensaje("Debe seleccionar un paquete");
+                            return;
+                        }
+                        paqueteSeleccionado = s.getPaquete(jComboBoxSeleccionarPaqueteReserva.getSelectedItem().toString());
+                    } else {
+                        paqueteSeleccionado = null;
+                        if (pagoGeneralRadioButton.isSelected()) {
+                            metodoPago = MetodoPago.GENERAL;
                         } else {
-                            new VentanaMensaje("La cantidad de pasajes no concuerda..");
+                            new VentanaMensaje("Debe seleccionar un método de pago");
+                            return;
                         }
                     }
-                });
+
+                    AgregarPasajero ventanaPasajes = new AgregarPasajero(pasajes);
+                    setEnabled(false);
+
+                    ventanaPasajes.addWindowListener(new WindowAdapter() {
+                        @Override
+                        public void windowClosed(WindowEvent e) {
+                            setEnabled(true);
+                            List<DtPasajero> listaPasajes = ventanaPasajes.getPasajes();
+                            if (listaPasajes.size() == pasajes) {
+                                DtReserva reserva;
+
+                                if (metodoPago == MetodoPago.PAQUETE) {
+                                    reserva = new DtReserva(
+                                            fecha,
+                                            tipoAsiento,
+                                            pasajes,
+                                            equipajeExtra,
+                                            0,
+                                            listaPasajes,
+                                            cliente,
+                                            vuelo,
+                                            metodoPago,
+                                            paqueteSeleccionado
+                                    );
+                                } else {
+                                    reserva = new DtReserva(
+                                            fecha,
+                                            tipoAsiento,
+                                            pasajes,
+                                            equipajeExtra,
+                                            0,
+                                            listaPasajes,
+                                            cliente,
+                                            vuelo,
+                                            metodoPago
+                                    );
+                                }
+
+                                try {
+                                    s.altaReserva(reserva);
+                                    new VentanaMensaje("Reserva realizada exitosamente");
+                                } catch (IllegalArgumentException ex) {
+                                    new VentanaMensaje(ex.getMessage());
+                                }
+                            } else {
+                                new VentanaMensaje("La cantidad de pasajes no concuerda..");
+                            }
+                        }
+                    });
+                } catch (IllegalArgumentException ex) {
+                    new VentanaMensaje("Error: " + ex.getMessage());
+                }
 
             }
         });
+
         userType.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
 
             }
         });
+
         userType.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
-                if (e.getStateChange() == ItemEvent.SELECTED){
+                if (e.getStateChange() == ItemEvent.SELECTED) {
                     String tipoUsuario = userType.getSelectedItem().toString();
-                    if (tipoUsuario.equals("Cliente")){
+                    if (tipoUsuario.equals("Cliente")) {
                         jPanelRegistrarAerolinea.setVisible(false);
                         jPanelRegistrarCliente.setVisible(true);
                     } else {
@@ -556,7 +559,7 @@ public class Main extends JFrame {
                 try {
                     String tipoUsuario = userType.getSelectedItem().toString();
                     if (tipoUsuario.equals("Cliente")) {
-                        if (auxiliar.estanVaciosJTextField(nicknameRegistrarCliente, nombreRegistrarCliente, correoElectronicoRegistrarCliente, registrarContrasenaCliente, registrarContrasenaCliente2, apellidoRegistrarCliente, nacionalidadRegistrarCliente, documentoRegistrarCliente) || auxiliar.estanVaciosJComboBox(tipoDocumentoRegistrarCliente)){
+                        if (auxiliar.estanVaciosJTextField(nicknameRegistrarCliente, nombreRegistrarCliente, correoElectronicoRegistrarCliente, registrarContrasenaCliente, registrarContrasenaCliente2, apellidoRegistrarCliente, nacionalidadRegistrarCliente, documentoRegistrarCliente) || auxiliar.estanVaciosJComboBox(tipoDocumentoRegistrarCliente)) {
                             new VentanaMensaje("Faltan argumentos");
                             return;
                         }
@@ -572,11 +575,11 @@ public class Main extends JFrame {
 
                         try {
                             fecha = LocalDate.of(anio, mes, dia);
-                            if (!auxiliar.esFechaValida(fecha)){
+                            if (!auxiliar.esFechaValida(fecha)) {
                                 new VentanaMensaje("Debes ingresar una fecha válida..");
                                 return;
                             }
-                        } catch (Exception ex){
+                        } catch (IllegalArgumentException ex) {
                             new VentanaMensaje("Debes ingresar una fecha válida..");
                             return;
                         }
@@ -584,14 +587,14 @@ public class Main extends JFrame {
                         TipoDocumento documentoT = tipoDocumentoRegistrarCliente.getSelectedItem().toString().equals("Cedula") ?
                                 TipoDocumento.CEDULA : TipoDocumento.PASAPORTE;
 
-                        if (!registrarContrasenaCliente.getText().equals(registrarContrasenaCliente2.getText())){
+                        if (!registrarContrasenaCliente.getText().equals(registrarContrasenaCliente2.getText())) {
                             new VentanaMensaje("Las contraseñas no coinciden.");
                             return;
                         }
 
                         String contrasena = registrarContrasenaCliente.getText();
 
-                        if (imagenTemporalUsuario == null){
+                        if (imagenTemporalUsuario == null) {
                             new VentanaMensaje("Debes ingresar una imagen.");
                             return;
                         }
@@ -599,7 +602,7 @@ public class Main extends JFrame {
                         File imagenGuardada = AuxiliarFunctions.guardarImagen(imagenTemporalUsuario, TipoImagen.USUARIO);
                         imagenTemporalUsuario = null;
 
-                        if (imagenGuardada == null){
+                        if (imagenGuardada == null) {
                             new VentanaMensaje("Ocurrió un error al guardar la imagen");
                             return;
                         }
@@ -622,11 +625,9 @@ public class Main extends JFrame {
                             s.registrarCliente(cliente);
                             new VentanaMensaje("Cliente creado correctamente.");
                             auxiliar.cargarUsuariosComboBox(); //Cada vez que se agregue un usuario, actualice todos los datos
-                        } catch (Exception ex) {
-                            ex.printStackTrace();
+                        } catch (IllegalArgumentException ex) {
                             AuxiliarFunctions.borrarImagen(urlImage, TipoImagen.USUARIO);
                             selectedFileClienteRegistrar.setText("No se ha seleccionado archivo.");
-                            s.cancelarAltaUsuario();
                             new VentanaMensaje(ex.getMessage());
                         }
                         auxiliar.cargarUsuariosComboBox();
@@ -634,55 +635,51 @@ public class Main extends JFrame {
                         selectedFileClienteRegistrar.setText("No se ha seleccionado archivo");
 
                     }
-                } catch (Exception ex) {
-                        ex.printStackTrace();
-                        new VentanaMensaje(ex.getMessage());
-                    }
+                } catch (IllegalArgumentException | IOException ex) {
+                    new VentanaMensaje(ex.getMessage());
                 }
-            });
+            }
+        });
 
         //CONSULTAR USUARIO
         consultarUsuarioButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-            try {
-                if (jComboBoxSeleccionarUsuarioConsultar.getSelectedItem() == null) {
-                    new VentanaMensaje("Seleccione un usuario");
-                    return;
+                try {
+                    if (jComboBoxSeleccionarUsuarioConsultar.getSelectedItem() == null) {
+                        new VentanaMensaje("Seleccione un usuario");
+                        return;
+                    }
+                    String nickname = jComboBoxSeleccionarUsuarioConsultar.getSelectedItem().toString();
+
+                    DtUsuario dtUsuario = s.getUsuario(nickname);
+
+                    InfoUsuario ventanaUsuario = new InfoUsuario(dtUsuario, auxiliar);
+                    setEnabled(false);
+
+                    ventanaUsuario.addWindowListener(new WindowAdapter() {
+                        @Override
+                        public void windowClosed(WindowEvent e) {
+                            setEnabled(true);
+                        }
+
+                        ;
+                    });
+
+                } catch (IllegalArgumentException ex) {
+                    new VentanaMensaje("Error al consultar: " + ex.getMessage());
                 }
-                String nickname = jComboBoxSeleccionarUsuarioConsultar.getSelectedItem().toString();
-
-                DtUsuario dtUsuario = s.getUsuario(nickname);
-
-                if (dtUsuario == null) {
-                    new VentanaMensaje("Usuario no encontrado");
-                    return;
-                }
-
-                InfoUsuario ventanaUsuario = new InfoUsuario(dtUsuario, auxiliar);
-                setEnabled(false);
-
-                ventanaUsuario.addWindowListener(new WindowAdapter() {
-                    @Override
-                    public void windowClosed(WindowEvent e){
-                        setEnabled(true);
-                    };
-                });
-
-            } catch (Exception ex) {
-                new VentanaMensaje("Error al consultar: " + ex.getMessage());
-                ex.printStackTrace();
-            }
             }
 
         });
         jComboBoxSeleccionarUsuarioModificar.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
-                if (e.getStateChange() == ItemEvent.SELECTED){
-                    DtUsuario user = (DtUsuario) jComboBoxSeleccionarUsuarioModificar.getSelectedItem();
-                    if (user instanceof DtCliente){ // Pregunta si mi usuario es un cliente
-                        DtCliente cliente = (DtCliente) user;
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+
+                    DtUsuario user = s.getUsuario(jComboBoxSeleccionarUsuarioModificar.getSelectedItem().toString());
+
+                    if (user instanceof DtCliente cliente) { // Pregunta si mi usuario es un cliente
                         LocalDate fechaCliente = cliente.getFechaNacimiento();
                         int tipo = cliente.getTipoDocumento() == TipoDocumento.CEDULA ? 0 : 1;
 
@@ -703,17 +700,16 @@ public class Main extends JFrame {
                         try {
                             Path userImg = AuxiliarFunctions.getImagePath(cliente.getUrlImage(), TipoImagen.USUARIO);
                             if (!Files.exists(userImg)) {
-                                throw new Exception("No se encontro el imagen");
+                                throw new IllegalArgumentException("No se encontro la imagen.");
                             }
                             profileImage = new ImageIcon(userImg.toAbsolutePath().toString());
-                        } catch (Exception err) {
+                        } catch (IllegalArgumentException ex) {
                             profileImage = new ImageIcon(getClass().getResource("/pictures/users/default.png"));
                         }
 
                         AuxiliarFunctions.mostrarFoto(modificarClienteImagenPanel, profileImage, 100, 100, TipoImagen.USUARIO);
 
-                    }else if (user instanceof DtAerolinea){
-                        DtAerolinea aerolinea = (DtAerolinea) user;
+                    } else if (user instanceof DtAerolinea aerolinea) {
                         jPanelModificarCliente.setVisible(false);
                         jPanelModificarAerolinea.setVisible(true);
                         nicknameModificarAerolinea.setText(aerolinea.getNickname());
@@ -726,10 +722,10 @@ public class Main extends JFrame {
                         try {
                             Path userImg = AuxiliarFunctions.getImagePath(aerolinea.getUrlImage(), TipoImagen.USUARIO);
                             if (!Files.exists(userImg)) {
-                                throw new Exception("No se encontro el imagen");
+                                throw new IllegalArgumentException("No se encontro la imagen");
                             }
                             profileImage = new ImageIcon(userImg.toAbsolutePath().toString());
-                        } catch (Exception err) {
+                        } catch (IllegalArgumentException ex) {
                             profileImage = new ImageIcon(getClass().getResource("/pictures/users/default.png"));
                         }
 
@@ -744,11 +740,11 @@ public class Main extends JFrame {
         crearVueloButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                if (auxiliar.estanVaciosJComboBox(jComboBoxAerolineaAltaVuelo, jComboBoxRutaVueloAltaVuelo) || auxiliar.estanVaciosJTextField(nombreAltaVuelo)) {
+                    new VentanaMensaje("Faltan argumentos");
+                    return;
+                }
                 try {
-                    if (auxiliar.estanVaciosJComboBox(jComboBoxAerolineaAltaVuelo, jComboBoxRutaVueloAltaVuelo) || auxiliar.estanVaciosJTextField(nombreAltaVuelo)){
-                        new VentanaMensaje("Faltan argumentos");
-                        return;
-                    }
 
                     String ruta = jComboBoxRutaVueloAltaVuelo.getSelectedItem().toString();
                     String nombre = nombreAltaVuelo.getText();
@@ -760,12 +756,12 @@ public class Main extends JFrame {
                     LocalDate fecha = LocalDate.of((Integer) jSpinnerAnioAltaVuelo.getValue(), (Integer) jSpinnerMesAltaVuelo.getValue(), (Integer) jSpinnerDiaAltaVuelo.getValue());
                     LocalTime hora = LocalTime.of((Integer) jSpinnerDuracionAltaVueloHora.getValue(), (Integer) jSpinnerDuracionAltaVueloMinuto.getValue());
 
-                    if (fecha.isBefore(LocalDate.now())){
+                    if (fecha.isBefore(LocalDate.now())) {
                         new VentanaMensaje("La fecha debe ser para el futuro");
                         return;
                     }
 
-                    if (imagenTemporalVuelo == null){
+                    if (imagenTemporalVuelo == null) {
                         new VentanaMensaje("Debes ingresar una imagen.");
                         return;
                     }
@@ -773,7 +769,7 @@ public class Main extends JFrame {
                     File imagenGuardada = AuxiliarFunctions.guardarImagen(imagenTemporalVuelo, TipoImagen.VUELO);
                     imagenTemporalVuelo = null;
 
-                    if (imagenGuardada == null){
+                    if (imagenGuardada == null) {
                         new VentanaMensaje("Ocurrió un error al guardar la imagen");
                         return;
                     }
@@ -785,48 +781,42 @@ public class Main extends JFrame {
                     try {
                         s.altaVuelo(dtVuelo);
                         new VentanaMensaje("Vuelo creado correctamente");
+                        auxiliar.limpiarJTextField(nombreAltaVuelo);
+                        auxiliar.cargarAerolineasComboBox();
+                        imagenTemporalVuelo = null;
+                        selectedFileVueloCrear.setText("No se ha seleccionado archivo");
                     } catch (IllegalArgumentException ex) {
                         AuxiliarFunctions.borrarImagen(urlImage, TipoImagen.VUELO);
                         new VentanaMensaje("Error: " + ex.getMessage());
-                        ex.printStackTrace();
                     }
-
-                    auxiliar.limpiarJTextField(nombreAltaVuelo);
-                    auxiliar.cargarAerolineasComboBox();
-                    imagenTemporalVuelo = null;
-                    selectedFileVueloCrear.setText("No se ha seleccionado archivo");
-
-                } catch (Exception ex) {
+                } catch (IllegalArgumentException | IOException ex) {
                     new VentanaMensaje(ex.getMessage());
-                    ex.printStackTrace();
                 }
             }
         });
 
-
         confirmarAltaCategoria.addActionListener(e -> {
+            if (auxiliar.estanVaciosJTextField(nombreAltaCategoria)) {
+                new VentanaMensaje("Ingrese un nombre de categoría");
+                return;
+            }
             try {
-                if (auxiliar.estanVaciosJTextField(nombreAltaCategoria)){
-                    new VentanaMensaje("Ingrese un nombre de categoría");
-                    return;
-                }
                 s.altaCategoria(new DtCategoria(nombreAltaCategoria.getText()));
                 new VentanaMensaje("Categoria creada correctamente");
                 nombreAltaCategoria.setText("");
                 cargarCategorias();
-            } catch (Exception ex) {
-                ex.printStackTrace();
+            } catch (IllegalArgumentException ex) {
                 new VentanaMensaje(ex.getMessage());
             }
         });
         confirmarAltaAerolinea.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                if (auxiliar.estanVaciosJComboBox(userType)) {
+                    new VentanaMensaje("Seleccione un tipo de usuario");
+                    return;
+                }
                 try {
-                    if (auxiliar.estanVaciosJComboBox(userType)){
-                        new VentanaMensaje("Seleccione un tipo de usuario");
-                        return;
-                    }
                     String tipoUsuario = userType.getSelectedItem().toString();
                     if (tipoUsuario.equals("Aerolinea")) {
                         if (auxiliar.estanVaciosJTextField(nicknameRegistrarAerolinea, nombreRegistrarAerolinea, correoRegistrarAerolinea, registrarAerolineaContrasena, registrarAerolineaContrasena2, descripcionRegistrarAerolinea)) {
@@ -835,14 +825,14 @@ public class Main extends JFrame {
                         }
                         auxiliar.validarCorreo(correoRegistrarAerolinea.getText());
 
-                        if (!registrarAerolineaContrasena.getText().equals(registrarAerolineaContrasena2.getText())){
+                        if (!registrarAerolineaContrasena.getText().equals(registrarAerolineaContrasena2.getText())) {
                             new VentanaMensaje("Las contraseñas no coinciden.");
                             return;
                         }
 
                         String contrasena = registrarAerolineaContrasena.getText();
 
-                        if (imagenTemporalUsuario == null){
+                        if (imagenTemporalUsuario == null) {
                             new VentanaMensaje("Debes ingresar una imagen.");
                             return;
                         }
@@ -850,7 +840,7 @@ public class Main extends JFrame {
                         File imagenGuardada = AuxiliarFunctions.guardarImagen(imagenTemporalUsuario, TipoImagen.USUARIO);
                         imagenTemporalUsuario = null;
 
-                        if (imagenGuardada == null){
+                        if (imagenGuardada == null) {
                             new VentanaMensaje("Ocurrió un error al guardar la imagen");
                             return;
                         }
@@ -869,9 +859,7 @@ public class Main extends JFrame {
                         try {
                             s.registrarAerolinea(aerolinea);
                             new VentanaMensaje("Aerolínea creada correctamente.");
-                        } catch (Exception ex){
-                            ex.printStackTrace();
-                            s.cancelarAltaUsuario();
+                        } catch (IllegalArgumentException ex) {
                             AuxiliarFunctions.borrarImagen(urlImage, TipoImagen.USUARIO);
                             selectedFileAerolineaRegistrar.setText("No se ha seleccionado archivo.");
                             new VentanaMensaje(ex.getMessage());
@@ -881,8 +869,7 @@ public class Main extends JFrame {
                     auxiliar.cargarAerolineasComboBox();
                     imagenTemporalUsuario = null;
                     selectedFileAerolineaRegistrar.setText("No se ha seleccionado archivo");
-            } catch (Exception ex) {
-                    ex.printStackTrace();
+                } catch (IllegalArgumentException | IOException ex) {
                     new VentanaMensaje(ex.getMessage());
                 }
             }
@@ -890,10 +877,16 @@ public class Main extends JFrame {
         cancelarAltaCliente.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
-                //new dialogMessage(ex.getMessage());
+                auxiliar.limpiarJTextField(nicknameRegistrarCliente, nombreRegistrarCliente, correoElectronicoRegistrarCliente, registrarContrasenaCliente, registrarContrasenaCliente2, apellidoRegistrarCliente, nacionalidadRegistrarCliente, documentoRegistrarCliente);
+                tipoDocumentoRegistrarCliente.setSelectedIndex(-1);
+                fechaDiaRegistrarCliente.setValue(1);
+                fechaMesRegistrarCliente.setValue(1);
+                fechaAnioRegistrarCliente.setValue(2024);
+                imagenTemporalUsuario = null;
+                selectedFileClienteRegistrar.setText("No se ha seleccionado archivo");
             }
         });
+
         crearRutaDeVuelo.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -929,7 +922,7 @@ public class Main extends JFrame {
 
                     String urlImage;
 
-                    if (imagenTemporalRuta == null){
+                    if (imagenTemporalRuta == null) {
                         int opcion = JOptionPane.showConfirmDialog(
                                 null,
                                 "¿Quieres crear la ruta de vuelo sin una imagen?",
@@ -946,7 +939,7 @@ public class Main extends JFrame {
                         File imagenGuardada = AuxiliarFunctions.guardarImagen(imagenTemporalRuta, TipoImagen.RUTA);
                         imagenTemporalRuta = null;
 
-                        if (imagenGuardada == null){
+                        if (imagenGuardada == null) {
                             new VentanaMensaje("Ocurrió un error al guardar la imagen");
                             return;
                         }
@@ -981,11 +974,12 @@ public class Main extends JFrame {
                         }
                     }
 
-                } catch (Exception ex) {
+                } catch (IllegalArgumentException | IOException ex) {
                     new VentanaMensaje(ex.getMessage());
                 }
             }
         });
+
         jButtonConsultarPaquete.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -993,28 +987,30 @@ public class Main extends JFrame {
                     new VentanaMensaje("Falta ingresar algún dato.");
                     return;
                 }
-                    try {
-                        DtPaquete dataPaquete = s.buscarPaquete((DtPaquete) jComboBoxPaqueteConsultaPaqueteRutaVuelo.getSelectedItem()).getDatos();
+                try {
+                    DtPaquete dataPaquete = s.getPaquete(jComboBoxPaqueteConsultaPaqueteRutaVuelo.getSelectedItem().toString());
 
+                    JFrame paquete = new InfoPaquete(dataPaquete, auxiliar);
+                    setEnabled(false);
 
-                        JFrame paquete = new InfoPaquete(dataPaquete, auxiliar);
-                        setEnabled(false);
+                    paquete.addWindowListener(new WindowAdapter() {
+                        @Override
+                        public void windowClosing(WindowEvent e) {
+                            setEnabled(true);
+                        }
 
-                        paquete.addWindowListener(new WindowAdapter() {
-                            @Override
-                            public void windowClosing(WindowEvent e){
-                                setEnabled(true);
-                            };
-                        });
-                    } catch (Exception ex){
-                        new VentanaMensaje(ex.getMessage());
-                    }
+                        ;
+                    });
+                } catch (IllegalArgumentException ex) {
+                    new VentanaMensaje(ex.getMessage());
+                }
             }
         });
+
         cONFIRMARButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (auxiliar.estanVaciosJTextField(nombreAltaPaquete, descripcionAltaPaquete)){
+                if (auxiliar.estanVaciosJTextField(nombreAltaPaquete, descripcionAltaPaquete)) {
                     new VentanaMensaje("Falta ingresar campos.");
                     return;
                 }
@@ -1022,7 +1018,7 @@ public class Main extends JFrame {
                     Integer periodo = (Integer) jSpinnerPeriodoAltaPaquete.getValue();
                     Integer descuento = (Integer) jSpinnerDescuentoAltaPaquete.getValue();
 
-                    if (periodo < 1){
+                    if (periodo < 1) {
                         new VentanaMensaje("El período debe ser 1 o más.");
                         return;
                     }
@@ -1034,7 +1030,7 @@ public class Main extends JFrame {
                     auxiliar.limpiarJTextField(nombreAltaPaquete, descripcionAltaPaquete);
                     jSpinnerPeriodoAltaPaquete.setValue(1);
                     jSpinnerDescuentoAltaPaquete.setValue(0);
-                } catch (Exception ex){
+                } catch (IllegalArgumentException ex) {
                     new VentanaMensaje(ex.getMessage());
                 }
             }
@@ -1043,7 +1039,7 @@ public class Main extends JFrame {
         buttonConfirmarAgregarRutaPaquete.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (auxiliar.estanVaciosJComboBox(jComboBoxPaqueteAgregarRuta, jComboBoxAerolineaAgregarRuta, jComboBoxRutaVueloAgregarRuta, jComboBoxTipoAsientoAgregarRutaPaquete)){
+                if (auxiliar.estanVaciosJComboBox(jComboBoxPaqueteAgregarRuta, jComboBoxAerolineaAgregarRuta, jComboBoxRutaVueloAgregarRuta, jComboBoxTipoAsientoAgregarRutaPaquete)) {
                     new VentanaMensaje("Falta ingresar campos de texto");
                     return;
                 }
@@ -1051,10 +1047,10 @@ public class Main extends JFrame {
                 try {
                     Integer cantidad = (Integer) jSpinnerCantidadAgregarRuta.getValue();
                     int res = s.agregarRutaAPaquete((DtPaquete) jComboBoxPaqueteAgregarRuta.getSelectedItem(), (DtRuta) jComboBoxRutaVueloAgregarRuta.getSelectedItem(), cantidad, TipoAsiento.valueOf(jComboBoxTipoAsientoAgregarRutaPaquete.getSelectedItem().toString()));
-                    if (res != 0 ) new VentanaMensaje("La ruta ya existía en el paquete, cantidad modificada a: " + res);
+                    if (res != 0) new VentanaMensaje("La ruta ya existía en el paquete, cantidad modificada a: " + res);
                     else new VentanaMensaje("Ruta de vuelo agregada a paquete correctamente.");
                     auxiliar.cargarPaquetesConRutasComboBox();
-                } catch (Exception ex) {
+                } catch (IllegalArgumentException ex) {
                     new VentanaMensaje(ex.getMessage());
                 }
             }
@@ -1063,13 +1059,17 @@ public class Main extends JFrame {
         jComboBoxAerolineaAgregarRuta.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
-                if (e.getStateChange() == ItemEvent.SELECTED){
-                    DtAerolinea a = (DtAerolinea) jComboBoxAerolineaAgregarRuta.getSelectedItem();
-                    if (a == null || a.toString().equals("N/A")){
-                        new VentanaMensaje("Ha ocurrido un error..");
-                        return;
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    try {
+                        DtAerolinea a = s.getAerolinea(jComboBoxAerolineaAgregarRuta.getSelectedItem().toString());
+                        if (a == null || a.toString().equals("N/A")) {
+                            new VentanaMensaje("Ha ocurrido un error..");
+                            return;
+                        }
+                        auxiliar.cargarRutasDeVueloComboBoxAerolinea(a.getNickname());
+                    } catch (IllegalArgumentException ex) {
+                        new VentanaMensaje(ex.getMessage());
                     }
-                    auxiliar.cargarRutasDeVueloComboBoxAerolinea(a);
                 }
             }
         });
@@ -1077,13 +1077,17 @@ public class Main extends JFrame {
         jComboBoxAerolineaConsultaRuta.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
-                if (e.getStateChange() == ItemEvent.SELECTED){
-                    DtAerolinea a = (DtAerolinea) jComboBoxAerolineaConsultaRuta.getSelectedItem();
-                    if (a == null || a.toString().equals("N/A")){
-                        new VentanaMensaje("Ha ocurrido un error..");
-                        return;
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    try {
+                        DtAerolinea a = s.getAerolinea(jComboBoxAerolineaConsultaRuta.getSelectedItem().toString());
+                        if (a == null || a.toString().equals("N/A")) {
+                            new VentanaMensaje("Ha ocurrido un error..");
+                            return;
+                        }
+                        auxiliar.cargarRutasDeVueloComboBoxAerolinea(a.getNickname());
+                    } catch (IllegalArgumentException ex) {
+                        new VentanaMensaje(ex.getMessage());
                     }
-                    auxiliar.cargarRutasDeVueloComboBoxAerolinea(a);
                 }
             }
         });
@@ -1091,121 +1095,125 @@ public class Main extends JFrame {
         buttonConsultarRutaVuelo.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (auxiliar.estanVaciosJComboBox(jComboBoxAerolineaConsultaRuta, jComboBoxRutaVueloConsultaRuta)){
+                if (auxiliar.estanVaciosJComboBox(jComboBoxAerolineaConsultaRuta, jComboBoxRutaVueloConsultaRuta)) {
                     new VentanaMensaje("Seleccione todos los campos");
                     return;
                 }
                 try {
                     String nombreRuta = jComboBoxRutaVueloConsultaRuta.getSelectedItem().toString();
-                    InfoRutaDeVuelo ventanaRuta = new InfoRutaDeVuelo(s.consultarRuta(nombreRuta), auxiliar);
+                    InfoRutaDeVuelo ventanaRuta = new InfoRutaDeVuelo(s.getRutaDeVuelo(nombreRuta), auxiliar);
                     setEnabled(false);
 
                     ventanaRuta.addWindowListener(new WindowAdapter() {
                         @Override
-                        public void windowClosing(WindowEvent e){
+                        public void windowClosing(WindowEvent e) {
                             setEnabled(true);
-                        };
+                        }
+
+                        ;
                     });
 
-                } catch (Exception ex) {
+                } catch (IllegalArgumentException ex) {
                     new VentanaMensaje(ex.getMessage());
                 }
-
-
             }
         });
+
         // MODIFICAR CLIENTE
         confirmarModificarCliente.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (auxiliar.estanVaciosJComboBox(jComboBoxSeleccionarUsuarioModificar) || auxiliar.estanVaciosJTextField(nombreClienteModificar, apellidoClienteModificar, correoClienteModificar, nacionalidadClienteModificar, numeroDocumentoModificarCliente)){
+                if (auxiliar.estanVaciosJComboBox(jComboBoxSeleccionarUsuarioModificar) || auxiliar.estanVaciosJTextField(nombreClienteModificar, apellidoClienteModificar, correoClienteModificar, nacionalidadClienteModificar, numeroDocumentoModificarCliente)) {
                     new VentanaMensaje("Los campos no pueden quedar vacíos..");
                     return;
                 }
-
-                int dia = (Integer) fechaDiaClienteModificar.getValue();
-                int mes = (Integer) fechaMesClienteModificar.getValue();
-                int anio = (Integer) fechaAnioClienteModificar.getValue();
-                LocalDate fecha = null;
-
                 try {
-                    fecha = LocalDate.of(anio, mes, dia);
-                    if (!auxiliar.esFechaValida(fecha)){
+                    int dia = (Integer) fechaDiaClienteModificar.getValue();
+                    int mes = (Integer) fechaMesClienteModificar.getValue();
+                    int anio = (Integer) fechaAnioClienteModificar.getValue();
+                    LocalDate fecha = null;
+
+                    try {
+                        fecha = LocalDate.of(anio, mes, dia);
+                        if (!auxiliar.esFechaValida(fecha)) {
+                            new VentanaMensaje("Debes ingresar una fecha válida..");
+                            return;
+                        }
+                    } catch (IllegalArgumentException ex) {
                         new VentanaMensaje("Debes ingresar una fecha válida..");
                         return;
                     }
-                }catch (Exception ex){
-                    new VentanaMensaje("Debes ingresar una fecha válida..");
-                    return;
-                }
 
+                    TipoDocumento tipoDocumento = tipoDocumentoClienteModificar.getSelectedItem().toString().equals("Cedula") ? TipoDocumento.CEDULA : TipoDocumento.PASAPORTE;
 
-                TipoDocumento tipoDocumento = tipoDocumentoClienteModificar.getSelectedItem().toString().equals("Cedula") ? TipoDocumento.CEDULA : TipoDocumento.PASAPORTE;
-
-                DtCliente cliente = new DtCliente(
-                        new DtUsuario(
-                                   nicknameModificarCliente.getText(),
-                                nombreClienteModificar.getText(),
-                                correoClienteModificar.getText()
-                        ),
-                        apellidoClienteModificar.getText(),
-                        fecha,
-                        nacionalidadClienteModificar.getText(),
-                        tipoDocumento,
-                        Integer.parseInt(numeroDocumentoModificarCliente.getText())
-                );
-                try {
+                    DtCliente cliente = new DtCliente(
+                            new DtUsuario(
+                                    nicknameModificarCliente.getText(),
+                                    nombreClienteModificar.getText(),
+                                    correoClienteModificar.getText()
+                            ),
+                            apellidoClienteModificar.getText(),
+                            fecha,
+                            nacionalidadClienteModificar.getText(),
+                            tipoDocumento,
+                            Integer.parseInt(numeroDocumentoModificarCliente.getText())
+                    );
                     s.modificarCliente(cliente);
-                    auxiliar.cargarUsuariosComboBox(cliente); // Funcion para actualizar valores.
+                    auxiliar.cargarUsuariosComboBox(cliente.getNickname()); // Funcion para actualizar valores.
                     new VentanaMensaje("Cliente actualizado correctamente.");
-                } catch (Exception ex){
+                } catch (IllegalArgumentException ex) {
                     new VentanaMensaje(ex.getMessage());
-                    ex.printStackTrace();
                 }
-
             }
         });
+
         jButtonModificarAerolinea.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (auxiliar.estanVaciosJTextField(nombreModificarAerolinea, correoModificarAerolinea, descripcionModificarAerolinea)){
+                if (auxiliar.estanVaciosJTextField(nombreModificarAerolinea, correoModificarAerolinea, descripcionModificarAerolinea)) {
                     new VentanaMensaje("No puedes dejar los campos vacios..");
                     return;
                 }
 
-                String link = auxiliar.estanVaciosJTextField(linkWebModificarAerolinea) ? "" : linkWebModificarAerolinea.getText();
-
-                String urlImage = "/src/main/pictures/users/default.png";
-
-                DtAerolinea aerolinea = new DtAerolinea(
-                        nicknameModificarAerolinea.getText(),
-                        nombreModificarAerolinea.getText(),
-                        correoModificarAerolinea.getText(),
-                        urlImage,
-                        descripcionModificarAerolinea.getText(),
-                        link
-                );
-
                 try {
+                    String link = auxiliar.estanVaciosJTextField(linkWebModificarAerolinea) ? "" : linkWebModificarAerolinea.getText();
+
+                    String urlImage = "/src/main/pictures/users/default.png";
+
+                    DtAerolinea aerolinea = new DtAerolinea(
+                            nicknameModificarAerolinea.getText(),
+                            nombreModificarAerolinea.getText(),
+                            correoModificarAerolinea.getText(),
+                            urlImage,
+                            descripcionModificarAerolinea.getText(),
+                            link
+                    );
+
+
                     s.modificarAerolinea(aerolinea);
-                    auxiliar.cargarUsuariosComboBox(aerolinea);
+                    auxiliar.cargarUsuariosComboBox(aerolinea.getNickname());
                     new VentanaMensaje("Aerolinea actualizado correctamente.");
-                } catch (Exception ex) {
+                } catch (IllegalArgumentException ex) {
                     new VentanaMensaje(ex.getMessage());
                 }
             }
         });
+
         jComboBoxseleccionarAerolineaReserva.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
-                if (e.getStateChange() == ItemEvent.SELECTED){
-                DtAerolinea aerolinea = (DtAerolinea) jComboBoxseleccionarAerolineaReserva.getSelectedItem();
-                if (aerolinea == null){
-                    new VentanaMensaje("Ha ocurrido un error..");
-                    return;
-                }
-                auxiliar.cargarRutasDeVueloComboBoxAerolinea(aerolinea);
-                jComboBoxrutaDeVueloReserva.setEnabled(true);
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    try {
+                        DtAerolinea aerolinea = s.getAerolinea(jComboBoxseleccionarAerolineaReserva.getSelectedItem().toString());
+                        if (aerolinea == null) {
+                            new VentanaMensaje("Ha ocurrido un error..");
+                            return;
+                        }
+                        auxiliar.cargarRutasDeVueloComboBoxAerolinea(aerolinea.getNickname());
+                        jComboBoxrutaDeVueloReserva.setEnabled(true);
+                    } catch (IllegalArgumentException ex) {
+                        new VentanaMensaje(ex.getMessage());
+                    }
                 }
             }
         });
@@ -1225,64 +1233,66 @@ public class Main extends JFrame {
         jComboBoxSeleccionarClienteReserva.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
-                if (e.getStateChange() == ItemEvent.SELECTED){
-                    DtCliente cliente = (DtCliente) jComboBoxSeleccionarClienteReserva.getSelectedItem();
-                    if (cliente == null){
-                        new VentanaMensaje("Ha ocurrido un error..");
-                        return;
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    try {
+                        DtCliente cliente = s.getCliente(jComboBoxSeleccionarClienteReserva.getSelectedItem().toString());
+                        auxiliar.cargarPaqueteClienteComboBox(cliente.getNickname());
+                        jComboBoxSeleccionarPaqueteReserva.setModel(auxiliar.getComboPaqueteClienteModel());
+                        jComboBoxSeleccionarPaqueteReserva.setEnabled(true);
+                    } catch (IllegalArgumentException ex) {
+                        new VentanaMensaje(ex.getMessage());
                     }
-
-                    auxiliar.cargarPaqueteClienteComboBox(cliente);
-                    jComboBoxSeleccionarPaqueteReserva.setModel(auxiliar.getComboPaqueteClienteModel());
-                    jComboBoxSeleccionarPaqueteReserva.setEnabled(true);
                 }
             }
         });
-
 
         jComboBoxrutaDeVueloReserva.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
-                if (e.getStateChange() == ItemEvent.SELECTED){
-                    DtRuta ruta = (DtRuta) jComboBoxrutaDeVueloReserva.getSelectedItem();
-                    if (ruta == null){
-                        new VentanaMensaje("Ha ocurrido un error..");
-                        return;
-                    }
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    try {
+                        DtRuta ruta = s.getRutaDeVuelo(jComboBoxrutaDeVueloReserva.getSelectedItem().toString());
 
-                    auxiliar.cargarVuelosComboBoxRuta(ruta.getNombre());
-                    jComboBoxvueloReserva.setEnabled(true);
+                        auxiliar.cargarVuelosComboBoxRuta(ruta.getNombre());
+                        jComboBoxvueloReserva.setEnabled(true);
+                    } catch (IllegalArgumentException ex) {
+                        new VentanaMensaje(ex.getMessage());
+                    }
                 }
             }
         });
+
         jButtonVerVueloReservaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (auxiliar.estanVaciosJComboBox(jComboBoxvueloReserva)){
+                if (auxiliar.estanVaciosJComboBox(jComboBoxvueloReserva)) {
                     new VentanaMensaje("Ha ocurrido un error..");
                     return;
                 }
 
-                DtVuelo vuelo = (DtVuelo) jComboBoxvueloReserva.getSelectedItem();
-                if (vuelo == null){
-                    new VentanaMensaje("Ha ocurrido un error..");
-                    return;
-                }
-                InfoVuelo ventanaVuelo = new InfoVuelo(vuelo, auxiliar);
-                setEnabled(false);
+                try {
+                    DtVuelo vuelo = s.getVuelo(jComboBoxvueloReserva.getSelectedItem().toString());
+                    InfoVuelo ventanaVuelo = new InfoVuelo(vuelo, auxiliar);
+                    setEnabled(false);
 
-                ventanaVuelo.addWindowListener(new WindowAdapter() {
-                    @Override
-                    public void windowClosing(WindowEvent e){
-                        setEnabled(true);
-                    };
-                });
+                    ventanaVuelo.addWindowListener(new WindowAdapter() {
+                        @Override
+                        public void windowClosing(WindowEvent e) {
+                            setEnabled(true);
+                        }
+
+                        ;
+                    });
+                } catch (IllegalArgumentException ex) {
+                    new VentanaMensaje(ex.getMessage());
+                }
             }
         });
+
         jComboBoxvueloReserva.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
-                if (e.getStateChange() == ItemEvent.SELECTED){
+                if (e.getStateChange() == ItemEvent.SELECTED) {
                     jButtonVerVueloReservaButton.setEnabled(!jComboBoxvueloReserva.getSelectedItem().toString().equals("N/A"));
                     jComboBoxSeleccionarClienteReserva.setEnabled(true);
                     jComboBoxtipoAsientoReserva.setEnabled(true);
@@ -1293,12 +1303,11 @@ public class Main extends JFrame {
             @Override
             public void itemStateChanged(ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
-                    DtAerolinea aerolinea = (DtAerolinea) jComboBoxConsultaVueloAerolinea.getSelectedItem();
-                    auxiliar.cargarRutasDeVueloComboBoxAerolinea(aerolinea);
-
-                    if (aerolinea == null) {
-                        new VentanaMensaje("Ha ocurrido un error..");
-                        return;
+                    try {
+                    DtAerolinea aerolinea = s.getAerolinea(jComboBoxConsultaVueloAerolinea.getSelectedItem().toString());
+                    auxiliar.cargarRutasDeVueloComboBoxAerolinea(aerolinea.getNickname());
+                    } catch (IllegalArgumentException ex) {
+                        new VentanaMensaje(ex.getMessage());
                     }
                 }
             }
@@ -1308,12 +1317,11 @@ public class Main extends JFrame {
             @Override
             public void itemStateChanged(ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
-                    DtRuta ruta = (DtRuta) jComboBoxConsultaVueloRutaDeVuelo.getSelectedItem();
+                    try {
+                    DtRuta ruta = s.getRutaDeVuelo(jComboBoxConsultaVueloRutaDeVuelo.getSelectedItem().toString());
                     auxiliar.cargarVuelosComboBoxRuta(ruta.getNombre());
-
-                    if (ruta == null) {
-                        new VentanaMensaje("Ha ocurrido un error..");
-                        return;
+                    } catch (IllegalArgumentException ex) {
+                        new VentanaMensaje(ex.getMessage());
                     }
                 }
             }
@@ -1329,15 +1337,17 @@ public class Main extends JFrame {
         buttonConfirmarCompraPaquete.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (auxiliar.estanVaciosJComboBox(jComboBoxPaqueteComprarPaquete, jComboBoxClienteCompraPaquete)){
+                if (auxiliar.estanVaciosJComboBox(jComboBoxPaqueteComprarPaquete, jComboBoxClienteCompraPaquete)) {
                     new VentanaMensaje("Complete todos los campos.");
                     return;
                 }
 
                 try {
-                    s.compraPaquete((DtPaquete) jComboBoxPaqueteComprarPaquete.getSelectedItem(), (DtCliente) jComboBoxClienteCompraPaquete.getSelectedItem());
+                    DtPaquete paquete = s.getPaquete(jComboBoxPaqueteComprarPaquete.getSelectedItem().toString());
+                    DtCliente cliente = s.getCliente(jComboBoxClienteCompraPaquete.getSelectedItem().toString());
+                    s.compraPaquete(paquete, cliente);
                     new VentanaMensaje("Compra de paquete realizada exitosamente.");
-                } catch (Exception ex){
+                } catch (IllegalArgumentException ex) {
                     new VentanaMensaje(ex.getMessage());
                 }
             }
@@ -1346,13 +1356,9 @@ public class Main extends JFrame {
         jComboBoxAerolineaAltaVuelo.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
-                if (e.getStateChange() == ItemEvent.SELECTED){
-                    DtAerolinea a = (DtAerolinea) jComboBoxAerolineaAltaVuelo.getSelectedItem();
-                    if (a == null || a.toString().equals("N/A")){
-                        new VentanaMensaje("Ha ocurrido un error..");
-                        return;
-                    }
-                    auxiliar.cargarRutasDeVueloComboBoxAerolinea(a);
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    DtAerolinea a = s.getAerolinea(jComboBoxAerolineaAltaVuelo.getSelectedItem().toString());
+                    auxiliar.cargarRutasDeVueloComboBoxAerolinea(a.getNickname());
                 }
             }
         });
@@ -1365,15 +1371,17 @@ public class Main extends JFrame {
 
                 ventanaImagen.addWindowListener(new WindowAdapter() {
                     @Override
-                    public void windowClosed(WindowEvent e){
+                    public void windowClosed(WindowEvent e) {
                         setEnabled(true);
                         imagenTemporalUsuario = ventanaImagen.getImagen();
-                        if (imagenTemporalUsuario != null){
+                        if (imagenTemporalUsuario != null) {
                             selectedFileClienteRegistrar.setText(imagenTemporalUsuario.getName());
                         } else {
                             selectedFileClienteRegistrar.setText("No se ha seleccionado archivo.");
                         }
-                    };
+                    }
+
+                    ;
                 });
             }
         });
@@ -1386,41 +1394,43 @@ public class Main extends JFrame {
 
                 ventanaImagen.addWindowListener(new WindowAdapter() {
                     @Override
-                    public void windowClosed(WindowEvent e){
+                    public void windowClosed(WindowEvent e) {
                         setEnabled(true);
                         imagenTemporalUsuario = ventanaImagen.getImagen();
 
-                        DtCliente cliente = (DtCliente) jComboBoxSeleccionarUsuarioModificar.getSelectedItem();
-                        if (imagenTemporalUsuario != null){
-                            try {
-                                if(cliente == null){
-                                    throw new IllegalArgumentException("El cliente no existe");
-                                }
+                        if (jComboBoxSeleccionarUsuarioModificar.getSelectedItem() == null) {
+                            new VentanaMensaje("Seleccione un usuario para modificar su imagen.");
+                            return;
+                        }
 
+                        if (imagenTemporalUsuario != null) {
+                            try {
+                                DtCliente cliente = s.getCliente(jComboBoxSeleccionarUsuarioModificar.getSelectedItem().toString());
                                 String urlABorrar;
 
-                                if(cliente.getUrlImage() != null && !cliente.getUrlImage().isEmpty()){
+                                if (cliente.getUrlImage() != null && !cliente.getUrlImage().isEmpty()) {
                                     urlABorrar = cliente.getUrlImage();
-                                }else{
+                                } else {
                                     urlABorrar = "estoEsUnArchivoCualquieraQueNoExiste.png";
                                 }
                                 AuxiliarFunctions.borrarImagen(urlABorrar, TipoImagen.USUARIO);
                                 File imagen = AuxiliarFunctions.guardarImagen(imagenTemporalUsuario, TipoImagen.USUARIO);
                                 s.modificarClienteImagen(cliente, imagen.getName());
-                                auxiliar.cargarUsuariosComboBox(cliente);
+                                auxiliar.cargarUsuariosComboBox(cliente.getNickname());
                                 new VentanaMensaje("Imagen actualizada correctamente.");
-                            } catch (Exception ex) {
+                            } catch (IllegalArgumentException | IOException ex) {
                                 new VentanaMensaje(ex.getMessage());
-                                return;
                             }
                         } else {
                             new VentanaMensaje("Se ha cancelado la operación");
-                            return;
                         }
-                    };
+                    }
+
+                    ;
                 });
             }
         });
+
         subirImagenImagenAerolineaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -1430,18 +1440,21 @@ public class Main extends JFrame {
 
                 ventanaImagen.addWindowListener(new WindowAdapter() {
                     @Override
-                    public void windowClosed(WindowEvent e){
+                    public void windowClosed(WindowEvent e) {
                         setEnabled(true);
                         imagenTemporalUsuario = ventanaImagen.getImagen();
-                        if (imagenTemporalUsuario != null){
+                        if (imagenTemporalUsuario != null) {
                             selectedFileAerolineaRegistrar.setText(imagenTemporalUsuario.getName());
                         } else {
                             selectedFileAerolineaRegistrar.setText("No se ha seleccionado archivo.");
                         }
-                    };
+                    }
+
+                    ;
                 });
             }
         });
+
         modificarAerolineaImagenButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -1451,41 +1464,39 @@ public class Main extends JFrame {
 
                 ventanaImagen.addWindowListener(new WindowAdapter() {
                     @Override
-                    public void windowClosed(WindowEvent e){
+                    public void windowClosed(WindowEvent e) {
                         setEnabled(true);
                         imagenTemporalUsuario = ventanaImagen.getImagen();
 
-                        DtAerolinea aerolinea = (DtAerolinea) jComboBoxSeleccionarUsuarioModificar.getSelectedItem();
-                        if (imagenTemporalUsuario != null){
-                            try {
-                                if(aerolinea == null){
-                                    throw new IllegalArgumentException("El cliente no existe");
-                                }
 
+                        if (imagenTemporalUsuario != null) {
+                            try {
+                                DtAerolinea aerolinea = s.getAerolinea(jComboBoxSeleccionarUsuarioModificar.getSelectedItem().toString());
                                 String urlABorrar;
 
-                                if(aerolinea.getUrlImage() != null && !aerolinea.getUrlImage().isEmpty()){
+                                if (aerolinea.getUrlImage() != null && !aerolinea.getUrlImage().isEmpty()) {
                                     urlABorrar = aerolinea.getUrlImage();
-                                }else{
+                                } else {
                                     urlABorrar = "estoEsUnArchivoCualquieraQueNoExiste.png";
                                 }
                                 AuxiliarFunctions.borrarImagen(urlABorrar, TipoImagen.USUARIO);
                                 File imagen = AuxiliarFunctions.guardarImagen(imagenTemporalUsuario, TipoImagen.USUARIO);
                                 s.modificarAerolineaImagen(aerolinea, imagen.getName());
-                                auxiliar.cargarUsuariosComboBox(aerolinea);
+                                auxiliar.cargarUsuariosComboBox(aerolinea.getNickname());
                                 new VentanaMensaje("Imagen actualizada correctamente.");
-                            } catch (Exception ex) {
+                            } catch (IllegalArgumentException | IOException ex) {
                                 new VentanaMensaje(ex.getMessage());
-                                return;
                             }
                         } else {
                             new VentanaMensaje("Se ha cancelado la operación");
-                            return;
                         }
-                    };
+                    }
+
+                    ;
                 });
             }
         });
+
         button1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -1495,18 +1506,21 @@ public class Main extends JFrame {
 
                 ventanaImagen.addWindowListener(new WindowAdapter() {
                     @Override
-                    public void windowClosed(WindowEvent e){
+                    public void windowClosed(WindowEvent e) {
                         setEnabled(true);
                         imagenTemporalVuelo = ventanaImagen.getImagen();
-                        if (imagenTemporalVuelo != null){
+                        if (imagenTemporalVuelo != null) {
                             selectedFileVueloCrear.setText(imagenTemporalVuelo.getName());
                         } else {
                             selectedFileVueloCrear.setText("No se ha seleccionado archivo.");
                         }
-                    };
+                    }
+
+                    ;
                 });
             }
         });
+
         button2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -1516,31 +1530,38 @@ public class Main extends JFrame {
 
                 ventanaImagen.addWindowListener(new WindowAdapter() {
                     @Override
-                    public void windowClosed(WindowEvent e){
+                    public void windowClosed(WindowEvent e) {
                         setEnabled(true);
                         imagenTemporalRuta = ventanaImagen.getImagen();
-                        if (imagenTemporalRuta != null){
+                        if (imagenTemporalRuta != null) {
                             selectedFileRutaCrear.setText(imagenTemporalRuta.getName());
                         } else {
                             selectedFileRutaCrear.setText("No se ha seleccionado archivo.");
                         }
-                    };
+                    }
+
+                    ;
                 });
             }
         });
         seleccionarRutaAceptarRechazarRuta.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
-                if (e.getStateChange() == ItemEvent.SELECTED){
-                    DtRuta ruta = (DtRuta) seleccionarRutaAceptarRechazarRuta.getSelectedItem();
-                    if (ruta != null && !ruta.toString().equals("N/A") && ruta.getEstado().toString().equals("INGRESADA")){
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    if (seleccionarRutaAceptarRechazarRuta.getSelectedItem() == null) {
+                        new VentanaMensaje("Ha ocurrido un error..");
+                        return;
+                    }
+
+                    DtRuta ruta = s.getRutaDeVuelo(seleccionarRutaAceptarRechazarRuta.getSelectedItem().toString());
+                    if (ruta != null && !ruta.toString().equals("N/A") && ruta.getEstado().toString().equals("INGRESADA")) {
                         aprobarButtonAceptarRechazarRuta.setEnabled(true);
                         rechazarButtonAceptarRechazarRuta.setEnabled(true);
                         estadoRutaText.setText(ruta.getEstado().toString());
                     } else {
                         aprobarButtonAceptarRechazarRuta.setEnabled(false);
                         rechazarButtonAceptarRechazarRuta.setEnabled(false);
-                        if (ruta != null && !ruta.toString().equals("N/A")){
+                        if (ruta != null && !ruta.toString().equals("N/A")) {
                             estadoRutaText.setText(ruta.getEstado().toString());
                         } else {
                             estadoRutaText.setText("No se ha seleccionado una ruta.");
@@ -1552,43 +1573,46 @@ public class Main extends JFrame {
         aprobarButtonAceptarRechazarRuta.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                DtRuta ruta = (DtRuta) seleccionarRutaAceptarRechazarRuta.getSelectedItem();
-                if (ruta != null && !ruta.toString().equals("N/A")){
-                    try {
-                        s.actualizarEstadoRuta(ruta, EstadoRuta.APROBADA);
-                        auxiliar.cargarRutasDeVueloComboBoxAerolinea((DtAerolinea) seleccionarAerolineaAceptarRechazarRuta.getSelectedItem(), ruta);
-                    } catch (Exception ex) {
-                        new VentanaMensaje(ex.getMessage());
-                    }
+                if (auxiliar.estanVaciosJComboBox(seleccionarAerolineaAceptarRechazarRuta, seleccionarRutaAceptarRechazarRuta)) {
+                    new VentanaMensaje("Debe seleccionar una aerolínea y una ruta para realizar esta acción");
+                    return;
+                }
 
-                } else {
-                    new VentanaMensaje("Debe seleccionar una ruta para realizar esta acción");
+                try {
+                    DtRuta ruta = s.getRutaDeVuelo(seleccionarRutaAceptarRechazarRuta.getSelectedItem().toString());
+                    DtAerolinea aerolinea = s.getAerolinea(seleccionarAerolineaAceptarRechazarRuta.getSelectedItem().toString());
+
+                    s.actualizarEstadoRuta(ruta, EstadoRuta.APROBADA);
+                    auxiliar.cargarRutasDeVueloComboBoxAerolinea(aerolinea.getNickname(), ruta.getNombre());
+                } catch (IllegalArgumentException ex) {
+                    new VentanaMensaje(ex.getMessage());
                 }
             }
         });
         rechazarButtonAceptarRechazarRuta.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                DtRuta ruta = (DtRuta) seleccionarRutaAceptarRechazarRuta.getSelectedItem();
-                if (ruta != null && !ruta.toString().equals("N/A")){
-                    try {
-                        s.actualizarEstadoRuta(ruta, EstadoRuta.RECHAZADA);
-                        auxiliar.cargarRutasDeVueloComboBoxAerolinea((DtAerolinea) seleccionarAerolineaAceptarRechazarRuta.getSelectedItem(), ruta);
-                    } catch (Exception ex) {
-                        new VentanaMensaje(ex.getMessage());
-                    }
+                if (auxiliar.estanVaciosJComboBox(seleccionarAerolineaAceptarRechazarRuta, seleccionarRutaAceptarRechazarRuta)) {
+                    new VentanaMensaje("Debe seleccionar una aerolínea y una ruta para realizar esta acción");
+                    return;
+                }
 
-                } else {
-                    new VentanaMensaje("Debe seleccionar una ruta para realizar esta acción");
+                try {
+                    DtRuta ruta = s.getRutaDeVuelo(seleccionarRutaAceptarRechazarRuta.getSelectedItem().toString());
+                    DtAerolinea aerolinea = s.getAerolinea(seleccionarAerolineaAceptarRechazarRuta.getSelectedItem().toString());
+                    s.actualizarEstadoRuta(ruta, EstadoRuta.RECHAZADA);
+                    auxiliar.cargarRutasDeVueloComboBoxAerolinea(aerolinea.getNickname(), ruta.getNombre());
+                } catch (IllegalArgumentException ex) {
+                    new VentanaMensaje(ex.getMessage());
                 }
             }
         });
     }
 
-    public void cargarCategorias(){
+    public void cargarCategorias() {
         jPanelCategorias.removeAll();
         checkboxes.clear();
-        for (DtCategoria c : s.getCategorias()) {
+        for (DtCategoria c : s.listarCategorias()) {
             JCheckBox check = new JCheckBox(c.getNombre());
             jPanelCategorias.add(check);
             this.checkboxes.add(check);
@@ -1596,8 +1620,7 @@ public class Main extends JFrame {
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(
-                () -> new Main()
-        );
+        s = Factory.getSistema();
+        SwingUtilities.invokeLater(() -> new Main());
     }
 }

@@ -20,12 +20,15 @@ import java.awt.RenderingHints;
 
 import java.io.File;
 import java.io.IOException;
+
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+
 import java.time.LocalDate;
 
 import com.app.clases.ISistema;
+
 import com.app.datatypes.DtAerolinea;
 import com.app.datatypes.DtCliente;
 import com.app.datatypes.DtRuta;
@@ -35,6 +38,7 @@ import com.app.datatypes.DtPasajero;
 import com.app.datatypes.DtCiudad;
 import com.app.datatypes.DtPaquete;
 import com.app.datatypes.DtReserva;
+
 import com.app.enums.TipoImagen;
 
 public class AuxiliarFunctions {
@@ -80,10 +84,8 @@ public class AuxiliarFunctions {
     public DefaultComboBoxModel<DtPaquete> getComboPaqueteNoCompradoModel() { return comboPaqueteNoComprado; }
     public DefaultComboBoxModel<DtPaquete> getComboPaquetesConRutasModel() { return comboPaquetesConRutas; }
     public DefaultComboBoxModel<DtVuelo> getComboVueloRutaDeVueloModel() { return  comboVueloRutaDeVuelo; }
-    public DefaultComboBoxModel<DtReserva> getComboReservaModel() { return comboReserva; }
     public DefaultComboBoxModel<DtReserva> getComboReservaVueloModel() { return comboReservaVuelo; }
     public DefaultComboBoxModel<DtReserva> getComboReservaVueloClienteModel() { return comboReservaCliente; }
-    public DefaultComboBoxModel<DtVuelo> getComboVuelosModel() {return comboVuelos; }
     public DefaultComboBoxModel<DtPasajero> getComboPasajerosReserva() { return comboPasajerosReserva; }
     public DefaultComboBoxModel<DtRuta> getComboRutaPaquete() { return comboRutaPaquete; }
 
@@ -139,13 +141,13 @@ public class AuxiliarFunctions {
         }
     }
 
-    public void cargarUsuariosComboBox(DtUsuario usuario) {
+    public void cargarUsuariosComboBox(String nickname) {
         comboUser.removeAllElements();
         List<DtUsuario> usuarios = sistema.listarUsuarios();
         if (usuarios != null  && !usuarios.isEmpty()){
             for (DtUsuario u : usuarios) {
                 comboUser.addElement(u);
-                if (u.getNickname().equals(usuario.getNickname())){
+                if (u.getNickname().equals(nickname)){
                     comboUser.setSelectedItem(u);
                 }
             }
@@ -202,9 +204,10 @@ public class AuxiliarFunctions {
         }
     }
 
-    public void cargarRutasDeVueloComboBoxAerolinea(DtAerolinea aerolinea) {
+    public void cargarRutasDeVueloComboBoxAerolinea(String nickname) {
         comboRutaDeVueloAerolinea.removeAllElements();
-        List<DtRuta> rutas = sistema.listarRutasDeVuelo(aerolinea);
+        DtAerolinea aerolineaExistente = sistema.getAerolinea(nickname);
+        List<DtRuta> rutas = aerolineaExistente.listarRutasDeVuelo();
         if (rutas != null && !rutas.isEmpty()) {
             for (DtRuta r : rutas) {
                 comboRutaDeVueloAerolinea.addElement(r);
@@ -217,13 +220,14 @@ public class AuxiliarFunctions {
         }
     }
 
-    public void cargarRutasDeVueloComboBoxAerolinea(DtAerolinea aerolinea, DtRuta ruta) {
+    public void cargarRutasDeVueloComboBoxAerolinea(String nickname, String nombreRuta) {
         comboRutaDeVueloAerolinea.removeAllElements();
-        List<DtRuta> rutas = sistema.listarRutasDeVuelo(aerolinea);
+        DtAerolinea aerolineaExistente = sistema.getAerolinea(nickname);
+        List<DtRuta> rutas = aerolineaExistente.listarRutasDeVuelo();
         if (rutas != null && !rutas.isEmpty()) {
             for (DtRuta r : rutas) {
                 comboRutaDeVueloAerolinea.addElement(r);
-                if (r.getNombre().equals(ruta.getNombre())){
+                if (r.getNombre().equals(nombreRuta)){
                     comboRutaDeVueloAerolinea.setSelectedItem(r);
                 }
             }
@@ -302,9 +306,9 @@ public class AuxiliarFunctions {
         }
     }
 
-    public void cargarPaqueteClienteComboBox(DtCliente cliente) {
+    public void cargarPaqueteClienteComboBox(String nickname) {
         comboPaqueteCliente.removeAllElements();
-        List<DtPaquete> p = sistema.listarPaquetes(cliente);
+        List<DtPaquete> p = sistema.listarPaquetesCliente(nickname);
         if (p != null && !p.isEmpty()) {
             for (DtPaquete pqt : p) {
                 comboPaqueteCliente.addElement(pqt);
@@ -317,24 +321,10 @@ public class AuxiliarFunctions {
         }
     }
 
-    public void cargarDatosReservaComboBox() {
-        comboReserva.removeAllElements();
-        List<DtReserva> reservas = sistema.listarReservas();
-        if (reservas != null && !reservas.isEmpty()) {
-            for (DtReserva r : reservas) {
-                comboReserva.addElement(r);
-            }
-        } else {
-            comboReserva.addElement(new DtReserva() {
-                @Override
-                public String toString() { return "N/A"; }
-            });
-        }
-    }
 
-    public void cargarDatosReservaComboBox(DtVuelo v) {
+    public void cargarDatosReservaVueloComboBox(String nombreVuelo) {
         comboReservaVuelo.removeAllElements();
-        List<DtReserva> reservas = sistema.listarReservas(v);
+        List<DtReserva> reservas = sistema.listarReservasVuelo(nombreVuelo);
         if (reservas != null && !reservas.isEmpty()) {
             for (DtReserva r : reservas) {
                 comboReservaVuelo.addElement(r);
@@ -347,9 +337,9 @@ public class AuxiliarFunctions {
         }
     }
 
-    public void cargarDatosReservaComboBox(DtCliente c) {
+    public void cargarDatosReservaClienteComboBox(String nickname) {
         comboReservaCliente.removeAllElements();
-        List<DtReserva> reservas = sistema.listarReservas(c);
+        List<DtReserva> reservas = sistema.listarReservasCliente(nickname);
         if (reservas != null && !reservas.isEmpty()) {
             for (DtReserva r : reservas) {
                 comboReservaCliente.addElement(r);
@@ -364,7 +354,7 @@ public class AuxiliarFunctions {
 
     public void cargarVuelosComboBoxRuta(String nombre){
         comboVueloRutaDeVuelo.removeAllElements();
-        List<DtVuelo> vuelos = sistema.listarVuelos(nombre);
+        List<DtVuelo> vuelos = sistema.listarVuelosRuta(nombre);
         if (vuelos != null && !vuelos.isEmpty()) {
             for (DtVuelo v : vuelos){
                 comboVueloRutaDeVuelo.addElement(v);
@@ -393,9 +383,9 @@ public class AuxiliarFunctions {
         }
     }
 
-    public void cargarRutasPaquete(DtPaquete p){
+    public void cargarRutasPaquete(String nombrePaquete){
         comboRutaPaquete.removeAllElements();
-        List<DtRuta> rutas = sistema.listarRutasDeVuelo(p);
+        List<DtRuta> rutas = sistema.listarRutasDeVueloPaquete(nombrePaquete);
         if (rutas != null && !rutas.isEmpty()) {
             for (DtRuta r : rutas){
                 comboRutaPaquete.addElement(r);
@@ -547,6 +537,12 @@ public class AuxiliarFunctions {
         imagenPanel.add(imgLabel);
         imagenPanel.revalidate();
         imagenPanel.repaint();
+    }
+
+    public void validarTextoSoloLetra(String nombre) {
+        if (!nombre.matches("^[\\p{L} ]+$")) {
+            throw new IllegalArgumentException("El nombre solo puede contener letras, números y espacios.");
+        }
     }
 
 }

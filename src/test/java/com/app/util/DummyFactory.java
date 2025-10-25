@@ -28,7 +28,7 @@ public class DummyFactory {
 
         if (crearDatos){
             s.vaciarBD();
-            s.cargarDatos();
+//            s.cargarDatos();
 
             // ------- Usuarios --------- //
             List<DtAerolinea> aerolineas = new ArrayList<>();

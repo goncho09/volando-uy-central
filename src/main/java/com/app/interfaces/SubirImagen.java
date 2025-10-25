@@ -40,7 +40,7 @@ public class SubirImagen extends JFrame {
                 dispose();
                 return;
             }
-        } catch (Exception e){
+        } catch (IllegalArgumentException e) {
             selectedFile = null;
             dispose();
             return;

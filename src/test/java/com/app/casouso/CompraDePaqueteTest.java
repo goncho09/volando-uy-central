@@ -220,7 +220,7 @@ public class CompraDePaqueteTest {
         s.registrarCliente(cliente);
  
         // Verificar que no tiene compras
-        List<DtPaquete> paquetesCliente = s.listarPaquetes(cliente);
+        List<DtPaquete> paquetesCliente = s.listarPaquetesCliente(cliente.getNickname());
 
         Assertions.assertTrue(paquetesCliente.isEmpty(),
                 "Un cliente nuevo sin compras debería tener lista vacía");
@@ -230,7 +230,7 @@ public class CompraDePaqueteTest {
     void listarPaquetesClienteConCompras() {
         DtCliente cliente = s.getCliente("zacgamer"); // Tiene VueloExpress
 
-        List<DtPaquete> paquetesCliente = s.listarPaquetes(cliente);
+        List<DtPaquete> paquetesCliente = s.listarPaquetesCliente(cliente.getNickname());
 
         Assertions.assertFalse(paquetesCliente.isEmpty(),
                 "Un cliente con compras debería tener paquetes en su lista");

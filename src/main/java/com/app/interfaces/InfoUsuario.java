@@ -71,15 +71,14 @@ public class InfoUsuario extends JFrame {
         try {
             Path userImg = AuxiliarFunctions.getImagePath(usuario.getUrlImage(), TipoImagen.USUARIO);
             if (!Files.exists(userImg)) {
-                throw new Exception("No se encontro el imagen");
+                throw new IllegalArgumentException("No se encontro la imagen");
             }
             profileImage = new ImageIcon(userImg.toAbsolutePath().toString());
-        } catch (Exception e) {
+        } catch (IllegalArgumentException ex) {
             profileImage = new ImageIcon(getClass().getResource("/pictures/users/default.png"));
         }
 
         AuxiliarFunctions.mostrarFoto(imagenPanel, profileImage, 175, 175, TipoImagen.USUARIO);
-
 
         if (usuario instanceof DtCliente) {
             DtCliente cliente = (DtCliente) usuario;
@@ -92,10 +91,10 @@ public class InfoUsuario extends JFrame {
             fechaNacConsultaUsuario.setText(cliente.getFechaNacimiento().toString());
 
             jComboBoxReservas.setModel(a.getComboReservaVueloClienteModel());
-            a.cargarDatosReservaComboBox(cliente);
+            a.cargarDatosReservaClienteComboBox(cliente.getNickname());
 
             jComboBoxPaquetes.setModel(a.getComboPaqueteClienteModel());
-            a.cargarPaqueteClienteComboBox(cliente);
+            a.cargarPaqueteClienteComboBox(cliente.getNickname());
 
         } else if (usuario instanceof DtAerolinea) {
             DtAerolinea aerolinea = (DtAerolinea) usuario;
@@ -106,7 +105,7 @@ public class InfoUsuario extends JFrame {
             sitioAerolineaConsultaUsuario.setText(aerolinea.getLinkWeb());
 
             jComboBoxRutasDeVuelo.setModel(a.getComboRutaDeVueloAerolineaModel());
-            a.cargarRutasDeVueloComboBoxAerolinea(aerolinea);
+            a.cargarRutasDeVueloComboBoxAerolinea(aerolinea.getNickname());
         }
 
         pack();

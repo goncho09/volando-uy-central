@@ -49,7 +49,7 @@ public class InfoPaquete extends JFrame {
             cantidadRutas.setText(Integer.toString(paquete.getRutaEnPaquete().size()));
 
             jComboBoxRutasVuelo.setModel(a.getComboRutaPaquete());
-            a.cargarRutasPaquete(paquete);
+            a.cargarRutasPaquete(paquete.getNombre());
 
 
         buttonVerRutaDeVuelo.addActionListener(new ActionListener() {
@@ -69,7 +69,7 @@ public class InfoPaquete extends JFrame {
                         public void windowClosing(WindowEvent e){setEnabled(true);
                         };
                     });
-                } catch (Exception ex) {
+                } catch (IllegalArgumentException ex) {
                     new VentanaMensaje(ex.getMessage());
                 }
 

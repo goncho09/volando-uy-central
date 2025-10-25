@@ -1,7 +1,9 @@
 package com.app.daos;
 
+import com.app.clases.Ciudad;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
+
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -31,6 +33,12 @@ public abstract class BaseDao<T, ID> {
     public T buscar(ID id) {
         return em.find(entityClass, id);
     }
+
+    public boolean existe(ID id) {
+        T entity = em.find(entityClass, id);
+        return entity != null;
+    }
+
 
     public void guardar(T entity) {
         EntityTransaction tx = em.getTransaction();
@@ -70,4 +78,17 @@ public abstract class BaseDao<T, ID> {
             throw e;
         }
     }
+
+    public EntityManager getEm() {
+        return em;
+    }
+
+    public void setEm(EntityManager em) {
+        this.em = em;
+    }
+
+    public Class<T> getEntityClass() {
+        return entityClass;
+    }
+
 }

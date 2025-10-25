@@ -24,7 +24,7 @@ import com.app.enums.TipoImagen;
 
 import com.app.utils.AuxiliarFunctions;
 
-public class InfoRutaDeVuelo extends JFrame{
+public class InfoRutaDeVuelo extends JFrame {
     private AuxiliarFunctions a;
 
     private JPanel panelGeneralRuta;
@@ -46,7 +46,7 @@ public class InfoRutaDeVuelo extends JFrame{
     private JLabel descripcionCorta;
     private ImageIcon imagen;
 
-    public InfoRutaDeVuelo(DtRuta ruta, AuxiliarFunctions auxiliar){
+    public InfoRutaDeVuelo(DtRuta ruta, AuxiliarFunctions auxiliar) {
         setContentPane(panelGeneralRuta);
         setTitle("Datos de la ruta: " + ruta.getNombre());
         setResizable(false);
@@ -72,21 +72,19 @@ public class InfoRutaDeVuelo extends JFrame{
 
         categoriasPanel.setLayout(new GridLayout(0, 2, 10, 5));
 
-        //new VentanaMensaje(ruta.getUrlImagen());
-
         try {
             Path userImg = AuxiliarFunctions.getImagePath(ruta.getUrlImagen(), TipoImagen.RUTA);
             if (!Files.exists(userImg)) {
-                throw new Exception("No se encontró la imagen");
+                throw new IllegalArgumentException("No se encontró la imagen");
             }
             imagen = new ImageIcon(userImg.toAbsolutePath().toString());
-        } catch (Exception e) {
+        } catch (IllegalArgumentException ex) {
             imagen = new ImageIcon(getClass().getResource("/pictures/rutas/default.png"));
         }
 
         AuxiliarFunctions.mostrarFoto(imagenRutaPanel, imagen, 175, 175, TipoImagen.RUTA);
 
-        if (ruta.getCategorias().isEmpty()){
+        if (ruta.getCategorias().isEmpty()) {
             categoriasPanel.add(new JLabel("No hay categorías."));
         } else {
             for (DtCategoria cat : ruta.getCategorias()) {
@@ -102,21 +100,21 @@ public class InfoRutaDeVuelo extends JFrame{
         buttonVerVuelo.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (jComboBoxVuelos.getSelectedItem() == null || jComboBoxVuelos.getSelectedItem().toString().equals("N/A")){
+                if (jComboBoxVuelos.getSelectedItem() == null || jComboBoxVuelos.getSelectedItem().toString().equals("N/A")) {
                     new VentanaMensaje("Seleccione un vuelo para poder verlo.");
                     return;
                 }
 
-                DtVuelo v =  (DtVuelo) jComboBoxVuelos.getSelectedItem();
+                DtVuelo v = (DtVuelo) jComboBoxVuelos.getSelectedItem();
                 InfoVuelo ventanaVuelo = new InfoVuelo(v.getDatos(), a);
                 setEnabled(false);
 
                 ventanaVuelo.addWindowListener(new WindowAdapter() {
-                            @Override
-                            public void windowClosing(WindowEvent e){setEnabled(true);
-                            };
-                        });
-
+                    @Override
+                    public void windowClosing(WindowEvent e) {
+                        setEnabled(true);
+                    }
+                });
             }
         });
     }
