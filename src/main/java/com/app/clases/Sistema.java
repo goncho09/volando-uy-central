@@ -464,9 +464,10 @@ public class Sistema implements ISistema {
             throw new IllegalArgumentException("La fecha de nacimiento no puede ser en el futuro.");
         }
 
+        c.setUrlImage(cliente.getUrlImage());
         c.setNombre(cliente.getNombre());
+
         c.setApellido(cliente.getApellido());
-        c.setEmail(cliente.getEmail());
         c.setFechaNacimiento(cliente.getFechaNacimiento());
         c.setNacionalidad(cliente.getNacionalidad());
         c.setTipoDocumento(cliente.getTipoDocumento());
@@ -522,9 +523,9 @@ public class Sistema implements ISistema {
             throw new IllegalArgumentException("Los campos no pueden estar vacíos.");
         }
 
-
         aerolineaExistente.setNombre(aerolinea.getNombre());
-        aerolineaExistente.setEmail(aerolinea.getEmail());
+        aerolineaExistente.setUrlImage(aerolinea.getUrlImage());
+
         aerolineaExistente.setDescripcion(aerolinea.getDescripcion());
         aerolineaExistente.setLinkWeb(aerolinea.getLinkWeb());
         userDao.actualizar(aerolineaExistente);
