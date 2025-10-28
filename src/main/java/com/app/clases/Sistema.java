@@ -775,7 +775,7 @@ public class Sistema implements ISistema {
     }
 
     public void altaReserva(DtReserva reserva) {
-        Cliente cliente = this.buscarCliente(reserva.getCliente().getNombre());
+        Cliente cliente = this.buscarCliente(reserva.getCliente().getNickname());
         Vuelo vuelo = this.buscarVuelo(reserva.getVuelo().getNombre());
 
         float costoAsiento = reserva.getTipoAsiento() == TipoAsiento.EJECUTIVO
@@ -894,7 +894,7 @@ public class Sistema implements ISistema {
     public Aerolinea buscarAerolinea(String nickname) {
         Aerolinea aerolinea = this.userDao.busarAerolinea(nickname);
         if (aerolinea == null) {
-            throw new IllegalArgumentException("El cliente no existe");
+            throw new IllegalArgumentException("La aerolinea no existe");
         }
         return aerolinea;
     }
