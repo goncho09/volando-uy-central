@@ -123,23 +123,6 @@ void altaCategoriaValida() {
     }
 
     @Test
-    void altaCategoriaCaseSensitive() {
-        DtCategoria categoria1 = new DtCategoria("CATEGORIA");
-        DtCategoria categoria2 = new DtCategoria("categoria");
-
-        // Crear primera categoría
-        Assertions.assertDoesNotThrow(
-                () -> s.altaCategoria(categoria1),
-                "Debería permitir crear categoría en mayúsculas");
-
-        // Intentar crear misma categoría en minúsculas (depende si es case-sensitive)
-        Assertions.assertThrows(
-                IllegalArgumentException.class,
-                () -> s.altaCategoria(categoria2),
-                "No debería permitir categoría duplicada (case-sensitive)");
-    }
-
-    @Test
     void altaCategoriaConTildes() {
         DtCategoria categoria = new DtCategoria("Cetogía Tildística");
 

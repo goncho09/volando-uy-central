@@ -120,7 +120,7 @@ public class Sistema implements ISistema {
     }
 
     public boolean aerolineaTieneRuta(DtAerolinea aerolinea, String nombre) {
-        Aerolinea a = this.userDao.busarAerolinea(aerolinea.getNickname());
+        Aerolinea a = this.userDao.buscarAerolinea(aerolinea.getNickname());
         if (a == null) {
             return false;
         }
@@ -134,7 +134,7 @@ public class Sistema implements ISistema {
 
     public List<DtReserva> listarReservasAerolinea(String nickname) {
         List<DtReserva> listaReservas = new ArrayList<>();
-        Aerolinea a = this.userDao.busarAerolinea(nickname);
+        Aerolinea a = this.userDao.buscarAerolinea(nickname);
         if (a == null) {
             return listaReservas;
         }
@@ -182,7 +182,7 @@ public class Sistema implements ISistema {
             throw new IllegalArgumentException("Costos no pueden ser negativos o 0");
         }
 
-        Aerolinea aerolinea = userDao.busarAerolinea(nombreAerolinea);
+        Aerolinea aerolinea = userDao.buscarAerolinea(nombreAerolinea);
 
         List<Categoria> categoriaList = new ArrayList<>();
 
@@ -478,7 +478,7 @@ public class Sistema implements ISistema {
     }
 
     public DtAerolinea getAerolinea(String nickname) {
-        Aerolinea a = this.userDao.busarAerolinea(nickname);
+        Aerolinea a = this.userDao.buscarAerolinea(nickname);
         if (a == null) {
             throw new IllegalArgumentException("No existe un usuario con ese nickname.");
         }
@@ -503,7 +503,8 @@ public class Sistema implements ISistema {
         }
         if (aerolinea.getDescripcion().isEmpty() || aerolinea.getNombre().isEmpty()
                 || aerolinea.getNickname().isEmpty() || aerolinea.getEmail().isEmpty()
-                || aerolinea.getPassword().isEmpty() || aerolinea.getUrlImage().isEmpty()) {
+                || aerolinea.getPassword() == null || aerolinea.getPassword().isEmpty()
+                || aerolinea.getUrlImage().isEmpty()) {
             throw new IllegalArgumentException("Los campos no pueden estar vacíos.");
         }
 
@@ -512,7 +513,7 @@ public class Sistema implements ISistema {
     }
 
     public void modificarAerolinea(DtAerolinea aerolinea) {
-        Aerolinea aerolineaExistente = this.userDao.busarAerolinea(aerolinea.getNickname());
+        Aerolinea aerolineaExistente = this.userDao.buscarAerolinea(aerolinea.getNickname());
 
         if (aerolineaExistente == null) {
             throw new IllegalArgumentException("Este usuario no existe.");
@@ -534,7 +535,7 @@ public class Sistema implements ISistema {
     }
 
     public void modificarAerolineaImagen(DtAerolinea aerolinea, String urlImagen) {
-        Aerolinea a = this.userDao.busarAerolinea(aerolinea.getNickname());
+        Aerolinea a = this.userDao.buscarAerolinea(aerolinea.getNickname());
         if (a == null) {
             throw new IllegalArgumentException("Este usuario no existe.");
         }
@@ -555,12 +556,18 @@ public class Sistema implements ISistema {
         return categoriasSeleccionadas;
     }
 
-
     public DtCiudad getCiudad(String nombre, String pais) {
-        return this.ciudadDao.buscar(new CiudadId(nombre, pais)).getDatos();
+        Ciudad c = this.ciudadDao.buscar(new CiudadId(nombre, pais));
+        if(c == null) {
+            throw new IllegalArgumentException("La ciudad no existe.");
+        }
+        return c.getDatos();
     }
 
     public DtReserva getReservaCliente(DtVuelo vuelo, DtCliente cliente, LocalDate fechaReserva) {
+        if(cliente == null){
+            throw new IllegalArgumentException("El cliente no existe");
+        }
         Cliente c = this.userDao.buscarCliente(cliente.getNickname());
         for (Reserva r : c.getReservas()) {
             if (r.getVuelo().getNombre().equals(vuelo.getNombre()) && r.getFecha().equals(fechaReserva)) {
@@ -571,6 +578,9 @@ public class Sistema implements ISistema {
     }
 
     public DtReserva getReservaAerolinea(DtVuelo vuelo, DtAerolinea aerolinea, LocalDate fechaReserva) {
+        if(aerolinea == null){
+            throw new IllegalArgumentException("La aerolinea no existe.");
+        }
         List<DtReserva> reservasAerolinea = this.listarReservasAerolinea(aerolinea.getNickname());
         for (DtReserva r : reservasAerolinea) {
             if (r.getVuelo().getNombre().equals(vuelo.getNombre()) && r.getFecha().equals(fechaReserva)) {
@@ -659,6 +669,13 @@ public class Sistema implements ISistema {
 
         Cliente c = this.userDao.buscarCliente(cliente.getNickname());
         Paquete p = this.paqueteDao.buscar(paquete.getNombre());
+
+        if (c == null) {
+            throw new IllegalArgumentException("El cliente no puede ser nulo");
+        }
+        if (p == null) {
+            throw new IllegalArgumentException("El paquete no puede ser nulo");
+        }
 
         for (CompraPaquete cp : c.getComprasPaquetes()) {
             if (cp.getPaquete().equals(p)) {
@@ -894,7 +911,7 @@ public class Sistema implements ISistema {
 
 
     public Aerolinea buscarAerolinea(String nickname) {
-        Aerolinea aerolinea = this.userDao.busarAerolinea(nickname);
+        Aerolinea aerolinea = this.userDao.buscarAerolinea(nickname);
         if (aerolinea == null) {
             throw new IllegalArgumentException("La aerolinea no existe");
         }

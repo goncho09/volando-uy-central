@@ -53,7 +53,7 @@ public class UserDao extends BaseDao<Usuario, String> {
         actualizar(aerolinea);
     }
 
-    public Aerolinea busarAerolinea(String nickname){
+    public Aerolinea buscarAerolinea(String nickname){
         return super.getEm().find(Aerolinea.class, nickname);
     }
 
