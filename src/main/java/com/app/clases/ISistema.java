@@ -102,5 +102,4 @@ public interface ISistema {
 
     // ---------- BD ---------- //
     void vaciarBD();
-//    void cargarDatos();
 }

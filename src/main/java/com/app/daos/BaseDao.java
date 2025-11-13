@@ -1,6 +1,5 @@
 package com.app.daos;
 
-import com.app.clases.Ciudad;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 

@@ -13,7 +13,7 @@ public class DtAerolinea extends DtUsuario {
 
     public DtAerolinea() {}
 
-    // alta aerolinea
+    // alta aerolinea con link
     public DtAerolinea(String nickname, String nombre, String email, String password, String urlImage, String descripcion, String linkWeb) {
         super(nickname, nombre, email, password, urlImage,new ArrayList<>(), new ArrayList<>());
         this.descripcion = descripcion;

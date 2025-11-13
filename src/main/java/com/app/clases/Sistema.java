@@ -508,7 +508,8 @@ public class Sistema implements ISistema {
         }
         if (aerolinea.getDescripcion().isEmpty() || aerolinea.getNombre().isEmpty()
                 || aerolinea.getNickname().isEmpty() || aerolinea.getEmail().isEmpty()
-                || aerolinea.getPassword().isEmpty() || aerolinea.getUrlImage().isEmpty()) {
+                || aerolinea.getPassword() == null || aerolinea.getPassword().isEmpty()
+                || aerolinea.getUrlImage().isEmpty()) {
             throw new IllegalArgumentException("Los campos no pueden estar vacíos.");
         }
 
@@ -560,9 +561,12 @@ public class Sistema implements ISistema {
         return categoriasSeleccionadas;
     }
 
-
     public DtCiudad getCiudad(String nombre, String pais) {
-        return this.ciudadDao.buscar(new CiudadId(nombre, pais)).getDatos();
+        Ciudad c = this.ciudadDao.buscar(new CiudadId(nombre, pais));
+        if(c == null) {
+            throw new IllegalArgumentException("La ciudad no existe.");
+        }
+        return c.getDatos();
     }
 
     public DtReserva getReservaCliente(DtVuelo vuelo, DtCliente cliente, LocalDate fechaReserva) {
