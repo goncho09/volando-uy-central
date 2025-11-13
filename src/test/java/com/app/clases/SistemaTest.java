@@ -150,12 +150,12 @@ public class SistemaTest {
 
     @Test
     void getReservaCliente(){
-        Assertions.assertNotNull(s.getReservaCliente(s.getVuelo("Vuelo_7"),s.getCliente("power"),LocalDate.of(2025,10,24)));
+        Assertions.assertNotNull(s.getReservaCliente(s.getVuelo("Vuelo_7"),s.getCliente("power"), LocalDate.now().plusDays(1)));
     }
 
     @Test
     void getReservaAerolinea(){
-        Assertions.assertNotNull(s.getReservaAerolinea(s.getVuelo("Vuelo_7"),s.getAerolinea("crystalMotus"),LocalDate.of(2025,10,24)));
+        Assertions.assertNotNull(s.getReservaAerolinea(s.getVuelo("Vuelo_7"),s.getAerolinea("crystalMotus"), LocalDate.now().plusDays(1)));
     }
 
     @Test

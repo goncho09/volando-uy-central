@@ -223,7 +223,7 @@ public class AltaDeVueloTest {
 
         s.altaVuelo(vuelo);
 
-        Assertions.assertDoesNotThrow(() -> s.getRutaDeVuelo("Vuelo11"),"El vuelo debería existir y no lanzar excepción");
+        Assertions.assertDoesNotThrow(() -> s.getVuelo("Vuelo_11"),"El vuelo debería existir y no lanzar excepción");
     }
 
 }

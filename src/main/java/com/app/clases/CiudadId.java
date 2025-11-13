@@ -4,6 +4,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 @Embeddable
 public class CiudadId implements Serializable {
@@ -28,5 +29,19 @@ public class CiudadId implements Serializable {
     public String getPais() { return pais; }
 
     public void setPais(String pais) { this.pais = pais; }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof CiudadId)) return false;
+        CiudadId that = (CiudadId) o;
+        return Objects.equals(nombre, that.nombre)
+                && Objects.equals(pais, that.pais);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(nombre, pais);
+    }
 
 }
