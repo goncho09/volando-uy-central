@@ -98,7 +98,14 @@ public class Sistema implements ISistema {
 
 
     public DtUsuario getUsuario(String nickname) {
-        Usuario u = this.userDao.buscar(nickname);
+        System.out.println("user nick " + nickname);
+        for (Usuario u : this.userDao.listar()) {
+            System.out.println("usuario nick " + u.getNickname());
+            if (u.getNickname().equals(nickname)) {
+                return u.getDatos();
+            }
+        }
+        Usuario u = this.userDao.buscarCliente(nickname.trim());
         if (u == null) throw new IllegalArgumentException("El usuario no existe");
         return u.getDatos();
     }

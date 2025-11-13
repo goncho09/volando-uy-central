@@ -621,6 +621,7 @@ public class Main extends JFrame {
                                 documentoT,
                                 Integer.parseInt(documentoRegistrarCliente.getText())
                         );
+
                         try {
                             s.registrarCliente(cliente);
                             new VentanaMensaje("Cliente creado correctamente.");
@@ -1146,18 +1147,20 @@ public class Main extends JFrame {
 
                     TipoDocumento tipoDocumento = tipoDocumentoClienteModificar.getSelectedItem().toString().equals("Cedula") ? TipoDocumento.CEDULA : TipoDocumento.PASAPORTE;
 
+                    String urlImage = "/src/main/pictures/users/default.png";
+
                     DtCliente cliente = new DtCliente(
-                            new DtUsuario(
-                                    nicknameModificarCliente.getText(),
-                                    nombreClienteModificar.getText(),
-                                    correoClienteModificar.getText()
-                            ),
+                            nicknameModificarCliente.getText(),
+                            nombreClienteModificar.getText(),
+                            correoClienteModificar.getText(),
+                            urlImage,
                             apellidoClienteModificar.getText(),
                             fecha,
                             nacionalidadClienteModificar.getText(),
                             tipoDocumento,
                             Integer.parseInt(numeroDocumentoModificarCliente.getText())
                     );
+
                     s.modificarCliente(cliente);
                     auxiliar.cargarUsuariosComboBox(cliente.getNickname()); // Funcion para actualizar valores.
                     new VentanaMensaje("Cliente actualizado correctamente.");
@@ -1180,6 +1183,7 @@ public class Main extends JFrame {
 
                     String urlImage = "/src/main/pictures/users/default.png";
 
+
                     DtAerolinea aerolinea = new DtAerolinea(
                             nicknameModificarAerolinea.getText(),
                             nombreModificarAerolinea.getText(),
@@ -1188,7 +1192,6 @@ public class Main extends JFrame {
                             descripcionModificarAerolinea.getText(),
                             link
                     );
-
 
                     s.modificarAerolinea(aerolinea);
                     auxiliar.cargarUsuariosComboBox(aerolinea.getNickname());

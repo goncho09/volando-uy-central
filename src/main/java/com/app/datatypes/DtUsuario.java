@@ -1,43 +1,40 @@
 package com.app.datatypes;
 
+import com.app.clases.Usuario;
+
+import java.util.List;
+
 public class DtUsuario {
     private String nickname;
     private String nombre;
     private String email;
     private String password;
     private String urlImage;
+    private List<Usuario> seguidores;
+    private List<Usuario> seguidos;
 
     public DtUsuario() {}
-    public DtUsuario(String nickname, String nombre, String email, String password, String urlImage){
+
+    // alta usuario
+    public DtUsuario(String nickname, String nombre, String email, String password, String urlImage, List<Usuario> seguidores, List<Usuario> seguidos){
         this.nickname = nickname;
         this.nombre = nombre;
         this.email = email;
         this.password = password;
         this.urlImage = urlImage;
+        this.seguidores = seguidores;
+        this.seguidos = seguidos;
     }
 
-    public DtUsuario(String nickname, String nombre, String email, String urlImage){
+    // get datos sin contraseña
+    public DtUsuario(String nickname, String nombre, String email, String urlImage, List<Usuario> seguidores, List<Usuario> seguidos){
         this.nickname = nickname;
         this.nombre = nombre;
         this.email = email;
         this.password = null;
         this.urlImage = urlImage;
-    }
-
-    public DtUsuario(String nickname, String nombre, String email){
-        this.nickname = nickname;
-        this.nombre = nombre;
-        this.email = email;
-        this.password = null;
-        this.urlImage = null;
-    }
-
-    public DtUsuario(DtUsuario usuario) {
-        this.nickname = usuario.getNickname();
-        this.nombre = usuario.getNombre();
-        this.email = usuario.getEmail();
-        this.password = usuario.getPassword();
-        this.urlImage = usuario.getUrlImage();
+        this.seguidores = seguidores;
+        this.seguidos = seguidos;
     }
 
     public String getNickname() {
@@ -71,6 +68,22 @@ public class DtUsuario {
     public void setPassword(String password) {this.password = password; }
 
     public void setUrlImage(String urlImage) {this.urlImage = urlImage; }
+
+    public List<Usuario> getSeguidores() {
+        return seguidores;
+    }
+
+    public void setSeguidores(List<Usuario> seguidores) {
+        this.seguidores = seguidores;
+    }
+
+    public List<Usuario> getSeguidos() {
+        return seguidos;
+    }
+
+    public void setSeguidos(List<Usuario> seguidos) {
+        this.seguidos = seguidos;
+    }
 
     @Override
     public String toString() { return this.nickname; }

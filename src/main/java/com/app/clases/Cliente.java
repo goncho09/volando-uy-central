@@ -29,8 +29,9 @@ public class Cliente extends Usuario{
     private List<Reserva> reservas = new ArrayList<>();
 
     public Cliente(){}
+
     public Cliente(DtCliente cliente) {
-        super(new DtUsuario(cliente.getNickname(), cliente.getNombre(), cliente.getEmail(), cliente.getPassword(), cliente.getUrlImage()));
+        super(new DtUsuario(cliente.getNickname(), cliente.getNombre(), cliente.getEmail(), cliente.getPassword(), cliente.getUrlImage(),new ArrayList<>(), new ArrayList<>()));
         this.setApellido(cliente.getApellido());
         this.setFechaNacimiento(cliente.getFechaNacimiento());
         this.setNacionalidad(cliente.getNacionalidad());
@@ -109,8 +110,9 @@ public class Cliente extends Usuario{
                 this.getNickname(),
                 this.getNombre(),
                 this.getEmail(),
-                this.getPassword(),
                 this.getUrlImage(),
+                this.getSeguidores(),
+                this.getSeguidos(),
                 this.getApellido(),
                 this.getFechaNacimiento(),
                 this.getNacionalidad(),

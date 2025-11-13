@@ -1,11 +1,9 @@
 package com.app.clases;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.DiscriminatorColumn;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Inheritance;
-import jakarta.persistence.InheritanceType;
-import jakarta.persistence.Id;
+import java.util.ArrayList;
+import java.util.List;
+
+import jakarta.persistence.*;
 
 import com.app.datatypes.DtUsuario;
 
@@ -27,13 +25,27 @@ public abstract class Usuario {
     @Column(nullable = false)
     private String urlImage;
 
-    public Usuario() {}
+    @ManyToMany
+    @JoinTable(
+            name = "usuario_seguidos",
+            joinColumns = @JoinColumn(name = "seguidor_nickname"),
+            inverseJoinColumns = @JoinColumn(name = "seguido_nickname")
+    )
+    private List<Usuario> seguidos;
+
+    @ManyToMany(mappedBy = "seguidos")
+    private List<Usuario> seguidores;
+
+    public Usuario() {};
+
     public Usuario(DtUsuario usuario){
         this.setNickname(usuario.getNickname());
         this.setNombre(usuario.getNombre());
         this.setEmail(usuario.getEmail());
         this.setPassword(usuario.getPassword());
         this.setUrlImage(usuario.getUrlImage());
+        this.setSeguidos(usuario.getSeguidos());
+        this.setSeguidores(usuario.getSeguidores());
     }
 
     public String getNickname() {
@@ -76,13 +88,30 @@ public abstract class Usuario {
         this.urlImage = urlImage;
     }
 
+    public List<Usuario> getSeguidos() {
+        return seguidos;
+    }
+
+    public void setSeguidos(List<Usuario> seguidos) {
+        this.seguidos = seguidos;
+    }
+
+    public List<Usuario> getSeguidores() {
+        return seguidores;
+    }
+
+    public void setSeguidores(List<Usuario> seguidores) {
+        this.seguidores = seguidores;
+    }
+
     public DtUsuario getDatos() {
         return new DtUsuario(
                 this.getNickname(),
                 this.getNombre(),
                 this.getEmail(),
-                this.getPassword(),
-                this.getUrlImage()
+                this.getUrlImage(),
+                this.getSeguidores(),
+                this.getSeguidos()
         );
     }
 
