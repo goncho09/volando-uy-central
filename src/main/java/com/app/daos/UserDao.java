@@ -21,10 +21,25 @@ public class UserDao extends BaseDao<Usuario, String> {
         super(em, Usuario.class);
     }
 
-    public Map<String, Usuario> obtenerUsuarios() {
-        return super.obtener(Usuario::getNickname);
+    public void agregarSeguidor(Usuario usuario, Usuario seguidor) {
+        usuario.agregarSeguidor(seguidor);
+        actualizar(usuario);
     }
 
+    public void eliminarSeguidor(Usuario usuario, Usuario seguidor) {
+        usuario.eliminarSeguidor(seguidor);
+        actualizar(usuario);
+    }
+
+    public void agregarSeguido(Usuario usuario, Usuario seguido) {
+        usuario.agregarSeguido(seguido);
+        actualizar(usuario);
+    }
+
+    public void eliminarSeguido(Usuario usuario, Usuario seguido) {
+        usuario.eliminarSeguido(seguido);
+        actualizar(usuario);
+    }
 
     // ----------- AEROLINEAS ----------- //
 

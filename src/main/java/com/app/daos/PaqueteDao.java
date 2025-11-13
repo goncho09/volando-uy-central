@@ -15,9 +15,6 @@ public class PaqueteDao extends BaseDao<Paquete, String> {
         super(em, Paquete.class);
     }
 
-    public Map<String, Paquete> obtenerPaquetes() {
-        return super.obtener(Paquete::getNombre);
-    }
 
     public void addRutaEnPaquete(Paquete p, RutaEnPaquete rp){
         p.addRutaEnPaquete(rp);
