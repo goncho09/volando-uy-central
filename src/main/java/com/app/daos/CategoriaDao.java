@@ -11,8 +11,5 @@ public class CategoriaDao extends BaseDao<Categoria, String> {
         super(em, Categoria.class);
     }
 
-    public Map<String, Categoria> obtenerCategorias() {
-        return super.obtener(Categoria::getNombre);
-    }
 
 }

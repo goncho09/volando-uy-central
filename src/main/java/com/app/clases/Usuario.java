@@ -104,6 +104,43 @@ public abstract class Usuario {
         this.seguidores = seguidores;
     }
 
+    public boolean sigueA(String nickname) {
+        for (Usuario u : this.seguidos) {
+            if (u.getNickname().equals(nickname)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void agregarSeguido(Usuario usuario) {
+        if (!this.sigueA(usuario.getNickname())) {
+            this.seguidos.add(usuario);
+            usuario.getSeguidores().add(this);
+        }
+    }
+
+    public void eliminarSeguido(Usuario usuario) {
+        if (this.sigueA(usuario.getNickname())) {
+            this.seguidos.remove(usuario);
+            usuario.getSeguidores().remove(this);
+        }
+    }
+
+    public void agregarSeguidor(Usuario usuario) {
+        if (!this.sigueA(usuario.getNickname())) {
+            this.seguidores.add(usuario);
+            usuario.getSeguidos().add(this);
+        }
+    }
+
+    public void eliminarSeguidor(Usuario usuario) {
+        if (this.sigueA(usuario.getNickname())) {
+            this.seguidores.remove(usuario);
+            usuario.getSeguidos().remove(this);
+        }
+    }
+
     public DtUsuario getDatos() {
         return new DtUsuario(
                 this.getNickname(),

@@ -85,6 +85,15 @@ public class DtUsuario {
         this.seguidos = seguidos;
     }
 
+    public boolean sigueA(String nickname) {
+        for (Usuario u : this.seguidos) {
+            if (u.getNickname().equals(nickname)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     @Override
     public String toString() { return this.nickname; }
 }
