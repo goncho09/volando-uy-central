@@ -1,6 +1,6 @@
 package com.app.datatypes;
 
-import com.app.clases.CompraPaquete;
+import com.app.clases.Usuario;
 import com.app.enums.TipoDocumento;
 
 import java.time.LocalDate;
@@ -17,8 +17,10 @@ public class DtCliente extends DtUsuario{
     private List<DtReserva> reservas;
 
     public DtCliente() {}
+
+    // alta cliente
     public DtCliente(String nickname, String nombre, String email, String password, String urlImage, String apellido, LocalDate fechaNacimiento, String nacionalidad, TipoDocumento tipoDocumento, int numeroDocumento) {
-        super(nickname, nombre, email, password, urlImage);
+        super(nickname, nombre, email, password, urlImage, new ArrayList<>(), new ArrayList<>());
         this.apellido = apellido;
         this.fechaNacimiento = fechaNacimiento;
         this.nacionalidad = nacionalidad;
@@ -28,28 +30,29 @@ public class DtCliente extends DtUsuario{
         this.reservas = new ArrayList<>();
     }
 
-    public DtCliente(DtUsuario usuario, String apellido, LocalDate fechaNacimiento, String nacionalidad, TipoDocumento tipoDocumento, int numeroDocumento) {
-        super(usuario.getNickname(), usuario.getNombre(), usuario.getEmail(),  usuario.getPassword(), usuario.getUrlImage());
+    // modificar cliente
+    public DtCliente(String nickname, String nombre, String email, String urlImage, String apellido, LocalDate fechaNacimiento, String nacionalidad, TipoDocumento tipoDocumento, int numeroDocumento) {
+        super(nickname, nombre, email,null, urlImage, new ArrayList<>(), new ArrayList<>());
         this.apellido = apellido;
         this.fechaNacimiento = fechaNacimiento;
         this.nacionalidad = nacionalidad;
         this.tipoDocumento = tipoDocumento;
         this.numeroDocumento = numeroDocumento;
-        this.comprasPaquetes = new ArrayList<>();
-        this.reservas = new ArrayList<>();
+        this.comprasPaquetes = this.getComprasPaquetes();
+        this.reservas = this.getReservas();
     }
 
-    public DtCliente(String nickname, String nombre, String email, String password, String urlImage, String apellido, LocalDate fechaNacimiento, String nacionalidad, TipoDocumento tipoDocumento, int numeroDocumento, List<DtCompraPaquete> paquetes, List<DtReserva> reservas) {
-        super(nickname, nombre, email, password, urlImage);
+    // get datos sin contraseña
+    public DtCliente(String nickname, String nombre, String email, String urlImage, List <Usuario> seguidores, List <Usuario> seguidos, String apellido, LocalDate fechaNacimiento, String nacionalidad, TipoDocumento tipoDocumento, int numeroDocumento, List<DtCompraPaquete> comprasPaquetes, List<DtReserva> reservas) {
+        super(nickname, nombre, email, null, urlImage, seguidores, seguidos);
         this.apellido = apellido;
         this.fechaNacimiento = fechaNacimiento;
         this.nacionalidad = nacionalidad;
         this.tipoDocumento = tipoDocumento;
         this.numeroDocumento = numeroDocumento;
-        this.comprasPaquetes = paquetes;
+        this.comprasPaquetes = comprasPaquetes;
         this.reservas = reservas;
     }
-
 
     public String getApellido() {return apellido; }
 

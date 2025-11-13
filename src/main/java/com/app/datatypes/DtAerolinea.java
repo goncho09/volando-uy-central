@@ -1,6 +1,7 @@
 package com.app.datatypes;
 
 import com.app.clases.RutaDeVuelo;
+import com.app.clases.Usuario;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,29 +12,26 @@ public class DtAerolinea extends DtUsuario {
     private List<RutaDeVuelo> rutasDeVuelo;
 
     public DtAerolinea() {}
-    public DtAerolinea(String nickname, String nombre, String email, String password, String urlImage, String descripcion) {
-        super(nickname, nombre, email, password, urlImage);
-        this.descripcion = descripcion;
-        this.linkWeb = "";
-        this.rutasDeVuelo = new ArrayList<>();
-    }
 
+    // alta aerolinea
     public DtAerolinea(String nickname, String nombre, String email, String password, String urlImage, String descripcion, String linkWeb) {
-        super(nickname, nombre, email, password, urlImage);
+        super(nickname, nombre, email, password, urlImage,new ArrayList<>(), new ArrayList<>());
         this.descripcion = descripcion;
-        this.linkWeb = linkWeb;
+        this.linkWeb = linkWeb.trim().isEmpty() ? "" : linkWeb;
         this.rutasDeVuelo = new ArrayList<>();
     }
 
-    public DtAerolinea(DtUsuario usuario, String descripcion, String linkWeb) {
-        super(usuario.getNickname(), usuario.getNombre(), usuario.getEmail(), usuario.getPassword(), usuario.getUrlImage());
+    // modificar aerolinea
+    public DtAerolinea(String nickname, String nombre, String email, String urlImage, String descripcion, String linkWeb) {
+        super(nickname, nombre, email,null, urlImage,null,null);
         this.descripcion = descripcion;
         this.linkWeb = linkWeb;
-        this.rutasDeVuelo = new ArrayList<>();
+        this.rutasDeVuelo = this.getRutasDeVuelo();
     }
 
-    public DtAerolinea(String nickname, String nombre, String email, String password, String urlImage, String descripcion, String linkWeb, List<RutaDeVuelo> rutasDeVuelo) {
-        super(nickname, nombre, email, password, urlImage);
+    // get datos sin password
+    public DtAerolinea(String nickname, String nombre, String email, String urlImage, List<Usuario> seguidores,List<Usuario> seguidos, String descripcion, String linkWeb, List<RutaDeVuelo> rutasDeVuelo) {
+        super(nickname, nombre, email, null, urlImage,seguidores, seguidos);
         this.descripcion = descripcion;
         this.linkWeb = linkWeb;
         this.rutasDeVuelo = rutasDeVuelo;

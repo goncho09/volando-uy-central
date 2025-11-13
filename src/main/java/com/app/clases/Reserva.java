@@ -167,16 +167,19 @@ public class Reserva {
         }
 
         DtCliente cliente = new DtCliente(
-                new DtUsuario(
-                        this.cliente.getNickname(),
-                        this.cliente.getNombre(),
-                        this.cliente.getEmail()
-                ),
+                this.cliente.getNickname(),
+                this.cliente.getNombre(),
+                this.cliente.getEmail(),
+                this.cliente.getUrlImage(),
+                this.cliente.getSeguidores(),
+                this.cliente.getSeguidos(),
                 this.cliente.getApellido(),
                 this.cliente.getFechaNacimiento(),
                 this.cliente.getNacionalidad(),
                 this.cliente.getTipoDocumento(),
-                this.cliente.getNumeroDocumento()
+                this.cliente.getNumeroDocumento(),
+                null,
+                null
         );
 
         return new DtReserva(
