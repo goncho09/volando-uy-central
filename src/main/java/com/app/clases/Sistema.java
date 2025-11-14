@@ -895,7 +895,9 @@ public class Sistema implements ISistema {
     }
 
     public DtReserva buscarReserva(DtReserva reserva) {
-        Reserva r = this.reservaDao.buscar(reserva.getCliente().getNickname(), reserva.getVuelo().getNombre(),
+        Reserva r = this.reservaDao.buscar(
+                this.userDao.buscarCliente(reserva.getCliente().getNickname()),
+                this.vueloDao.buscar(reserva.getVuelo().getNombre()),
                 reserva.getFecha());
         if (r == null) {
             throw new IllegalArgumentException("La reserva no existe");

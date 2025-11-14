@@ -22,6 +22,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
+import com.app.soap.Publicador;
 import com.app.utils.AuxiliarFunctions;
 
 import com.formdev.flatlaf.FlatLightLaf;
@@ -254,6 +255,7 @@ public class Main extends JFrame {
         // Configuración del JFrame
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(800, 700);
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
         setResizable(false);
         setLocationRelativeTo(null);
         setTitle("Admin Dashboard");
@@ -1625,5 +1627,6 @@ public class Main extends JFrame {
     public static void main(String[] args) {
         s = Factory.getSistema();
         SwingUtilities.invokeLater(() -> new Main());
+        Publicador.publicar();
     }
 }

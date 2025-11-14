@@ -1,5 +1,7 @@
 package com.app.daos;
 
+import com.app.clases.Cliente;
+import com.app.clases.Vuelo;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 
@@ -14,15 +16,15 @@ public class ReservaDao extends BaseDao<Reserva, String> {
         super(em, Reserva.class);
     }
 
-    public Reserva buscar(String nickname, String nombreVuelo, LocalDate fecha) {
+    public Reserva buscar(Cliente cliente, Vuelo vuelo, LocalDate fecha) {
         try {
             return super.getEm().createQuery(
                             "SELECT r FROM Reserva r WHERE r.cliente = :cliente AND r.fecha = :fecha AND r.vuelo = :vuelo",
                             Reserva.class
                     )
-                    .setParameter("cliente", nickname)
+                    .setParameter("cliente", cliente)
                     .setParameter("fecha", fecha)
-                    .setParameter("vuelo", nombreVuelo)
+                    .setParameter("vuelo", vuelo)
                     .getSingleResult();
         } catch (NoResultException e) {
             return null;
