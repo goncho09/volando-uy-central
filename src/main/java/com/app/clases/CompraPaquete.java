@@ -51,7 +51,7 @@ public class CompraPaquete {
                 this.cliente.getSeguidores(),
                 this.cliente.getSeguidos(),
                 this.cliente.getApellido(),
-                this.cliente.getFechaNacimiento(),
+                this.cliente.getFechaNacimiento().toString(),
                 this.cliente.getNacionalidad(),
                 this.cliente.getTipoDocumento(),
                 this.cliente.getNumeroDocumento(),

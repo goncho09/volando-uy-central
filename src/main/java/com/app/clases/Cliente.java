@@ -33,7 +33,7 @@ public class Cliente extends Usuario{
     public Cliente(DtCliente cliente) {
         super(new DtUsuario(cliente.getNickname(), cliente.getNombre(), cliente.getEmail(), cliente.getPassword(), cliente.getUrlImage(),new ArrayList<>(), new ArrayList<>()));
         this.setApellido(cliente.getApellido());
-        this.setFechaNacimiento(cliente.getFechaNacimiento());
+        this.setFechaNacimiento(LocalDate.parse(cliente.getFechaNacimiento()));
         this.setNacionalidad(cliente.getNacionalidad());
         this.setTipoDocumento(cliente.getTipoDocumento());
         this.setNumeroDocumento(cliente.getNumeroDocumento());
@@ -114,7 +114,7 @@ public class Cliente extends Usuario{
                 this.getSeguidores(),
                 this.getSeguidos(),
                 this.getApellido(),
-                this.getFechaNacimiento(),
+                this.getFechaNacimiento().toString(),
                 this.getNacionalidad(),
                 this.getTipoDocumento(),
                 this.getNumeroDocumento(),

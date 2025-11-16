@@ -11,7 +11,7 @@ public class DtPaquete {
     private float costo;
     private List<DtRutaEnPaquete> rutaEnPaquete;
 
-    public  DtPaquete(){};
+    public DtPaquete(){};
 
     public DtPaquete(String nombre, String descripcion, int validezDias, float descuento, float costo, List<DtRutaEnPaquete> rutaEnPaquete) {
         this.nombre = nombre;
@@ -32,7 +32,14 @@ public class DtPaquete {
     }
 
     public List<DtRutaEnPaquete> getRutaEnPaquete() {
+        if (rutaEnPaquete == null) {
+            rutaEnPaquete = new ArrayList<>();
+        }
         return rutaEnPaquete;
+    }
+
+    public void setRutaEnPaquete(List<DtRutaEnPaquete> rutaEnPaquete) {
+        this.rutaEnPaquete = rutaEnPaquete;
     }
 
     public float getCosto() {

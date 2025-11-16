@@ -9,7 +9,7 @@ import java.util.List;
 
 public class DtCliente extends DtUsuario{
     private String apellido;
-    private LocalDate fechaNacimiento;
+    private String fechaNacimiento;
     private String nacionalidad;
     private TipoDocumento tipoDocumento;
     private int numeroDocumento;
@@ -19,7 +19,7 @@ public class DtCliente extends DtUsuario{
     public DtCliente() {}
 
     // alta cliente
-    public DtCliente(String nickname, String nombre, String email, String password, String urlImage, String apellido, LocalDate fechaNacimiento, String nacionalidad, TipoDocumento tipoDocumento, int numeroDocumento) {
+    public DtCliente(String nickname, String nombre, String email, String password, String urlImage, String apellido, String fechaNacimiento, String nacionalidad, TipoDocumento tipoDocumento, int numeroDocumento) {
         super(nickname, nombre, email, password, urlImage, new ArrayList<>(), new ArrayList<>());
         this.apellido = apellido;
         this.fechaNacimiento = fechaNacimiento;
@@ -31,7 +31,7 @@ public class DtCliente extends DtUsuario{
     }
 
     // modificar cliente
-    public DtCliente(String nickname, String nombre, String email, String urlImage, String apellido, LocalDate fechaNacimiento, String nacionalidad, TipoDocumento tipoDocumento, int numeroDocumento) {
+    public DtCliente(String nickname, String nombre, String email, String urlImage, String apellido, String fechaNacimiento, String nacionalidad, TipoDocumento tipoDocumento, int numeroDocumento) {
         super(nickname, nombre, email,null, urlImage, new ArrayList<>(), new ArrayList<>());
         this.apellido = apellido;
         this.fechaNacimiento = fechaNacimiento;
@@ -43,7 +43,7 @@ public class DtCliente extends DtUsuario{
     }
 
     // get datos sin contraseña
-    public DtCliente(String nickname, String nombre, String email, String urlImage, List <Usuario> seguidores, List <Usuario> seguidos, String apellido, LocalDate fechaNacimiento, String nacionalidad, TipoDocumento tipoDocumento, int numeroDocumento, List<DtCompraPaquete> comprasPaquetes, List<DtReserva> reservas) {
+    public DtCliente(String nickname, String nombre, String email, String urlImage, List <Usuario> seguidores, List <Usuario> seguidos, String apellido, String fechaNacimiento, String nacionalidad, TipoDocumento tipoDocumento, int numeroDocumento, List<DtCompraPaquete> comprasPaquetes, List<DtReserva> reservas) {
         super(nickname, nombre, email, null, urlImage, seguidores, seguidos);
         this.apellido = apellido;
         this.fechaNacimiento = fechaNacimiento;
@@ -60,11 +60,11 @@ public class DtCliente extends DtUsuario{
         this.apellido = apellido;
     }
 
-    public LocalDate getFechaNacimiento() {
+    public String getFechaNacimiento() {
         return fechaNacimiento;
     }
 
-    public void setFechaNacimiento(LocalDate fechaNacimiento) {
+    public void setFechaNacimiento(String fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
 

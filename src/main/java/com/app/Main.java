@@ -617,7 +617,7 @@ public class Main extends JFrame {
                                 contrasena,
                                 urlImage,
                                 apellidoRegistrarCliente.getText(),
-                                fecha,
+                                fecha.toString(),
                                 nacionalidadRegistrarCliente.getText(),
                                 documentoT,
                                 Integer.parseInt(documentoRegistrarCliente.getText())
@@ -682,7 +682,7 @@ public class Main extends JFrame {
                     DtUsuario user = s.getUsuario(jComboBoxSeleccionarUsuarioModificar.getSelectedItem().toString());
 
                     if (user instanceof DtCliente cliente) { // Pregunta si mi usuario es un cliente
-                        LocalDate fechaCliente = cliente.getFechaNacimiento();
+                        LocalDate fechaCliente = LocalDate.parse(cliente.getFechaNacimiento());
                         int tipo = cliente.getTipoDocumento() == TipoDocumento.CEDULA ? 0 : 1;
 
                         jPanelModificarCliente.setVisible(true);
@@ -1156,7 +1156,7 @@ public class Main extends JFrame {
                             correoClienteModificar.getText(),
                             urlImage,
                             apellidoClienteModificar.getText(),
-                            fecha,
+                            fecha.toString(),
                             nacionalidadClienteModificar.getText(),
                             tipoDocumento,
                             Integer.parseInt(numeroDocumentoModificarCliente.getText())

@@ -1,5 +1,6 @@
 package com.app.soap;
 
+import java.io.File;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -12,6 +13,7 @@ import com.app.datatypes.DtRuta;
 import com.app.datatypes.DtPaquete;
 import com.app.datatypes.DtCiudad;
 import com.app.datatypes.DtCategoria;
+import com.app.enums.TipoImagen;
 
 import javax.jws.WebMethod;
 import javax.jws.WebService;
@@ -87,7 +89,7 @@ public interface VolandoServicePort {
 //    DtReserva buscarReserva(DtReserva reserva);
 
     @WebMethod
-    DtReserva getReservaCliente(DtVuelo vuelo, DtCliente cliente, LocalDate fechaReserva);
+    DtReserva getReservaCliente(DtVuelo vuelo, DtCliente cliente, String fechaReserva);
 
     @WebMethod
     DtReserva getReservaAerolinea(DtVuelo vuelo, DtAerolinea aerolinea, LocalDate fechaReserva);
@@ -204,5 +206,9 @@ public interface VolandoServicePort {
 
     // -------- Pasajeros --------- //
 //        List<DtPasajero> listarPasajeros(DtReserva reserva);
+
+    // -------- Auxiliar --------- //
+    @WebMethod
+    String guardarImagen(byte[] data, TipoImagen tipoImagen);
 
 }

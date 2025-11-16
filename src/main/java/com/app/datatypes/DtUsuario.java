@@ -2,6 +2,7 @@ package com.app.datatypes;
 
 import com.app.clases.Usuario;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DtUsuario {
@@ -70,6 +71,9 @@ public class DtUsuario {
     public void setUrlImage(String urlImage) {this.urlImage = urlImage; }
 
     public List<Usuario> getSeguidores() {
+        if(seguidores == null){
+            seguidores = new ArrayList<>();
+        }
         return seguidores;
     }
 
@@ -78,20 +82,14 @@ public class DtUsuario {
     }
 
     public List<Usuario> getSeguidos() {
+        if(seguidos == null){
+            seguidos = new ArrayList<>();
+        }
         return seguidos;
     }
 
     public void setSeguidos(List<Usuario> seguidos) {
         this.seguidos = seguidos;
-    }
-
-    public boolean sigueA(String nickname) {
-        for (Usuario u : this.seguidos) {
-            if (u.getNickname().equals(nickname)) {
-                return true;
-            }
-        }
-        return false;
     }
 
     @Override

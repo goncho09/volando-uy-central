@@ -1,10 +1,15 @@
 package com.app.soap;
 
+import javax.jws.WebMethod;
 import javax.jws.WebService;
 import com.app.clases.Factory;
 import com.app.clases.ISistema;
 import com.app.datatypes.*;
+import com.app.enums.TipoImagen;
+import com.app.utils.AuxiliarFunctions;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -105,8 +110,8 @@ public class VolandoService implements VolandoServicePort {
     }
 
     @Override
-    public DtReserva getReservaCliente(DtVuelo vuelo, DtCliente cliente, LocalDate fechaReserva) {
-        return sistema.getReservaCliente(vuelo, cliente, fechaReserva);
+    public DtReserva getReservaCliente(DtVuelo vuelo, DtCliente cliente, String fechaReserva) {
+        return sistema.getReservaCliente(vuelo, cliente, LocalDate.parse(fechaReserva));
     }
 
     @Override
@@ -272,5 +277,19 @@ public class VolandoService implements VolandoServicePort {
     }
 
 
+    // -------- Auxiliar --------- //
+    @Override
+    public String guardarImagen(byte[] data, TipoImagen tipoImagen){
+        try{
+            File tempFile = File.createTempFile("upload_", ".bin");
+            try (FileOutputStream fos = new FileOutputStream(tempFile)) {
+                fos.write(data);
+            }
+            File imagenGuardada = AuxiliarFunctions.guardarImagen(tempFile, tipoImagen);
+            return imagenGuardada.getName();
+        }catch(Exception e){
+            throw new IllegalArgumentException("Ha ocurrido un error al subir la imagen");
+        }
+    }
 
 }

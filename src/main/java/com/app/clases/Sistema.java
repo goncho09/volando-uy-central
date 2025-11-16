@@ -462,7 +462,9 @@ public class Sistema implements ISistema {
         this.auxiliar.validarTextoSoloLetra(cliente.getApellido());
         this.auxiliar.validarTextoSoloLetra(cliente.getNacionalidad());
 
-        if (cliente.getFechaNacimiento().isAfter(LocalDate.now())) {
+        LocalDate fechaNac = LocalDate.parse(cliente.getFechaNacimiento());
+
+        if (fechaNac.isAfter(LocalDate.now())) {
             throw new IllegalArgumentException("La fecha de nacimiento no puede ser en el futuro.");
         }
 
@@ -470,7 +472,7 @@ public class Sistema implements ISistema {
         c.setNombre(cliente.getNombre());
 
         c.setApellido(cliente.getApellido());
-        c.setFechaNacimiento(cliente.getFechaNacimiento());
+        c.setFechaNacimiento(fechaNac);
         c.setNacionalidad(cliente.getNacionalidad());
         c.setTipoDocumento(cliente.getTipoDocumento());
         c.setNumeroDocumento(cliente.getNumeroDocumento());
