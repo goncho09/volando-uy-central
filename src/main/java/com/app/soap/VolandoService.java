@@ -1,6 +1,5 @@
 package com.app.soap;
 
-import javax.jws.WebMethod;
 import javax.jws.WebService;
 import com.app.clases.Factory;
 import com.app.clases.ISistema;

@@ -255,8 +255,7 @@ public class Main extends JFrame {
         // Configuración del JFrame
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(800, 700);
-        setExtendedState(JFrame.MAXIMIZED_BOTH);
-        setResizable(false);
+        setResizable(true);
         setLocationRelativeTo(null);
         setTitle("Admin Dashboard");
         add(menuPrincipal);

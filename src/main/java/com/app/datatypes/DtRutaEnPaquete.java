@@ -8,6 +8,8 @@ public class DtRutaEnPaquete {
     private TipoAsiento tipoAsiento;
     private DtRuta rutaDeVuelo;
 
+    public DtRutaEnPaquete(){};
+
     public DtRutaEnPaquete(int cantidad, TipoAsiento tipoAsiento, DtRuta rutaDeVuelo) {
         this.cantidad = cantidad;
         this.tipoAsiento = tipoAsiento;
