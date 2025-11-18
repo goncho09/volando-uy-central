@@ -51,7 +51,7 @@ public class Reserva {
 
     public Reserva() {}
     public Reserva(DtReserva reserva, Cliente cliente, Vuelo vuelo) {
-        this.setFecha(reserva.getFecha());
+        this.setFecha(LocalDate.parse(reserva.getFecha()));
         this.setTipoAsiento(reserva.getTipoAsiento());
         this.setCantPasajes(reserva.getCantPasajes());
         this.setEquipajeExtra(reserva.getEquipajeExtra());
@@ -64,7 +64,7 @@ public class Reserva {
     }
 
     public Reserva(DtReserva reserva, Cliente cliente, Paquete paquete) {
-        this.setFecha(reserva.getFecha());
+        this.setFecha(LocalDate.parse(reserva.getFecha()));
         this.setTipoAsiento(reserva.getTipoAsiento());
         this.setCantPasajes(reserva.getCantPasajes());
         this.setEquipajeExtra(reserva.getEquipajeExtra());
@@ -183,7 +183,7 @@ public class Reserva {
         );
 
         return new DtReserva(
-                this.getFecha(),
+                this.getFecha().toString(),
                 this.getTipoAsiento(),
                 this.getCantPasajes(),
                 this.getEquipajeExtra(),

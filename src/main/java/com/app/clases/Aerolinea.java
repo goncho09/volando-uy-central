@@ -68,6 +68,11 @@ public class Aerolinea extends Usuario {
     }
 
     public DtAerolinea getDatos(){
+        List<DtRuta> listaRutas = new ArrayList<>();
+        for ( RutaDeVuelo r : this.getRutasDeVuelo()){
+            listaRutas.add(r.getDatos());
+        }
+
         return new DtAerolinea(
                 this.getNickname(),
                 this.getNombre(),
@@ -77,7 +82,7 @@ public class Aerolinea extends Usuario {
                 this.getSeguidos(),
                 this.getDescripcion(),
                 this.getLinkWeb(),
-                this.getRutasDeVuelo()
+                listaRutas
         );
     }
 

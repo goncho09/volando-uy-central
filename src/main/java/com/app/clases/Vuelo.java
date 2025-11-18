@@ -46,12 +46,12 @@ public class Vuelo {
 
     public Vuelo(DtVuelo vuelo, RutaDeVuelo rutaDeVuelo) {
         this.setNombre(vuelo.getNombre());
-        this.setFecha(vuelo.getFecha());
-        this.setDuracion(vuelo.getDuracion());
+        this.setFecha(LocalDate.parse(vuelo.getFecha()));
+        this.setDuracion(LocalTime.parse(vuelo.getDuracion()));
         this.setMaxTuristas(vuelo.getMaxTuristas());
         this.setMaxEjecutivos(vuelo.getMaxEjecutivos());
         this.setUrlImage(vuelo.getUrlImage());
-        this.setFechaAlta(vuelo.getFechaAlta());
+        this.setFechaAlta(LocalDate.parse(vuelo.getFechaAlta()));
         this.setRutaDeVuelo(rutaDeVuelo);
         this.setCantReservas(vuelo.getCantReservas());
     }
@@ -59,12 +59,12 @@ public class Vuelo {
     public DtVuelo getDatos() {
         return new DtVuelo(
                 this.getNombre(),
-                this.getFecha(),
-                this.getDuracion(),
+                this.getFecha().toString(),
+                this.getDuracion().toString(),
                 this.getMaxTuristas(),
                 this.getMaxEjecutivos(),
                 this.getUrlImage(),
-                this.getFechaAlta(),
+                this.getFechaAlta().toString(),
                 this.getRutaDeVuelo().getDatos(),
                 this.getCantReservas()
         );

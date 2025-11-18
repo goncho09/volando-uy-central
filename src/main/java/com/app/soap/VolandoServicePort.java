@@ -92,7 +92,7 @@ public interface VolandoServicePort {
     DtReserva getReservaCliente(DtVuelo vuelo, DtCliente cliente, String fechaReserva);
 
     @WebMethod
-    DtReserva getReservaAerolinea(DtVuelo vuelo, DtAerolinea aerolinea, LocalDate fechaReserva);
+    DtReserva getReservaAerolinea(DtVuelo vuelo, DtAerolinea aerolinea, String fechaReserva);
 
 //    List<DtReserva> listarReservasVuelo(String nombreVuelo); // Devuelve las reservas de un vuelo en específico
 
@@ -142,7 +142,7 @@ public interface VolandoServicePort {
     List<DtVuelo> listarVuelosRuta(String nombreRuta); // Busca vuelos por nombre de ruta
 
     @WebMethod
-    List<DtVuelo> listarVuelosRutaFecha(String nombreRuta, LocalDate fecha); // Busca vuelos por nombre de ruta y fecha opcional
+    List<DtVuelo> listarVuelosRutaFecha(String nombreRuta, String fecha); // Busca vuelos por nombre de ruta y fecha opcional
 
     @WebMethod
     List<DtVuelo> getVuelosRutaDeVuelo(DtRuta ruta);

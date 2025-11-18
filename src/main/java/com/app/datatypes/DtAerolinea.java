@@ -9,7 +9,7 @@ import java.util.List;
 public class DtAerolinea extends DtUsuario {
     private String descripcion;
     private String linkWeb;
-    private List<RutaDeVuelo> rutasDeVuelo;
+    private List<DtRuta> rutasDeVuelo;
 
     public DtAerolinea() {}
 
@@ -30,7 +30,7 @@ public class DtAerolinea extends DtUsuario {
     }
 
     // get datos sin password
-    public DtAerolinea(String nickname, String nombre, String email, String urlImage, List<Usuario> seguidores,List<Usuario> seguidos, String descripcion, String linkWeb, List<RutaDeVuelo> rutasDeVuelo) {
+    public DtAerolinea(String nickname, String nombre, String email, String urlImage, List<Usuario> seguidores,List<Usuario> seguidos, String descripcion, String linkWeb, List<DtRuta> rutasDeVuelo) {
         super(nickname, nombre, email, null, urlImage,seguidores, seguidos);
         this.descripcion = descripcion;
         this.linkWeb = linkWeb;
@@ -45,16 +45,8 @@ public class DtAerolinea extends DtUsuario {
         return this.linkWeb;
     }
 
-    public List<RutaDeVuelo> getRutasDeVuelo() {
+    public List<DtRuta> getRutasDeVuelo() {
         return rutasDeVuelo;
-    }
-
-    public List<DtRuta> listarRutasDeVuelo() {
-        List<DtRuta> listaRutas = new ArrayList<>();
-        for ( RutaDeVuelo r : this.getRutasDeVuelo()){
-            listaRutas.add(r.getDatos());
-        }
-        return listaRutas;
     }
 
     public void setDescripcion(String descripcion) {
@@ -65,7 +57,7 @@ public class DtAerolinea extends DtUsuario {
         this.linkWeb = linkWeb;
     }
 
-    public void setRutasDeVuelo(List<RutaDeVuelo> rutasDeVuelo) {
+    public void setRutasDeVuelo(List<DtRuta> rutasDeVuelo) {
         this.rutasDeVuelo = rutasDeVuelo;
     }
 

@@ -12,6 +12,7 @@
     <name>Volando App</name>
 
     <dependencies>
+
         <dependency>
             <groupId>jakarta.persistence</groupId>
             <artifactId>jakarta.persistence-api</artifactId>

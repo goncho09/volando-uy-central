@@ -3,11 +3,11 @@ package com.app.datatypes;
 import com.app.enums.TipoAsiento;
 import com.app.enums.MetodoPago;
 
-import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class DtReserva {
-    private LocalDate fecha;
+    private String fecha;
     private TipoAsiento tipoAsiento;
     private int cantPasajes;
     private int equipajeExtra;
@@ -20,7 +20,7 @@ public class DtReserva {
 
     public DtReserva() {}
 
-    public DtReserva(LocalDate fecha, TipoAsiento tipoAsiento, int cantPasajes, int equipajeExtra, float costo, List<DtPasajero> pasajeros, DtCliente cliente, DtVuelo vuelo, MetodoPago metodoPago) {
+    public DtReserva(String fecha, TipoAsiento tipoAsiento, int cantPasajes, int equipajeExtra, float costo, List<DtPasajero> pasajeros, DtCliente cliente, DtVuelo vuelo, MetodoPago metodoPago) {
         this.fecha = fecha;
         this.tipoAsiento = tipoAsiento;
         this.cantPasajes = cantPasajes;
@@ -32,7 +32,7 @@ public class DtReserva {
         this.metodoPago = metodoPago;
     }
 
-    public DtReserva(LocalDate fecha, TipoAsiento tipoAsiento, int cantPasajes, int equipajeExtra, float costo, List<DtPasajero> pasajeros, DtCliente cliente, DtVuelo vuelo, MetodoPago metodoPago, DtPaquete paquetePago) {
+    public DtReserva(String fecha, TipoAsiento tipoAsiento, int cantPasajes, int equipajeExtra, float costo, List<DtPasajero> pasajeros, DtCliente cliente, DtVuelo vuelo, MetodoPago metodoPago, DtPaquete paquetePago) {
         this.fecha = fecha;
         this.tipoAsiento = tipoAsiento;
         this.cantPasajes = cantPasajes;
@@ -45,11 +45,11 @@ public class DtReserva {
         this.paquetePago = paquetePago;
     }
 
-    public LocalDate getFecha() {
+    public String getFecha() {
         return fecha;
     }
 
-    public void setFecha(LocalDate fecha) {
+    public void setFecha(String fecha) {
         this.fecha = fecha;
     }
 
@@ -89,9 +89,7 @@ public class DtReserva {
         return pasajeros;
     }
 
-    public void setPasajeros(List<DtPasajero> pasajeros) {
-        this.pasajeros = pasajeros;
-    }
+    public void setPasajeros(List<DtPasajero> pasajeros) {this.pasajeros = pasajeros;}
 
     public DtCliente getCliente() {
         return cliente;

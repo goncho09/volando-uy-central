@@ -487,7 +487,7 @@ public class Main extends JFrame {
 
                                 if (metodoPago == MetodoPago.PAQUETE) {
                                     reserva = new DtReserva(
-                                            fecha,
+                                            fecha.toString(),
                                             tipoAsiento,
                                             pasajes,
                                             equipajeExtra,
@@ -500,7 +500,7 @@ public class Main extends JFrame {
                                     );
                                 } else {
                                     reserva = new DtReserva(
-                                            fecha,
+                                            fecha.toString(),
                                             tipoAsiento,
                                             pasajes,
                                             equipajeExtra,
@@ -778,7 +778,7 @@ public class Main extends JFrame {
 
                     String urlImage = imagenGuardada.getName();
 
-                    DtVuelo dtVuelo = new DtVuelo(nombre, fecha, hora, (Integer) jSpinnerTuristasAltaVuelo.getValue(), (Integer) jSpinnerEjecutivosAltaVuelo.getValue(), urlImage, LocalDate.now(), rutaDeVuelo, 0);
+                    DtVuelo dtVuelo = new DtVuelo(nombre, fecha.toString(), hora.toString(), (Integer) jSpinnerTuristasAltaVuelo.getValue(), (Integer) jSpinnerEjecutivosAltaVuelo.getValue(), urlImage, LocalDate.now().toString(), rutaDeVuelo, 0);
 
                     try {
                         s.altaVuelo(dtVuelo);
@@ -952,11 +952,11 @@ public class Main extends JFrame {
                     DtRuta ruta = new DtRuta(nombreAltaRutaDeVuelo.getText(),
                             descripcionAltaRutaDeVuelo.getText(),
                             descripcionCortaAltaRutaDeVuelo.getText(),
-                            horaRuta,
+                            horaRuta.toString(),
                             costoTurista,
                             costoEjecutivo,
                             costoEquipaje,
-                            LocalDate.now(),
+                            LocalDate.now().toString(),
                             urlImage,
                             s.buscarCategoriasPorNombre(nombresCategorias),
                             ciudadOrigen,

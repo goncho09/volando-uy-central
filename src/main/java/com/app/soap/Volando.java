@@ -1,6 +1,5 @@
 package com.app.soap;
 
-import javax.jws.WebMethod;
 import javax.jws.WebService;
 import com.app.clases.Factory;
 import com.app.clases.ISistema;
@@ -14,7 +13,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @WebService(endpointInterface = "com.app.soap.VolandoServicePort")
-public class VolandoService implements VolandoServicePort {
+public class Volando implements VolandoServicePort {
 
     private static ISistema sistema = Factory.getSistema();
 
@@ -115,8 +114,8 @@ public class VolandoService implements VolandoServicePort {
     }
 
     @Override
-    public DtReserva getReservaAerolinea(DtVuelo vuelo, DtAerolinea aerolinea, LocalDate fechaReserva) {
-        return sistema.getReservaAerolinea(vuelo, aerolinea, fechaReserva);
+    public DtReserva getReservaAerolinea(DtVuelo vuelo, DtAerolinea aerolinea, String fechaReserva) {
+        return sistema.getReservaAerolinea(vuelo, aerolinea, LocalDate.parse(fechaReserva));
     }
 
     @Override
@@ -184,8 +183,8 @@ public class VolandoService implements VolandoServicePort {
     }
 
     @Override
-    public List<DtVuelo> listarVuelosRutaFecha(String nombreRuta, LocalDate fecha) {
-        return sistema.listarVuelosRutaFecha(nombreRuta, fecha);
+    public List<DtVuelo> listarVuelosRutaFecha(String nombreRuta, String fecha) {
+        return sistema.listarVuelosRutaFecha(nombreRuta, LocalDate.parse(fecha));
     }
 
     @Override

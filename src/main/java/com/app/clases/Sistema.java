@@ -166,7 +166,7 @@ public class Sistema implements ISistema {
         if (datosRuta.getNombre() == null || datosRuta.getNombre().isEmpty())
             throw new IllegalArgumentException("Nombre de ruta no puede ser vacío");
 
-        if (datosRuta.getDuracion().isBefore(LocalTime.of(0, 1))) {
+        if (LocalTime.parse(datosRuta.getDuracion()).isBefore(LocalTime.of(0, 1))) {
             throw new IllegalArgumentException("La duración debe ser > 0 minutos");
         }
 
@@ -900,7 +900,7 @@ public class Sistema implements ISistema {
         Reserva r = this.reservaDao.buscar(
                 this.userDao.buscarCliente(reserva.getCliente().getNickname()),
                 this.vueloDao.buscar(reserva.getVuelo().getNombre()),
-                reserva.getFecha());
+                LocalDate.parse(reserva.getFecha()));
         if (r == null) {
             throw new IllegalArgumentException("La reserva no existe");
         }

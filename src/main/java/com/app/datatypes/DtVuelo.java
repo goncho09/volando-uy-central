@@ -1,21 +1,19 @@
 package com.app.datatypes;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
 
 public class DtVuelo {
     private String nombre;
-    private LocalDate fecha;
-    private LocalTime duracion;
+    private String fecha;
+    private String duracion;
     private int maxTuristas;
     private int maxEjecutivos;
     private String urlImage;
-    private LocalDate fechaAlta;
+    private String fechaAlta;
     private DtRuta rutaDeVuelo;
     private int cantReservas;
 
     public DtVuelo(){};
-    public DtVuelo(String nombre, LocalDate fecha, LocalTime duracion, int maxTuristas, int maxEjecutivos, String urlImage, LocalDate fechaAlta, DtRuta rutaDeVuelo, int cantReservas) {
+    public DtVuelo(String nombre, String fecha, String duracion, int maxTuristas, int maxEjecutivos, String urlImage, String fechaAlta, DtRuta rutaDeVuelo, int cantReservas) {
         this.nombre = nombre;
         this.fecha = fecha;
         this.duracion = duracion;
@@ -39,19 +37,19 @@ public class DtVuelo {
         this.nombre = nombre;
     }
 
-    public LocalDate getFecha() {
+    public String getFecha() {
         return fecha;
     }
 
-    public void setFecha(LocalDate fecha) {
+    public void setFecha(String fecha) {
         this.fecha = fecha;
     }
 
-    public LocalTime getDuracion() {
+    public String getDuracion() {
         return duracion;
     }
 
-    public void setDuracion(LocalTime duracion) {
+    public void setDuracion(String duracion) {
         this.duracion = duracion;
     }
 
@@ -75,17 +73,19 @@ public class DtVuelo {
 
     public void setUrlImage(String urlImage) {this.urlImage = urlImage; }
 
-    public LocalDate getFechaAlta() {
+    public String getFechaAlta() {
         return fechaAlta;
     }
 
-    public void setFechaAlta(LocalDate fechaAlta) {
+    public void setFechaAlta(String fechaAlta) {
         this.fechaAlta = fechaAlta;
     }
 
     public int getCantReservas(){
         return this.cantReservas;
     }
+
+    public void setCantReservas(int cantReservas) {this.cantReservas = cantReservas; }
 
     public DtRuta getRutaDeVuelo() {
         return rutaDeVuelo;

@@ -1,7 +1,5 @@
 package com.app.datatypes;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.List;
 
 import com.app.enums.EstadoRuta;
@@ -10,11 +8,11 @@ public class DtRuta {
     private String nombre;
     private String descripcion;
     private String descripcionCorta;
-    private LocalTime duracion;
+    private String duracion;
     private float costoTurista;
     private float costoEjecutivo;
     private float equipajeExtra;
-    private LocalDate fechaAlta;
+    private String fechaAlta;
     private String urlImagen;
     private EstadoRuta estado;
     private List<DtCategoria> categorias;
@@ -22,7 +20,7 @@ public class DtRuta {
     private DtCiudad ciudadDestino;
 
     public DtRuta() {}
-    public DtRuta(String nombre, String descripcion, String descripcionCorta, LocalTime duracion, float costoTurista, float costoEjecutivo, float equipajeExtra, LocalDate fechaAlta, String urlImagen, List<DtCategoria> categorias, DtCiudad origen, DtCiudad destino) {
+    public DtRuta(String nombre, String descripcion, String descripcionCorta, String duracion, float costoTurista, float costoEjecutivo, float equipajeExtra, String fechaAlta, String urlImagen, List<DtCategoria> categorias, DtCiudad origen, DtCiudad destino) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.descripcionCorta = descripcionCorta;
@@ -38,7 +36,7 @@ public class DtRuta {
         this.ciudadDestino = destino;
     }
 
-    public DtRuta(String nombre, String descripcion, String descripcionCorta, LocalTime duracion, float costoTurista, float costoEjecutivo, float equipajeExtra, LocalDate fechaAlta, String urlImagen, EstadoRuta estado, List<DtCategoria> categorias, DtCiudad origen, DtCiudad destino) {
+    public DtRuta(String nombre, String descripcion, String descripcionCorta, String duracion, float costoTurista, float costoEjecutivo, float equipajeExtra, String fechaAlta, String urlImagen, EstadoRuta estado, List<DtCategoria> categorias, DtCiudad origen, DtCiudad destino) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.duracion = duracion;
@@ -74,11 +72,11 @@ public class DtRuta {
 
     public void setDescripcionCorta(String descripcionCorta) { this.descripcionCorta = descripcionCorta; }
 
-    public LocalTime getDuracion() {
+    public String getDuracion() {
         return duracion;
     }
 
-    public void setDuracion(LocalTime duracion) {
+    public void setDuracion(String duracion) {
         this.duracion = duracion;
     }
 
@@ -106,11 +104,11 @@ public class DtRuta {
         this.equipajeExtra = equipajeExtra;
     }
 
-    public LocalDate getFechaAlta() {
+    public String getFechaAlta() {
         return fechaAlta;
     }
 
-    public void setFechaAlta(LocalDate fechaAlta) {
+    public void setFechaAlta(String fechaAlta) {
         this.fechaAlta = fechaAlta;
     }
 

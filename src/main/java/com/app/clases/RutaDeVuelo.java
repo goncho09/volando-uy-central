@@ -84,11 +84,11 @@ public class RutaDeVuelo {
         this.setNombre(ruta.getNombre());
         this.setDescripcion(ruta.getDescripcion());
         this.setDescripcionCorta(ruta.getDescripcionCorta());
-        this.setDuracion(ruta.getDuracion());
+        this.setDuracion(LocalTime.parse(ruta.getDuracion()));
         this.setCostoTurista(ruta.getCostoTurista());
         this.setCostoEjecutivo(ruta.getCostoEjecutivo());
         this.setEquipajeExtra(ruta.getEquipajeExtra());
-        this.setFechaAlta(ruta.getFechaAlta());
+        this.setFechaAlta(LocalDate.parse(ruta.getFechaAlta()));
         this.setUrlImagen(ruta.getUrlImagen());
         this.setEstado(ruta.getEstado());
         this.setCategorias(categorias);
@@ -199,11 +199,11 @@ public class RutaDeVuelo {
                 this.getNombre(),
                 this.getDescripcion(),
                 this.getDescripcionCorta(),
-                this.getDuracion(),
+                this.getDuracion().toString(),
                 this.getCostoTurista(),
                 this.getCostoEjecutivo(),
                 this.getEquipajeExtra(),
-                this.getFechaAlta(),
+                this.getFechaAlta().toString(),
                 this.getUrlImagen(),
                 this.getEstado(),
                 categoriaList,

@@ -207,7 +207,7 @@ public class AuxiliarFunctions {
     public void cargarRutasDeVueloComboBoxAerolinea(String nickname) {
         comboRutaDeVueloAerolinea.removeAllElements();
         DtAerolinea aerolineaExistente = sistema.getAerolinea(nickname);
-        List<DtRuta> rutas = aerolineaExistente.listarRutasDeVuelo();
+        List<DtRuta> rutas = aerolineaExistente.getRutasDeVuelo();
         if (rutas != null && !rutas.isEmpty()) {
             for (DtRuta r : rutas) {
                 comboRutaDeVueloAerolinea.addElement(r);
@@ -223,7 +223,7 @@ public class AuxiliarFunctions {
     public void cargarRutasDeVueloComboBoxAerolinea(String nickname, String nombreRuta) {
         comboRutaDeVueloAerolinea.removeAllElements();
         DtAerolinea aerolineaExistente = sistema.getAerolinea(nickname);
-        List<DtRuta> rutas = aerolineaExistente.listarRutasDeVuelo();
+        List<DtRuta> rutas = aerolineaExistente.getRutasDeVuelo();
         if (rutas != null && !rutas.isEmpty()) {
             for (DtRuta r : rutas) {
                 comboRutaDeVueloAerolinea.addElement(r);

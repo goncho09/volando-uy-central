@@ -13,7 +13,7 @@ public class Publicador {
         String url = "http://" + ip + ":" + port + path;
 
         System.out.println("Publicando servicio SOAP en: " + url);
-        Endpoint.publish(url, new VolandoService());
+        Endpoint.publish(url, new Volando());
         System.out.println("Servicio SOAP publicado.");
     }
 }
