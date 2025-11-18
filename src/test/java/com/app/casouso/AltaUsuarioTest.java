@@ -34,7 +34,7 @@ class AltaUsuarioTest {
                 "1234",
                 "default.png",
                 "Mary",
-                fechaNacimiento,
+                fechaNacimiento.toString(),
                 "Tokyo",
                 TipoDocumento.CEDULA,
                 12345678
@@ -57,7 +57,7 @@ class AltaUsuarioTest {
                 "1234",
                 "default.png",
                 "Mary",
-                fechaNacimiento,
+                fechaNacimiento.toString(),
                 "Tokyo",
                 TipoDocumento.CEDULA,
                 12345678
@@ -80,7 +80,7 @@ class AltaUsuarioTest {
                 "1234",
                 "default.png",
                 "Mary",
-                fechaNacimiento,
+                fechaNacimiento.toString(),
                 "Tokyo",
                 TipoDocumento.CEDULA,
                 12345678
@@ -103,7 +103,7 @@ class AltaUsuarioTest {
                 "1234",
                 "default.png",
                 "Mary",
-                fechaNacimiento,
+                fechaNacimiento.toString(),
                 "Tokyo",
                 TipoDocumento.CEDULA,
                 12345678
@@ -126,7 +126,7 @@ class AltaUsuarioTest {
                 "1234",
                 "default.png",
                 "Mary",
-                fechaNacimiento,
+                fechaNacimiento.toString(),
                 "Tokyo",
                 TipoDocumento.CEDULA,
                 12345678
@@ -149,7 +149,7 @@ class AltaUsuarioTest {
                 "1234",
                 "default.png",
                 "Mary",
-                fechaNacimiento,
+                fechaNacimiento.toString(),
                 "Tokyo",
                 TipoDocumento.CEDULA,
                 12345678
@@ -172,7 +172,7 @@ class AltaUsuarioTest {
                 "",
                 "default.png",
                 "Mary",
-                fechaNacimiento,
+                fechaNacimiento.toString(),
                 "Tokyo",
                 TipoDocumento.CEDULA,
                 12345678
@@ -199,7 +199,7 @@ class AltaUsuarioTest {
                 "1234",
                 "default.png",
                 "Gomez",
-                fechaNacimiento,
+                fechaNacimiento.toString(),
                 "Tokyo",
                 TipoDocumento.CEDULA,
                 12345678
@@ -224,7 +224,7 @@ class AltaUsuarioTest {
                 "1234",
                 "default.png",
                 "",
-                fechaNacimiento,
+                fechaNacimiento.toString(),
                 "Tokyo",
                 TipoDocumento.CEDULA,
                 12345678
@@ -247,7 +247,7 @@ class AltaUsuarioTest {
                 "1234",
                 "default.png",
                 "Mary432432",
-                fechaNacimiento,
+                fechaNacimiento.toString(),
                 "Tokyo",
                 TipoDocumento.CEDULA,
                 12345678
@@ -270,7 +270,7 @@ class AltaUsuarioTest {
                 "1234",
                 "default.png",
                 "Gomez",
-                fechaNacimiento,
+                fechaNacimiento.toString(),
                 "",
                 TipoDocumento.CEDULA,
                 12345678
@@ -293,7 +293,7 @@ class AltaUsuarioTest {
                 "1234",
                 "default.png",
                 "Mary432432",
-                fechaNacimiento,
+                fechaNacimiento.toString(),
                 "Tokyo423432",
                 TipoDocumento.CEDULA,
                 12345678
@@ -316,7 +316,7 @@ class AltaUsuarioTest {
                 "1234",
                 "default.png",
                 "Mary",
-                fechaNacimiento,
+                fechaNacimiento.toString(),
                 "Tokyo",
                 TipoDocumento.CEDULA,
                 1234567891
@@ -340,7 +340,7 @@ class AltaUsuarioTest {
                 "1234",
                 "default.png",
                 "Mary",
-                fechaFutura,
+                fechaFutura.toString(),
                 "Tokyo",
                 TipoDocumento.CEDULA,
                 12345678

@@ -32,7 +32,7 @@ public class ModificarDatosDeUsuarioTest {
                 "1234",
                 "default.png",
                 "Mary",
-                fechaNacimiento,
+                fechaNacimiento.toString(),
                 "Tokyo",
                 TipoDocumento.CEDULA,
                 12345678
@@ -55,7 +55,7 @@ public class ModificarDatosDeUsuarioTest {
                 "1234",
                 "default.png",
                 "Mary",
-                fechaNacimiento,
+                fechaNacimiento.toString(),
                 "Tokyo",
                 TipoDocumento.CEDULA,
                 12345678
@@ -78,7 +78,7 @@ public class ModificarDatosDeUsuarioTest {
                 "1234",
                 "default.png",
                 "Mary",
-                fechaNacimiento,
+                fechaNacimiento.toString(),
                 "Tokyo",
                 TipoDocumento.CEDULA,
                 12345678
@@ -101,7 +101,7 @@ public class ModificarDatosDeUsuarioTest {
                 "1234",
                 "default.png",
                 "Mary",
-                fechaNacimiento,
+                fechaNacimiento.toString(),
                 "Tokyo",
                 TipoDocumento.CEDULA,
                 12345678
@@ -124,7 +124,7 @@ public class ModificarDatosDeUsuarioTest {
                 "1234",
                 "default.png",
                 "Mary",
-                fechaNacimiento,
+                fechaNacimiento.toString(),
                 "Tokyo",
                 TipoDocumento.CEDULA,
                 12345678
@@ -151,7 +151,7 @@ public class ModificarDatosDeUsuarioTest {
                 "1234",
                 "default.png",
                 "",
-                fechaNacimiento,
+                fechaNacimiento.toString(),
                 "Tokyo",
                 TipoDocumento.CEDULA,
                 12345678
@@ -174,7 +174,7 @@ public class ModificarDatosDeUsuarioTest {
                 "1234",
                 "default.png",
                 "Mary432432",
-                fechaNacimiento,
+                fechaNacimiento.toString(),
                 "Tokyo",
                 TipoDocumento.CEDULA,
                 12345678
@@ -197,7 +197,7 @@ public class ModificarDatosDeUsuarioTest {
                 "1234",
                 "default.png",
                 "Gomez",
-                fechaNacimiento,
+                fechaNacimiento.toString(),
                 "",
                 TipoDocumento.CEDULA,
                 12345678
@@ -220,7 +220,7 @@ public class ModificarDatosDeUsuarioTest {
                 "1234",
                 "default.png",
                 "Mary432432",
-                fechaNacimiento,
+                fechaNacimiento.toString(),
                 "Tokyo423432",
                 TipoDocumento.CEDULA,
                 12345678
@@ -243,7 +243,7 @@ public class ModificarDatosDeUsuarioTest {
                 "1234",
                 "default.png",
                 "Mary",
-                fechaNacimiento,
+                fechaNacimiento.toString(),
                 "Tokyo",
                 TipoDocumento.CEDULA,
                 1234567891
@@ -267,7 +267,7 @@ public class ModificarDatosDeUsuarioTest {
                 "1234",
                 "default.png",
                 "Mary",
-                fechaFutura,
+                fechaFutura.toString(),
                 "Tokyo",
                 TipoDocumento.CEDULA,
                 12345678
@@ -289,7 +289,7 @@ public class ModificarDatosDeUsuarioTest {
                 "1234",
                 "difolt.png",
                 "Mary",
-                LocalDate.of(1990, 5, 12),
+                LocalDate.of(1990, 5, 12).toString(),
                 "Tokyo",
                 TipoDocumento.CEDULA,
                 12345678

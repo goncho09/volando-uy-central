@@ -58,7 +58,7 @@ public class CompraDePaqueteTest {
     void compraPaqueteConClienteInexistente() {
         DtCliente clienteInexistente = new DtCliente(
                 "clienteInexistente", "No", "existe@gmail.com", "1234", "default.png",
-                "Existe", java.time.LocalDate.of(1990, 1, 1), "Uruguay",
+                "Existe", java.time.LocalDate.of(1990, 1, 1).toString(), "Uruguay",
                 com.app.enums.TipoDocumento.CEDULA, 12345678);
         DtPaquete paquete = s.getPaquete("ExploraSur");
 
@@ -212,7 +212,7 @@ public class CompraDePaqueteTest {
                 "1234",
                 "default.png",
                 "Usuario",
-                java.time.LocalDate.of(1995, 5, 15),
+                java.time.LocalDate.of(1995, 5, 15).toString(),
                 "Uruguay",
                 com.app.enums.TipoDocumento.CEDULA,
                 11111111);

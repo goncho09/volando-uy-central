@@ -28,7 +28,7 @@ public class ReservaDeVueloTest {
     @Test
     void validarCantPasajes() {
         DtReserva reserva = new DtReserva(
-                LocalDate.now(),
+                LocalDate.now().toString(),
                 TipoAsiento.EJECUTIVO,
                 0,
                 0,
@@ -53,7 +53,7 @@ public class ReservaDeVueloTest {
     @Test
     void validarCantPasajesNegativa() {
         DtReserva reserva = new DtReserva(
-                LocalDate.now(),
+                LocalDate.now().toString(),
                 TipoAsiento.EJECUTIVO,
                 -10,
                 0,
@@ -78,7 +78,7 @@ public class ReservaDeVueloTest {
     @Test
     void validarCantPasajesMayorAMaxReservaVuelo() {
         DtReserva reserva = new DtReserva(
-                LocalDate.now(),
+                LocalDate.now().toString(),
                 TipoAsiento.EJECUTIVO,
                 95, // El Vuelo_3 debería tener 94 reservas restantes.
                 0,
@@ -103,7 +103,7 @@ public class ReservaDeVueloTest {
     @Test
     void validarCantPasajesMayorCantPasajeros() {
         DtReserva reserva = new DtReserva(
-                LocalDate.now(),
+                LocalDate.now().toString(),
                 TipoAsiento.EJECUTIVO,
                 3,
                 0,
@@ -128,7 +128,7 @@ public class ReservaDeVueloTest {
     @Test
     void validarCantPasajesMenorCantPasajeros() {
         DtReserva reserva = new DtReserva(
-                LocalDate.now(),
+                LocalDate.now().toString(),
                 TipoAsiento.EJECUTIVO,
                 1,
                 0,
@@ -159,14 +159,14 @@ public class ReservaDeVueloTest {
                 "irreal",
                 "imagen.404",
                 "Existo",
-                LocalDate.of(1969,12,15),
+                LocalDate.of(1969,12,15).toString(),
                 "null",
                 TipoDocumento.CEDULA,
                 12345678
         );
 
         DtReserva reserva = new DtReserva(
-                LocalDate.now(),
+                LocalDate.now().toString(),
                 TipoAsiento.EJECUTIVO,
                 2,
                 0,
@@ -191,7 +191,7 @@ public class ReservaDeVueloTest {
     @Test
     void validarReservaDeUnVueloYaReservadoPorElCliente() {
         DtReserva reserva = new DtReserva(
-                LocalDate.now(),
+                LocalDate.now().toString(),
                 TipoAsiento.EJECUTIVO,
                 2,
                 0,
@@ -217,18 +217,18 @@ public class ReservaDeVueloTest {
     void validarReservaDeUnVueloInexistente() {
         DtVuelo vueloInexistente = new DtVuelo(
                 "NoSeVolar",
-                LocalDate.now().plusDays(10),
-                LocalTime.of(2, 45),
+                LocalDate.now().plusDays(10).toString(),
+                LocalTime.of(2, 45).toString(),
                 100,
                 20,
                 "vuelo.null",
-                LocalDate.now(),
+                LocalDate.now().toString(),
                 s.getRutaDeVuelo("Montevideo-Lima"),
                 0
         );
 
         DtReserva reserva = new DtReserva(
-                LocalDate.now(),
+                LocalDate.now().toString(),
                 TipoAsiento.EJECUTIVO,
                 2,
                 0,
@@ -253,7 +253,7 @@ public class ReservaDeVueloTest {
     @Test
     void validarMetodoDePagoCorrespondaConElPago() {
         DtReserva reserva = new DtReserva(
-                LocalDate.now(),
+                LocalDate.now().toString(),
                 TipoAsiento.EJECUTIVO,
                 2,
                 0,
@@ -285,7 +285,7 @@ public class ReservaDeVueloTest {
         );
 
         DtReserva reserva = new DtReserva(
-                LocalDate.now(),
+                LocalDate.now().toString(),
                 TipoAsiento.EJECUTIVO,
                 2,
                 0,
@@ -310,7 +310,7 @@ public class ReservaDeVueloTest {
     @Test
     void validarMetodoDePagoPaqueteConClienteSinPaquete() {
         DtReserva reserva = new DtReserva(
-                LocalDate.now(),
+                LocalDate.now().toString(),
                 TipoAsiento.EJECUTIVO,
                 2,
                 0,
@@ -335,7 +335,7 @@ public class ReservaDeVueloTest {
     @Test
     void validarVueloConPaquetePago() {
         DtReserva reserva = new DtReserva(
-                LocalDate.now(),
+                LocalDate.now().toString(),
                 TipoAsiento.EJECUTIVO,
                 2,
                 0,
@@ -362,7 +362,7 @@ public class ReservaDeVueloTest {
     @Test
     void validarVueloConPagoGeneral() {
         DtReserva reserva = new DtReserva(
-                LocalDate.now(),
+                LocalDate.now().toString(),
                 TipoAsiento.EJECUTIVO,
                 2,
                 0,
@@ -385,7 +385,7 @@ public class ReservaDeVueloTest {
     @Test
     void validarCantPasajesMayorCantPaquete() {
         DtReserva reserva = new DtReserva(
-                LocalDate.now(),
+                LocalDate.now().toString(),
                 TipoAsiento.EJECUTIVO,
                 4,
                 0,

@@ -420,7 +420,7 @@ public class Main extends JFrame {
                     return;
                 }
                 try {
-                    s.altaCiudad(new DtCiudad(nombreAltaCiudad.getText(), paisAltaCiudad.getText(), aeropuertoAltaCiudad.getText(), descripcionAltaCiudad.getText(), webAltaCiudad.getText(), LocalDate.now()));
+                    s.altaCiudad(new DtCiudad(nombreAltaCiudad.getText(), paisAltaCiudad.getText(), aeropuertoAltaCiudad.getText(), descripcionAltaCiudad.getText(), webAltaCiudad.getText(), LocalDate.now().toString()));
                     new VentanaMensaje("Ciudad registrada exitosamente: " + nombreAltaCiudad.getText());
                     auxiliar.cargarCiudadesComboBox();
                 } catch (IllegalArgumentException ex) {

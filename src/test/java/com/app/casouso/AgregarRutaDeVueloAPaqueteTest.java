@@ -81,14 +81,14 @@ public class AgregarRutaDeVueloAPaqueteTest {
 
                 // Crear DtCiudad correctamente con todos los parámetros
                 DtCiudad ciudadOrigen = new DtCiudad("Origen", "Pais", "Aeropuerto Origen", "Descripción origen",
-                                "www.origen.com", java.time.LocalDate.now());
+                                "www.origen.com", java.time.LocalDate.now().toString());
                 DtCiudad ciudadDestino = new DtCiudad("Destino", "Pais", "Aeropuerto Destino", "Descripción destino",
-                                "www.destino.com", java.time.LocalDate.now());
+                                "www.destino.com", java.time.LocalDate.now().toString());
 
                 DtRuta rutaInexistente = new DtRuta(
                                 "RutaInexistente", "No existe", "No existe corta",
-                                java.time.LocalTime.of(2, 0), 100, 200, 15,
-                                java.time.LocalDate.now(), "default.png",
+                                java.time.LocalTime.of(2, 0).toString(), 100, 200, 15,
+                                java.time.LocalDate.now().toString(), "default.png",
                                 java.util.Arrays.asList(),
                                 ciudadOrigen,
                                 ciudadDestino);

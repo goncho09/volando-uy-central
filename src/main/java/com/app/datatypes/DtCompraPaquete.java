@@ -4,21 +4,21 @@ import java.time.LocalDate;
 
 public class DtCompraPaquete {
     private long id;
-    private LocalDate fechaCompra;
-    private LocalDate fechaVencimiento;
+    private String fechaCompra;
+    private String fechaVencimiento;
     private float costo;
     private DtPaquete paquete;
     private DtCliente cliente;
 
     public DtCompraPaquete() {};
-    public DtCompraPaquete(LocalDate fechaCompra, LocalDate fechaVencimiento, float costo, DtPaquete paquete, DtCliente cliente) {
+    public DtCompraPaquete(String fechaCompra, String fechaVencimiento, float costo, DtPaquete paquete, DtCliente cliente) {
         this.fechaCompra = fechaCompra;
         this.fechaVencimiento = fechaVencimiento;
         this.costo = costo;
         this.paquete = paquete;
         this.cliente = cliente;
     }
-    public DtCompraPaquete(LocalDate fechaCompra, LocalDate fechaVencimiento, float costo) {
+    public DtCompraPaquete(String fechaCompra, String fechaVencimiento, float costo) {
         this.fechaCompra = fechaCompra;
         this.fechaVencimiento = fechaVencimiento;
         this.costo = costo;
@@ -26,11 +26,11 @@ public class DtCompraPaquete {
         this.cliente = null;
     }
 
-    public LocalDate getFechaCompra(){
+    public String getFechaCompra(){
         return fechaCompra;
     }
 
-    public LocalDate getFechaVencimiento(){
+    public String getFechaVencimiento(){
         return fechaVencimiento;
     }
 

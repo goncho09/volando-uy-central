@@ -27,12 +27,12 @@ public class AltaDeVueloTest {
     void validarNombreVacioAltaVuelo(){
         DtVuelo vuelo = new DtVuelo(
                 "",
-                LocalDate.now().plusDays(200),
-                LocalTime.of(2,30),
+                LocalDate.now().plusDays(200).toString(),
+                LocalTime.of(2,30).toString(),
                 3,
                 3,
                 "default.png",
-                LocalDate.now(),
+                LocalDate.now().toString(),
                 s.getRutaDeVuelo("Lima-Montevideo Norte"), // Es una ruta con estado Aprobada.
                 0
         );
@@ -49,12 +49,12 @@ public class AltaDeVueloTest {
     void validarNombreExistenteAltaVuelo(){
         DtVuelo vuelo = new DtVuelo(
                 "Vuelo_1", //Este nombre debería existir.
-                LocalDate.now().plusDays(200),
-                LocalTime.of(2,30),
+                LocalDate.now().plusDays(200).toString(),
+                LocalTime.of(2,30).toString(),
                 3,
                 3,
                 "default.png",
-                LocalDate.now(),
+                LocalDate.now().toString(),
                 s.getRutaDeVuelo("Lima-Montevideo Norte"), // Es una ruta con estado Aprobada.
                 0
         );
@@ -71,12 +71,12 @@ public class AltaDeVueloTest {
     void validarFechaInvalidaAltaVuelo(){
         DtVuelo vuelo = new DtVuelo(
                 "VueloTestFecha",
-                LocalDate.now().minusDays(1), // Fecha inválida
-                LocalTime.of(2,30),
+                LocalDate.now().minusDays(1).toString(), // Fecha inválida
+                LocalTime.of(2,30).toString(),
                 3,
                 3,
                 "default.png",
-                LocalDate.now(),
+                LocalDate.now().toString(),
                 s.getRutaDeVuelo("Lima-Montevideo Norte"), // Es una ruta con estado Aprobada.
                 0
         );
@@ -92,12 +92,12 @@ public class AltaDeVueloTest {
     void validarHoraInvalidaAltaVuelo(){
         DtVuelo vuelo = new DtVuelo(
                 "VueloTestHora",
-                LocalDate.now().plusDays(200),
-                LocalTime.of(0,0), // Hora inválida
+                LocalDate.now().plusDays(200).toString(),
+                LocalTime.of(0,0).toString(), // Hora inválida
                 3,
                 3,
                 "default.png",
-                LocalDate.now(),
+                LocalDate.now().toString(),
                 s.getRutaDeVuelo("Lima-Montevideo Norte"), // Es una ruta con estado Aprobada.
                 0
         );
@@ -113,12 +113,12 @@ public class AltaDeVueloTest {
     void validarCupoInvalidoAltaVuelo(){
         DtVuelo vuelo = new DtVuelo(
                 "VueloTestCupo",
-                LocalDate.now().plusDays(200),
-                LocalTime.of(2,30),
+                LocalDate.now().plusDays(200).toString(),
+                LocalTime.of(2,30).toString(),
                 0, // Entre ambos cupos
                 0, // Deberian sumar 1 o más.
                 "default.png",
-                LocalDate.now(),
+                LocalDate.now().toString(),
                 s.getRutaDeVuelo("Lima-Montevideo Norte"), // Es una ruta con estado Aprobada.
                 0
         );
@@ -134,12 +134,12 @@ public class AltaDeVueloTest {
     void validarRutaInvalidaRechazadaAltaVuelo(){
         DtVuelo vuelo = new DtVuelo(
                 "VueloTestRutaRechazada",
-                LocalDate.now().plusDays(200),
-                LocalTime.of(2,30),
+                LocalDate.now().plusDays(200).toString(),
+                LocalTime.of(2,30).toString(),
                 3,
                 3,
                 "default.png",
-                LocalDate.now(),
+                LocalDate.now().toString(),
                 s.getRutaDeVuelo("Montevideo Norte-Quito"), // Es una ruta con estado Rechazada.
                 0
         );
@@ -155,12 +155,12 @@ public class AltaDeVueloTest {
     void validarRutaInvalidaIngresadaAltaVuelo(){
         DtVuelo vuelo = new DtVuelo(
                 "VueloTestRutaIngresada",
-                LocalDate.now().plusDays(200),
-                LocalTime.of(2,30),
+                LocalDate.now().plusDays(200).toString(),
+                LocalTime.of(2,30).toString(),
                 3,
                 3,
                 "default.png",
-                LocalDate.now(),
+                LocalDate.now().toString(),
                 s.getRutaDeVuelo("Santiago-Lima"), // Es una ruta con estado Ingresada.
                 0
         );
@@ -178,10 +178,10 @@ public class AltaDeVueloTest {
                 "Esto Es La Ruta Mas Inexistente Del Mundo Jeje",
                 "Ruta entre Bogotá y Santiago",
                 "Bogotá a Santiago",
-                LocalTime.of(5, 0),
+                LocalTime.of(5, 0).toString(),
                 250,
                 500,
-                30, LocalDate.now(),
+                30, LocalDate.now().toString(),
                 "default.png",
                 Arrays.asList(s.getCategoria("Negocios")),
                 s.getCiudad("Santiago", "Chile"),
@@ -190,12 +190,12 @@ public class AltaDeVueloTest {
 
         DtVuelo vuelo = new DtVuelo(
                 "VueloTestFecha",
-                LocalDate.now().plusDays(200),
-                LocalTime.of(2,30),
+                LocalDate.now().plusDays(200).toString(),
+                LocalTime.of(2,30).toString(),
                 3,
                 3,
                 "default.png",
-                LocalDate.now(),
+                LocalDate.now().toString(),
                 ruta, // Es una ruta con estado Ingresada.
                 0
         );
@@ -211,12 +211,12 @@ public class AltaDeVueloTest {
     void validarVueloInexistenteAltaVuelo(){
         DtVuelo vuelo = new DtVuelo(
                 "Vuelo_11",
-                LocalDate.now().plusDays(200),
-                LocalTime.of(2,30),
+                LocalDate.now().plusDays(200).toString(),
+                LocalTime.of(2,30).toString(),
                 3,
                 3,
                 "default.png",
-                LocalDate.now(),
+                LocalDate.now().toString(),
                 s.getRutaDeVuelo("Rio de Janeiro-Bogotá"), // Es una ruta con estado Aprobada.
                 0
         );

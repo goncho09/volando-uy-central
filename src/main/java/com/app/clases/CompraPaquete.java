@@ -35,8 +35,8 @@ public class CompraPaquete {
 
     public CompraPaquete() {}
     public CompraPaquete(DtCompraPaquete dto, Paquete paquete, Cliente cliente) {
-        this.setFechaCompra(dto.getFechaCompra());
-        this.setFechaVencimiento(dto.getFechaVencimiento());
+        this.setFechaCompra(LocalDate.parse(dto.getFechaCompra()));
+        this.setFechaVencimiento(LocalDate.parse(dto.getFechaVencimiento()));
         this.setCosto(dto.getCosto());
         this.setPaquete(paquete);
         this.setCliente(cliente);
@@ -59,8 +59,8 @@ public class CompraPaquete {
                 null
         );
         return new DtCompraPaquete(
-                this.getFechaCompra(),
-                this.getFechaVencimiento(),
+                this.getFechaCompra().toString(),
+                this.getFechaVencimiento().toString(),
                 this.getCosto(),
                 this.getPaquete().getDatos(),
                 cliente

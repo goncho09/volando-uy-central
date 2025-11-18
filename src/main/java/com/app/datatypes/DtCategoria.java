@@ -3,6 +3,8 @@ package com.app.datatypes;
 public class DtCategoria {
     private String nombre;
 
+    public DtCategoria() {}
+
     public DtCategoria(String nombre) {
         this.nombre = nombre;
     }

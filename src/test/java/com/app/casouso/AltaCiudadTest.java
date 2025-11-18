@@ -22,7 +22,7 @@ public class AltaCiudadTest {
 
     @Test
     void validarNombreVacioAltaCiudad() {
-        DtCiudad ciudad = new DtCiudad("", "Uruguay", "Carrasco", "Descripción", "sitioWeb", LocalDate.now());
+        DtCiudad ciudad = new DtCiudad("", "Uruguay", "Carrasco", "Descripción", "sitioWeb", LocalDate.now().toString());
 
         Assertions.assertThrows(
                 IllegalArgumentException.class,
@@ -33,7 +33,7 @@ public class AltaCiudadTest {
 
     @Test
     void validarPaisVacioAltaCiudad() {
-        DtCiudad ciudad = new DtCiudad("Canelones", "", "Aeropuerto", "Descripción", "SitioWeb", LocalDate.now());
+        DtCiudad ciudad = new DtCiudad("Canelones", "", "Aeropuerto", "Descripción", "SitioWeb", LocalDate.now().toString());
 
         Assertions.assertThrows(
                 IllegalArgumentException.class,
@@ -44,7 +44,7 @@ public class AltaCiudadTest {
 
     @Test
     void validarCiudadExistente() {
-        DtCiudad ciudad = new DtCiudad("Buenos Aires", "Argentina", "Aeropuerto", "Descripción", "SitioWeb", LocalDate.now());
+        DtCiudad ciudad = new DtCiudad("Buenos Aires", "Argentina", "Aeropuerto", "Descripción", "SitioWeb", LocalDate.now().toString());
 
         Assertions.assertThrows(
                 IllegalArgumentException.class,
@@ -61,7 +61,7 @@ public class AltaCiudadTest {
                 "Aeropuerto de Valencia-Manises",
                 "Ciudad portuaria con una mezcla de arquitectura moderna y antigua.",
                 "www.visitvalencia.com",
-                LocalDate.now()
+                LocalDate.now().toString()
         );
 
         Assertions.assertDoesNotThrow(

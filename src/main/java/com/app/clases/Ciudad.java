@@ -25,7 +25,7 @@ public class Ciudad {
         this.setAeropuerto(ciudad.getAeropuerto());
         this.setDescripcion(ciudad.getDescripcion());
         this.setSitioWeb(ciudad.getSitioWeb());
-        this.setFechaAlta(ciudad.getFechaAlta());
+        this.setFechaAlta(LocalDate.parse(ciudad.getFechaAlta()));
         this.setId(new CiudadId(ciudad.getNombre(), ciudad.getPais()));
     }
 
@@ -94,7 +94,7 @@ public class Ciudad {
                 this.getAeropuerto(),
                 this.getDescripcion(),
                 this.getSitioWeb(),
-                this.getFechaAlta()
+                this.getFechaAlta().toString()
         );
     }
 

@@ -482,7 +482,7 @@ public class Sistema implements ISistema {
     public DtAerolinea getAerolinea(String nickname) {
         Aerolinea a = this.userDao.buscarAerolinea(nickname);
         if (a == null) {
-            throw new IllegalArgumentException("No existe un usuario con ese nickname.");
+            throw new IllegalArgumentException("No existe un usuario con ese nickname. [" + nickname + "]");
         }
         return a.getDatos();
     }
@@ -687,7 +687,7 @@ public class Sistema implements ISistema {
 
         LocalDate vencimiento = LocalDate.now().plusDays(p.getValidezDias());
 
-        CompraPaquete nuevaCompra = new CompraPaquete(new DtCompraPaquete(LocalDate.now(), vencimiento, p.getCosto()),
+        CompraPaquete nuevaCompra = new CompraPaquete(new DtCompraPaquete(LocalDate.now().toString(), vencimiento.toString(), p.getCosto()),
                 p, c);
 
         userDao.addCompraPaquete(c, nuevaCompra);
