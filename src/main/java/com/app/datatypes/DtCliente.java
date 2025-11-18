@@ -3,7 +3,6 @@ package com.app.datatypes;
 import com.app.clases.Usuario;
 import com.app.enums.TipoDocumento;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 

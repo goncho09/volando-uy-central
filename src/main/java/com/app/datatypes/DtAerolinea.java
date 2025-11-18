@@ -1,6 +1,5 @@
 package com.app.datatypes;
 
-import com.app.clases.RutaDeVuelo;
 import com.app.clases.Usuario;
 
 import java.util.ArrayList;

@@ -1,7 +1,5 @@
 package com.app.datatypes;
 
-import java.time.LocalDate;
-
 public class DtCompraPaquete {
     private long id;
     private String fechaCompra;
