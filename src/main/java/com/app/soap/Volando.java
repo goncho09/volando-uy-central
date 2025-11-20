@@ -133,6 +133,16 @@ public class Volando implements VolandoServicePort {
         return sistema.listarReservasClienteVuelo(cliente, vuelo);
     }
 
+    @Override
+    public DtReserva realizarCheckin (DtVuelo vuelo, String fechaReserva, String nicknameCliente){
+        return sistema.realizarCheckin(vuelo, LocalDate.parse(fechaReserva), nicknameCliente);
+    }
+
+    @Override
+    public byte[] crearPDFReserva(DtReserva reserva) {
+        return sistema.crearPDFReserva(reserva);
+    }
+
 // ---------- RUTAS DE VUELO ---------- //
 
     @Override

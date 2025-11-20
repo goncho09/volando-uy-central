@@ -40,7 +40,7 @@ public class ReservaDeVueloTest {
                 s.getCliente("power"),
                 s.getVuelo("Vuelo_3"), // Este vuelo debe existir y no estar reservado por "power"
                 MetodoPago.PAQUETE,
-                s.getPaquete("AventuraTotal") // Este paquete debe existir y con cantidad 1
+                s.getPaquete("AventuraTotal"), false // Este paquete debe existir y con cantidad 1
         );
 
         Assertions.assertThrows(
@@ -65,7 +65,7 @@ public class ReservaDeVueloTest {
                 s.getCliente("power"),
                 s.getVuelo("Vuelo_3"), // Este vuelo debe existir y no estar reservado por "power"
                 MetodoPago.PAQUETE,
-                s.getPaquete("AventuraTotal") // Este paquete debe existir y con cantidad 1
+                s.getPaquete("AventuraTotal"), false // Este paquete debe existir y con cantidad 1
         );
 
         Assertions.assertThrows(
@@ -90,7 +90,7 @@ public class ReservaDeVueloTest {
                 s.getCliente("power"),
                 s.getVuelo("Vuelo_3"), // Este vuelo debe existir y no estar reservado por "power"
                 MetodoPago.PAQUETE,
-                s.getPaquete("AventuraTotal") // Este paquete debe existir y con cantidad 1
+                s.getPaquete("AventuraTotal"),false // Este paquete debe existir y con cantidad 1
         );
 
         Assertions.assertThrows(
@@ -115,7 +115,7 @@ public class ReservaDeVueloTest {
                 s.getCliente("power"),
                 s.getVuelo("Vuelo_3"), // Este vuelo debe existir y no estar reservado por "power"
                 MetodoPago.PAQUETE,
-                s.getPaquete("AventuraTotal") // Este paquete debe existir y con cantidad 1
+                s.getPaquete("AventuraTotal"), false// Este paquete debe existir y con cantidad 1
         );
 
         Assertions.assertThrows(
@@ -140,7 +140,7 @@ public class ReservaDeVueloTest {
                 s.getCliente("power"),
                 s.getVuelo("Vuelo_3"), // Este vuelo debe existir y no estar reservado por "power"
                 MetodoPago.PAQUETE,
-                s.getPaquete("AventuraTotal") // Este paquete debe existir y con cantidad 1
+                s.getPaquete("AventuraTotal"), false // Este paquete debe existir y con cantidad 1
         );
 
         Assertions.assertThrows(
@@ -178,7 +178,7 @@ public class ReservaDeVueloTest {
                 clienteInexistente,
                 s.getVuelo("Vuelo_3"), // Este vuelo debe existir y no estar reservado por "power"
                 MetodoPago.PAQUETE,
-                s.getPaquete("AventuraTotal") // Este paquete debe existir y con cantidad 1
+                s.getPaquete("AventuraTotal"), false // Este paquete debe existir y con cantidad 1
         );
 
         Assertions.assertThrows(
@@ -203,7 +203,7 @@ public class ReservaDeVueloTest {
                 s.getCliente("power"),
                 s.getVuelo("Vuelo_7"), // Este vuelo debe existir y estar reservado por "power"
                 MetodoPago.PAQUETE,
-                s.getPaquete("AventuraTotal") // Este paquete debe existir y con cantidad 1
+                s.getPaquete("AventuraTotal"), false // Este paquete debe existir y con cantidad 1
         );
 
         Assertions.assertThrows(
@@ -240,7 +240,7 @@ public class ReservaDeVueloTest {
                 s.getCliente("power"),
                 vueloInexistente,
                 MetodoPago.PAQUETE,
-                s.getPaquete("AventuraTotal") // Este paquete debe existir y con cantidad 1
+                s.getPaquete("AventuraTotal"), false // Este paquete debe existir y con cantidad 1
         );
 
         Assertions.assertThrows(
@@ -265,7 +265,7 @@ public class ReservaDeVueloTest {
                 s.getCliente("power"),
                 s.getVuelo("Vuelo_3"), // Este vuelo debe existir y no estar reservado por "power"
                 MetodoPago.GENERAL,
-                s.getPaquete("AventuraTotal") // Este paquete debe existir y con cantidad 1
+                s.getPaquete("AventuraTotal"), false // Este paquete debe existir y con cantidad 1
         );
 
         Assertions.assertThrows(
@@ -297,7 +297,7 @@ public class ReservaDeVueloTest {
                 s.getCliente("power"),
                 s.getVuelo("Vuelo_3"), // Este vuelo debe existir y no estar reservado por "power"
                 MetodoPago.PAQUETE,
-                paqueteInexistente
+                paqueteInexistente, false
         );
 
         Assertions.assertThrows(
@@ -322,7 +322,7 @@ public class ReservaDeVueloTest {
                 s.getCliente("power"),
                 s.getVuelo("Vuelo_3"), // Este vuelo debe existir y no estar reservado por "power"
                 MetodoPago.PAQUETE,
-                s.getPaquete("LujoMundial") // Este paquete debe existir y con cantidad 1
+                s.getPaquete("LujoMundial"), false // Este paquete debe existir y con cantidad 1
         );
 
         Assertions.assertThrows(
@@ -347,7 +347,7 @@ public class ReservaDeVueloTest {
                 s.getCliente("power"),
                 s.getVuelo("Vuelo_5"), // Este vuelo debe existir, no estar reservado por "power" y no compartir rutas con el paquete
                 MetodoPago.PAQUETE,
-                s.getPaquete("AventuraTotal") // Este paquete debe existir y con cantidad 1
+                s.getPaquete("AventuraTotal"), false // Este paquete debe existir y con cantidad 1
         );
 
         Assertions.assertThrows(
@@ -373,7 +373,7 @@ public class ReservaDeVueloTest {
                 ),
                 s.getCliente("power"),
                 s.getVuelo("Vuelo_4"), // Este vuelo debe existir y no estar reservado por "power"
-                MetodoPago.GENERAL
+                MetodoPago.GENERAL, false
         );
 
         Assertions.assertDoesNotThrow(
@@ -399,7 +399,7 @@ public class ReservaDeVueloTest {
                 s.getCliente("power"),
                 s.getVuelo("Vuelo_3"), // Este vuelo debe existir y no estar reservado por "power"
                 MetodoPago.PAQUETE,
-                s.getPaquete("AventuraTotal") // Este paquete debe existir y con cantidad 1
+                s.getPaquete("AventuraTotal"), false // Este paquete debe existir y con cantidad 1
         );
 
         Assertions.assertDoesNotThrow(

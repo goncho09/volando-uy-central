@@ -51,7 +51,8 @@ public interface ISistema {
     List<DtReserva> listarReservasCliente(String nickname); // Devuelve las reservas de un cliente en específico
     List<DtReserva> listarReservasAerolinea(String nickname); // Devuelve las reservas de una aerolínea en específico
     List<DtReserva> listarReservasClienteVuelo(DtCliente cliente, DtVuelo vuelo); // Devuelve las reservas de un cliente en un vuelo en específico
-
+    DtReserva realizarCheckin (DtVuelo vuelo, LocalDate fechaReserva, String nicknameCliente);
+    byte[] crearPDFReserva(DtReserva reserva);
 
     // ---------- RUTAS DE VUELO ---------- //
     boolean rutaContieneCategoria(DtRuta ruta, String categoria);

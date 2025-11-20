@@ -105,6 +105,11 @@ public interface VolandoServicePort {
     @WebMethod
     List<DtReserva> listarReservasClienteVuelo(DtCliente cliente, DtVuelo vuelo); // Devuelve las reservas de un cliente en un vuelo en específico
 
+    @WebMethod
+    DtReserva realizarCheckin(DtVuelo vuelo, String fechaReserva, String nicknameCliente);
+
+    @WebMethod
+    byte[] crearPDFReserva(DtReserva reserva);
 
     // ---------- RUTAS DE VUELO ---------- //
     @WebMethod

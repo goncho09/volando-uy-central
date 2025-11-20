@@ -496,7 +496,8 @@ public class Main extends JFrame {
                                             cliente,
                                             vuelo,
                                             metodoPago,
-                                            paqueteSeleccionado
+                                            paqueteSeleccionado,
+                                            false
                                     );
                                 } else {
                                     reserva = new DtReserva(
@@ -508,7 +509,8 @@ public class Main extends JFrame {
                                             listaPasajes,
                                             cliente,
                                             vuelo,
-                                            metodoPago
+                                            metodoPago,
+                                            false
                                     );
                                 }
 

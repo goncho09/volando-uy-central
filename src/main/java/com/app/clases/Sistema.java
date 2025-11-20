@@ -1,5 +1,6 @@
 package com.app.clases;
 
+import java.io.ByteArrayOutputStream;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -42,6 +43,11 @@ import com.app.enums.MetodoPago;
 import com.app.enums.TipoAsiento;
 
 import com.app.utils.AuxiliarFunctions;
+import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+import java.io.FileOutputStream;
 
 
 public class Sistema implements ISistema {
@@ -560,14 +566,14 @@ public class Sistema implements ISistema {
 
     public DtCiudad getCiudad(String nombre, String pais) {
         Ciudad c = this.ciudadDao.buscar(new CiudadId(nombre, pais));
-        if(c == null) {
+        if (c == null) {
             throw new IllegalArgumentException("La ciudad no existe.");
         }
         return c.getDatos();
     }
 
     public DtReserva getReservaCliente(DtVuelo vuelo, DtCliente cliente, LocalDate fechaReserva) {
-        if(cliente == null){
+        if (cliente == null) {
             throw new IllegalArgumentException("El cliente no existe");
         }
         Cliente c = this.userDao.buscarCliente(cliente.getNickname());
@@ -580,7 +586,7 @@ public class Sistema implements ISistema {
     }
 
     public DtReserva getReservaAerolinea(DtVuelo vuelo, DtAerolinea aerolinea, LocalDate fechaReserva) {
-        if(aerolinea == null){
+        if (aerolinea == null) {
             throw new IllegalArgumentException("La aerolinea no existe.");
         }
         List<DtReserva> reservasAerolinea = this.listarReservasAerolinea(aerolinea.getNickname());
@@ -859,7 +865,9 @@ public class Sistema implements ISistema {
                 cliente.getDatos(),
                 vuelo.getDatos(),
                 reserva.getMetodoPago(),
-                reserva.getPaquetePago());
+                reserva.getPaquetePago(),
+                false
+        );
 
         Reserva nuevaReserva = new Reserva(r, cliente, vuelo); // 'r' es DtReserva
         this.reservaDao.guardar(nuevaReserva);
@@ -962,19 +970,19 @@ public class Sistema implements ISistema {
         return false;
     }
 
-    public void seguirUsuario(String usuarioSeguidor, String usuarioASeguir){
+    public void seguirUsuario(String usuarioSeguidor, String usuarioASeguir) {
         Usuario seguidor = this.userDao.buscar(usuarioSeguidor);
         Usuario aSeguir = this.userDao.buscar(usuarioASeguir);
 
-        if(seguidor == null || aSeguir == null){
+        if (seguidor == null || aSeguir == null) {
             throw new IllegalArgumentException("Alguno de los usuarios no existe");
         }
 
-        if(seguidor.getNickname().equals(aSeguir.getNickname())){
+        if (seguidor.getNickname().equals(aSeguir.getNickname())) {
             throw new IllegalArgumentException("No se puede seguir a uno mismo");
         }
 
-        if(seguidor.sigueA(aSeguir.getNickname())){
+        if (seguidor.sigueA(aSeguir.getNickname())) {
             throw new IllegalArgumentException("Ya sigues a este usuario");
         }
 
@@ -982,15 +990,15 @@ public class Sistema implements ISistema {
         this.userDao.agregarSeguido(seguidor, aSeguir);
     }
 
-    public void dejarDeSeguirUsuario(String usuarioSeguidor, String usuarioADejarDeSeguir){
+    public void dejarDeSeguirUsuario(String usuarioSeguidor, String usuarioADejarDeSeguir) {
         Usuario seguidor = this.userDao.buscar(usuarioSeguidor);
         Usuario aDejarDeSeguir = this.userDao.buscar(usuarioADejarDeSeguir);
 
-        if(seguidor == null || aDejarDeSeguir == null){
+        if (seguidor == null || aDejarDeSeguir == null) {
             throw new IllegalArgumentException("Alguno de los usuarios no existe");
         }
 
-        if(!seguidor.sigueA(aDejarDeSeguir.getNickname())){
+        if (!seguidor.sigueA(aDejarDeSeguir.getNickname())) {
             throw new IllegalArgumentException("No sigues a este usuario");
         }
 
@@ -1001,6 +1009,132 @@ public class Sistema implements ISistema {
     public DtCategoria getCategoria(String nombre) {
         return this.categoriaDao.buscar(nombre).getDatos();
     }
+
+    public DtReserva realizarCheckin(DtVuelo vuelo, LocalDate fechaReserva, String nicknameCliente) {
+        Cliente cliente = this.buscarCliente(nicknameCliente);
+        Vuelo v = this.buscarVuelo(vuelo.getNombre());
+
+        Reserva reserva = this.reservaDao.buscar(cliente, v, fechaReserva);
+
+        if (reserva == null) {
+            throw new IllegalArgumentException("No existe la reserva para realizar el check-in.");
+        }
+
+        if (reserva.getCheckin()) {
+            throw new IllegalArgumentException("El check-in ya ha sido realizado para esta reserva.");
+        }
+
+        reserva.setCheckin(true);
+        this.reservaDao.actualizar(reserva);
+
+        return reserva.getDatos();
+    }
+
+    public byte[] crearPDFReserva(DtReserva reservaCompleta) {
+        try {
+            // Verificamos que tenga check-in hecho
+            if (!reservaCompleta.getCheckin()) {
+                throw new IllegalArgumentException("El check-in no ha sido realizado para esta reserva.");
+            }
+
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            Document document = new Document(PageSize.A4.rotate());
+            PdfWriter.getInstance(document, baos);
+            document.open();
+
+            // Carpeta donde se guardan los PDFs
+            String carpeta = "pdfs";
+            new java.io.File(carpeta).mkdirs();
+
+            String nombreArchivo = "BoardingPass_" +
+                    reservaCompleta.getVuelo().getNombre() + "_" +
+                    reservaCompleta.getCliente().getNickname() + "_" +
+                    reservaCompleta.getFecha() + ".pdf";
+
+            String rutaPDF = carpeta + "/" + nombreArchivo;
+
+            PdfWriter.getInstance(document, new FileOutputStream(rutaPDF));
+            document.open();
+
+            Font titulo = new Font(Font.FontFamily.HELVETICA, 36, Font.BOLD, new BaseColor(0, 102, 204));
+            Font subtitulo = new Font(Font.FontFamily.HELVETICA, 24, Font.BOLD, BaseColor.DARK_GRAY);
+            Font normal = new Font(Font.FontFamily.HELVETICA, 14);
+            Font negrita = new Font(Font.FontFamily.HELVETICA, 14, Font.BOLD);
+
+            // Título principal
+            Paragraph p = new Paragraph("VOLANDO.UY", titulo);
+            p.setAlignment(Element.ALIGN_CENTER);
+            p.setSpacingAfter(10);
+            document.add(p);
+
+            p = new Paragraph("BOARDING PASS", subtitulo);
+            p.setAlignment(Element.ALIGN_CENTER);
+            p.setSpacingAfter(30);
+            document.add(p);
+
+            // Tabla de información
+            PdfPTable tabla = new PdfPTable(2);
+            tabla.setWidthPercentage(90);
+            tabla.setHorizontalAlignment(Element.ALIGN_CENTER);
+
+            agregarFila(tabla, "Vuelo", reservaCompleta.getVuelo().getNombre(), negrita, normal);
+            agregarFila(tabla, "Fecha de vuelo", reservaCompleta.getVuelo().getFecha(), negrita, normal);
+            agregarFila(tabla, "Ruta",
+                    reservaCompleta.getVuelo().getRutaDeVuelo().getCiudadOrigen().getNombre() + " ✈ " +
+                            reservaCompleta.getVuelo().getRutaDeVuelo().getCiudadDestino().getNombre(), negrita, normal);
+            agregarFila(tabla, "Duración", reservaCompleta.getVuelo().getDuracion(), negrita, normal);
+            agregarFila(tabla, "Asiento", reservaCompleta.getTipoAsiento().toString(), negrita, normal);
+            agregarFila(tabla, "Pasajeros", String.valueOf(reservaCompleta.getCantPasajes()), negrita, normal);
+
+            if (reservaCompleta.getEquipajeExtra() > 0) {
+                agregarFila(tabla, "Equipaje extra", reservaCompleta.getEquipajeExtra() + " valijas", negrita, normal);
+            }
+
+            document.add(tabla);
+
+            // Lista de pasajeros
+            document.add(new Paragraph("\nPasajeros:", negrita));
+
+            for (DtPasajero pasajero : reservaCompleta.getPasajeros()) {
+                Paragraph pa = new Paragraph("• " + pasajero.getNombre() + " " + pasajero.getApellido(), normal);
+                p.setIndentationLeft(40);  // ← Así sí funciona
+                document.add(p);
+            }
+
+            // Mensaje final
+            p = new Paragraph("\n¡Gracias por volar con Volando.uy!", negrita);
+            p.setAlignment(Element.ALIGN_CENTER);
+            p.setSpacingBefore(40);
+            document.add(p);
+
+            p = new Paragraph("Presenta este boarding pass en el aeropuerto", normal);
+            p.setAlignment(Element.ALIGN_CENTER);
+            document.add(p);
+
+            document.close();
+
+            System.out.println("PDF generado correctamente: " + rutaPDF);
+            return baos.toByteArray();  // ← DEVUELVE LOS BYTES
+
+        } catch (Exception e) {
+            throw new RuntimeException("Error generando PDF: " + e.getMessage());
+        }
+    }
+
+    private void agregarFila(PdfPTable tabla, String label, String valor, Font labelFont, Font valueFont) {
+        PdfPCell celdaLabel = new PdfPCell(new Phrase(label, labelFont));
+        celdaLabel.setBorder(Rectangle.NO_BORDER);
+        celdaLabel.setPadding(8);
+        celdaLabel.setBackgroundColor(new BaseColor(240, 248, 255));
+
+        PdfPCell celdaValor = new PdfPCell(new Phrase(valor, valueFont));
+        celdaValor.setBorder(Rectangle.NO_BORDER);
+        celdaValor.setPadding(8);
+
+        tabla.addCell(celdaLabel);
+        tabla.addCell(celdaValor);
+    }
+
 
     public void vaciarBD() {
         EntityTransaction tx = em.getTransaction();

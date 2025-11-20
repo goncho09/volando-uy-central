@@ -17,10 +17,11 @@ public class DtReserva {
     private DtVuelo vuelo;
     private MetodoPago metodoPago;
     private DtPaquete paquetePago;
+    private boolean checkin;
 
     public DtReserva() {}
 
-    public DtReserva(String fecha, TipoAsiento tipoAsiento, int cantPasajes, int equipajeExtra, float costo, List<DtPasajero> pasajeros, DtCliente cliente, DtVuelo vuelo, MetodoPago metodoPago) {
+    public DtReserva(String fecha, TipoAsiento tipoAsiento, int cantPasajes, int equipajeExtra, float costo, List<DtPasajero> pasajeros, DtCliente cliente, DtVuelo vuelo, MetodoPago metodoPago, boolean checkin) {
         this.fecha = fecha;
         this.tipoAsiento = tipoAsiento;
         this.cantPasajes = cantPasajes;
@@ -30,9 +31,10 @@ public class DtReserva {
         this.cliente = cliente;
         this.vuelo = vuelo;
         this.metodoPago = metodoPago;
+        this.checkin = checkin;
     }
 
-    public DtReserva(String fecha, TipoAsiento tipoAsiento, int cantPasajes, int equipajeExtra, float costo, List<DtPasajero> pasajeros, DtCliente cliente, DtVuelo vuelo, MetodoPago metodoPago, DtPaquete paquetePago) {
+    public DtReserva(String fecha, TipoAsiento tipoAsiento, int cantPasajes, int equipajeExtra, float costo, List<DtPasajero> pasajeros, DtCliente cliente, DtVuelo vuelo, MetodoPago metodoPago, DtPaquete paquetePago, boolean checkin) {
         this.fecha = fecha;
         this.tipoAsiento = tipoAsiento;
         this.cantPasajes = cantPasajes;
@@ -43,6 +45,7 @@ public class DtReserva {
         this.vuelo = vuelo;
         this.metodoPago = metodoPago;
         this.paquetePago = paquetePago;
+        this.checkin = checkin;
     }
 
     public String getFecha() {
@@ -123,6 +126,13 @@ public class DtReserva {
         this.paquetePago = paquetePago;
     }
 
+    public void setCheckin(boolean checkin) {
+        this.checkin = checkin;
+    }
+
+    public boolean getCheckin() {
+        return checkin;
+    }
 
     @Override
     public String toString() {

@@ -31,6 +31,7 @@ public class Reserva {
     private int equipajeExtra;
     private float costo;
     private MetodoPago metodoPago;
+    private boolean checkin;
 
     @OneToMany // Una reserva "puede" tener 1 o más pasajeros (1-N)
     @JoinColumn(name="reserva_id", nullable = false) // nullable = false indica que debe existir obligatoriamente 1 pasaje.
@@ -61,6 +62,7 @@ public class Reserva {
         this.setVuelo(vuelo);
         this.setMetodoPago(reserva.getMetodoPago());
         this.setPaquetePago(null);
+        this.setCheckin(false);
     }
 
     public Reserva(DtReserva reserva, Cliente cliente, Paquete paquete) {
@@ -74,6 +76,7 @@ public class Reserva {
         this.setVuelo(null);
         this.setMetodoPago(reserva.getMetodoPago());
         this.setPaquetePago(paquete);
+        this.setCheckin(false);
     }
 
     public LocalDate getFecha() {
@@ -156,6 +159,14 @@ public class Reserva {
         this.metodoPago = metodoPago;
     }
 
+    public void setCheckin(boolean checkin) {
+        this.checkin = checkin;
+    }
+
+    public boolean getCheckin() {
+        return checkin;
+    }
+
     public DtReserva getDatos() {
         Paquete paquete = this.getPaquetePago();
         DtPaquete paqueteData;
@@ -192,7 +203,9 @@ public class Reserva {
                 cliente,
                 this.getVuelo().getDatos(),
                 this.getMetodoPago(),
-                paqueteData
+                paqueteData,
+                this.getCheckin()
         );
+
     }
 }
