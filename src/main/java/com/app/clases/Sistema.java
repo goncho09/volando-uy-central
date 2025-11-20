@@ -96,7 +96,6 @@ public class Sistema implements ISistema {
         return listaAerolineas;
     }
 
-
     public DtUsuario getUsuario(String nickname) {
         Usuario u = this.userDao.buscar(nickname);
         if (u != null) {
@@ -150,7 +149,7 @@ public class Sistema implements ISistema {
     public DtCliente getCliente(String nickname) {
         Cliente c = this.userDao.buscarCliente(nickname);
         if (c == null) {
-            throw new IllegalArgumentException("No existe un usuario con ese nickname.");
+            throw new IllegalArgumentException("No existe un cliente con ese nickname.");
         }
         return c.getDatos();
     }
@@ -457,6 +456,9 @@ public class Sistema implements ISistema {
             throw new IllegalArgumentException("Los campos no pueden estar vacíos.");
         }
 
+        System.out.println(cliente.getNombre());
+        System.out.println(cliente.getApellido());
+        System.out.println(cliente.getNacionalidad());
 
         this.auxiliar.validarTextoSoloLetra(cliente.getNombre());
         this.auxiliar.validarTextoSoloLetra(cliente.getApellido());
@@ -482,7 +484,7 @@ public class Sistema implements ISistema {
     public DtAerolinea getAerolinea(String nickname) {
         Aerolinea a = this.userDao.buscarAerolinea(nickname);
         if (a == null) {
-            throw new IllegalArgumentException("No existe un usuario con ese nickname. [" + nickname + "]");
+            throw new IllegalArgumentException("No existe una aerolinea con ese nickname. [" + nickname + "]");
         }
         return a.getDatos();
     }
@@ -560,14 +562,14 @@ public class Sistema implements ISistema {
 
     public DtCiudad getCiudad(String nombre, String pais) {
         Ciudad c = this.ciudadDao.buscar(new CiudadId(nombre, pais));
-        if(c == null) {
+        if (c == null) {
             throw new IllegalArgumentException("La ciudad no existe.");
         }
         return c.getDatos();
     }
 
     public DtReserva getReservaCliente(DtVuelo vuelo, DtCliente cliente, LocalDate fechaReserva) {
-        if(cliente == null){
+        if (cliente == null) {
             throw new IllegalArgumentException("El cliente no existe");
         }
         Cliente c = this.userDao.buscarCliente(cliente.getNickname());
@@ -580,7 +582,7 @@ public class Sistema implements ISistema {
     }
 
     public DtReserva getReservaAerolinea(DtVuelo vuelo, DtAerolinea aerolinea, LocalDate fechaReserva) {
-        if(aerolinea == null){
+        if (aerolinea == null) {
             throw new IllegalArgumentException("La aerolinea no existe.");
         }
         List<DtReserva> reservasAerolinea = this.listarReservasAerolinea(aerolinea.getNickname());
@@ -950,6 +952,20 @@ public class Sistema implements ISistema {
         return false;
     }
 
+    public String getTipoUsuario(String nickname) {
+        Usuario u = this.userDao.buscar(nickname);
+
+        if (u instanceof Cliente) {
+            return "Cliente";
+        }
+
+        if (u instanceof Aerolinea) {
+            return "Aerolinea";
+        }
+
+        throw new IllegalArgumentException("El usuario no existe");
+    }
+
     public boolean clienteTienePaquete(String nickname, String nombrePaquete) {
         Cliente cliente = this.buscarCliente(nickname);
         Paquete paquete = this.buscarPaquete(nombrePaquete);
@@ -962,19 +978,19 @@ public class Sistema implements ISistema {
         return false;
     }
 
-    public void seguirUsuario(String usuarioSeguidor, String usuarioASeguir){
+    public void seguirUsuario(String usuarioSeguidor, String usuarioASeguir) {
         Usuario seguidor = this.userDao.buscar(usuarioSeguidor);
         Usuario aSeguir = this.userDao.buscar(usuarioASeguir);
 
-        if(seguidor == null || aSeguir == null){
+        if (seguidor == null || aSeguir == null) {
             throw new IllegalArgumentException("Alguno de los usuarios no existe");
         }
 
-        if(seguidor.getNickname().equals(aSeguir.getNickname())){
+        if (seguidor.getNickname().equals(aSeguir.getNickname())) {
             throw new IllegalArgumentException("No se puede seguir a uno mismo");
         }
 
-        if(seguidor.sigueA(aSeguir.getNickname())){
+        if (seguidor.sigueA(aSeguir.getNickname())) {
             throw new IllegalArgumentException("Ya sigues a este usuario");
         }
 
@@ -982,15 +998,15 @@ public class Sistema implements ISistema {
         this.userDao.agregarSeguido(seguidor, aSeguir);
     }
 
-    public void dejarDeSeguirUsuario(String usuarioSeguidor, String usuarioADejarDeSeguir){
+    public void dejarDeSeguirUsuario(String usuarioSeguidor, String usuarioADejarDeSeguir) {
         Usuario seguidor = this.userDao.buscar(usuarioSeguidor);
         Usuario aDejarDeSeguir = this.userDao.buscar(usuarioADejarDeSeguir);
 
-        if(seguidor == null || aDejarDeSeguir == null){
+        if (seguidor == null || aDejarDeSeguir == null) {
             throw new IllegalArgumentException("Alguno de los usuarios no existe");
         }
 
-        if(!seguidor.sigueA(aDejarDeSeguir.getNickname())){
+        if (!seguidor.sigueA(aDejarDeSeguir.getNickname())) {
             throw new IllegalArgumentException("No sigues a este usuario");
         }
 

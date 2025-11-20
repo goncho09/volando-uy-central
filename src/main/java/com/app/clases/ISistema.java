@@ -25,22 +25,28 @@ public interface ISistema {
     boolean clienteTienePaquete(String nickname, String nombrePaquete);
     boolean validarUsuario(String nickname, String password);
     boolean aerolineaTieneRuta(DtAerolinea aerolinea, String nombre);
+
+    String getTipoUsuario(String nickname); // "Aerolinea" o "Cliente"
+
     void registrarAerolinea(DtAerolinea aerolinea);
     void modificarAerolinea(DtAerolinea aerolinea);
     void modificarAerolineaImagen(DtAerolinea aerolinea, String urlImagen);
     void registrarCliente(DtCliente cliente);
     void modificarCliente(DtCliente cliente);
     void modificarClienteImagen(DtCliente cliente, String urlImagen);
-    Aerolinea buscarAerolinea(String nickname);
-    Cliente buscarCliente(String nickname);
-    DtUsuario getUsuario(String nickname);
-    DtCliente getCliente(String nickname);
-    DtAerolinea getAerolinea(String nickname);
-    List<DtUsuario> listarUsuarios();
-    List<DtCliente> listarClientes();
-    List<DtAerolinea> listarAerolineas();
     void seguirUsuario(String usuarioSeguidor, String usuarioASeguir);
     void dejarDeSeguirUsuario(String usuarioSeguidor, String usuarioASeguir);
+
+    DtUsuario getUsuario(String nickname);
+    List<DtUsuario> listarUsuarios();
+
+    Aerolinea buscarAerolinea(String nickname);
+    DtAerolinea getAerolinea(String nickname);
+    List<DtAerolinea> listarAerolineas();
+
+    Cliente buscarCliente(String nickname);
+    DtCliente getCliente(String nickname);
+    List<DtCliente> listarClientes();
 
     // ------------ RESERVAS ----------- //
     void altaReserva(DtReserva reserva); //Reserva de un Vuelo

@@ -38,6 +38,9 @@ public interface VolandoServicePort {
 //    boolean aerolineaTieneRuta(DtAerolinea aerolinea, String nombre);
 
     @WebMethod
+    String getTipoUsuario(String nickname);
+
+    @WebMethod
     void registrarAerolinea(DtAerolinea aerolinea);
 
     @WebMethod

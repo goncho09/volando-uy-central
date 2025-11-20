@@ -10,6 +10,7 @@ import com.app.utils.AuxiliarFunctions;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @WebService(endpointInterface = "com.app.soap.VolandoServicePort")
@@ -34,6 +35,11 @@ public class Volando implements VolandoServicePort {
     @Override
     public boolean validarUsuario(String nickname, String password) {
         return sistema.validarUsuario(nickname, password);
+    }
+
+    @Override
+    public String getTipoUsuario(String nickname) {
+        return sistema.getTipoUsuario(nickname);
     }
 
     @Override
@@ -68,7 +74,12 @@ public class Volando implements VolandoServicePort {
 
     @Override
     public DtUsuario getUsuario(String nickname) {
-        return sistema.getUsuario(nickname);
+        DtUsuario usuario = sistema.getUsuario(nickname);
+        if (usuario.getSeguidores() == null) usuario.setSeguidores(new ArrayList<>());
+        if (usuario.getSeguidos() == null) usuario.setSeguidos(new ArrayList<>());
+
+        /*return sistema.getUsuario(nickname); */
+        return usuario;
     }
 
     @Override

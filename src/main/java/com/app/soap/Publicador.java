@@ -13,7 +13,12 @@ public class Publicador {
         String url = "http://" + ip + ":" + port + path;
 
         System.out.println("Publicando servicio SOAP en: " + url);
+
+        System.setProperty("com.sun.xml.ws.transport.http.HttpAdapter.dump", "true");
+        System.setProperty("com.sun.xml.internal.ws.transport.http.HttpAdapter.dump", "true");
+
         Endpoint.publish(url, new Volando());
+
         System.out.println("Servicio SOAP publicado.");
     }
 }
