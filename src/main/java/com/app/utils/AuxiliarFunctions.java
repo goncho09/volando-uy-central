@@ -1,6 +1,7 @@
 package com.app.utils;
 
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 import javax.swing.DefaultComboBoxModel;
@@ -497,6 +498,11 @@ public class AuxiliarFunctions {
         int i = nombre.lastIndexOf('.');
         if (i > 0) {
             extension = nombre.substring(i); // incluye el punto
+        }
+
+        Set<String> extensionesPermitidas = Set.of(".png", ".jpg", ".jpeg", ".webp");
+        if (!extensionesPermitidas.contains(extension)) {
+            throw new IllegalArgumentException("Formato de imagen no soportado: " + extension);
         }
 
         String nombreUnico = UUID.randomUUID().toString() + extension;

@@ -1135,6 +1135,62 @@ public class Sistema implements ISistema {
         tabla.addCell(celdaValor);
     }
 
+    public String getTipoUsuario(String nickname){
+       try{
+           buscarAerolinea(nickname);
+           return "Aerolinea";
+       }catch(Exception e){
+           try{
+               buscarCliente(nickname);
+               return "Cliente";
+           }catch(Exception ex){
+               System.out.println("El usuario no es ni cliente ni aerolinea.");
+               throw new IllegalArgumentException("El usuario no existe.");
+           }
+       }
+    }
+
+    public String detectarExtension(byte[] data) {
+        if (data == null || data.length < 8) return ".bin";
+
+        // PNG
+        if (data[0] == (byte)0x89 &&
+                data[1] == 0x50 &&
+                data[2] == 0x4E &&
+                data[3] == 0x47 &&
+                data[4] == 0x0D &&
+                data[5] == 0x0A &&
+                data[6] == 0x1A &&
+                data[7] == 0x0A) {
+            return ".png";
+        }
+
+        // JPG/JPEG
+        if (data[0] == (byte)0xFF &&
+                data[1] == (byte)0xD8) {
+            return ".jpg";
+        }
+
+        // GIF
+        if (data[0] == 'G' &&
+                data[1] == 'I' &&
+                data[2] == 'F') {
+            return ".gif";
+        }
+
+        // BMP
+        if (data[0] == 'B' && data[1] == 'M') {
+            return ".bmp";
+        }
+
+        // WEBP (RIFF)
+        if (data[0] == 'R' && data[1] == 'I' && data[2] == 'F' && data[3] == 'F') {
+            return ".webp";
+        }
+
+        return ".bin"; // fallback si no se reconoce
+    }
+
 
     public void vaciarBD() {
         EntityTransaction tx = em.getTransaction();

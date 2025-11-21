@@ -23,281 +23,557 @@ public class Volando implements VolandoServicePort {
 
     @Override
     public boolean existeUsuario(String nickname) {
-        return sistema.existeUsuario(nickname);
+        try {
+            return sistema.existeUsuario(nickname);
+        } catch (Exception e) {
+            System.out.println("Error existeUsuario: " + e.getMessage());
+            throw new IllegalArgumentException("Ha ocurrido un error.");
+        }
     }
 
     @Override
     public boolean existeUsuarioEmail(String email) {
-        return sistema.existeUsuarioEmail(email);
+        try {
+            return sistema.existeUsuarioEmail(email);
+        } catch (Exception e) {
+            System.out.println("Error existeUsuarioEmail: " + e.getMessage());
+            throw new IllegalArgumentException("Ha ocurrido un error.");
+        }
+    }
+
+    @Override
+    public String getTipoUsuario(String nickname){
+        try {
+            return sistema.getTipoUsuario(nickname);
+        }catch (Exception e){
+            System.out.println("Error getTipoUsuario: " + e.getMessage());
+            throw new IllegalArgumentException("Ha ocurrido un error.");
+        }
     }
 
     @Override
     public boolean validarUsuario(String nickname, String password) {
-        return sistema.validarUsuario(nickname, password);
+        try {
+            return sistema.validarUsuario(nickname, password);
+        } catch (Exception e) {
+            System.out.println("Error validarUsuario: " + e.getMessage());
+            throw new IllegalArgumentException("Ha ocurrido un error.");
+        }
     }
 
     @Override
     public void registrarAerolinea(DtAerolinea aerolinea) {
-        sistema.registrarAerolinea(aerolinea);
+        try {
+            sistema.registrarAerolinea(aerolinea);
+        } catch (Exception e) {
+            System.out.println("Error registrarAerolinea: " + e.getMessage());
+            throw new IllegalArgumentException("Ha ocurrido un error.");
+        }
     }
 
     @Override
     public void modificarAerolinea(DtAerolinea aerolinea) {
-        sistema.modificarAerolinea(aerolinea);
+        try {
+            sistema.modificarAerolinea(aerolinea);
+        } catch (Exception e) {
+            System.out.println("Error modificarAerolinea: " + e.getMessage());
+            throw new IllegalArgumentException("Ha ocurrido un error.");
+        }
     }
 
     @Override
     public void modificarAerolineaImagen(DtAerolinea aerolinea, String urlImagen) {
-        sistema.modificarAerolineaImagen(aerolinea, urlImagen);
+        try {
+            sistema.modificarAerolineaImagen(aerolinea, urlImagen);
+        } catch (Exception e) {
+            System.out.println("Error modificarAerolineaImagen: " + e.getMessage());
+            throw new IllegalArgumentException("Ha ocurrido un error.");
+        }
     }
 
     @Override
     public void registrarCliente(DtCliente cliente) {
-        sistema.registrarCliente(cliente);
+        try {
+            sistema.registrarCliente(cliente);
+        } catch (Exception e) {
+            System.out.println("Error registrarCliente: " + e.getMessage());
+            throw new IllegalArgumentException("Ha ocurrido un error.");
+        }
     }
 
     @Override
     public void modificarCliente(DtCliente cliente) {
-        sistema.modificarCliente(cliente);
+        try {
+            System.out.println("|----- Modificando cliente -----|");
+            System.out.println("Nickname: " + cliente.getNickname());
+            System.out.println("Nombre: " + cliente.getNombre());
+            System.out.println("Email: " + cliente.getEmail());
+            System.out.println("UrlImagen: " + cliente.getUrlImage());
+            System.out.println("Apellido: " + cliente.getApellido());
+            System.out.println("Nacimiento: " + cliente.getFechaNacimiento());
+            System.out.println("Nacionalidad: " + cliente.getNacionalidad());
+            System.out.println("Pasaporte: " + cliente.getTipoDocumento());
+            System.out.println("NroDocumento: " + cliente.getNumeroDocumento());
+            sistema.modificarCliente(cliente);
+        } catch (Exception e) {
+            System.out.println("Error modificarCliente: " + e.getMessage());
+            throw new IllegalArgumentException("Ha ocurrido un error.");
+        }
     }
 
     @Override
     public void modificarClienteImagen(DtCliente cliente, String urlImagen) {
-        sistema.modificarClienteImagen(cliente, urlImagen);
+        try {
+            System.out.println("|----- Modificando cliente -----|");
+            System.out.println("Nickname: " + cliente.getNickname());
+            System.out.println("UrlImagen: " + cliente.getUrlImage());
+            sistema.modificarClienteImagen(cliente, urlImagen);
+        } catch (Exception e) {
+            System.out.println("Error modificarClienteImagen: " + e.getMessage());
+            throw new IllegalArgumentException("Ha ocurrido un error.");
+        }
     }
 
     @Override
     public DtUsuario getUsuario(String nickname) {
-        return sistema.getUsuario(nickname);
+        try {
+            return sistema.getUsuario(nickname);
+        } catch (Exception e) {
+            System.out.println("Error getUsuario: " + e.getMessage());
+            throw new IllegalArgumentException("Ha ocurrido un error.");
+        }
     }
 
     @Override
     public DtCliente getCliente(String nickname) {
-        return sistema.getCliente(nickname);
+        try {
+            return sistema.getCliente(nickname);
+        } catch (Exception e) {
+            System.out.println("Error getCliente: " + e.getMessage());
+            throw new IllegalArgumentException("Ha ocurrido un error.");
+        }
     }
 
     @Override
     public DtAerolinea getAerolinea(String nickname) {
-        return sistema.getAerolinea(nickname);
+        try {
+            return sistema.getAerolinea(nickname);
+        } catch (Exception e) {
+            System.out.println("Error getAerolinea: " + e.getMessage());
+            throw new IllegalArgumentException("Ha ocurrido un error.");
+        }
     }
 
     @Override
     public List<DtUsuario> listarUsuarios() {
-        return sistema.listarUsuarios();
+        try {
+            return sistema.listarUsuarios();
+        } catch (Exception e) {
+            System.out.println("Error listarUsuarios: " + e.getMessage());
+            throw new IllegalArgumentException("Ha ocurrido un error.");
+        }
     }
 
     @Override
     public List<DtAerolinea> listarAerolineas() {
-        return sistema.listarAerolineas();
+        try {
+            return sistema.listarAerolineas();
+        } catch (Exception e) {
+            System.out.println("Error listarAerolineas: " + e.getMessage());
+            throw new IllegalArgumentException("Ha ocurrido un error.");
+        }
     }
 
     @Override
     public void seguirUsuario(String usuarioSeguidor, String usuarioASeguir) {
-        sistema.seguirUsuario(usuarioSeguidor, usuarioASeguir);
+        try {
+            sistema.seguirUsuario(usuarioSeguidor, usuarioASeguir);
+        } catch (Exception e) {
+            System.out.println("Error seguirUsuario: " + e.getMessage());
+            throw new IllegalArgumentException("Ha ocurrido un error.");
+        }
     }
 
     @Override
     public void dejarDeSeguirUsuario(String usuarioSeguidor, String usuarioASeguir) {
-        sistema.dejarDeSeguirUsuario(usuarioSeguidor, usuarioASeguir);
+        try {
+            sistema.dejarDeSeguirUsuario(usuarioSeguidor, usuarioASeguir);
+        } catch (Exception e) {
+            System.out.println("Error dejarDeSeguirUsuario: " + e.getMessage());
+            throw new IllegalArgumentException("Ha ocurrido un error.");
+        }
     }
 
 // ------------ RESERVAS ----------- //
 
     @Override
     public void altaReserva(DtReserva reserva) {
-        sistema.altaReserva(reserva);
+        try {
+            sistema.altaReserva(reserva);
+        } catch (Exception e) {
+            System.out.println("Error altaReserva: " + e.getMessage());
+            throw new IllegalArgumentException("Ha ocurrido un error.");
+        }
     }
 
     @Override
     public DtReserva getReservaCliente(DtVuelo vuelo, DtCliente cliente, String fechaReserva) {
-        return sistema.getReservaCliente(vuelo, cliente, LocalDate.parse(fechaReserva));
+        try {
+            return sistema.getReservaCliente(vuelo, cliente, LocalDate.parse(fechaReserva));
+        } catch (Exception e) {
+            System.out.println("Error getReservaCliente: " + e.getMessage());
+            throw new IllegalArgumentException("Ha ocurrido un error.");
+        }
     }
 
     @Override
     public DtReserva getReservaAerolinea(DtVuelo vuelo, DtAerolinea aerolinea, String fechaReserva) {
-        return sistema.getReservaAerolinea(vuelo, aerolinea, LocalDate.parse(fechaReserva));
+        try {
+            return sistema.getReservaAerolinea(vuelo, aerolinea, LocalDate.parse(fechaReserva));
+        } catch (Exception e) {
+            System.out.println("Error getReservaAerolinea: " + e.getMessage());
+            throw new IllegalArgumentException("Ha ocurrido un error.");
+        }
     }
 
     @Override
     public List<DtReserva> listarReservasCliente(String nickname) {
-        return sistema.listarReservasCliente(nickname);
+        try {
+            return sistema.listarReservasCliente(nickname);
+        } catch (Exception e) {
+            System.out.println("Error listarReservasCliente: " + e.getMessage());
+            throw new IllegalArgumentException("Ha ocurrido un error.");
+        }
     }
 
     @Override
     public List<DtReserva> listarReservasAerolinea(String nickname) {
-        return sistema.listarReservasAerolinea(nickname);
+        try {
+            return sistema.listarReservasAerolinea(nickname);
+        } catch (Exception e) {
+            System.out.println("Error listarReservasAerolinea: " + e.getMessage());
+            throw new IllegalArgumentException("Ha ocurrido un error.");
+        }
     }
 
     @Override
     public List<DtReserva> listarReservasClienteVuelo(DtCliente cliente, DtVuelo vuelo) {
-        return sistema.listarReservasClienteVuelo(cliente, vuelo);
+        try {
+            return sistema.listarReservasClienteVuelo(cliente, vuelo);
+        } catch (Exception e) {
+            System.out.println("Error listarReservasClienteVuelo: " + e.getMessage());
+            throw new IllegalArgumentException("Ha ocurrido un error.");
+        }
     }
 
     @Override
-    public DtReserva realizarCheckin (DtVuelo vuelo, String fechaReserva, String nicknameCliente){
-        return sistema.realizarCheckin(vuelo, LocalDate.parse(fechaReserva), nicknameCliente);
+    public DtReserva realizarCheckin(DtVuelo vuelo, String fechaReserva, String nicknameCliente) {
+        try {
+            return sistema.realizarCheckin(vuelo, LocalDate.parse(fechaReserva), nicknameCliente);
+        } catch (Exception e) {
+            System.out.println("Error realizarCheckin: " + e.getMessage());
+            throw new IllegalArgumentException("Ha ocurrido un error.");
+        }
     }
 
     @Override
     public byte[] crearPDFReserva(DtReserva reserva) {
-        return sistema.crearPDFReserva(reserva);
+        try {
+            return sistema.crearPDFReserva(reserva);
+        } catch (Exception e) {
+            System.out.println("Error crearPDFReserva: " + e.getMessage());
+            throw new IllegalArgumentException("Ha ocurrido un error.");
+        }
     }
 
 // ---------- RUTAS DE VUELO ---------- //
 
     @Override
     public boolean rutaContieneCategoria(DtRuta ruta, String categoria) {
-        return sistema.rutaContieneCategoria(ruta, categoria);
+        try {
+            return sistema.rutaContieneCategoria(ruta, categoria);
+        } catch (Exception e) {
+            System.out.println("Error rutaContieneCategoria: " + e.getMessage());
+            throw new IllegalArgumentException("Ha ocurrido un error.");
+        }
     }
 
     @Override
     public boolean existeRuta(String nombre) {
-        return sistema.existeRuta(nombre);
+        try {
+            return sistema.existeRuta(nombre);
+        } catch (Exception e) {
+            System.out.println("Error existeRuta: " + e.getMessage());
+            throw new IllegalArgumentException("Ha ocurrido un error.");
+        }
     }
 
     @Override
     public void altaRutaDeVuelo(String nickname, DtRuta datosRuta) {
-        sistema.altaRutaDeVuelo(nickname, datosRuta);
+        try {
+            sistema.altaRutaDeVuelo(nickname, datosRuta);
+        } catch (Exception e) {
+            System.out.println("Error altaRutaDeVuelo: " + e.getMessage());
+            throw new IllegalArgumentException("Ha ocurrido un error.");
+        }
     }
 
     @Override
     public DtRuta getRutaDeVuelo(String nombre) {
-        return sistema.getRutaDeVuelo(nombre);
+        try {
+            return sistema.getRutaDeVuelo(nombre);
+        } catch (Exception e) {
+            System.out.println("Error getRutaDeVuelo: " + e.getMessage());
+            throw new IllegalArgumentException("Ha ocurrido un error.");
+        }
     }
 
     @Override
     public List<DtRuta> listarRutasDeVuelo() {
-        return sistema.listarRutasDeVuelo();
+        try {
+            return sistema.listarRutasDeVuelo();
+        } catch (Exception e) {
+            System.out.println("Error listarRutasDeVuelo: " + e.getMessage());
+            throw new IllegalArgumentException("Ha ocurrido un error.");
+        }
     }
 
 // ---------- VUELOS ---------- //
 
     @Override
     public boolean existeVuelo(String nombre) {
-        return sistema.existeVuelo(nombre);
+        try {
+            return sistema.existeVuelo(nombre);
+        } catch (Exception e) {
+            System.out.println("Error existeVuelo: " + e.getMessage());
+            throw new IllegalArgumentException("Ha ocurrido un error.");
+        }
     }
 
     @Override
     public void altaVuelo(DtVuelo vuelo) {
-        sistema.altaVuelo(vuelo);
+        try {
+            sistema.altaVuelo(vuelo);
+        } catch (Exception e) {
+            System.out.println("Error altaVuelo: " + e.getMessage());
+            throw new IllegalArgumentException("Ha ocurrido un error.");
+        }
     }
 
     @Override
     public DtVuelo getVuelo(String nombre) {
-        return sistema.getVuelo(nombre);
+        try {
+            return sistema.getVuelo(nombre);
+        } catch (Exception e) {
+            System.out.println("Error getVuelo: " + e.getMessage());
+            throw new IllegalArgumentException("Ha ocurrido un error.");
+        }
     }
 
     @Override
     public List<DtVuelo> listarVuelosRuta(String nombreRuta) {
-        return sistema.listarVuelosRuta(nombreRuta);
+        try {
+            return sistema.listarVuelosRuta(nombreRuta);
+        } catch (Exception e) {
+            System.out.println("Error listarVuelosRuta: " + e.getMessage());
+            throw new IllegalArgumentException("Ha ocurrido un error.");
+        }
     }
 
     @Override
     public List<DtVuelo> listarVuelosRutaFecha(String nombreRuta, String fecha) {
-        return sistema.listarVuelosRutaFecha(nombreRuta, LocalDate.parse(fecha));
+        try {
+            return sistema.listarVuelosRutaFecha(nombreRuta, LocalDate.parse(fecha));
+        } catch (Exception e) {
+            System.out.println("Error listarVuelosRutaFecha: " + e.getMessage());
+            throw new IllegalArgumentException("Ha ocurrido un error.");
+        }
     }
 
     @Override
     public List<DtVuelo> getVuelosRutaDeVuelo(DtRuta ruta) {
-        return sistema.getVuelosRutaDeVuelo(ruta);
+        try {
+            return sistema.getVuelosRutaDeVuelo(ruta);
+        } catch (Exception e) {
+            System.out.println("Error getVuelosRutaDeVuelo: " + e.getMessage());
+            throw new IllegalArgumentException("Ha ocurrido un error.");
+        }
     }
 
 // ---------- PAQUETES ---------- //
 
     @Override
     public boolean estaPaqueteComprado(DtPaquete paquete) {
-        return sistema.estaPaqueteComprado(paquete);
+        try {
+            return sistema.estaPaqueteComprado(paquete);
+        } catch (Exception e) {
+            System.out.println("Error estaPaqueteComprado: " + e.getMessage());
+            throw new IllegalArgumentException("Ha ocurrido un error.");
+        }
     }
 
     @Override
     public boolean existePaquete(String nombre) {
-        return sistema.existePaquete(nombre);
+        try {
+            return sistema.existePaquete(nombre);
+        } catch (Exception e) {
+            System.out.println("Error existePaquete: " + e.getMessage());
+            throw new IllegalArgumentException("Ha ocurrido un error.");
+        }
     }
 
     @Override
     public void altaPaquete(DtPaquete paquete) {
-        sistema.altaPaquete(paquete);
+        try {
+            sistema.altaPaquete(paquete);
+        } catch (Exception e) {
+            System.out.println("Error altaPaquete: " + e.getMessage());
+            throw new IllegalArgumentException("Ha ocurrido un error.");
+        }
     }
 
     @Override
     public DtPaquete getPaquete(String nombre) {
-        return sistema.getPaquete(nombre);
+        try {
+            return sistema.getPaquete(nombre);
+        } catch (Exception e) {
+            System.out.println("Error getPaquete: " + e.getMessage());
+            throw new IllegalArgumentException("Ha ocurrido un error.");
+        }
     }
 
     @Override
     public List<DtPaquete> listarPaquetes() {
-        return sistema.listarPaquetes();
+        try {
+            return sistema.listarPaquetes();
+        } catch (Exception e) {
+            System.out.println("Error listarPaquetes: " + e.getMessage());
+            throw new IllegalArgumentException("Ha ocurrido un error.");
+        }
     }
 
     @Override
     public List<DtPaquete> listarPaquetesCliente(String nickname) {
-        return sistema.listarPaquetesCliente(nickname);
+        try {
+            return sistema.listarPaquetesCliente(nickname);
+        } catch (Exception e) {
+            System.out.println("Error listarPaquetesCliente: " + e.getMessage());
+            throw new IllegalArgumentException("Ha ocurrido un error.");
+        }
     }
 
     @Override
     public List<DtPaquete> listarPaquetesAerolinea(String nickname) {
-        return sistema.listarPaquetesAerolinea(nickname);
+        try {
+            return sistema.listarPaquetesAerolinea(nickname);
+        } catch (Exception e) {
+            System.out.println("Error listarPaquetesAerolinea: " + e.getMessage());
+            throw new IllegalArgumentException("Ha ocurrido un error.");
+        }
     }
 
     @Override
     public List<DtPaquete> listarPaquetesNoComprados() {
-        return sistema.listarPaquetesNoComprados();
+        try {
+            return sistema.listarPaquetesNoComprados();
+        } catch (Exception e) {
+            System.out.println("Error listarPaquetesNoComprados: " + e.getMessage());
+            throw new IllegalArgumentException("Ha ocurrido un error.");
+        }
     }
 
 // ---------- CATEGORIAS ---------- //
 
     @Override
     public List<DtCategoria> listarCategorias() {
-        return sistema.listarCategorias();
+        try {
+            return sistema.listarCategorias();
+        } catch (Exception e) {
+            System.out.println("Error listarCategorias: " + e.getMessage());
+            throw new IllegalArgumentException("Ha ocurrido un error.");
+        }
     }
 
     @Override
     public List<DtCategoria> buscarCategorias() {
-        return sistema.buscarCategorias();
+        try {
+            return sistema.buscarCategorias();
+        } catch (Exception e) {
+            System.out.println("Error buscarCategorias: " + e.getMessage());
+            throw new IllegalArgumentException("Ha ocurrido un error.");
+        }
     }
 
     @Override
     public List<DtCategoria> buscarCategoriasPorNombre(List<String> nombres) {
-        return sistema.buscarCategoriasPorNombre(nombres);
+        try {
+            return sistema.buscarCategoriasPorNombre(nombres);
+        } catch (Exception e) {
+            System.out.println("Error buscarCategoriasPorNombre: " + e.getMessage());
+            throw new IllegalArgumentException("Ha ocurrido un error.");
+        }
     }
 
 // ---------- CIUDADES ---------- //
 
     @Override
     public void altaCiudad(DtCiudad ciudad) {
-        sistema.altaCiudad(ciudad);
+        try {
+            sistema.altaCiudad(ciudad);
+        } catch (Exception e) {
+            System.out.println("Error altaCiudad: " + e.getMessage());
+            throw new IllegalArgumentException("Ha ocurrido un error.");
+        }
     }
 
     @Override
     public DtCiudad getCiudad(String nombre, String pais) {
-        return sistema.getCiudad(nombre, pais);
+        try {
+            return sistema.getCiudad(nombre, pais);
+        } catch (Exception e) {
+            System.out.println("Error getCiudad: " + e.getMessage());
+            throw new IllegalArgumentException("Ha ocurrido un error.");
+        }
     }
 
     @Override
     public List<DtCiudad> listarCiudades() {
-        return sistema.listarCiudades();
+        try {
+            return sistema.listarCiudades();
+        } catch (Exception e) {
+            System.out.println("Error listarCiudades: " + e.getMessage());
+            throw new IllegalArgumentException("Ha ocurrido un error.");
+        }
     }
 
-// ---------- COMPRAS ---------- //
+    // ---------- COMPRAS ---------- //
 
     @Override
     public void compraPaquete(DtPaquete paquete, DtCliente cliente) {
-        sistema.compraPaquete(paquete, cliente);
+        try {
+            sistema.compraPaquete(paquete, cliente);
+        } catch (Exception e) {
+            System.out.println("Error compraPaquete: " + e.getMessage());
+            throw new IllegalArgumentException("Ha ocurrido un error.");
+        }
     }
-
 
     // -------- Auxiliar --------- //
     @Override
     public String guardarImagen(byte[] data, TipoImagen tipoImagen){
         try{
-            File tempFile = File.createTempFile("upload_", ".bin");
+            System.out.println("Subiendo imagen para un/a " + tipoImagen.toString());
+
+            String extension = sistema.detectarExtension(data);
+            File tempFile = File.createTempFile("upload_", extension);
             try (FileOutputStream fos = new FileOutputStream(tempFile)) {
                 fos.write(data);
             }
             File imagenGuardada = AuxiliarFunctions.guardarImagen(tempFile, tipoImagen);
+            System.out.println("Se ha guardado la imágen con éxito");
             return imagenGuardada.getName();
         }catch(Exception e){
-            throw new IllegalArgumentException("Ha ocurrido un error al subir la imagen");
+            throw new IllegalArgumentException("Ha ocurrido un error al subir la imagen: " + e.getMessage());
         }
     }
 

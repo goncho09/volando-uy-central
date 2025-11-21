@@ -33,6 +33,9 @@ public interface VolandoServicePort {
 //    boolean clienteTienePaquete(String nickname, String nombrePaquete);
 
     @WebMethod
+    String getTipoUsuario(String nickname);
+
+    @WebMethod
     boolean validarUsuario(String nickname, String password);
 
 //    boolean aerolineaTieneRuta(DtAerolinea aerolinea, String nombre);

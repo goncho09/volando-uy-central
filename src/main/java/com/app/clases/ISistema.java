@@ -25,6 +25,7 @@ public interface ISistema {
     boolean clienteTienePaquete(String nickname, String nombrePaquete);
     boolean validarUsuario(String nickname, String password);
     boolean aerolineaTieneRuta(DtAerolinea aerolinea, String nombre);
+    String getTipoUsuario(String nickname);
     void registrarAerolinea(DtAerolinea aerolinea);
     void modificarAerolinea(DtAerolinea aerolinea);
     void modificarAerolineaImagen(DtAerolinea aerolinea, String urlImagen);
@@ -102,6 +103,10 @@ public interface ISistema {
 
     // -------- Pasajeros --------- //
     List<DtPasajero> listarPasajeros(DtReserva reserva);
+
+    // -------- Auxiliares --------- //
+
+    String detectarExtension(byte[] data);
 
     // ---------- BD ---------- //
     void vaciarBD();
