@@ -1032,28 +1032,16 @@ public class Sistema implements ISistema {
 
     public byte[] crearPDFReserva(DtReserva reservaCompleta) {
         try {
-            // Verificamos que tenga check-in hecho
             if (!reservaCompleta.getCheckin()) {
                 throw new IllegalArgumentException("El check-in no ha sido realizado para esta reserva.");
             }
 
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
+
             Document document = new Document(PageSize.A4.rotate());
+
             PdfWriter.getInstance(document, baos);
-            document.open();
 
-            // Carpeta donde se guardan los PDFs
-            String carpeta = "pdfs";
-            new java.io.File(carpeta).mkdirs();
-
-            String nombreArchivo = "BoardingPass_" +
-                    reservaCompleta.getVuelo().getNombre() + "_" +
-                    reservaCompleta.getCliente().getNickname() + "_" +
-                    reservaCompleta.getFecha() + ".pdf";
-
-            String rutaPDF = carpeta + "/" + nombreArchivo;
-
-            PdfWriter.getInstance(document, new FileOutputStream(rutaPDF));
             document.open();
 
             Font titulo = new Font(Font.FontFamily.HELVETICA, 36, Font.BOLD, new BaseColor(0, 102, 204));
@@ -1061,7 +1049,6 @@ public class Sistema implements ISistema {
             Font normal = new Font(Font.FontFamily.HELVETICA, 14);
             Font negrita = new Font(Font.FontFamily.HELVETICA, 14, Font.BOLD);
 
-            // Título principal
             Paragraph p = new Paragraph("VOLANDO.UY", titulo);
             p.setAlignment(Element.ALIGN_CENTER);
             p.setSpacingAfter(10);
@@ -1072,7 +1059,6 @@ public class Sistema implements ISistema {
             p.setSpacingAfter(30);
             document.add(p);
 
-            // Tabla de información
             PdfPTable tabla = new PdfPTable(2);
             tabla.setWidthPercentage(90);
             tabla.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -1092,17 +1078,14 @@ public class Sistema implements ISistema {
 
             document.add(tabla);
 
-            // Lista de pasajeros
             document.add(new Paragraph("\nPasajeros:", negrita));
-
             for (DtPasajero pasajero : reservaCompleta.getPasajeros()) {
                 Paragraph pa = new Paragraph("• " + pasajero.getNombre() + " " + pasajero.getApellido(), normal);
-                p.setIndentationLeft(40);  // ← Así sí funciona
-                document.add(p);
+                pa.setIndentationLeft(40);
+                document.add(pa);
             }
 
-            // Mensaje final
-            p = new Paragraph("\n¡Gracias por volar con Volando.uy!", negrita);
+            p = new Paragraph("\nGracias por volar con Volando.uy", negrita);
             p.setAlignment(Element.ALIGN_CENTER);
             p.setSpacingBefore(40);
             document.add(p);
@@ -1113,9 +1096,7 @@ public class Sistema implements ISistema {
 
             document.close();
 
-            System.out.println("PDF generado correctamente: " + rutaPDF);
-            return baos.toByteArray();  // ← DEVUELVE LOS BYTES
-
+            return baos.toByteArray();
         } catch (Exception e) {
             throw new RuntimeException("Error generando PDF: " + e.getMessage());
         }

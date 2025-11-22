@@ -64,6 +64,14 @@ public class Volando implements VolandoServicePort {
     @Override
     public void registrarAerolinea(DtAerolinea aerolinea) {
         try {
+            System.out.println("|----------- Registrando Aerolinea ------------|");
+            System.out.println("Nickname: " + aerolinea.getNickname());
+            System.out.println("Nombre: " + aerolinea.getNombre());
+            System.out.println("Email: " + aerolinea.getEmail());
+            System.out.println("Pass: " + aerolinea.getPassword());
+            System.out.println("UrlImage: " + aerolinea.getUrlImage());
+            System.out.println("Descripcion: " + aerolinea.getDescripcion());
+            System.out.println("LinkWeb: " + aerolinea.getLinkWeb());
             sistema.registrarAerolinea(aerolinea);
         } catch (Exception e) {
             System.out.println("Error registrarAerolinea: " + e.getMessage());

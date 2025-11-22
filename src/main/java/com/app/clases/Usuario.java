@@ -28,8 +28,8 @@ public abstract class Usuario {
     @ManyToMany
     @JoinTable(
             name = "usuario_seguidos",
-            joinColumns = @JoinColumn(name = "seguidor_nickname"),
-            inverseJoinColumns = @JoinColumn(name = "seguido_nickname")
+            joinColumns = @JoinColumn(name = "sigue_nickname"),
+            inverseJoinColumns = @JoinColumn(name = "loSiguen_nickname")
     )
     private List<Usuario> seguidos;
 
