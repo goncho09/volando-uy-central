@@ -106,13 +106,40 @@ public class Cliente extends Usuario{
             reservasList.add(r.getDatos());
         }
 
+        List <DtUsuario> listaSeguidores = new ArrayList<>();
+        for ( Usuario u : this.getSeguidores()){
+            DtUsuario dtUsuario = new DtUsuario(
+                    u.getNickname(),
+                    u.getNombre(),
+                    u.getEmail(),
+                    u.getPassword(),
+                    u.getUrlImage(),
+                    new ArrayList<>(),
+                    new ArrayList<>()
+            );
+            listaSeguidores.add(dtUsuario);
+        }
+        List <DtUsuario> listaSeguidos = new ArrayList<>();
+        for ( Usuario u : this.getSeguidos()){
+            DtUsuario dtUsuario = new DtUsuario(
+                    u.getNickname(),
+                    u.getNombre(),
+                    u.getEmail(),
+                    u.getPassword(),
+                    u.getUrlImage(),
+                    new ArrayList<>(),
+                    new ArrayList<>()
+            );
+            listaSeguidos.add(dtUsuario);
+        }
+
         return new DtCliente(
                 this.getNickname(),
                 this.getNombre(),
                 this.getEmail(),
                 this.getUrlImage(),
-                this.getSeguidores(),
-                this.getSeguidos(),
+                listaSeguidores,
+                listaSeguidos,
                 this.getApellido(),
                 this.getFechaNacimiento().toString(),
                 this.getNacionalidad(),

@@ -29,7 +29,7 @@ public class DtAerolinea extends DtUsuario {
     }
 
     // get datos sin password
-    public DtAerolinea(String nickname, String nombre, String email, String urlImage, List<Usuario> seguidores,List<Usuario> seguidos, String descripcion, String linkWeb, List<DtRuta> rutasDeVuelo) {
+    public DtAerolinea(String nickname, String nombre, String email, String urlImage, List<DtUsuario> seguidores,List<DtUsuario> seguidos, String descripcion, String linkWeb, List<DtRuta> rutasDeVuelo) {
         super(nickname, nombre, email, null, urlImage,seguidores, seguidos);
         this.descripcion = descripcion;
         this.linkWeb = linkWeb;
