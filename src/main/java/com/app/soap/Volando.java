@@ -1,6 +1,8 @@
 package com.app.soap;
 
 import javax.jws.WebService;
+import javax.xml.ws.WebServiceException;
+
 import com.app.clases.Factory;
 import com.app.clases.ISistema;
 import com.app.datatypes.*;
@@ -27,7 +29,7 @@ public class Volando implements VolandoServicePort {
             return sistema.existeUsuario(nickname);
         } catch (Exception e) {
             System.out.println("Error existeUsuario: " + e.getMessage());
-            throw new IllegalArgumentException("Ha ocurrido un error.");
+            throw new WebServiceException("Ha ocurrido un error.");
         }
     }
 
@@ -37,7 +39,7 @@ public class Volando implements VolandoServicePort {
             return sistema.existeUsuarioEmail(email);
         } catch (Exception e) {
             System.out.println("Error existeUsuarioEmail: " + e.getMessage());
-            throw new IllegalArgumentException("Ha ocurrido un error.");
+            throw new WebServiceException("Ha ocurrido un error.");
         }
     }
 
@@ -47,7 +49,7 @@ public class Volando implements VolandoServicePort {
             return sistema.getTipoUsuario(nickname);
         }catch (Exception e){
             System.out.println("Error getTipoUsuario: " + e.getMessage());
-            throw new IllegalArgumentException("Ha ocurrido un error.");
+            throw new WebServiceException("Ha ocurrido un error.");
         }
     }
 
@@ -57,7 +59,7 @@ public class Volando implements VolandoServicePort {
             return sistema.validarUsuario(nickname, password);
         } catch (Exception e) {
             System.out.println("Error validarUsuario: " + e.getMessage());
-            throw new IllegalArgumentException("Ha ocurrido un error.");
+            throw new WebServiceException("Ha ocurrido un error.");
         }
     }
 
@@ -67,7 +69,7 @@ public class Volando implements VolandoServicePort {
             sistema.registrarAerolinea(aerolinea);
         } catch (Exception e) {
             System.out.println("Error registrarAerolinea: " + e.getMessage());
-            throw new IllegalArgumentException("Ha ocurrido un error.");
+            throw new WebServiceException("Ha ocurrido un error.");
         }
     }
 
@@ -77,7 +79,7 @@ public class Volando implements VolandoServicePort {
             sistema.modificarAerolinea(aerolinea);
         } catch (Exception e) {
             System.out.println("Error modificarAerolinea: " + e.getMessage());
-            throw new IllegalArgumentException("Ha ocurrido un error.");
+            throw new WebServiceException("Ha ocurrido un error.");
         }
     }
 
@@ -87,7 +89,7 @@ public class Volando implements VolandoServicePort {
             sistema.modificarAerolineaImagen(aerolinea, urlImagen);
         } catch (Exception e) {
             System.out.println("Error modificarAerolineaImagen: " + e.getMessage());
-            throw new IllegalArgumentException("Ha ocurrido un error.");
+            throw new WebServiceException("Ha ocurrido un error.");
         }
     }
 
@@ -97,7 +99,7 @@ public class Volando implements VolandoServicePort {
             sistema.registrarCliente(cliente);
         } catch (Exception e) {
             System.out.println("Error registrarCliente: " + e.getMessage());
-            throw new IllegalArgumentException("Ha ocurrido un error.");
+            throw new WebServiceException("Ha ocurrido un error.");
         }
     }
 
@@ -117,7 +119,7 @@ public class Volando implements VolandoServicePort {
             sistema.modificarCliente(cliente);
         } catch (Exception e) {
             System.out.println("Error modificarCliente: " + e.getMessage());
-            throw new IllegalArgumentException("Ha ocurrido un error.");
+            throw new WebServiceException("Ha ocurrido un error.");
         }
     }
 
@@ -130,7 +132,7 @@ public class Volando implements VolandoServicePort {
             sistema.modificarClienteImagen(cliente, urlImagen);
         } catch (Exception e) {
             System.out.println("Error modificarClienteImagen: " + e.getMessage());
-            throw new IllegalArgumentException("Ha ocurrido un error.");
+            throw new WebServiceException("Ha ocurrido un error.");
         }
     }
 
@@ -140,7 +142,7 @@ public class Volando implements VolandoServicePort {
             return sistema.getUsuario(nickname);
         } catch (Exception e) {
             System.out.println("Error getUsuario: " + e.getMessage());
-            throw new IllegalArgumentException("Ha ocurrido un error.");
+            throw new WebServiceException("Ha ocurrido un error.");
         }
     }
 
@@ -150,7 +152,7 @@ public class Volando implements VolandoServicePort {
             return sistema.getCliente(nickname);
         } catch (Exception e) {
             System.out.println("Error getCliente: " + e.getMessage());
-            throw new IllegalArgumentException("Ha ocurrido un error.");
+            throw new WebServiceException("Ha ocurrido un error.");
         }
     }
 
@@ -160,7 +162,7 @@ public class Volando implements VolandoServicePort {
             return sistema.getAerolinea(nickname);
         } catch (Exception e) {
             System.out.println("Error getAerolinea: " + e.getMessage());
-            throw new IllegalArgumentException("Ha ocurrido un error.");
+            throw new WebServiceException("Ha ocurrido un error.");
         }
     }
 
@@ -170,7 +172,7 @@ public class Volando implements VolandoServicePort {
             return sistema.listarUsuarios();
         } catch (Exception e) {
             System.out.println("Error listarUsuarios: " + e.getMessage());
-            throw new IllegalArgumentException("Ha ocurrido un error.");
+            throw new WebServiceException("Ha ocurrido un error.");
         }
     }
 
@@ -180,7 +182,7 @@ public class Volando implements VolandoServicePort {
             return sistema.listarAerolineas();
         } catch (Exception e) {
             System.out.println("Error listarAerolineas: " + e.getMessage());
-            throw new IllegalArgumentException("Ha ocurrido un error.");
+            throw new WebServiceException("Ha ocurrido un error.");
         }
     }
 
@@ -189,8 +191,9 @@ public class Volando implements VolandoServicePort {
         try {
             sistema.seguirUsuario(usuarioSeguidor, usuarioASeguir);
         } catch (Exception e) {
+            e.printStackTrace();
             System.out.println("Error seguirUsuario: " + e.getMessage());
-            throw new IllegalArgumentException("Ha ocurrido un error.");
+            throw new WebServiceException("Ha ocurrido un error al seguir el usuario.");
         }
     }
 
@@ -200,7 +203,7 @@ public class Volando implements VolandoServicePort {
             sistema.dejarDeSeguirUsuario(usuarioSeguidor, usuarioASeguir);
         } catch (Exception e) {
             System.out.println("Error dejarDeSeguirUsuario: " + e.getMessage());
-            throw new IllegalArgumentException("Ha ocurrido un error.");
+            throw new WebServiceException("Ha ocurrido un error.");
         }
     }
 
@@ -212,7 +215,7 @@ public class Volando implements VolandoServicePort {
             sistema.altaReserva(reserva);
         } catch (Exception e) {
             System.out.println("Error altaReserva: " + e.getMessage());
-            throw new IllegalArgumentException("Ha ocurrido un error.");
+            throw new WebServiceException("Ha ocurrido un error.");
         }
     }
 
@@ -222,7 +225,7 @@ public class Volando implements VolandoServicePort {
             return sistema.getReservaCliente(vuelo, cliente, LocalDate.parse(fechaReserva));
         } catch (Exception e) {
             System.out.println("Error getReservaCliente: " + e.getMessage());
-            throw new IllegalArgumentException("Ha ocurrido un error.");
+            throw new WebServiceException("Ha ocurrido un error.");
         }
     }
 
@@ -232,7 +235,7 @@ public class Volando implements VolandoServicePort {
             return sistema.getReservaAerolinea(vuelo, aerolinea, LocalDate.parse(fechaReserva));
         } catch (Exception e) {
             System.out.println("Error getReservaAerolinea: " + e.getMessage());
-            throw new IllegalArgumentException("Ha ocurrido un error.");
+            throw new WebServiceException("Ha ocurrido un error.");
         }
     }
 
@@ -242,7 +245,7 @@ public class Volando implements VolandoServicePort {
             return sistema.listarReservasCliente(nickname);
         } catch (Exception e) {
             System.out.println("Error listarReservasCliente: " + e.getMessage());
-            throw new IllegalArgumentException("Ha ocurrido un error.");
+            throw new WebServiceException("Ha ocurrido un error.");
         }
     }
 
@@ -252,7 +255,7 @@ public class Volando implements VolandoServicePort {
             return sistema.listarReservasAerolinea(nickname);
         } catch (Exception e) {
             System.out.println("Error listarReservasAerolinea: " + e.getMessage());
-            throw new IllegalArgumentException("Ha ocurrido un error.");
+            throw new WebServiceException("Ha ocurrido un error.");
         }
     }
 
@@ -262,7 +265,7 @@ public class Volando implements VolandoServicePort {
             return sistema.listarReservasClienteVuelo(cliente, vuelo);
         } catch (Exception e) {
             System.out.println("Error listarReservasClienteVuelo: " + e.getMessage());
-            throw new IllegalArgumentException("Ha ocurrido un error.");
+            throw new WebServiceException("Ha ocurrido un error.");
         }
     }
 
@@ -272,7 +275,7 @@ public class Volando implements VolandoServicePort {
             return sistema.realizarCheckin(vuelo, LocalDate.parse(fechaReserva), nicknameCliente);
         } catch (Exception e) {
             System.out.println("Error realizarCheckin: " + e.getMessage());
-            throw new IllegalArgumentException("Ha ocurrido un error.");
+            throw new WebServiceException("Ha ocurrido un error.");
         }
     }
 
@@ -282,7 +285,7 @@ public class Volando implements VolandoServicePort {
             return sistema.crearPDFReserva(reserva);
         } catch (Exception e) {
             System.out.println("Error crearPDFReserva: " + e.getMessage());
-            throw new IllegalArgumentException("Ha ocurrido un error.");
+            throw new WebServiceException("Ha ocurrido un error.");
         }
     }
 
@@ -294,7 +297,7 @@ public class Volando implements VolandoServicePort {
             return sistema.rutaContieneCategoria(ruta, categoria);
         } catch (Exception e) {
             System.out.println("Error rutaContieneCategoria: " + e.getMessage());
-            throw new IllegalArgumentException("Ha ocurrido un error.");
+            throw new WebServiceException("Ha ocurrido un error.");
         }
     }
 
@@ -304,7 +307,7 @@ public class Volando implements VolandoServicePort {
             return sistema.existeRuta(nombre);
         } catch (Exception e) {
             System.out.println("Error existeRuta: " + e.getMessage());
-            throw new IllegalArgumentException("Ha ocurrido un error.");
+            throw new WebServiceException("Ha ocurrido un error.");
         }
     }
 
@@ -314,7 +317,7 @@ public class Volando implements VolandoServicePort {
             sistema.altaRutaDeVuelo(nickname, datosRuta);
         } catch (Exception e) {
             System.out.println("Error altaRutaDeVuelo: " + e.getMessage());
-            throw new IllegalArgumentException("Ha ocurrido un error.");
+            throw new WebServiceException("Ha ocurrido un error.");
         }
     }
 
@@ -324,7 +327,7 @@ public class Volando implements VolandoServicePort {
             return sistema.getRutaDeVuelo(nombre);
         } catch (Exception e) {
             System.out.println("Error getRutaDeVuelo: " + e.getMessage());
-            throw new IllegalArgumentException("Ha ocurrido un error.");
+            throw new WebServiceException("Ha ocurrido un error.");
         }
     }
 
@@ -334,7 +337,7 @@ public class Volando implements VolandoServicePort {
             return sistema.listarRutasDeVuelo();
         } catch (Exception e) {
             System.out.println("Error listarRutasDeVuelo: " + e.getMessage());
-            throw new IllegalArgumentException("Ha ocurrido un error.");
+            throw new WebServiceException("Ha ocurrido un error.");
         }
     }
 
@@ -346,7 +349,7 @@ public class Volando implements VolandoServicePort {
             return sistema.existeVuelo(nombre);
         } catch (Exception e) {
             System.out.println("Error existeVuelo: " + e.getMessage());
-            throw new IllegalArgumentException("Ha ocurrido un error.");
+            throw new WebServiceException("Ha ocurrido un error.");
         }
     }
 
@@ -356,7 +359,7 @@ public class Volando implements VolandoServicePort {
             sistema.altaVuelo(vuelo);
         } catch (Exception e) {
             System.out.println("Error altaVuelo: " + e.getMessage());
-            throw new IllegalArgumentException("Ha ocurrido un error.");
+            throw new WebServiceException("Ha ocurrido un error.");
         }
     }
 
@@ -366,7 +369,7 @@ public class Volando implements VolandoServicePort {
             return sistema.getVuelo(nombre);
         } catch (Exception e) {
             System.out.println("Error getVuelo: " + e.getMessage());
-            throw new IllegalArgumentException("Ha ocurrido un error.");
+            throw new WebServiceException("Ha ocurrido un error.");
         }
     }
 
@@ -376,7 +379,7 @@ public class Volando implements VolandoServicePort {
             return sistema.listarVuelosRuta(nombreRuta);
         } catch (Exception e) {
             System.out.println("Error listarVuelosRuta: " + e.getMessage());
-            throw new IllegalArgumentException("Ha ocurrido un error.");
+            throw new WebServiceException("Ha ocurrido un error.");
         }
     }
 
@@ -386,7 +389,7 @@ public class Volando implements VolandoServicePort {
             return sistema.listarVuelosRutaFecha(nombreRuta, LocalDate.parse(fecha));
         } catch (Exception e) {
             System.out.println("Error listarVuelosRutaFecha: " + e.getMessage());
-            throw new IllegalArgumentException("Ha ocurrido un error.");
+            throw new WebServiceException("Ha ocurrido un error.");
         }
     }
 
@@ -396,7 +399,7 @@ public class Volando implements VolandoServicePort {
             return sistema.getVuelosRutaDeVuelo(ruta);
         } catch (Exception e) {
             System.out.println("Error getVuelosRutaDeVuelo: " + e.getMessage());
-            throw new IllegalArgumentException("Ha ocurrido un error.");
+            throw new WebServiceException("Ha ocurrido un error.");
         }
     }
 
@@ -408,7 +411,7 @@ public class Volando implements VolandoServicePort {
             return sistema.estaPaqueteComprado(paquete);
         } catch (Exception e) {
             System.out.println("Error estaPaqueteComprado: " + e.getMessage());
-            throw new IllegalArgumentException("Ha ocurrido un error.");
+            throw new WebServiceException("Ha ocurrido un error.");
         }
     }
 
@@ -418,7 +421,7 @@ public class Volando implements VolandoServicePort {
             return sistema.existePaquete(nombre);
         } catch (Exception e) {
             System.out.println("Error existePaquete: " + e.getMessage());
-            throw new IllegalArgumentException("Ha ocurrido un error.");
+            throw new WebServiceException("Ha ocurrido un error.");
         }
     }
 
@@ -428,7 +431,7 @@ public class Volando implements VolandoServicePort {
             sistema.altaPaquete(paquete);
         } catch (Exception e) {
             System.out.println("Error altaPaquete: " + e.getMessage());
-            throw new IllegalArgumentException("Ha ocurrido un error.");
+            throw new WebServiceException("Ha ocurrido un error.");
         }
     }
 
@@ -438,7 +441,7 @@ public class Volando implements VolandoServicePort {
             return sistema.getPaquete(nombre);
         } catch (Exception e) {
             System.out.println("Error getPaquete: " + e.getMessage());
-            throw new IllegalArgumentException("Ha ocurrido un error.");
+            throw new WebServiceException("Ha ocurrido un error.");
         }
     }
 
@@ -448,7 +451,7 @@ public class Volando implements VolandoServicePort {
             return sistema.listarPaquetes();
         } catch (Exception e) {
             System.out.println("Error listarPaquetes: " + e.getMessage());
-            throw new IllegalArgumentException("Ha ocurrido un error.");
+            throw new WebServiceException("Ha ocurrido un error.");
         }
     }
 
@@ -458,7 +461,7 @@ public class Volando implements VolandoServicePort {
             return sistema.listarPaquetesCliente(nickname);
         } catch (Exception e) {
             System.out.println("Error listarPaquetesCliente: " + e.getMessage());
-            throw new IllegalArgumentException("Ha ocurrido un error.");
+            throw new WebServiceException("Ha ocurrido un error.");
         }
     }
 
@@ -468,7 +471,7 @@ public class Volando implements VolandoServicePort {
             return sistema.listarPaquetesAerolinea(nickname);
         } catch (Exception e) {
             System.out.println("Error listarPaquetesAerolinea: " + e.getMessage());
-            throw new IllegalArgumentException("Ha ocurrido un error.");
+            throw new WebServiceException("Ha ocurrido un error.");
         }
     }
 
@@ -478,7 +481,7 @@ public class Volando implements VolandoServicePort {
             return sistema.listarPaquetesNoComprados();
         } catch (Exception e) {
             System.out.println("Error listarPaquetesNoComprados: " + e.getMessage());
-            throw new IllegalArgumentException("Ha ocurrido un error.");
+            throw new WebServiceException("Ha ocurrido un error.");
         }
     }
 
@@ -490,7 +493,7 @@ public class Volando implements VolandoServicePort {
             return sistema.listarCategorias();
         } catch (Exception e) {
             System.out.println("Error listarCategorias: " + e.getMessage());
-            throw new IllegalArgumentException("Ha ocurrido un error.");
+            throw new WebServiceException("Ha ocurrido un error.");
         }
     }
 
@@ -500,7 +503,7 @@ public class Volando implements VolandoServicePort {
             return sistema.buscarCategorias();
         } catch (Exception e) {
             System.out.println("Error buscarCategorias: " + e.getMessage());
-            throw new IllegalArgumentException("Ha ocurrido un error.");
+            throw new WebServiceException("Ha ocurrido un error.");
         }
     }
 
@@ -510,7 +513,7 @@ public class Volando implements VolandoServicePort {
             return sistema.buscarCategoriasPorNombre(nombres);
         } catch (Exception e) {
             System.out.println("Error buscarCategoriasPorNombre: " + e.getMessage());
-            throw new IllegalArgumentException("Ha ocurrido un error.");
+            throw new WebServiceException("Ha ocurrido un error.");
         }
     }
 
@@ -522,7 +525,7 @@ public class Volando implements VolandoServicePort {
             sistema.altaCiudad(ciudad);
         } catch (Exception e) {
             System.out.println("Error altaCiudad: " + e.getMessage());
-            throw new IllegalArgumentException("Ha ocurrido un error.");
+            throw new WebServiceException("Ha ocurrido un error.");
         }
     }
 
@@ -532,7 +535,7 @@ public class Volando implements VolandoServicePort {
             return sistema.getCiudad(nombre, pais);
         } catch (Exception e) {
             System.out.println("Error getCiudad: " + e.getMessage());
-            throw new IllegalArgumentException("Ha ocurrido un error.");
+            throw new WebServiceException("Ha ocurrido un error.");
         }
     }
 
@@ -542,7 +545,7 @@ public class Volando implements VolandoServicePort {
             return sistema.listarCiudades();
         } catch (Exception e) {
             System.out.println("Error listarCiudades: " + e.getMessage());
-            throw new IllegalArgumentException("Ha ocurrido un error.");
+            throw new WebServiceException("Ha ocurrido un error.");
         }
     }
 
@@ -554,7 +557,7 @@ public class Volando implements VolandoServicePort {
             sistema.compraPaquete(paquete, cliente);
         } catch (Exception e) {
             System.out.println("Error compraPaquete: " + e.getMessage());
-            throw new IllegalArgumentException("Ha ocurrido un error.");
+            throw new WebServiceException("Ha ocurrido un error.");
         }
     }
 
@@ -573,7 +576,7 @@ public class Volando implements VolandoServicePort {
             System.out.println("Se ha guardado la imágen con éxito");
             return imagenGuardada.getName();
         }catch(Exception e){
-            throw new IllegalArgumentException("Ha ocurrido un error al subir la imagen: " + e.getMessage());
+            throw new WebServiceException("Ha ocurrido un error al subir la imagen: " + e.getMessage());
         }
     }
 

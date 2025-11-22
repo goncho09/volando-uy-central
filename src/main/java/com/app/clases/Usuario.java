@@ -28,8 +28,8 @@ public abstract class Usuario {
     @ManyToMany
     @JoinTable(
             name = "usuario_seguidos",
-            joinColumns = @JoinColumn(name = "seguidor_nickname"),
-            inverseJoinColumns = @JoinColumn(name = "seguido_nickname")
+            joinColumns = @JoinColumn(name = "sigue_nickname"),
+            inverseJoinColumns = @JoinColumn(name = "loSiguen_nickname")
     )
     private List<Usuario> seguidos;
 
@@ -44,8 +44,8 @@ public abstract class Usuario {
         this.setEmail(usuario.getEmail());
         this.setPassword(usuario.getPassword());
         this.setUrlImage(usuario.getUrlImage());
-        this.setSeguidos(usuario.getSeguidos());
-        this.setSeguidores(usuario.getSeguidores());
+        this.setSeguidos(new ArrayList<>());
+        this.setSeguidores(new ArrayList<>());
     }
 
     public String getNickname() {
@@ -113,42 +113,41 @@ public abstract class Usuario {
         return false;
     }
 
-    public void agregarSeguido(Usuario usuario) {
-        if (!this.sigueA(usuario.getNickname())) {
-            this.seguidos.add(usuario);
-            usuario.getSeguidores().add(this);
+    public void agregarSeguidorySeguido(Usuario usuarioQueSiguen) {
+        if (!this.sigueA(usuarioQueSiguen.getNickname())) {
+            this.seguidos.add(usuarioQueSiguen);
+            usuarioQueSiguen.getSeguidores().add(this);
+            return;
         }
+        throw new IllegalArgumentException("El usuario ya es seguido.");
     }
 
-    public void eliminarSeguido(Usuario usuario) {
-        if (this.sigueA(usuario.getNickname())) {
-            this.seguidos.remove(usuario);
-            usuario.getSeguidores().remove(this);
+    public void eliminarSeguidoYSeguidor(Usuario usuarioDejadoSeguir) {
+        if (this.sigueA(usuarioDejadoSeguir.getNickname())) {
+            this.seguidos.remove(usuarioDejadoSeguir);
+            usuarioDejadoSeguir.getSeguidores().remove(this);
+            return;
         }
-    }
-
-    public void agregarSeguidor(Usuario usuario) {
-        if (!this.sigueA(usuario.getNickname())) {
-            this.seguidores.add(usuario);
-            usuario.getSeguidos().add(this);
-        }
-    }
-
-    public void eliminarSeguidor(Usuario usuario) {
-        if (this.sigueA(usuario.getNickname())) {
-            this.seguidores.remove(usuario);
-            usuario.getSeguidos().remove(this);
-        }
+        throw new IllegalArgumentException("El usuario no es seguido.");
     }
 
     public DtUsuario getDatos() {
+        List <DtUsuario> listaSeguidores = new ArrayList<>();
+        for ( Usuario u : this.getSeguidores()){
+            listaSeguidores.add(u.getDatos());
+        }
+        List <DtUsuario> listaSeguidos = new ArrayList<>();
+        for ( Usuario u : this.getSeguidos()){
+            listaSeguidos.add(u.getDatos());
+        }
+
         return new DtUsuario(
                 this.getNickname(),
                 this.getNombre(),
                 this.getEmail(),
                 this.getUrlImage(),
-                this.getSeguidores(),
-                this.getSeguidos()
+                listaSeguidores,
+                listaSeguidos
         );
     }
 

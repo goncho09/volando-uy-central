@@ -2,6 +2,7 @@ package com.app.clases;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 import com.app.datatypes.DtCliente;
 import com.app.datatypes.DtUsuario;
@@ -43,13 +44,41 @@ public class CompraPaquete {
     }
 
     public DtCompraPaquete getDatos(){
+        List <DtUsuario> listaSeguidores = new ArrayList<>();
+        for ( Usuario u : this.getCliente().getSeguidores()){
+            DtUsuario dtUsuario = new DtUsuario(
+                    u.getNickname(),
+                    u.getNombre(),
+                    u.getEmail(),
+                    u.getPassword(),
+                    u.getUrlImage(),
+                    new ArrayList<>(),
+                    new ArrayList<>()
+            );
+            listaSeguidores.add(dtUsuario);
+        }
+        List <DtUsuario> listaSeguidos = new ArrayList<>();
+        for ( Usuario u : this.getCliente().getSeguidos()){
+            DtUsuario dtUsuario = new DtUsuario(
+                    u.getNickname(),
+                    u.getNombre(),
+                    u.getEmail(),
+                    u.getPassword(),
+                    u.getUrlImage(),
+                    new ArrayList<>(),
+                    new ArrayList<>()
+            );
+            listaSeguidos.add(dtUsuario);
+        }
+
+
         DtCliente cliente = new DtCliente(
                 this.cliente.getNickname(),
                 this.cliente.getNombre(),
                 this.cliente.getEmail(),
                 this.cliente.getUrlImage(),
-                this.cliente.getSeguidores(),
-                this.cliente.getSeguidos(),
+                listaSeguidores,
+                listaSeguidos,
                 this.cliente.getApellido(),
                 this.cliente.getFechaNacimiento().toString(),
                 this.cliente.getNacionalidad(),

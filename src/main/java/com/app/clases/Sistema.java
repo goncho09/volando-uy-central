@@ -232,6 +232,7 @@ public class Sistema implements ISistema {
     public List<DtUsuario> listarUsuarios() {
         List<DtUsuario> listaUsuarios = new ArrayList<>();
         for (Usuario u : this.userDao.listar()) {
+            System.out.println(u.getDatos());
             listaUsuarios.add(u.getDatos());
         }
         return listaUsuarios;
@@ -971,39 +972,37 @@ public class Sistema implements ISistema {
     }
 
     public void seguirUsuario(String usuarioSeguidor, String usuarioASeguir) {
-        Usuario seguidor = this.userDao.buscar(usuarioSeguidor);
-        Usuario aSeguir = this.userDao.buscar(usuarioASeguir);
+        Usuario sigueA = this.userDao.buscar(usuarioSeguidor);
+        Usuario loSiguen = this.userDao.buscar(usuarioASeguir);
 
-        if (seguidor == null || aSeguir == null) {
+        if (sigueA == null || loSiguen == null) {
             throw new IllegalArgumentException("Alguno de los usuarios no existe");
         }
 
-        if (seguidor.getNickname().equals(aSeguir.getNickname())) {
+        if (sigueA.getNickname().equals(loSiguen.getNickname())) {
             throw new IllegalArgumentException("No se puede seguir a uno mismo");
         }
 
-        if (seguidor.sigueA(aSeguir.getNickname())) {
+        if (sigueA.sigueA(loSiguen.getNickname())) {
             throw new IllegalArgumentException("Ya sigues a este usuario");
         }
 
-        this.userDao.agregarSeguidor(aSeguir, seguidor);
-        this.userDao.agregarSeguido(seguidor, aSeguir);
+        this.userDao.agregarSeguidorySeguido(sigueA,loSiguen);
     }
 
     public void dejarDeSeguirUsuario(String usuarioSeguidor, String usuarioADejarDeSeguir) {
-        Usuario seguidor = this.userDao.buscar(usuarioSeguidor);
-        Usuario aDejarDeSeguir = this.userDao.buscar(usuarioADejarDeSeguir);
+        Usuario usuarioDejaSeguir = this.userDao.buscar(usuarioSeguidor);
+        Usuario usuarioDejadoSeguir = this.userDao.buscar(usuarioADejarDeSeguir);
 
-        if (seguidor == null || aDejarDeSeguir == null) {
+        if (usuarioDejaSeguir == null || usuarioDejadoSeguir == null) {
             throw new IllegalArgumentException("Alguno de los usuarios no existe");
         }
 
-        if (!seguidor.sigueA(aDejarDeSeguir.getNickname())) {
+        if (!usuarioDejaSeguir.sigueA(usuarioDejadoSeguir.getNickname())) {
             throw new IllegalArgumentException("No sigues a este usuario");
         }
 
-        this.userDao.eliminarSeguidor(aDejarDeSeguir, seguidor);
-        this.userDao.eliminarSeguido(seguidor, aDejarDeSeguir);
+        this.userDao.eliminarSeguidorYSeguido(usuarioDejaSeguir, usuarioDejadoSeguir);
     }
 
     public DtCategoria getCategoria(String nombre) {
