@@ -66,14 +66,6 @@ public class Volando implements VolandoServicePort {
     @Override
     public void registrarAerolinea(DtAerolinea aerolinea) {
         try {
-            System.out.println("|----------- Registrando Aerolinea ------------|");
-            System.out.println("Nickname: " + aerolinea.getNickname());
-            System.out.println("Nombre: " + aerolinea.getNombre());
-            System.out.println("Email: " + aerolinea.getEmail());
-            System.out.println("Pass: " + aerolinea.getPassword());
-            System.out.println("UrlImage: " + aerolinea.getUrlImage());
-            System.out.println("Descripcion: " + aerolinea.getDescripcion());
-            System.out.println("LinkWeb: " + aerolinea.getLinkWeb());
             sistema.registrarAerolinea(aerolinea);
         } catch (Exception e) {
             System.out.println("Error registrarAerolinea: " + e.getMessage());
@@ -92,9 +84,9 @@ public class Volando implements VolandoServicePort {
     }
 
     @Override
-    public void modificarAerolineaImagen(DtAerolinea aerolinea, String urlImagen) {
+    public void modificarUsuarioImagen(DtUsuario user, String urlImagen) {
         try {
-            sistema.modificarAerolineaImagen(aerolinea, urlImagen);
+            sistema.modificarUsuarioImagen(user, urlImagen);
         } catch (Exception e) {
             System.out.println("Error modificarAerolineaImagen: " + e.getMessage());
             throw new WebServiceException("Ha ocurrido un error.");
@@ -114,32 +106,9 @@ public class Volando implements VolandoServicePort {
     @Override
     public void modificarCliente(DtCliente cliente) {
         try {
-            System.out.println("|----- Modificando cliente -----|");
-            System.out.println("Nickname: " + cliente.getNickname());
-            System.out.println("Nombre: " + cliente.getNombre());
-            System.out.println("Email: " + cliente.getEmail());
-            System.out.println("UrlImagen: " + cliente.getUrlImage());
-            System.out.println("Apellido: " + cliente.getApellido());
-            System.out.println("Nacimiento: " + cliente.getFechaNacimiento());
-            System.out.println("Nacionalidad: " + cliente.getNacionalidad());
-            System.out.println("Pasaporte: " + cliente.getTipoDocumento());
-            System.out.println("NroDocumento: " + cliente.getNumeroDocumento());
             sistema.modificarCliente(cliente);
         } catch (Exception e) {
             System.out.println("Error modificarCliente: " + e.getMessage());
-            throw new WebServiceException("Ha ocurrido un error.");
-        }
-    }
-
-    @Override
-    public void modificarClienteImagen(DtCliente cliente, String urlImagen) {
-        try {
-            System.out.println("|----- Modificando cliente -----|");
-            System.out.println("Nickname: " + cliente.getNickname());
-            System.out.println("UrlImagen: " + cliente.getUrlImage());
-            sistema.modificarClienteImagen(cliente, urlImagen);
-        } catch (Exception e) {
-            System.out.println("Error modificarClienteImagen: " + e.getMessage());
             throw new WebServiceException("Ha ocurrido un error.");
         }
     }

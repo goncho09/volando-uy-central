@@ -1412,16 +1412,9 @@ public class Main extends JFrame {
                         if (imagenTemporalUsuario != null) {
                             try {
                                 DtCliente cliente = s.getCliente(jComboBoxSeleccionarUsuarioModificar.getSelectedItem().toString());
-                                String urlABorrar;
 
-                                if (cliente.getUrlImage() != null && !cliente.getUrlImage().isEmpty()) {
-                                    urlABorrar = cliente.getUrlImage();
-                                } else {
-                                    urlABorrar = "estoEsUnArchivoCualquieraQueNoExiste.png";
-                                }
-                                AuxiliarFunctions.borrarImagen(urlABorrar, TipoImagen.USUARIO);
                                 File imagen = AuxiliarFunctions.guardarImagen(imagenTemporalUsuario, TipoImagen.USUARIO);
-                                s.modificarClienteImagen(cliente, imagen.getName());
+                                s.modificarUsuarioImagen(cliente, imagen.getName());
                                 auxiliar.cargarUsuariosComboBox(cliente.getNickname());
                                 new VentanaMensaje("Imagen actualizada correctamente.");
                             } catch (IllegalArgumentException | IOException ex) {
@@ -1478,16 +1471,9 @@ public class Main extends JFrame {
                         if (imagenTemporalUsuario != null) {
                             try {
                                 DtAerolinea aerolinea = s.getAerolinea(jComboBoxSeleccionarUsuarioModificar.getSelectedItem().toString());
-                                String urlABorrar;
 
-                                if (aerolinea.getUrlImage() != null && !aerolinea.getUrlImage().isEmpty()) {
-                                    urlABorrar = aerolinea.getUrlImage();
-                                } else {
-                                    urlABorrar = "estoEsUnArchivoCualquieraQueNoExiste.png";
-                                }
-                                AuxiliarFunctions.borrarImagen(urlABorrar, TipoImagen.USUARIO);
                                 File imagen = AuxiliarFunctions.guardarImagen(imagenTemporalUsuario, TipoImagen.USUARIO);
-                                s.modificarAerolineaImagen(aerolinea, imagen.getName());
+                                s.modificarUsuarioImagen(aerolinea, imagen.getName());
                                 auxiliar.cargarUsuariosComboBox(aerolinea.getNickname());
                                 new VentanaMensaje("Imagen actualizada correctamente.");
                             } catch (IllegalArgumentException | IOException ex) {

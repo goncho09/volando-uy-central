@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Set;
 import java.util.Collections;
 
+import com.app.enums.TipoImagen;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
@@ -468,7 +469,6 @@ public class Sistema implements ISistema {
         this.auxiliar.validarTextoSoloLetra(cliente.getNombre());
         this.auxiliar.validarTextoSoloLetra(cliente.getApellido());
         this.auxiliar.validarTextoSoloLetra(cliente.getNacionalidad());
-
         LocalDate fechaNac = LocalDate.parse(cliente.getFechaNacimiento());
 
         if (fechaNac.isAfter(LocalDate.now())) {
@@ -477,7 +477,6 @@ public class Sistema implements ISistema {
 
         c.setUrlImage(cliente.getUrlImage());
         c.setNombre(cliente.getNombre());
-
         c.setApellido(cliente.getApellido());
         c.setFechaNacimiento(fechaNac);
         c.setNacionalidad(cliente.getNacionalidad());
@@ -492,15 +491,6 @@ public class Sistema implements ISistema {
             throw new IllegalArgumentException("No existe un usuario con ese nickname. [" + nickname + "]");
         }
         return a.getDatos();
-    }
-
-    public void modificarClienteImagen(DtCliente cliente, String urlImagen) {
-        Cliente c = this.userDao.buscarCliente(cliente.getNickname());
-        if (c == null) {
-            throw new IllegalArgumentException("Este usuario no existe.");
-        }
-        c.setUrlImage(urlImagen);
-        userDao.actualizar(c);
     }
 
     public void registrarAerolinea(DtAerolinea aerolinea) {
@@ -537,19 +527,21 @@ public class Sistema implements ISistema {
 
         aerolineaExistente.setNombre(aerolinea.getNombre());
         aerolineaExistente.setUrlImage(aerolinea.getUrlImage());
-
         aerolineaExistente.setDescripcion(aerolinea.getDescripcion());
         aerolineaExistente.setLinkWeb(aerolinea.getLinkWeb());
         userDao.actualizar(aerolineaExistente);
     }
 
-    public void modificarAerolineaImagen(DtAerolinea aerolinea, String urlImagen) {
-        Aerolinea a = this.userDao.buscarAerolinea(aerolinea.getNickname());
-        if (a == null) {
+    public void modificarUsuarioImagen(DtUsuario user, String urlImagen) {
+        Usuario u = this.userDao.buscar(user.getNickname());
+        if (u == null) {
             throw new IllegalArgumentException("Este usuario no existe.");
         }
-        a.setUrlImage(urlImagen);
-        userDao.actualizar(a);
+        System.out.println("Borrando la imagen: " + u.getUrlImage());
+        AuxiliarFunctions.borrarImagen(u.getUrlImage(), TipoImagen.USUARIO);
+        System.out.println("Seteando la imagen: " + urlImagen);
+        u.setUrlImage(urlImagen);
+        userDao.actualizar(u);
     }
 
     public List<DtCategoria> buscarCategoriasPorNombre(List<String> nombres) {
