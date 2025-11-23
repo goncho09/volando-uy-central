@@ -188,6 +188,13 @@ public class Sistema implements ISistema {
             throw new IllegalArgumentException("Costos no pueden ser negativos o 0");
         }
 
+        // VALIDACIÓN DE URL DE VIDEO
+        if (datosRuta.getUrlVideo() != null && !datosRuta.getUrlVideo().trim().isEmpty()) {
+            if (!esUrlValida(datosRuta.getUrlVideo())) {
+                throw new IllegalArgumentException("La URL del video no es válida");
+            }
+        }
+
         Aerolinea aerolinea = userDao.buscarAerolinea(nombreAerolinea);
 
         List<Categoria> categoriaList = new ArrayList<>();
@@ -214,6 +221,8 @@ public class Sistema implements ISistema {
         }
 
         RutaDeVuelo nuevaRuta = new RutaDeVuelo(datosRuta, categoriaList, origen, destino);
+
+        nuevaRuta.setUrlVideo(datosRuta.getUrlVideo());
 
         if (aerolinea.getRutasDeVuelo().contains(nuevaRuta))
             throw new IllegalArgumentException("Ya existe esa ruta de vuelo en esa aerolínea");
@@ -381,6 +390,18 @@ public class Sistema implements ISistema {
             }
         }
         return false;
+    }
+
+    private boolean esUrlValida(String url) {
+        if (url == null || url.trim().isEmpty()) {
+            return true; // URL vacía es válida (campo opcional)
+        }
+        try {
+            new java.net.URL(url);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     public void altaCategoria(DtCategoria categoria) {

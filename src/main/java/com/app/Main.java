@@ -231,6 +231,7 @@ public class Main extends JFrame {
     private JRadioButton pagoGeneralRadioButton;
     private JRadioButton pagoConPaqueteRadioButton;
     private JComboBox jComboBoxSeleccionarPaqueteReserva;
+    private JTextField videoUrlAltaRutaDeVuelo;
 
 
     public Main() {
@@ -894,6 +895,12 @@ public class Main extends JFrame {
         crearRutaDeVuelo.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                // OBTENER URL DE VIDEO
+                String urlVideo = videoUrlAltaRutaDeVuelo.getText().trim();
+                if (urlVideo.isEmpty()) {
+                    urlVideo = "";
+                }
+
                 try {
                     if (auxiliar.estanVaciosJTextField(nombreAltaRutaDeVuelo, descripcionAltaRutaDeVuelo, descripcionCortaAltaRutaDeVuelo) || auxiliar.estanVaciosJComboBox(jComboBoxAerolineaAltaRutaVuelo, jComboBoxCiudadOrigen, jComboBoxCiudadDestino)) {
                         new VentanaMensaje("Faltan argumentos");
@@ -960,6 +967,7 @@ public class Main extends JFrame {
                             costoEquipaje,
                             LocalDate.now().toString(),
                             urlImage,
+                            urlVideo,
                             s.buscarCategoriasPorNombre(nombresCategorias),
                             ciudadOrigen,
                             ciudadDestino);

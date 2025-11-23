@@ -14,13 +14,14 @@ public class DtRuta {
     private float equipajeExtra;
     private String fechaAlta;
     private String urlImagen;
+    private String urlVideo;
     private EstadoRuta estado;
     private List<DtCategoria> categorias;
     private DtCiudad ciudadOrigen;
     private DtCiudad ciudadDestino;
 
     public DtRuta() {}
-    public DtRuta(String nombre, String descripcion, String descripcionCorta, String duracion, float costoTurista, float costoEjecutivo, float equipajeExtra, String fechaAlta, String urlImagen, List<DtCategoria> categorias, DtCiudad origen, DtCiudad destino) {
+    public DtRuta(String nombre, String descripcion, String descripcionCorta, String duracion, float costoTurista, float costoEjecutivo, float equipajeExtra, String fechaAlta, String urlImagen, String urlVideo, List<DtCategoria> categorias, DtCiudad origen, DtCiudad destino) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.descripcionCorta = descripcionCorta;
@@ -30,6 +31,7 @@ public class DtRuta {
         this.equipajeExtra = equipajeExtra;
         this.fechaAlta = fechaAlta;
         this.urlImagen = urlImagen;
+        this.urlVideo = urlVideo;
         this.estado = EstadoRuta.INGRESADA; // Por defecto se creará la ruta con "Ingresada"
         this.categorias = categorias;
         this.ciudadOrigen = origen;
@@ -115,6 +117,14 @@ public class DtRuta {
     public String getUrlImagen() {return urlImagen; }
 
     public void setUrlImagen(String urlImagen) {this.urlImagen = urlImagen; }
+
+    public String getUrlVideo() {
+        return urlVideo;
+    }
+
+    public void setUrlVideo(String urlVideo) {
+        this.urlVideo = urlVideo;
+    }
 
     public EstadoRuta getEstado() {return estado; }
 

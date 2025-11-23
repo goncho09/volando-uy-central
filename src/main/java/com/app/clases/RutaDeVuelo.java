@@ -53,6 +53,9 @@ public class RutaDeVuelo {
     @Column( nullable = true)
     private String urlImagen;
 
+    @Column(nullable = true, length = 500)
+    private String urlVideo;
+
     @Column( nullable = true)
     private EstadoRuta estado;
 
@@ -90,6 +93,7 @@ public class RutaDeVuelo {
         this.setEquipajeExtra(ruta.getEquipajeExtra());
         this.setFechaAlta(LocalDate.parse(ruta.getFechaAlta()));
         this.setUrlImagen(ruta.getUrlImagen());
+        this.setUrlVideo(ruta.getUrlVideo());
         this.setEstado(ruta.getEstado());
         this.setCategorias(categorias);
         this.setCiudadOrigen(origen);
@@ -161,6 +165,14 @@ public class RutaDeVuelo {
     public String getUrlImagen() {return urlImagen; };
 
     public void setUrlImagen(String urlImagen){this.urlImagen = urlImagen; };
+
+    public String getUrlVideo() {
+        return urlVideo;
+    }
+
+    public void setUrlVideo(String urlVideo) {
+        this.urlVideo = urlVideo;
+    }
 
     public  EstadoRuta getEstado() {return estado; }
 
