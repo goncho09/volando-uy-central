@@ -1168,6 +1168,7 @@ public class Sistema implements ISistema {
         RutaDeVuelo r = buscarRutaDeVuelo(nombre);
         if(r != null){
             r.setVecesVisitada(r.getVecesVisitada() + 1);
+            rutaDeVueloDao.actualizar(r);
         }
     }
 

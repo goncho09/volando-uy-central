@@ -318,6 +318,16 @@ public class Volando implements VolandoServicePort {
         }
     }
 
+    @Override
+    public void aumentarVisita(String nombre) {
+        try {
+            sistema.aumentarVisita(nombre);
+        } catch (Exception e) {
+            System.out.println("Error aumentarVisita: " + e.getMessage());
+            throw new WebServiceException("Ha ocurrido un error.");
+        }
+    }
+
 // ---------- VUELOS ---------- //
 
     @Override

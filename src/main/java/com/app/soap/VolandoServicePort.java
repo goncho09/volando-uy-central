@@ -131,6 +131,9 @@ public interface VolandoServicePort {
     @WebMethod
     List<DtRuta> listarRutasDeVuelo(); // Devuelve TODAS las rutas de vuelo
 
+    @WebMethod
+    void aumentarVisita(String nombre);
+
 //    List<DtRuta> listarRutasDeVueloPaquete(String paquete); // Devuelve TODAS las rutas de un paquete en específico
 
     // ---------- VUELOS ---------- //
