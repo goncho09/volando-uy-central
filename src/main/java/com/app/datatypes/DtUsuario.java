@@ -11,13 +11,13 @@ public class DtUsuario {
     private String email;
     private String password;
     private String urlImage;
-    private List<Usuario> seguidores;
-    private List<Usuario> seguidos;
+    private List<DtUsuario> seguidores;
+    private List<DtUsuario> seguidos;
 
     public DtUsuario() {}
 
     // alta usuario
-    public DtUsuario(String nickname, String nombre, String email, String password, String urlImage, List<Usuario> seguidores, List<Usuario> seguidos){
+    public DtUsuario(String nickname, String nombre, String email, String password, String urlImage, List<DtUsuario> seguidores, List<DtUsuario> seguidos){
         this.nickname = nickname;
         this.nombre = nombre;
         this.email = email;
@@ -28,7 +28,7 @@ public class DtUsuario {
     }
 
     // get datos sin contraseña
-    public DtUsuario(String nickname, String nombre, String email, String urlImage, List<Usuario> seguidores, List<Usuario> seguidos){
+    public DtUsuario(String nickname, String nombre, String email, String urlImage, List<DtUsuario> seguidores, List<DtUsuario> seguidos){
         this.nickname = nickname;
         this.nombre = nombre;
         this.email = email;
@@ -70,25 +70,25 @@ public class DtUsuario {
 
     public void setUrlImage(String urlImage) {this.urlImage = urlImage; }
 
-    public List<Usuario> getSeguidores() {
+    public List<DtUsuario> getSeguidores() {
         if(seguidores == null){
             seguidores = new ArrayList<>();
         }
         return seguidores;
     }
 
-    public void setSeguidores(List<Usuario> seguidores) {
+    public void setSeguidores(List<DtUsuario> seguidores) {
         this.seguidores = seguidores;
     }
 
-    public List<Usuario> getSeguidos() {
+    public List<DtUsuario> getSeguidos() {
         if(seguidos == null){
             seguidos = new ArrayList<>();
         }
         return seguidos;
     }
 
-    public void setSeguidos(List<Usuario> seguidos) {
+    public void setSeguidos(List<DtUsuario> seguidos) {
         this.seguidos = seguidos;
     }
 

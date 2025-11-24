@@ -28,10 +28,9 @@ public interface ISistema {
     String getTipoUsuario(String nickname);
     void registrarAerolinea(DtAerolinea aerolinea);
     void modificarAerolinea(DtAerolinea aerolinea);
-    void modificarAerolineaImagen(DtAerolinea aerolinea, String urlImagen);
+    void modificarUsuarioImagen(DtUsuario user, String urlImagen);
     void registrarCliente(DtCliente cliente);
     void modificarCliente(DtCliente cliente);
-    void modificarClienteImagen(DtCliente cliente, String urlImagen);
     Aerolinea buscarAerolinea(String nickname);
     Cliente buscarCliente(String nickname);
     DtUsuario getUsuario(String nickname);

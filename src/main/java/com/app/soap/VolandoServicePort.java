@@ -47,16 +47,13 @@ public interface VolandoServicePort {
     void modificarAerolinea(DtAerolinea aerolinea);
 
     @WebMethod
-    void modificarAerolineaImagen(DtAerolinea aerolinea, String urlImagen);
+    void modificarUsuarioImagen(DtUsuario user, String urlImagen);
 
     @WebMethod
     void registrarCliente(DtCliente cliente);
 
     @WebMethod
     void modificarCliente(DtCliente cliente);
-
-    @WebMethod
-    void modificarClienteImagen(DtCliente cliente, String urlImagen);
 
 //    Aerolinea buscarAerolinea(String nickname);
 //    Cliente buscarCliente(String nickname);
