@@ -40,7 +40,7 @@ public interface ISistema {
     List<DtCliente> listarClientes();
     List<DtAerolinea> listarAerolineas();
     void seguirUsuario(String usuarioSeguidor, String usuarioASeguir);
-    void dejarDeSeguirUsuario(String usuarioSeguidor, String usuarioASeguir);
+    void dejarDeSeguirUsuario(String usuarioDeja, String usuarioDejado);
 
     // ------------ RESERVAS ----------- //
     void altaReserva(DtReserva reserva); //Reserva de un Vuelo

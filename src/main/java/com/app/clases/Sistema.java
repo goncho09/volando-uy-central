@@ -983,9 +983,9 @@ public class Sistema implements ISistema {
         this.userDao.agregarSeguidorySeguido(sigueA,loSiguen);
     }
 
-    public void dejarDeSeguirUsuario(String usuarioSeguidor, String usuarioADejarDeSeguir) {
-        Usuario usuarioDejaSeguir = this.userDao.buscar(usuarioSeguidor);
-        Usuario usuarioDejadoSeguir = this.userDao.buscar(usuarioADejarDeSeguir);
+    public void dejarDeSeguirUsuario(String usuarioDeja, String usuarioDejado) {
+        Usuario usuarioDejaSeguir = this.userDao.buscar(usuarioDeja);
+        Usuario usuarioDejadoSeguir = this.userDao.buscar(usuarioDejado);
 
         if (usuarioDejaSeguir == null || usuarioDejadoSeguir == null) {
             throw new IllegalArgumentException("Alguno de los usuarios no existe");
