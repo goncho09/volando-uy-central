@@ -549,6 +549,7 @@ public class Sistema implements ISistema {
         for (String nombreCategoria : nombres) {
             for (Categoria c : this.categoriaDao.listar()) {
                 if (c.getNombre().equals(nombreCategoria)) {
+                    System.out.println(c.getNombre());
                     categoriasSeleccionadas.add(c.getDatos());
                     break;
                 }
@@ -1162,6 +1163,17 @@ public class Sistema implements ISistema {
 
         return ".bin"; // fallback si no se reconoce
     }
+
+    public void aumentarVisita(String nombre){
+        RutaDeVuelo r = buscarRutaDeVuelo(nombre);
+        if(r != null){
+            r.setVecesVisitada(r.getVecesVisitada() + 1);
+        }
+    }
+
+    public List<DtRuta> listarRutasDeVueloTop5(){
+        return rutaDeVueloDao.getTop5();
+    };
 
 
     public void vaciarBD() {

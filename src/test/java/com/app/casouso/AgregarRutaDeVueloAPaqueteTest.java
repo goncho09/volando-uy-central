@@ -91,7 +91,7 @@ public class AgregarRutaDeVueloAPaqueteTest {
                                 java.time.LocalDate.now().toString(), "default.png",
                                 java.util.Arrays.asList(),
                                 ciudadOrigen,
-                                ciudadDestino);
+                                ciudadDestino,0);
 
                 Assertions.assertThrows(
                                 IllegalArgumentException.class,

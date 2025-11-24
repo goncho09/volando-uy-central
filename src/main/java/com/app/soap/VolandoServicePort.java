@@ -1,7 +1,5 @@
 package com.app.soap;
 
-import java.io.File;
-import java.time.LocalDate;
 import java.util.List;
 
 import com.app.datatypes.DtAerolinea;
@@ -24,6 +22,7 @@ public interface VolandoServicePort {
     //Aquí están SOLO los métodos que queremos "compartir" o dar como servicio a nuestra web.
 
     // ---------- USUARIOS ---------- //
+
     @WebMethod
     boolean existeUsuario(String nickname);
 
@@ -56,6 +55,7 @@ public interface VolandoServicePort {
     void modificarCliente(DtCliente cliente);
 
 //    Aerolinea buscarAerolinea(String nickname);
+
 //    Cliente buscarCliente(String nickname);
 
     @WebMethod
@@ -83,6 +83,7 @@ public interface VolandoServicePort {
 
 
     // ------------ RESERVAS ----------- //
+
     @WebMethod
     void altaReserva(DtReserva reserva); //Reserva de un Vuelo
 
@@ -112,6 +113,7 @@ public interface VolandoServicePort {
     byte[] crearPDFReserva(DtReserva reserva);
 
     // ---------- RUTAS DE VUELO ---------- //
+
     @WebMethod
     boolean rutaContieneCategoria(DtRuta ruta, String categoria);
 
@@ -132,6 +134,7 @@ public interface VolandoServicePort {
 //    List<DtRuta> listarRutasDeVueloPaquete(String paquete); // Devuelve TODAS las rutas de un paquete en específico
 
     // ---------- VUELOS ---------- //
+
     @WebMethod
     boolean existeVuelo(String nombre);
 
@@ -153,6 +156,7 @@ public interface VolandoServicePort {
     List<DtVuelo> getVuelosRutaDeVuelo(DtRuta ruta);
 
     // ---------- PAQUETES ---------- //
+
     @WebMethod
     boolean estaPaqueteComprado(DtPaquete paquete);
 
@@ -181,8 +185,8 @@ public interface VolandoServicePort {
 
 //    List<DtPaquete> listarPaquetesConRutas();
 
-
     // ---------- CATEGORIAS ---------- //
+
 //    void altaCategoria(DtCategoria categoria);
 //    DtCategoria getCategoria(String nombre);
 
@@ -196,6 +200,7 @@ public interface VolandoServicePort {
     List<DtCategoria> buscarCategoriasPorNombre(List<String> nombres);
 
     // ---------- CIUDADES ---------- //
+
     @WebMethod
     void altaCiudad(DtCiudad ciudad);
 
@@ -206,13 +211,16 @@ public interface VolandoServicePort {
     List<DtCiudad> listarCiudades();
 
     // ---------- COMPRAS ---------- //
+
     @WebMethod
     void compraPaquete(DtPaquete paquete, DtCliente cliente);
 
     // -------- Pasajeros --------- //
+
 //        List<DtPasajero> listarPasajeros(DtReserva reserva);
 
     // -------- Auxiliar --------- //
+
     @WebMethod
     String guardarImagen(byte[] data, TipoImagen tipoImagen);
 

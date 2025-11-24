@@ -62,6 +62,9 @@ public interface ISistema {
     DtRuta getRutaDeVuelo(String nombre);
     List<DtRuta> listarRutasDeVuelo(); // Devuelve TODAS las rutas de vuelo
     List<DtRuta> listarRutasDeVueloPaquete(String paquete); // Devuelve TODAS las rutas de un paquete en específico
+    List<DtRuta> listarRutasDeVueloTop5();
+    void aumentarVisita(String nombre);
+
 
     // ---------- VUELOS ---------- //
     boolean existeVuelo(String nombre);

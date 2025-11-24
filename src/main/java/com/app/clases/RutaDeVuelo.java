@@ -56,6 +56,9 @@ public class RutaDeVuelo {
     @Column( nullable = true)
     private EstadoRuta estado;
 
+    @Column( nullable = true)
+    private int vecesVisitada;
+
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
             name = "ruta_categoria",
@@ -94,6 +97,7 @@ public class RutaDeVuelo {
         this.setCategorias(categorias);
         this.setCiudadOrigen(origen);
         this.setCiudadDestino(destino);
+        this.setVecesVisitada(0); // Siempre inicializa en 0
     }
 
     public String getNombre() {
@@ -190,6 +194,10 @@ public class RutaDeVuelo {
         this.ciudadDestino = ciudadDestino;
     }
 
+    public int getVecesVisitada(){return vecesVisitada;}
+
+    public void setVecesVisitada(int vecesVisitada){this.vecesVisitada = vecesVisitada;}
+
     public DtRuta getDatos() {
         List<DtCategoria> categoriaList = new ArrayList<>();
         for (Categoria categoria : this.getCategorias()) {
@@ -208,7 +216,8 @@ public class RutaDeVuelo {
                 this.getEstado(),
                 categoriaList,
                 this.getCiudadOrigen().getDatos(),
-                this.getCiudadDestino().getDatos()
+                this.getCiudadDestino().getDatos(),
+                this.getVecesVisitada()
         );
     }
 

@@ -18,9 +18,10 @@ public class DtRuta {
     private List<DtCategoria> categorias;
     private DtCiudad ciudadOrigen;
     private DtCiudad ciudadDestino;
+    private int vecesVisitada;
 
     public DtRuta() {}
-    public DtRuta(String nombre, String descripcion, String descripcionCorta, String duracion, float costoTurista, float costoEjecutivo, float equipajeExtra, String fechaAlta, String urlImagen, List<DtCategoria> categorias, DtCiudad origen, DtCiudad destino) {
+    public DtRuta(String nombre, String descripcion, String descripcionCorta, String duracion, float costoTurista, float costoEjecutivo, float equipajeExtra, String fechaAlta, String urlImagen, List<DtCategoria> categorias, DtCiudad origen, DtCiudad destino, int vecesVisitada) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.descripcionCorta = descripcionCorta;
@@ -34,9 +35,10 @@ public class DtRuta {
         this.categorias = categorias;
         this.ciudadOrigen = origen;
         this.ciudadDestino = destino;
+        this.vecesVisitada = vecesVisitada;
     }
 
-    public DtRuta(String nombre, String descripcion, String descripcionCorta, String duracion, float costoTurista, float costoEjecutivo, float equipajeExtra, String fechaAlta, String urlImagen, EstadoRuta estado, List<DtCategoria> categorias, DtCiudad origen, DtCiudad destino) {
+    public DtRuta(String nombre, String descripcion, String descripcionCorta, String duracion, float costoTurista, float costoEjecutivo, float equipajeExtra, String fechaAlta, String urlImagen, EstadoRuta estado, List<DtCategoria> categorias, DtCiudad origen, DtCiudad destino, int vecesVisitada) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.duracion = duracion;
@@ -50,6 +52,7 @@ public class DtRuta {
         this.categorias = categorias;
         this.ciudadOrigen = origen;
         this.ciudadDestino = destino;
+        this.vecesVisitada = vecesVisitada;
     }
 
     public String getNombre() {
@@ -143,6 +146,10 @@ public class DtRuta {
     public void setCiudadOrigen(DtCiudad ciudadOrigen) {
         this.ciudadOrigen = ciudadOrigen;
     }
+
+    public int getVecesVisitada() { return vecesVisitada; }
+
+    public void setVecesVisitada(int vecesVisitada) { this.vecesVisitada = vecesVisitada; }
 
     @Override
     public String toString() { return this.nombre; }
