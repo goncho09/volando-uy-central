@@ -319,6 +319,16 @@ public class Volando implements VolandoServicePort {
     }
 
     @Override
+    public List<DtRuta> buscarRutaDeVuelos(String patron) {
+        try {
+            return sistema.buscarRutaDeVuelos(patron);
+        } catch (Exception e) {
+            System.out.println("Error buscarRutaDeVuelos: " + e.getMessage());
+            throw new WebServiceException("Ha ocurrido un error.");
+        }
+    }
+
+    @Override
     public List<DtRuta> listarRutasDeVuelo() {
         try {
             return sistema.listarRutasDeVuelo();
@@ -438,6 +448,16 @@ public class Volando implements VolandoServicePort {
             return sistema.getPaquete(nombre);
         } catch (Exception e) {
             System.out.println("Error getPaquete: " + e.getMessage());
+            throw new WebServiceException("Ha ocurrido un error.");
+        }
+    }
+
+    @Override
+    public List<DtPaquete> buscarPaquetes(String patron) {
+        try {
+            return sistema.buscarPaquetes(patron);
+        } catch (Exception e) {
+            System.out.println("Error buscarPaquetes: " + e.getMessage());
             throw new WebServiceException("Ha ocurrido un error.");
         }
     }
