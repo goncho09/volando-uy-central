@@ -40,7 +40,7 @@ public interface ISistema {
     List<DtCliente> listarClientes();
     List<DtAerolinea> listarAerolineas();
     void seguirUsuario(String usuarioSeguidor, String usuarioASeguir);
-    void dejarDeSeguirUsuario(String usuarioSeguidor, String usuarioASeguir);
+    void dejarDeSeguirUsuario(String usuarioDeja, String usuarioDejado);
 
     // ------------ RESERVAS ----------- //
     void altaReserva(DtReserva reserva); //Reserva de un Vuelo
@@ -62,6 +62,12 @@ public interface ISistema {
     DtRuta getRutaDeVuelo(String nombre);
     List<DtRuta> listarRutasDeVuelo(); // Devuelve TODAS las rutas de vuelo
     List<DtRuta> listarRutasDeVueloPaquete(String paquete); // Devuelve TODAS las rutas de un paquete en específico
+    List<DtRuta> listarRutasDeVueloTop5();
+    void aumentarVisita(String nombre);
+    void finalizarRuta(DtRuta ruta);
+    boolean rutaEstaEnPaquete(String nombreRuta); // true si la ruta esta en algun paquete
+
+
 
     // ---------- VUELOS ---------- //
     boolean existeVuelo(String nombre);

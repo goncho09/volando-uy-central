@@ -185,7 +185,7 @@ public class AltaDeVueloTest {
                 "default.png",
                 Arrays.asList(s.getCategoria("Negocios")),
                 s.getCiudad("Santiago", "Chile"),
-                s.getCiudad("Quito", "Ecuador")
+                s.getCiudad("Quito", "Ecuador"),0
         );
 
         DtVuelo vuelo = new DtVuelo(

@@ -38,7 +38,7 @@ public class AltaDeRutaDeVueloTest {
                 "default.png",
                 Arrays.asList(s.getCategoria("Turismo"), s.getCategoria("Lujo")),
                 s.getCiudad("Lima", "Perú"),
-                s.getCiudad("Montevideo", "Uruguay")
+                s.getCiudad("Montevideo", "Uruguay"),0
         );
 
         Assertions.assertThrows(
@@ -63,7 +63,7 @@ public class AltaDeRutaDeVueloTest {
                 "default.png",
                 Arrays.asList(s.getCategoria("Turismo"), s.getCategoria("Lujo")),
                 s.getCiudad("Lima", "Perú"),
-                s.getCiudad("Montevideo", "Uruguay")
+                s.getCiudad("Montevideo", "Uruguay"),0
         );
 
         Assertions.assertThrows(
@@ -86,7 +86,7 @@ public class AltaDeRutaDeVueloTest {
                 "default.png",
                 Arrays.asList(s.getCategoria("Turismo"), s.getCategoria("Lujo")),
                 s.getCiudad("Lima", "Perú"),
-                s.getCiudad("Montevideo", "Uruguay")
+                s.getCiudad("Montevideo", "Uruguay"),0
         );
 
         Assertions.assertThrows(
@@ -109,7 +109,7 @@ public class AltaDeRutaDeVueloTest {
                 "default.png",
                 Arrays.asList(s.getCategoria("Turismo"), s.getCategoria("Lujo")),
                 s.getCiudad("Lima", "Perú"),
-                s.getCiudad("Lima", "Perú") // Ciudades iguales
+                s.getCiudad("Lima", "Perú"),0 // Ciudades iguales
         );
 
         Assertions.assertThrows(
@@ -132,7 +132,7 @@ public class AltaDeRutaDeVueloTest {
                 "default.png",
                 Arrays.asList(), // Categorías vacías
                 s.getCiudad("Lima", "Perú"),
-                s.getCiudad("Montevideo", "Uruguay")
+                s.getCiudad("Montevideo", "Uruguay"),0
         );
 
         Assertions.assertThrows(
@@ -156,7 +156,7 @@ public class AltaDeRutaDeVueloTest {
                 "default.png",
                 Arrays.asList(s.getCategoria("Turismo"), s.getCategoria("Lujo")),
                 s.getCiudad("Lima", "Perú"),
-                s.getCiudad("Montevideo", "Uruguay")
+                s.getCiudad("Montevideo", "Uruguay"),0
         );
 
         Assertions.assertThrows(
@@ -180,7 +180,7 @@ public class AltaDeRutaDeVueloTest {
                 "default.png",
                 Arrays.asList(s.getCategoria("Turismo"), s.getCategoria("Lujo")),
                 s.getCiudad("Lima", "Perú"),
-                s.getCiudad("Montevideo", "Uruguay")
+                s.getCiudad("Montevideo", "Uruguay"),0
         );
 
         Assertions.assertThrows(
@@ -203,7 +203,7 @@ public class AltaDeRutaDeVueloTest {
                 "default.png",
                 Arrays.asList(s.getCategoria("Turismo"), s.getCategoria("Lujo")),
                 s.getCiudad("Lima", "Perú"),
-                s.getCiudad("Montevideo", "Uruguay")
+                s.getCiudad("Montevideo", "Uruguay"),0
         );
 
         Assertions.assertThrows(
@@ -227,7 +227,7 @@ public class AltaDeRutaDeVueloTest {
                 "default.png",
                 Arrays.asList(s.getCategoria("Turismo"), s.getCategoria("Lujo")),
                 s.getCiudad("Lima", "Perú"),
-                s.getCiudad("Montevideo", "Uruguay")
+                s.getCiudad("Montevideo", "Uruguay"),0
         );
 
         Assertions.assertThrows(
@@ -251,7 +251,7 @@ public class AltaDeRutaDeVueloTest {
                 "default.png",
                 Arrays.asList(s.getCategoria("Turismo"), s.getCategoria("Lujo")),
                 s.getCiudad("Lima", "Perú"),
-                s.getCiudad("Montevideo", "Uruguay")
+                s.getCiudad("Montevideo", "Uruguay"),0
         );
 
         // Esta ruta debería ser creada exitosamente, ya que los costos en float son válidos.

@@ -570,6 +570,7 @@ public class Sistema implements ISistema {
         for (String nombreCategoria : nombres) {
             for (Categoria c : this.categoriaDao.listar()) {
                 if (c.getNombre().equals(nombreCategoria)) {
+                    System.out.println(c.getNombre());
                     categoriasSeleccionadas.add(c.getDatos());
                     break;
                 }
@@ -1003,9 +1004,9 @@ public class Sistema implements ISistema {
         this.userDao.agregarSeguidorySeguido(sigueA,loSiguen);
     }
 
-    public void dejarDeSeguirUsuario(String usuarioSeguidor, String usuarioADejarDeSeguir) {
-        Usuario usuarioDejaSeguir = this.userDao.buscar(usuarioSeguidor);
-        Usuario usuarioDejadoSeguir = this.userDao.buscar(usuarioADejarDeSeguir);
+    public void dejarDeSeguirUsuario(String usuarioDeja, String usuarioDejado) {
+        Usuario usuarioDejaSeguir = this.userDao.buscar(usuarioDeja);
+        Usuario usuarioDejadoSeguir = this.userDao.buscar(usuarioDejado);
 
         if (usuarioDejaSeguir == null || usuarioDejadoSeguir == null) {
             throw new IllegalArgumentException("Alguno de los usuarios no existe");
@@ -1184,6 +1185,18 @@ public class Sistema implements ISistema {
         return ".bin"; // fallback si no se reconoce
     }
 
+    public void aumentarVisita(String nombre){
+        RutaDeVuelo r = buscarRutaDeVuelo(nombre);
+        if(r != null){
+            r.setVecesVisitada(r.getVecesVisitada() + 1);
+            rutaDeVueloDao.actualizar(r);
+        }
+    }
+
+    public List<DtRuta> listarRutasDeVueloTop5(){
+        return rutaDeVueloDao.getTop5();
+    };
+
 
     public void vaciarBD() {
         EntityTransaction tx = em.getTransaction();
@@ -1202,4 +1215,43 @@ public class Sistema implements ISistema {
         em.createQuery("DELETE FROM Paquete").executeUpdate();
         tx.commit();
     }
+
+    public void finalizarRuta(DtRuta ruta){
+        RutaDeVuelo r = this.rutaDeVueloDao.buscar(ruta.getNombre());
+
+        if(r == null){
+            throw new IllegalArgumentException("La ruta no existe");
+        }
+
+        if(r.getEstado() != EstadoRuta.APROBADA) {
+            throw new RuntimeException("La ruta debe estar en estado APROBADA para finalizarse.");
+        }
+
+        List <DtVuelo> vuelosRuta = getVuelosRutaDeVuelo(ruta);
+        if(!vuelosRuta.isEmpty()) {
+            throw new RuntimeException("La ruta tiene vuelos pendientes y no puede finalizarse.");
+        }
+
+        if(rutaEstaEnPaquete(r.getNombre())){
+            throw new RuntimeException("La ruta está incluida en un paquete, no puede finalizarse.");
+        }
+
+        r.setEstado(EstadoRuta.FINALIZADA);
+        rutaDeVueloDao.actualizar(r);
+
+    }
+
+    public boolean rutaEstaEnPaquete(String nombreRuta) {
+        List<Paquete> paquetes = paqueteDao.listar();
+
+        for (Paquete p : paquetes) {
+            for (RutaEnPaquete rp : p.getRutaEnPaquete()) {
+                if (rp.getRutaDeVuelo().getNombre().equals(nombreRuta)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
 }

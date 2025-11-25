@@ -1,26 +1,13 @@
 package com.app;
 
+import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JTabbedPane;
-import javax.swing.JComboBox;
-import javax.swing.JTextField;
-import javax.swing.JSpinner;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JPasswordField;
-import javax.swing.JLabel;
-import javax.swing.JRadioButton;
-import javax.swing.SpinnerNumberModel;
-import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
-import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
+import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import com.app.soap.Publicador;
 import com.app.utils.AuxiliarFunctions;
@@ -35,7 +22,6 @@ import java.io.File;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
@@ -231,7 +217,8 @@ public class Main extends JFrame {
     private JRadioButton pagoGeneralRadioButton;
     private JRadioButton pagoConPaqueteRadioButton;
     private JComboBox jComboBoxSeleccionarPaqueteReserva;
-    private JTextField videoUrlAltaRutaDeVuelo;
+    private JList listaCategorias;
+    private JPanel jPanelTop5Rutas;
 
 
     public Main() {
@@ -323,10 +310,8 @@ public class Main extends JFrame {
         jComboBoxvueloReserva.setModel(auxiliar.getComboVueloRutaDeVueloModel());
         jComboBoxConsultaVueloVuelo.setModel(auxiliar.getComboVueloRutaDeVueloModel());
 
-        jPanelCategorias.setLayout(new GridLayout(0, 2, 5, 5));
-
-        // Es para mostrar las categorias en alta ruta vuelo
-        cargarCategorias();
+        listaCategorias.setModel(auxiliar.getModeloCategorias());
+        listaCategorias.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 
 
         // Configurar JSpinner
@@ -356,8 +341,6 @@ public class Main extends JFrame {
         jSpinnerDescuentoAltaPaquete.setModel(new SpinnerNumberModel(0, 0, 100, 1));
         jSpinnerPeriodoAltaPaquete.setModel(new SpinnerNumberModel(1, 1, 1_000_000, 1));
 
-
-        //¡Cargar datitos!
         auxiliar.cargarTodosLosDatos();
 
         jComboBoxSeleccionarUsuarioModificar.setSelectedIndex(-1);
@@ -379,6 +362,7 @@ public class Main extends JFrame {
         jComboBoxPaqueteAgregarRuta.setSelectedIndex(-1);
         jComboBoxAerolineaAgregarRuta.setSelectedIndex(-1);
         jComboBoxRutaVueloAgregarRuta.setSelectedIndex(-1);
+
 
 
         consultarVueloButton.addActionListener(new ActionListener() {
@@ -895,12 +879,6 @@ public class Main extends JFrame {
         crearRutaDeVuelo.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // OBTENER URL DE VIDEO
-                String urlVideo = videoUrlAltaRutaDeVuelo.getText().trim();
-                if (urlVideo.isEmpty()) {
-                    urlVideo = "";
-                }
-
                 try {
                     if (auxiliar.estanVaciosJTextField(nombreAltaRutaDeVuelo, descripcionAltaRutaDeVuelo, descripcionCortaAltaRutaDeVuelo) || auxiliar.estanVaciosJComboBox(jComboBoxAerolineaAltaRutaVuelo, jComboBoxCiudadOrigen, jComboBoxCiudadDestino)) {
                         new VentanaMensaje("Faltan argumentos");
@@ -919,17 +897,15 @@ public class Main extends JFrame {
                     Integer costoTurista = (Integer) spinnerCostoTurista.getValue();
                     Integer costoEjecutivo = (Integer) spinnerCostoEjecutivo.getValue();
                     Integer costoEquipaje = (Integer) spinnerCostoEquipaje.getValue();
-                    List<String> nombresCategorias = new ArrayList<String>();
-                    List<DtCategoria> categorias = s.buscarCategorias();
+                    List<String> nombresCategorias = listaCategorias.getSelectedValuesList();
+
+                    if(nombresCategorias == null || nombresCategorias.isEmpty()){
+                        new VentanaMensaje("No has seleccionado categorías");
+                        return;
+                    }
 
                     DtCiudad ciudadOrigen = (DtCiudad) jComboBoxCiudadOrigen.getSelectedItem();
                     DtCiudad ciudadDestino = (DtCiudad) jComboBoxCiudadDestino.getSelectedItem();
-
-                    for (int i = 0; i < categorias.size(); i++) {
-                        if (checkboxes.get(i).isSelected()) {
-                            nombresCategorias.add(categorias.get(i).getNombre());
-                        }
-                    }
 
                     String urlImage;
 
@@ -967,10 +943,11 @@ public class Main extends JFrame {
                             costoEquipaje,
                             LocalDate.now().toString(),
                             urlImage,
-                            urlVideo,
                             s.buscarCategoriasPorNombre(nombresCategorias),
                             ciudadOrigen,
-                            ciudadDestino);
+                            ciudadDestino,
+                            0
+                    );
 
 
                     s.altaRutaDeVuelo(jComboBoxAerolineaAltaRutaVuelo.getSelectedItem().toString(), ruta);
@@ -980,11 +957,7 @@ public class Main extends JFrame {
                     new VentanaMensaje("Ruta de vuelo creada correctamente.");
 
                     auxiliar.limpiarJTextField(nombreAltaRutaDeVuelo, descripcionAltaRutaDeVuelo);
-                    for (int i = 0; i < categorias.size(); i++) {
-                        if (checkboxes.get(i).isSelected()) {
-                            checkboxes.get(i).setSelected(false);
-                        }
-                    }
+                    cargarCategorias();
 
                 } catch (IllegalArgumentException | IOException ex) {
                     new VentanaMensaje(ex.getMessage());
@@ -1265,8 +1238,11 @@ public class Main extends JFrame {
             public void itemStateChanged(ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
                     try {
-                        DtRuta ruta = s.getRutaDeVuelo(jComboBoxrutaDeVueloReserva.getSelectedItem().toString());
-
+                        DtRuta rutaSeleccionada = (DtRuta) jComboBoxrutaDeVueloReserva.getSelectedItem();
+                        if(rutaSeleccionada == null || rutaSeleccionada.toString().equals("N/A")){
+                            return;
+                        }
+                        DtRuta ruta = s.getRutaDeVuelo(rutaSeleccionada.toString());
                         auxiliar.cargarVuelosComboBoxRuta(ruta.getNombre());
                         jComboBoxvueloReserva.setEnabled(true);
                     } catch (IllegalArgumentException ex) {
@@ -1331,12 +1307,13 @@ public class Main extends JFrame {
             @Override
             public void itemStateChanged(ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
-                    try {
-                    DtRuta ruta = s.getRutaDeVuelo(jComboBoxConsultaVueloRutaDeVuelo.getSelectedItem().toString());
-                    auxiliar.cargarVuelosComboBoxRuta(ruta.getNombre());
-                    } catch (IllegalArgumentException ex) {
-                        new VentanaMensaje(ex.getMessage());
+                    DtRuta rutaSeleccionada = (DtRuta) jComboBoxConsultaVueloRutaDeVuelo.getSelectedItem();
+                    if(rutaSeleccionada == null || rutaSeleccionada.toString().equals("N/A")){
+                        return;
                     }
+                    DtRuta ruta = s.getRutaDeVuelo(rutaSeleccionada.toString());
+                    auxiliar.cargarVuelosComboBoxRuta(ruta.getNombre());
+
                 }
             }
         });
@@ -1548,24 +1525,30 @@ public class Main extends JFrame {
             @Override
             public void itemStateChanged(ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
-                    if (seleccionarRutaAceptarRechazarRuta.getSelectedItem() == null) {
+
+                    DtRuta rutaSeleccionada = (DtRuta) seleccionarRutaAceptarRechazarRuta.getSelectedItem();
+
+                    if (rutaSeleccionada == null) {
                         new VentanaMensaje("Ha ocurrido un error..");
                         return;
                     }
 
-                    DtRuta ruta = s.getRutaDeVuelo(seleccionarRutaAceptarRechazarRuta.getSelectedItem().toString());
-                    if (ruta != null && !ruta.toString().equals("N/A") && ruta.getEstado().toString().equals("INGRESADA")) {
+                    if(rutaSeleccionada.toString().equals("N/A")){
+                        aprobarButtonAceptarRechazarRuta.setEnabled(false);
+                        rechazarButtonAceptarRechazarRuta.setEnabled(false);
+                        estadoRutaText.setText("No se ha seleccionado una ruta.");
+                        return;
+                    }
+
+                    DtRuta ruta = s.getRutaDeVuelo(rutaSeleccionada.toString());
+                    if (ruta != null && ruta.getEstado().toString().equals("INGRESADA")) {
                         aprobarButtonAceptarRechazarRuta.setEnabled(true);
                         rechazarButtonAceptarRechazarRuta.setEnabled(true);
                         estadoRutaText.setText(ruta.getEstado().toString());
                     } else {
                         aprobarButtonAceptarRechazarRuta.setEnabled(false);
                         rechazarButtonAceptarRechazarRuta.setEnabled(false);
-                        if (ruta != null && !ruta.toString().equals("N/A")) {
-                            estadoRutaText.setText(ruta.getEstado().toString());
-                        } else {
-                            estadoRutaText.setText("No se ha seleccionado una ruta.");
-                        }
+                        estadoRutaText.setText(ruta.getEstado().toString());
                     }
                 }
             }
@@ -1607,16 +1590,92 @@ public class Main extends JFrame {
                 }
             }
         });
+        tabbedPane4.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                int index = tabbedPane4.getSelectedIndex();
+                String title = tabbedPane4.getTitleAt(index);
+
+                if(title.equals("Ingresar")){
+                    auxiliar.cargarAerolineasComboBox();
+                    cargarCategorias();
+                }
+                if(title.equals("Aceptar/Rechazar") || title.equals("Consultar")){
+                    auxiliar.cargarAerolineasComboBox();
+                }
+
+                if (title.equals("Top5")) {
+                    jPanelTop5Rutas.removeAll();
+                    jPanelTop5Rutas.setLayout(new GridLayout(0, 1, 5, 5)); // una columna, filas dinámicas
+
+                    for(DtRuta r : s.listarRutasDeVueloTop5()){
+                        JLabel label = new JLabel(
+                                r.getNombre() + " | Visitada: " + r.getVecesVisitada() + " veces"
+                        );
+                        jPanelTop5Rutas.add(label);
+                    };
+
+                    jPanelTop5Rutas.revalidate();
+                    jPanelTop5Rutas.repaint();
+                }
+            }
+        });
+        tabbedPane1.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                int index = tabbedPane1.getSelectedIndex();
+                String title = tabbedPane1.getTitleAt(index);
+
+                if (title.equals("Consultar") || title.equals("Modificar")) {
+                    auxiliar.cargarUsuariosComboBox();
+                }
+            }
+        });
+        tabbedPane3.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                int index = tabbedPane3.getSelectedIndex();
+                String title = tabbedPane3.getTitleAt(index);
+
+                if (title.equals("Comprar")) {
+                    auxiliar.cargarPaqueteNoCompradoComboBox();
+                    auxiliar.cargarClientesComboBox();
+                }
+                if(title.equals("Consultar")){
+                    auxiliar.cargarPaqueteComboBox();
+                }
+                if(title.equals("Agregar ruta")){
+                    auxiliar.cargarPaqueteNoCompradoComboBox();
+                    auxiliar.cargarAerolineasComboBox();
+                }
+            }
+        });
+        tabbedPane2.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                int index = tabbedPane2.getSelectedIndex();
+                String title = tabbedPane2.getTitleAt(index);
+
+                if (title.equals("Crear") || title.equals("Consulta")) {
+                    auxiliar.cargarAerolineasComboBox();
+                }
+                if(title.equals("Reservar")){
+                    auxiliar.cargarAerolineasComboBox();
+                    auxiliar.cargarClientesComboBox();
+                }
+            }
+        });
     }
 
     public void cargarCategorias() {
+        auxiliar.cargarCategorias();
+
         jPanelCategorias.removeAll();
-        checkboxes.clear();
-        for (DtCategoria c : s.listarCategorias()) {
-            JCheckBox check = new JCheckBox(c.getNombre());
-            jPanelCategorias.add(check);
-            this.checkboxes.add(check);
-        }
+        jPanelCategorias.setLayout(new BorderLayout());
+        jPanelCategorias.add(new JScrollPane(listaCategorias), BorderLayout.CENTER);
+
+        jPanelCategorias.revalidate();
+        jPanelCategorias.repaint();
     }
 
     public static void main(String[] args) {

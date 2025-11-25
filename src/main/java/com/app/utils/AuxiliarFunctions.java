@@ -4,12 +4,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JComboBox;
-import javax.swing.JTextField;
-import javax.swing.ImageIcon;
-import javax.swing.JPanel;
-import javax.swing.JLabel;
+import javax.swing.*;
 
 import java.awt.geom.Ellipse2D;
 import java.awt.Image;
@@ -30,15 +25,7 @@ import java.time.LocalDate;
 
 import com.app.clases.ISistema;
 
-import com.app.datatypes.DtAerolinea;
-import com.app.datatypes.DtCliente;
-import com.app.datatypes.DtRuta;
-import com.app.datatypes.DtUsuario;
-import com.app.datatypes.DtVuelo;
-import com.app.datatypes.DtPasajero;
-import com.app.datatypes.DtCiudad;
-import com.app.datatypes.DtPaquete;
-import com.app.datatypes.DtReserva;
+import com.app.datatypes.*;
 
 import com.app.enums.TipoImagen;
 
@@ -68,6 +55,8 @@ public class AuxiliarFunctions {
     private DefaultComboBoxModel<DtPasajero> comboPasajerosReserva = new DefaultComboBoxModel<>();
     private DefaultComboBoxModel<DtRuta> comboRutaPaquete = new DefaultComboBoxModel<>();
 
+    private DefaultListModel<String> modeloCategorias = new DefaultListModel<>();
+
     public AuxiliarFunctions(ISistema s) {
         this.sistema = s;
     }
@@ -89,6 +78,8 @@ public class AuxiliarFunctions {
     public DefaultComboBoxModel<DtReserva> getComboReservaVueloClienteModel() { return comboReservaCliente; }
     public DefaultComboBoxModel<DtPasajero> getComboPasajerosReserva() { return comboPasajerosReserva; }
     public DefaultComboBoxModel<DtRuta> getComboRutaPaquete() { return comboRutaPaquete; }
+
+    public DefaultListModel<String> getModeloCategorias() { return modeloCategorias; }
 
     //Función para validar 1 o más "JComboBox"
     public boolean estanVaciosJComboBox(JComboBox<?>... combos) {
@@ -139,6 +130,15 @@ public class AuxiliarFunctions {
                 @Override
                 public String toString() { return "N/A"; }
             });
+        }
+    }
+
+    public void cargarCategorias() {
+        modeloCategorias.clear();
+
+        List<DtCategoria> categorias = sistema.listarCategorias();
+        for (DtCategoria c : categorias) {
+            modeloCategorias.addElement(c.getNombre());
         }
     }
 

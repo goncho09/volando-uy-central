@@ -80,7 +80,7 @@ public class AceptarRechazarVueloTest {
                 "http://imagenruta.com/ruta_inexistente.jpg",
                 Arrays.asList(),
                 s.getCiudad("Lima", "Perú"),
-                s.getCiudad("Montevideo", "Uruguay")
+                s.getCiudad("Montevideo", "Uruguay"),0
         );
 
         Assertions.assertThrows(

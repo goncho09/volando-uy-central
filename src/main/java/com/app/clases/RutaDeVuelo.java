@@ -53,11 +53,11 @@ public class RutaDeVuelo {
     @Column( nullable = true)
     private String urlImagen;
 
-    @Column(nullable = true, length = 500)
-    private String urlVideo;
-
     @Column( nullable = true)
     private EstadoRuta estado;
+
+    @Column( nullable = true)
+    private int vecesVisitada;
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
@@ -93,11 +93,11 @@ public class RutaDeVuelo {
         this.setEquipajeExtra(ruta.getEquipajeExtra());
         this.setFechaAlta(LocalDate.parse(ruta.getFechaAlta()));
         this.setUrlImagen(ruta.getUrlImagen());
-        this.setUrlVideo(ruta.getUrlVideo());
-        this.setEstado(ruta.getEstado());
+        this.setEstado(EstadoRuta.INGRESADA); // Siempre inicializa en Ingresada.
         this.setCategorias(categorias);
         this.setCiudadOrigen(origen);
         this.setCiudadDestino(destino);
+        this.setVecesVisitada(0); // Siempre inicializa en 0
     }
 
     public String getNombre() {
@@ -166,14 +166,6 @@ public class RutaDeVuelo {
 
     public void setUrlImagen(String urlImagen){this.urlImagen = urlImagen; };
 
-    public String getUrlVideo() {
-        return urlVideo;
-    }
-
-    public void setUrlVideo(String urlVideo) {
-        this.urlVideo = urlVideo;
-    }
-
     public  EstadoRuta getEstado() {return estado; }
 
     public void setEstado(EstadoRuta estado) {this.estado = estado; };
@@ -202,6 +194,10 @@ public class RutaDeVuelo {
         this.ciudadDestino = ciudadDestino;
     }
 
+    public int getVecesVisitada(){return vecesVisitada;}
+
+    public void setVecesVisitada(int vecesVisitada){this.vecesVisitada = vecesVisitada;}
+
     public DtRuta getDatos() {
         List<DtCategoria> categoriaList = new ArrayList<>();
         for (Categoria categoria : this.getCategorias()) {
@@ -220,7 +216,8 @@ public class RutaDeVuelo {
                 this.getEstado(),
                 categoriaList,
                 this.getCiudadOrigen().getDatos(),
-                this.getCiudadDestino().getDatos()
+                this.getCiudadDestino().getDatos(),
+                this.getVecesVisitada()
         );
     }
 
