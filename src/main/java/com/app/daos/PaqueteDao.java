@@ -36,7 +36,7 @@ public class PaqueteDao extends BaseDao<Paquete, String> {
         return  rp.getCantidad();
     }
 
-    public List<DtPaquete> buscarPorTexto(String texto) {
+    public List<DtPaquete> buscarPorPatron(String texto) {
         if (texto == null || texto.trim().isEmpty()) {
             return new ArrayList<>();
         }
@@ -58,10 +58,9 @@ public class PaqueteDao extends BaseDao<Paquete, String> {
                 .setParameter("inicio", inicio)
                 .getResultList();
 
-        // SIN lambdas, SIN stream → for normalito
         List<DtPaquete> dtos = new ArrayList<>();
         for (Paquete p : resultados) {
-            dtos.add(p.getDatos());  // usamos getDatos() como pidió el jefe
+            dtos.add(p.getDatos());
         }
 
         return dtos;

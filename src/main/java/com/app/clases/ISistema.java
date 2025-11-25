@@ -60,6 +60,7 @@ public interface ISistema {
     void actualizarEstadoRuta(DtRuta ruta, EstadoRuta estado);
     void altaRutaDeVuelo(String nickname, DtRuta datosRuta);
     DtRuta getRutaDeVuelo(String nombre);
+    List<DtRuta> buscarRutaDeVuelos(String patron); // Busca TODAS las rutas que coincidan con el patrón brindado (actualmente filtra por nombre y descripción)
     List<DtRuta> listarRutasDeVuelo(); // Devuelve TODAS las rutas de vuelo
     List<DtRuta> listarRutasDeVueloPaquete(String paquete); // Devuelve TODAS las rutas de un paquete en específico
     List<DtRuta> listarRutasDeVueloTop5();
@@ -81,6 +82,7 @@ public interface ISistema {
     int agregarRutaAPaquete(DtPaquete paquete, DtRuta ruta, int cantidad, TipoAsiento tipoAsiento);
     void altaPaquete(DtPaquete paquete);
     DtPaquete getPaquete(String nombre);
+    List<DtPaquete> buscarPaquetes(String patron); // Busca TODOS los paquetes que coincidan con el patrón brindado (actualmente filtra por nombre y descripción)
     List<DtPaquete> listarPaquetes();
     List<DtPaquete> listarPaquetesCliente(String nickname); // Lista todos los paquetes comprados por un cliente.
     List<DtPaquete> listarPaquetesAerolinea(String nickname);

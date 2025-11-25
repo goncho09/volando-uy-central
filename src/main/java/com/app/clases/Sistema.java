@@ -1176,6 +1176,9 @@ public class Sistema implements ISistema {
         return rutaDeVueloDao.getTop5();
     };
 
+    public List<DtRuta> buscarRutaDeVuelos(String patron){return this.rutaDeVueloDao.buscarPorPatron(patron);}
+
+    public List<DtPaquete> buscarPaquetes(String patron){return this.paqueteDao.buscarPorPatron(patron);}
 
     public void vaciarBD() {
         EntityTransaction tx = em.getTransaction();

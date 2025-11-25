@@ -24,15 +24,15 @@ public class RutaDeVueloDao extends BaseDao<RutaDeVuelo, String> {
     public List<DtRuta> getTop5() {
         List<DtRuta> top5 = new ArrayList<>();
         List<RutaDeVuelo> rutas = getEm().createQuery("SELECT r FROM RutaDeVuelo r ORDER BY r.vecesVisitada DESC", RutaDeVuelo.class).setMaxResults(5).getResultList();
-        ;
+
         for (RutaDeVuelo r : rutas) {
             top5.add(r.getDatos());
         }
-        ;
+
         return top5;
     }
 
-    public List<DtRuta> buscarPorNombre(String texto) {
+    public List<DtRuta> buscarPorPatron(String texto) {
         if (texto == null || texto.trim().isEmpty()) {
             return new ArrayList<>();
         }
