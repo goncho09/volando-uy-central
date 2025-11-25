@@ -129,6 +129,9 @@ public interface VolandoServicePort {
     DtRuta getRutaDeVuelo(String nombre);
 
     @WebMethod
+    List<DtRuta> buscarRutaDeVuelos(String patron);
+
+    @WebMethod
     List<DtRuta> listarRutasDeVuelo(); // Devuelve TODAS las rutas de vuelo
 
     @WebMethod
@@ -173,6 +176,9 @@ public interface VolandoServicePort {
 
     @WebMethod
     DtPaquete getPaquete(String nombre);
+
+    @WebMethod
+    List<DtPaquete> buscarPaquetes(String patron);
 
     @WebMethod
     List<DtPaquete> listarPaquetes();
