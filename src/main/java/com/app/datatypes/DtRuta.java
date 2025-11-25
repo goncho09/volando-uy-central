@@ -37,6 +37,7 @@ public class DtRuta {
         this.categorias = categorias;
         this.ciudadOrigen = origen;
         this.ciudadDestino = destino;
+        this.vecesVisitada = vecesVisitada;
     }
 
     public DtRuta(String nombre, String descripcion, String descripcionCorta, String duracion, float costoTurista, float costoEjecutivo, float equipajeExtra, String fechaAlta, String urlImagen, String urlVideo, EstadoRuta estado, List<DtCategoria> categorias, DtCiudad origen, DtCiudad destino, int vecesVisitada) {
