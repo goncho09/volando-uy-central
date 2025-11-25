@@ -93,7 +93,7 @@ public class RutaDeVuelo {
         this.setEquipajeExtra(ruta.getEquipajeExtra());
         this.setFechaAlta(LocalDate.parse(ruta.getFechaAlta()));
         this.setUrlImagen(ruta.getUrlImagen());
-        this.setEstado(ruta.getEstado());
+        this.setEstado(EstadoRuta.INGRESADA); // Siempre inicializa en Ingresada.
         this.setCategorias(categorias);
         this.setCiudadOrigen(origen);
         this.setCiudadDestino(destino);
