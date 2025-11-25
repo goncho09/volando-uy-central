@@ -115,6 +115,9 @@ public interface VolandoServicePort {
     // ---------- RUTAS DE VUELO ---------- //
 
     @WebMethod
+    void finalizarRuta(DtRuta ruta);
+
+    @WebMethod
     boolean rutaContieneCategoria(DtRuta ruta, String categoria);
 
     @WebMethod

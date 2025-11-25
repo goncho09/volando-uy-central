@@ -269,6 +269,16 @@ public class Volando implements VolandoServicePort {
 // ---------- RUTAS DE VUELO ---------- //
 
     @Override
+    public void finalizarRuta(DtRuta ruta) {
+        try {
+            sistema.finalizarRuta(ruta);
+        } catch (Exception e) {
+            System.out.println("Error finalizarRuta: " + e.getMessage());
+            throw new WebServiceException("Ha ocurrido un error.");
+        }
+    }
+
+    @Override
     public boolean rutaContieneCategoria(DtRuta ruta, String categoria) {
         try {
             return sistema.rutaContieneCategoria(ruta, categoria);
