@@ -19,6 +19,7 @@ public class DtRuta {
     private List<DtCategoria> categorias;
     private DtCiudad ciudadOrigen;
     private DtCiudad ciudadDestino;
+    private int vecesVisitada;
 
     public DtRuta() {}
     public DtRuta(String nombre, String descripcion, String descripcionCorta, String duracion, float costoTurista, float costoEjecutivo, float equipajeExtra, String fechaAlta, String urlImagen, String urlVideo, List<DtCategoria> categorias, DtCiudad origen, DtCiudad destino) {

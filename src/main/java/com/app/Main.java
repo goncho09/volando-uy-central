@@ -880,6 +880,13 @@ public class Main extends JFrame {
         crearRutaDeVuelo.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
+                // OBTENER URL DE VIDEO
+                String urlVideo = videoUrlAltaRutaDeVuelo.getText().trim();
+                if (urlVideo.isEmpty()) {
+                    urlVideo = "";
+                }
+
                 try {
                     if (auxiliar.estanVaciosJTextField(nombreAltaRutaDeVuelo, descripcionAltaRutaDeVuelo, descripcionCortaAltaRutaDeVuelo) || auxiliar.estanVaciosJComboBox(jComboBoxAerolineaAltaRutaVuelo, jComboBoxCiudadOrigen, jComboBoxCiudadDestino)) {
                         new VentanaMensaje("Faltan argumentos");
@@ -973,6 +980,12 @@ public class Main extends JFrame {
                 if (auxiliar.estanVaciosJComboBox(jComboBoxPaqueteConsultaPaqueteRutaVuelo)) {
                     new VentanaMensaje("Falta ingresar algún dato.");
                     return;
+                }
+
+                // OBTENER URL DE VIDEO
+                String urlVideo = videoUrlAltaRutaDeVuelo.getText().trim();
+                if (urlVideo.isEmpty()) {
+                    urlVideo = "";
                 }
                 try {
                     DtPaquete dataPaquete = s.getPaquete(jComboBoxPaqueteConsultaPaqueteRutaVuelo.getSelectedItem().toString());
