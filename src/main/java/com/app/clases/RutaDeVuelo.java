@@ -225,6 +225,7 @@ public class RutaDeVuelo {
                 this.getEquipajeExtra(),
                 this.getFechaAlta().toString(),
                 this.getUrlImagen(),
+                this.getUrlVideo(),
                 this.getEstado(),
                 categoriaList,
                 this.getCiudadOrigen().getDatos(),

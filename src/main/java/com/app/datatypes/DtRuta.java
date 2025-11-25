@@ -22,6 +22,7 @@ public class DtRuta {
     private int vecesVisitada;
 
 
+    public DtRuta() {  }
     public DtRuta(String nombre, String descripcion, String descripcionCorta, String duracion, float costoTurista, float costoEjecutivo, float equipajeExtra, String fechaAlta, String urlImagen, String urlVideo, List<DtCategoria> categorias, DtCiudad origen, DtCiudad destino, int vecesVisitada) {
         this.nombre = nombre;
         this.descripcion = descripcion;
