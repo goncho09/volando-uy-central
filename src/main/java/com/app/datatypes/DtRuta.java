@@ -21,7 +21,7 @@ public class DtRuta {
     private DtCiudad ciudadDestino;
     private int vecesVisitada;
 
-    public DtRuta() {}
+
     public DtRuta(String nombre, String descripcion, String descripcionCorta, String duracion, float costoTurista, float costoEjecutivo, float equipajeExtra, String fechaAlta, String urlImagen, String urlVideo, List<DtCategoria> categorias, DtCiudad origen, DtCiudad destino) {
         this.nombre = nombre;
         this.descripcion = descripcion;
@@ -39,7 +39,7 @@ public class DtRuta {
         this.ciudadDestino = destino;
     }
 
-    public DtRuta(String nombre, String descripcion, String descripcionCorta, String duracion, float costoTurista, float costoEjecutivo, float equipajeExtra, String fechaAlta, String urlImagen, EstadoRuta estado, List<DtCategoria> categorias, DtCiudad origen, DtCiudad destino) {
+    public DtRuta(String nombre, String descripcion, String descripcionCorta, String duracion, float costoTurista, float costoEjecutivo, float equipajeExtra, String fechaAlta, String urlImagen, String urlVideo, EstadoRuta estado, List<DtCategoria> categorias, DtCiudad origen, DtCiudad destino, int vecesVisitada) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.duracion = duracion;
@@ -49,10 +49,12 @@ public class DtRuta {
         this.equipajeExtra = equipajeExtra;
         this.fechaAlta = fechaAlta;
         this.urlImagen = urlImagen;
+        this.urlVideo = urlVideo;
         this.estado = estado;
         this.categorias = categorias;
         this.ciudadOrigen = origen;
         this.ciudadDestino = destino;
+        this.vecesVisitada = vecesVisitada;
     }
 
     public String getNombre() {
