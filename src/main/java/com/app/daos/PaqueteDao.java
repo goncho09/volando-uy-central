@@ -1,7 +1,11 @@
 package com.app.daos;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
+import com.app.datatypes.DtPaquete;
 import jakarta.persistence.EntityManager;
 
 import com.app.clases.Paquete;
@@ -30,6 +34,37 @@ public class PaqueteDao extends BaseDao<Paquete, String> {
         rp.setCantidad(rp.getCantidad() + cantidad);
         actualizar(p);
         return  rp.getCantidad();
+    }
+
+    public List<DtPaquete> buscarPorTexto(String texto) {
+        if (texto == null || texto.trim().isEmpty()) {
+            return new ArrayList<>();
+        }
+
+        String patron = "%" + texto.trim().toLowerCase() + "%";
+        String inicio = texto.trim().toLowerCase() + "%";
+
+        String jpql = """
+        SELECT p FROM Paquete p
+        WHERE LOWER(p.nombre) LIKE :patron
+           OR LOWER(p.descripcion) LIKE :patron
+        ORDER BY 
+            CASE WHEN LOWER(p.nombre) LIKE :inicio THEN 0 ELSE 1 END,
+            p.nombre
+        """;
+
+        List<Paquete> resultados = getEm().createQuery(jpql, Paquete.class)
+                .setParameter("patron", patron)
+                .setParameter("inicio", inicio)
+                .getResultList();
+
+        // SIN lambdas, SIN stream → for normalito
+        List<DtPaquete> dtos = new ArrayList<>();
+        for (Paquete p : resultados) {
+            dtos.add(p.getDatos());  // usamos getDatos() como pidió el jefe
+        }
+
+        return dtos;
     }
 
 }
