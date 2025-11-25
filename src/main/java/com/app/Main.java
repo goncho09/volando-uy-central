@@ -219,6 +219,7 @@ public class Main extends JFrame {
     private JComboBox jComboBoxSeleccionarPaqueteReserva;
     private JList listaCategorias;
     private JPanel jPanelTop5Rutas;
+    private JTextField videoUrlAltaRutaDeVuelo;
 
 
     public Main() {
@@ -943,6 +944,7 @@ public class Main extends JFrame {
                             costoEquipaje,
                             LocalDate.now().toString(),
                             urlImage,
+                            urlVideo,
                             s.buscarCategoriasPorNombre(nombresCategorias),
                             ciudadOrigen,
                             ciudadDestino,
