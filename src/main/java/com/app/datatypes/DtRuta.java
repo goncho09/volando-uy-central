@@ -150,6 +150,8 @@ public class DtRuta {
         return ciudadOrigen;
     }
 
+    public int getVecesVisitada() { return vecesVisitada; }
+
     public void setCiudadOrigen(DtCiudad ciudadOrigen) {
         this.ciudadOrigen = ciudadOrigen;
     }
