@@ -78,6 +78,7 @@ public class AceptarRechazarVueloTest {
                 20.0f,
                 LocalDate.now().toString(),
                 "http://imagenruta.com/ruta_inexistente.jpg",
+                "https://www.youtube.com/watch?v=rNGWhSb447o",
                 Arrays.asList(),
                 s.getCiudad("Lima", "Perú"),
                 s.getCiudad("Montevideo", "Uruguay"),0
