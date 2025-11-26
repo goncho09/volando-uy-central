@@ -29,7 +29,7 @@ public class Aerolinea extends Usuario {
     public Aerolinea() {}
 
     public Aerolinea(DtAerolinea aerolinea) {
-        super(new DtUsuario(aerolinea.getNickname(), aerolinea.getNombre(), aerolinea.getEmail(), aerolinea.getPassword(), aerolinea.getUrlImage(),new ArrayList<>(), new ArrayList<>()));
+        super(new DtUsuario(aerolinea.getNickname(), aerolinea.getNombre(), aerolinea.getEmail(), aerolinea.getPassword(), aerolinea.getUrlImage() ,new ArrayList<>(), new ArrayList<>()));
         this.setDescripcion(aerolinea.getDescripcion());
         this.setLinkWeb(aerolinea.getLinkWeb());
         this.setRutasDeVuelo(new ArrayList<>());
@@ -73,7 +73,7 @@ public class Aerolinea extends Usuario {
             listaRutas.add(r.getDatos());
         }
 
-        List <DtUsuario> listaSeguidores = new ArrayList<>();
+        List<DtUsuario> listaSeguidores = new ArrayList<>();
         for ( Usuario u : this.getSeguidores()){
             DtUsuario dtUsuario = new DtUsuario(
                     u.getNickname(),
@@ -86,7 +86,7 @@ public class Aerolinea extends Usuario {
             );
             listaSeguidores.add(dtUsuario);
         }
-        List <DtUsuario> listaSeguidos = new ArrayList<>();
+        List<DtUsuario> listaSeguidos = new ArrayList<>();
         for ( Usuario u : this.getSeguidos()){
             DtUsuario dtUsuario = new DtUsuario(
                     u.getNickname(),

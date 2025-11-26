@@ -32,7 +32,8 @@ import com.app.enums.TipoImagen;
 public class AuxiliarFunctions {
 
     // Base relativa al proyecto
-    private static final String BASE_DIR = Paths.get(System.getProperty("user.home"), "lab-pa-g2-pictures").toString();
+    private static final String BASE_DIR = Paths.get(System.getProperty("user.home"), "volandouyFiles", "lab-pa-g2-pictures").toString();
+
     private static final String[] SUB_DIRS = { "users", "vuelos", "rutas" };
 
     private ISistema sistema;
