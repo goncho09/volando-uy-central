@@ -279,6 +279,16 @@ public class Volando implements VolandoServicePort {
     }
 
     @Override
+    public boolean puedeFinalizar(String nombreRuta) {
+        try {
+            return sistema.puedeFinalizar(nombreRuta);
+        } catch (Exception e) {
+            System.out.println("Error puedeFinalizar: " + e.getMessage());
+            throw new WebServiceException("Ha ocurrido un error.");
+        }
+    }
+
+    @Override
     public boolean rutaContieneCategoria(DtRuta ruta, String categoria) {
         try {
             return sistema.rutaContieneCategoria(ruta, categoria);

@@ -1222,26 +1222,24 @@ public class Sistema implements ISistema {
     public void finalizarRuta(DtRuta ruta){
         RutaDeVuelo r = this.rutaDeVueloDao.buscar(ruta.getNombre());
 
-        if(r == null){
-            throw new IllegalArgumentException("La ruta no existe");
-        }
-
-        if(r.getEstado() != EstadoRuta.APROBADA) {
-            throw new RuntimeException("La ruta debe estar en estado APROBADA para finalizarse.");
-        }
-
-        List <DtVuelo> vuelosRuta = getVuelosRutaDeVuelo(ruta);
-        if(!vuelosRuta.isEmpty()) {
-            throw new RuntimeException("La ruta tiene vuelos pendientes y no puede finalizarse.");
-        }
-
-        if(rutaEstaEnPaquete(r.getNombre())){
-            throw new RuntimeException("La ruta está incluida en un paquete, no puede finalizarse.");
+        if(!puedeFinalizar(r.getNombre())){
+            throw new IllegalArgumentException("La ruta no se puede finalizar.");
         }
 
         r.setEstado(EstadoRuta.FINALIZADA);
         rutaDeVueloDao.actualizar(r);
+    }
 
+    public boolean puedeFinalizar(String nombreRuta){
+        RutaDeVuelo r = this.rutaDeVueloDao.buscar(nombreRuta);
+
+        if(r == null){
+            return false;
+        }
+
+        List <DtVuelo> vuelosRuta = getVuelosRutaDeVuelo(r.getDatos());
+
+        return r.getEstado() == EstadoRuta.APROBADA && vuelosRuta.isEmpty() && !rutaEstaEnPaquete(r.getNombre());
     }
 
     public boolean rutaEstaEnPaquete(String nombreRuta) {

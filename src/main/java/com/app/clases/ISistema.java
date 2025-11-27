@@ -66,6 +66,7 @@ public interface ISistema {
     List<DtRuta> listarRutasDeVueloTop5();
     void aumentarVisita(String nombre);
     void finalizarRuta(DtRuta ruta);
+    boolean puedeFinalizar(String nombreRuta); // true si la ruta puede ser finalizada
     boolean rutaEstaEnPaquete(String nombreRuta); // true si la ruta esta en algun paquete
 
 
