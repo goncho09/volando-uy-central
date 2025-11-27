@@ -136,7 +136,8 @@ public class SubirImagen extends JFrame {
         gbc.gridy = 0;
         gbc.weightx = 1.0;
         gbc.weighty = 1.0;
-        gbc.fill = GridBagConstraints.BOTH;
+        gbc.anchor = GridBagConstraints.NORTH;
+        gbc.insets = new Insets(10, 20, 10, 20);
         panel1.add(panelGlobal, gbc);
         imagePanel = new JPanel();
         imagePanel.setLayout(new GridBagLayout());
@@ -154,7 +155,9 @@ public class SubirImagen extends JFrame {
         gbc.gridy = 1;
         gbc.weightx = 1.0;
         gbc.weighty = 1.0;
-        gbc.fill = GridBagConstraints.BOTH;
+        gbc.anchor = GridBagConstraints.NORTH;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(10, 20, 0, 20);
         panelGlobal.add(panel2, gbc);
         cancelarButton = new JButton();
         cancelarButton.setText("Cancelar");

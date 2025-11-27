@@ -92,7 +92,9 @@ public class VentanaMensaje extends JDialog {
         gbc.gridx = 0;
         gbc.gridy = 1;
         gbc.weightx = 1.0;
-        gbc.fill = GridBagConstraints.VERTICAL;
+        gbc.weighty = 1.0;
+        gbc.anchor = GridBagConstraints.NORTH;
+        gbc.insets = new Insets(10, 10, 0, 10);
         contentPane.add(panel1, gbc);
         final JPanel panel2 = new JPanel();
         panel2.setLayout(new GridBagLayout());
@@ -101,7 +103,8 @@ public class VentanaMensaje extends JDialog {
         gbc.gridy = 0;
         gbc.weightx = 1.0;
         gbc.weighty = 1.0;
-        gbc.fill = GridBagConstraints.BOTH;
+        gbc.anchor = GridBagConstraints.NORTH;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
         panel1.add(panel2, gbc);
         buttonOK = new JButton();
         buttonOK.setText("OK");
@@ -119,7 +122,8 @@ public class VentanaMensaje extends JDialog {
         gbc.gridy = 0;
         gbc.weightx = 1.0;
         gbc.weighty = 1.0;
-        gbc.fill = GridBagConstraints.BOTH;
+        gbc.anchor = GridBagConstraints.NORTH;
+        gbc.insets = new Insets(10, 20, 0, 20);
         contentPane.add(panel3, gbc);
         message = new JLabel();
         message.setText("empanadas");
