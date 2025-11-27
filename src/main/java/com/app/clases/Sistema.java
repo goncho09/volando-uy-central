@@ -48,6 +48,7 @@ import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+
 import java.io.FileOutputStream;
 
 
@@ -184,8 +185,7 @@ public class Sistema implements ISistema {
             throw new IllegalArgumentException("Debe tener al menos una categoria");
         }
 
-        if (datosRuta.getCostoTurista() <= 0 || datosRuta.getCostoEjecutivo() <= 0
-                || datosRuta.getEquipajeExtra() < 0) {
+        if (datosRuta.getCostoTurista() <= 0 || datosRuta.getCostoEjecutivo() <= 0 || datosRuta.getEquipajeExtra() < 0) {
             throw new IllegalArgumentException("Costos no pueden ser negativos o 0");
         }
 
@@ -209,14 +209,12 @@ public class Sistema implements ISistema {
         }
 
 
-        Ciudad origen = this.ciudadDao.buscar(new CiudadId(datosRuta.getCiudadOrigen().getNombre(),
-                datosRuta.getCiudadOrigen().getPais()));
+        Ciudad origen = this.ciudadDao.buscar(new CiudadId(datosRuta.getCiudadOrigen().getNombre(), datosRuta.getCiudadOrigen().getPais()));
         if (origen == null) {
             throw new IllegalArgumentException("Ciudad Origen no existe");
         }
 
-        Ciudad destino = this.ciudadDao.buscar(new CiudadId(datosRuta.getCiudadDestino().getNombre(),
-                datosRuta.getCiudadDestino().getPais()));
+        Ciudad destino = this.ciudadDao.buscar(new CiudadId(datosRuta.getCiudadDestino().getNombre(), datosRuta.getCiudadDestino().getPais()));
         if (destino == null || destino == origen) {
             throw new IllegalArgumentException("Ciudad Destino no existe o es igual a la de Origen");
         }
@@ -234,8 +232,7 @@ public class Sistema implements ISistema {
 
     public boolean validarUsuario(String nickname, String password) {
         Usuario u = this.userDao.buscar(nickname);
-        if (u == null)
-            return false;
+        if (u == null) return false;
         return u.getPassword().equals(password);
     }
 
@@ -288,15 +285,10 @@ public class Sistema implements ISistema {
         }
 
         // Conjunto de nombres de rutas de la aerolínea para búsqueda rápida
-        Set<String> nombresRutas = rutasAerolinea.stream()
-                .map(DtRuta::getNombre)
-                .collect(Collectors.toSet());
+        Set<String> nombresRutas = rutasAerolinea.stream().map(DtRuta::getNombre).collect(Collectors.toSet());
 
         // Filtrar paquetes que contengan alguna de esas rutas
-        return this.listarPaquetes().stream()
-                .filter(p -> p.getRutaEnPaquete().stream()
-                        .anyMatch(rp -> nombresRutas.contains(rp.getRutaDeVuelo().getNombre())))
-                .collect(Collectors.toList());
+        return this.listarPaquetes().stream().filter(p -> p.getRutaEnPaquete().stream().anyMatch(rp -> nombresRutas.contains(rp.getRutaDeVuelo().getNombre()))).collect(Collectors.toList());
     }
 
     public List<DtPaquete> listarPaquetesNoComprados() {
@@ -464,10 +456,7 @@ public class Sistema implements ISistema {
             throw new IllegalArgumentException("Ya existe un usuario con ese email.");
         }
 
-        if (cliente.getNombre().isEmpty() || cliente.getApellido().isEmpty() || cliente.getNickname().isEmpty()
-                || cliente.getEmail().isEmpty() || cliente.getPassword().isEmpty()
-                || cliente.getNacionalidad().isEmpty() || cliente.getNumeroDocumento() == 0
-                || cliente.getUrlImage().isEmpty()) {
+        if (cliente.getNombre().isEmpty() || cliente.getApellido().isEmpty() || cliente.getNickname().isEmpty() || cliente.getEmail().isEmpty() || cliente.getPassword().isEmpty() || cliente.getNacionalidad().isEmpty() || cliente.getNumeroDocumento() == 0 || cliente.getUrlImage().isEmpty()) {
             throw new IllegalArgumentException("Los campos no pueden estar vacíos.");
         }
 
@@ -481,8 +470,7 @@ public class Sistema implements ISistema {
             throw new IllegalArgumentException("Este cliente no existe.");
         }
 
-        if (cliente.getNickname().isEmpty() || cliente.getEmail().isEmpty() || cliente.getNombre().isEmpty()
-                || cliente.getApellido().isEmpty() || cliente.getNacionalidad().isEmpty() || cliente.getNumeroDocumento() == 0) {
+        if (cliente.getNickname().isEmpty() || cliente.getEmail().isEmpty() || cliente.getNombre().isEmpty() || cliente.getApellido().isEmpty() || cliente.getNacionalidad().isEmpty() || cliente.getNumeroDocumento() == 0) {
             throw new IllegalArgumentException("Los campos no pueden estar vacíos.");
         }
 
@@ -521,10 +509,7 @@ public class Sistema implements ISistema {
         if (existeUsuarioEmail(aerolinea.getEmail())) {
             throw new IllegalArgumentException("Ya existe un usuario con ese email.");
         }
-        if (aerolinea.getDescripcion().isEmpty() || aerolinea.getNombre().isEmpty()
-                || aerolinea.getNickname().isEmpty() || aerolinea.getEmail().isEmpty()
-                || aerolinea.getPassword() == null || aerolinea.getPassword().isEmpty()
-                || aerolinea.getUrlImage().isEmpty()) {
+        if (aerolinea.getDescripcion().isEmpty() || aerolinea.getNombre().isEmpty() || aerolinea.getNickname().isEmpty() || aerolinea.getEmail().isEmpty() || aerolinea.getPassword() == null || aerolinea.getPassword().isEmpty() || aerolinea.getUrlImage().isEmpty()) {
             throw new IllegalArgumentException("Los campos no pueden estar vacíos.");
         }
 
@@ -541,8 +526,7 @@ public class Sistema implements ISistema {
 
         this.auxiliar.validarTextoSoloLetra(aerolinea.getNombre());
 
-        if (aerolinea.getNickname().isEmpty() || aerolinea.getDescripcion().isEmpty() || aerolinea.getEmail().isEmpty()
-                || aerolinea.getNombre().isEmpty()) {
+        if (aerolinea.getNickname().isEmpty() || aerolinea.getDescripcion().isEmpty() || aerolinea.getEmail().isEmpty() || aerolinea.getNombre().isEmpty()) {
             throw new IllegalArgumentException("Los campos no pueden estar vacíos.");
         }
 
@@ -708,8 +692,7 @@ public class Sistema implements ISistema {
 
         LocalDate vencimiento = LocalDate.now().plusDays(p.getValidezDias());
 
-        CompraPaquete nuevaCompra = new CompraPaquete(new DtCompraPaquete(LocalDate.now().toString(), vencimiento.toString(), p.getCosto()),
-                p, c);
+        CompraPaquete nuevaCompra = new CompraPaquete(new DtCompraPaquete(LocalDate.now().toString(), vencimiento.toString(), p.getCosto()), p, c);
 
         userDao.addCompraPaquete(c, nuevaCompra);
     }
@@ -800,9 +783,14 @@ public class Sistema implements ISistema {
     public List<DtVuelo> listarVuelosRutaFecha(String nombreRuta, LocalDate fecha) {
         List<DtVuelo> vuelos = new ArrayList<>();
         for (Vuelo v : this.vueloDao.listar()) {
-            boolean condicionFecha = fecha == null || v.getFecha().isAfter(fecha);
-            if (v.getRutaDeVuelo().getNombre().equals(nombreRuta) && v.getFecha().isAfter(LocalDate.now()) && condicionFecha) {
+            boolean nombreCoincide = v.getRutaDeVuelo().getNombre().equals(nombreRuta);
+
+            if (fecha == null && nombreCoincide) {
                 vuelos.add(v.getDatos());
+            } else if (fecha != null && nombreCoincide) {
+                if (v.getFecha().isBefore(fecha) || v.getFecha().isEqual(fecha)) {
+                    vuelos.add(v.getDatos());
+                }
             }
         }
         return vuelos;
@@ -820,9 +808,7 @@ public class Sistema implements ISistema {
         Cliente cliente = this.buscarCliente(reserva.getCliente().getNickname());
         Vuelo vuelo = this.buscarVuelo(reserva.getVuelo().getNombre());
 
-        float costoAsiento = reserva.getTipoAsiento() == TipoAsiento.EJECUTIVO
-                ? vuelo.getRutaDeVuelo().getCostoEjecutivo()
-                : vuelo.getRutaDeVuelo().getCostoTurista();
+        float costoAsiento = reserva.getTipoAsiento() == TipoAsiento.EJECUTIVO ? vuelo.getRutaDeVuelo().getCostoEjecutivo() : vuelo.getRutaDeVuelo().getCostoTurista();
         int cantPasajes = reserva.getCantPasajes();
         float costoEquipaje = reserva.getEquipajeExtra() * vuelo.getRutaDeVuelo().getEquipajeExtra();
         float costo = (costoAsiento * cantPasajes) + costoEquipaje;
@@ -851,9 +837,7 @@ public class Sistema implements ISistema {
             rutaEnPaquete.setCantidad(rutaEnPaquete.getCantidad() - descontar);
             pasajesRestantes -= descontar;
 
-            costo = pasajesRestantes
-                    * (reserva.getTipoAsiento() == TipoAsiento.EJECUTIVO ? vuelo.getRutaDeVuelo().getCostoEjecutivo()
-                    : vuelo.getRutaDeVuelo().getCostoTurista());
+            costo = pasajesRestantes * (reserva.getTipoAsiento() == TipoAsiento.EJECUTIVO ? vuelo.getRutaDeVuelo().getCostoEjecutivo() : vuelo.getRutaDeVuelo().getCostoTurista());
             costo += reserva.getEquipajeExtra() * vuelo.getRutaDeVuelo().getEquipajeExtra();
         } else {
             if (reserva.getPaquetePago() != null) {
@@ -862,27 +846,14 @@ public class Sistema implements ISistema {
         }
 
         if (cliente.existeVueloReserva(vuelo)) {
-            throw new IllegalArgumentException(
-                    "Ya existe una reserva para este vuelo. Cambie el Cliente, Aerolínea o RutaDeVuelo.");
+            throw new IllegalArgumentException("Ya existe una reserva para este vuelo. Cambie el Cliente, Aerolínea o RutaDeVuelo.");
         }
 
         if (cantPasajes != reserva.getPasajeros().size()) {
             throw new IllegalArgumentException("La cantidad de pasajeros no coincide");
         }
 
-        DtReserva r = new DtReserva(
-                reserva.getFecha(),
-                reserva.getTipoAsiento(),
-                cantPasajes,
-                reserva.getEquipajeExtra(),
-                costo,
-                reserva.getPasajeros(),
-                cliente.getDatos(),
-                vuelo.getDatos(),
-                reserva.getMetodoPago(),
-                reserva.getPaquetePago(),
-                false
-        );
+        DtReserva r = new DtReserva(reserva.getFecha(), reserva.getTipoAsiento(), cantPasajes, reserva.getEquipajeExtra(), costo, reserva.getPasajeros(), cliente.getDatos(), vuelo.getDatos(), reserva.getMetodoPago(), reserva.getPaquetePago(), false);
 
         Reserva nuevaReserva = new Reserva(r, cliente, vuelo); // 'r' es DtReserva
         this.reservaDao.guardar(nuevaReserva);
@@ -920,10 +891,7 @@ public class Sistema implements ISistema {
     }
 
     public DtReserva buscarReserva(DtReserva reserva) {
-        Reserva r = this.reservaDao.buscar(
-                this.userDao.buscarCliente(reserva.getCliente().getNickname()),
-                this.vueloDao.buscar(reserva.getVuelo().getNombre()),
-                LocalDate.parse(reserva.getFecha()));
+        Reserva r = this.reservaDao.buscar(this.userDao.buscarCliente(reserva.getCliente().getNickname()), this.vueloDao.buscar(reserva.getVuelo().getNombre()), LocalDate.parse(reserva.getFecha()));
         if (r == null) {
             throw new IllegalArgumentException("La reserva no existe");
         }
@@ -1001,7 +969,7 @@ public class Sistema implements ISistema {
             throw new IllegalArgumentException("Ya sigues a este usuario");
         }
 
-        this.userDao.agregarSeguidorySeguido(sigueA,loSiguen);
+        this.userDao.agregarSeguidorySeguido(sigueA, loSiguen);
     }
 
     public void dejarDeSeguirUsuario(String usuarioDeja, String usuarioDejado) {
@@ -1078,9 +1046,7 @@ public class Sistema implements ISistema {
 
             agregarFila(tabla, "Vuelo", reservaCompleta.getVuelo().getNombre(), negrita, normal);
             agregarFila(tabla, "Fecha de vuelo", reservaCompleta.getVuelo().getFecha(), negrita, normal);
-            agregarFila(tabla, "Ruta",
-                    reservaCompleta.getVuelo().getRutaDeVuelo().getCiudadOrigen().getNombre() + " ✈ " +
-                            reservaCompleta.getVuelo().getRutaDeVuelo().getCiudadDestino().getNombre(), negrita, normal);
+            agregarFila(tabla, "Ruta", reservaCompleta.getVuelo().getRutaDeVuelo().getCiudadOrigen().getNombre() + " ✈ " + reservaCompleta.getVuelo().getRutaDeVuelo().getCiudadDestino().getNombre(), negrita, normal);
             agregarFila(tabla, "Duración", reservaCompleta.getVuelo().getDuracion(), negrita, normal);
             agregarFila(tabla, "Asiento", reservaCompleta.getTipoAsiento().toString(), negrita, normal);
             agregarFila(tabla, "Pasajeros", String.valueOf(reservaCompleta.getCantPasajes()), negrita, normal);
@@ -1129,46 +1095,36 @@ public class Sistema implements ISistema {
         tabla.addCell(celdaValor);
     }
 
-    public String getTipoUsuario(String nickname){
-       try{
-           buscarAerolinea(nickname);
-           return "Aerolinea";
-       }catch(Exception e){
-           try{
-               buscarCliente(nickname);
-               return "Cliente";
-           }catch(Exception ex){
-               System.out.println("El usuario no es ni cliente ni aerolinea.");
-               throw new IllegalArgumentException("El usuario no existe.");
-           }
-       }
+    public String getTipoUsuario(String nickname) {
+        try {
+            buscarAerolinea(nickname);
+            return "Aerolinea";
+        } catch (Exception e) {
+            try {
+                buscarCliente(nickname);
+                return "Cliente";
+            } catch (Exception ex) {
+                System.out.println("El usuario no es ni cliente ni aerolinea.");
+                throw new IllegalArgumentException("El usuario no existe.");
+            }
+        }
     }
 
     public String detectarExtension(byte[] data) {
         if (data == null || data.length < 8) return ".bin";
 
         // PNG
-        if (data[0] == (byte)0x89 &&
-                data[1] == 0x50 &&
-                data[2] == 0x4E &&
-                data[3] == 0x47 &&
-                data[4] == 0x0D &&
-                data[5] == 0x0A &&
-                data[6] == 0x1A &&
-                data[7] == 0x0A) {
+        if (data[0] == (byte) 0x89 && data[1] == 0x50 && data[2] == 0x4E && data[3] == 0x47 && data[4] == 0x0D && data[5] == 0x0A && data[6] == 0x1A && data[7] == 0x0A) {
             return ".png";
         }
 
         // JPG/JPEG
-        if (data[0] == (byte)0xFF &&
-                data[1] == (byte)0xD8) {
+        if (data[0] == (byte) 0xFF && data[1] == (byte) 0xD8) {
             return ".jpg";
         }
 
         // GIF
-        if (data[0] == 'G' &&
-                data[1] == 'I' &&
-                data[2] == 'F') {
+        if (data[0] == 'G' && data[1] == 'I' && data[2] == 'F') {
             return ".gif";
         }
 
@@ -1185,21 +1141,27 @@ public class Sistema implements ISistema {
         return ".bin"; // fallback si no se reconoce
     }
 
-    public void aumentarVisita(String nombre){
+    public void aumentarVisita(String nombre) {
         RutaDeVuelo r = buscarRutaDeVuelo(nombre);
-        if(r != null){
+        if (r != null) {
             r.setVecesVisitada(r.getVecesVisitada() + 1);
             rutaDeVueloDao.actualizar(r);
         }
     }
 
-    public List<DtRuta> listarRutasDeVueloTop5(){
+    public List<DtRuta> listarRutasDeVueloTop5() {
         return rutaDeVueloDao.getTop5();
-    };
+    }
 
-    public List<DtRuta> buscarRutaDeVuelos(String patron){return this.rutaDeVueloDao.buscarPorPatron(patron);}
+    ;
 
-    public List<DtPaquete> buscarPaquetes(String patron){return this.paqueteDao.buscarPorPatron(patron);}
+    public List<DtRuta> buscarRutaDeVuelos(String patron) {
+        return this.rutaDeVueloDao.buscarPorPatron(patron);
+    }
+
+    public List<DtPaquete> buscarPaquetes(String patron) {
+        return this.paqueteDao.buscarPorPatron(patron);
+    }
 
     public void vaciarBD() {
         EntityTransaction tx = em.getTransaction();
@@ -1219,10 +1181,10 @@ public class Sistema implements ISistema {
         tx.commit();
     }
 
-    public void finalizarRuta(DtRuta ruta){
+    public void finalizarRuta(DtRuta ruta) {
         RutaDeVuelo r = this.rutaDeVueloDao.buscar(ruta.getNombre());
 
-        if(!puedeFinalizar(r.getNombre())){
+        if (!puedeFinalizar(r.getNombre())) {
             throw new IllegalArgumentException("La ruta no se puede finalizar.");
         }
 
@@ -1230,14 +1192,14 @@ public class Sistema implements ISistema {
         rutaDeVueloDao.actualizar(r);
     }
 
-    public boolean puedeFinalizar(String nombreRuta){
+    public boolean puedeFinalizar(String nombreRuta) {
         RutaDeVuelo r = this.rutaDeVueloDao.buscar(nombreRuta);
 
-        if(r == null){
+        if (r == null) {
             return false;
         }
 
-        List <DtVuelo> vuelosRuta = getVuelosRutaDeVuelo(r.getDatos());
+        List<DtVuelo> vuelosRuta = getVuelosRutaDeVuelo(r.getDatos());
 
         return r.getEstado() == EstadoRuta.APROBADA && vuelosRuta.isEmpty() && !rutaEstaEnPaquete(r.getNombre());
     }
