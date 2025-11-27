@@ -179,11 +179,27 @@ public class Reserva {
 
         List <DtUsuario> listaSeguidores = new ArrayList<>();
         for ( Usuario u : cliente.getSeguidores()){
-            listaSeguidores.add(u.getDatos());
+            DtUsuario dtUsuario = new DtUsuario(
+                    u.getNickname(),
+                    u.getNombre(),
+                    u.getEmail(),
+                    u.getUrlImage(),
+                    new ArrayList<>(),
+                    new ArrayList<>()
+            );
+            listaSeguidores.add(dtUsuario);
         }
         List <DtUsuario> listaSeguidos = new ArrayList<>();
         for ( Usuario u : cliente.getSeguidos()){
-            listaSeguidos.add(u.getDatos());
+            DtUsuario dtUsuario = new DtUsuario(
+                    u.getNickname(),
+                    u.getNombre(),
+                    u.getEmail(),
+                    u.getUrlImage(),
+                    new ArrayList<>(),
+                    new ArrayList<>()
+            );
+            listaSeguidores.add(dtUsuario);
         }
 
         DtCliente cliente = new DtCliente(

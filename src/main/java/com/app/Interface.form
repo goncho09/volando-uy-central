@@ -4,12 +4,15 @@
     <constraints>
       <xy x="67" y="37" width="980" height="1150"/>
     </constraints>
-    <properties/>
+    <properties>
+      <alignmentX value="0.5"/>
+      <alignmentY value="0.5"/>
+    </properties>
     <border type="none"/>
     <children>
       <tabbedpane id="b26a8" binding="gestionUsuarios">
         <constraints>
-          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
           <gridbag weightx="0.0" weighty="0.0"/>
         </constraints>
         <properties>

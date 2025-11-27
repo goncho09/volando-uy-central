@@ -141,4 +141,9 @@ public class Vuelo {
     public void setRutaDeVuelo(RutaDeVuelo rutaDeVuelo) {
         this.rutaDeVuelo = rutaDeVuelo;
     }
+
+    @Override
+    public String toString(){
+        return this.getNombre();
+    }
 }
