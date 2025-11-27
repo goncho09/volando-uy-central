@@ -1689,12 +1689,24 @@ public class Main extends JFrame {
         auxiliar.cargarCategorias();
 
         jPanelCategorias.removeAll();
-        jPanelCategorias.setLayout(new BorderLayout());
-        jPanelCategorias.add(new JScrollPane(listaCategorias), BorderLayout.CENTER);
+        jPanelCategorias.setLayout(new GridBagLayout());
+
+        JScrollPane scroll = new JScrollPane(listaCategorias);
+
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.weightx = 1.0;
+        gbc.weighty = 1.0;
+        gbc.ipady = 50;
+
+        jPanelCategorias.add(scroll, gbc);
 
         jPanelCategorias.revalidate();
         jPanelCategorias.repaint();
     }
+
 
     public static void main(String[] args) {
         s = Factory.getSistema();
@@ -3792,6 +3804,7 @@ public class Main extends JFrame {
         gbc.gridy = 8;
         gbc.weightx = 1.0;
         gbc.fill = GridBagConstraints.BOTH;
+        gbc.insets = new Insets(10, 0, 10, 0);
         panel36.add(jPanelCategorias, gbc);
         listaCategorias = new JList();
         gbc = new GridBagConstraints();
@@ -3800,6 +3813,7 @@ public class Main extends JFrame {
         gbc.weightx = 1.0;
         gbc.weighty = 1.0;
         gbc.fill = GridBagConstraints.BOTH;
+        gbc.insets = new Insets(10, 0, 10, 0);
         jPanelCategorias.add(listaCategorias, gbc);
         final JLabel label86 = new JLabel();
         label86.setText("URL Video");

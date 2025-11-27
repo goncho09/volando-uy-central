@@ -103,7 +103,9 @@ public class InfoPaquete extends JFrame {
         gbc.gridwidth = 4;
         gbc.weightx = 1.0;
         gbc.weighty = 1.0;
-        gbc.fill = GridBagConstraints.BOTH;
+        gbc.anchor = GridBagConstraints.NORTH;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(50, 20, 50, 20);
         dataPaquetePanel.add(dataPaqueteDisplay, gbc);
         final JLabel label1 = new JLabel();
         label1.setText("Nombre:");
@@ -225,6 +227,7 @@ public class InfoPaquete extends JFrame {
         gbc.gridwidth = 2;
         gbc.weighty = 1.0;
         gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(10, 0, 0, 0);
         dataPaqueteDisplay.add(buttonVerRutaDeVuelo, gbc);
     }
 

@@ -140,7 +140,9 @@ public class InfoRutaDeVuelo extends JFrame {
         gbc.gridy = 0;
         gbc.weightx = 1.0;
         gbc.weighty = 1.0;
-        gbc.fill = GridBagConstraints.BOTH;
+        gbc.anchor = GridBagConstraints.NORTH;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(50, 20, 50, 20);
         panelGeneralRuta.add(dataRutaPanel, gbc);
         final JLabel label1 = new JLabel();
         label1.setText("Nombre:");

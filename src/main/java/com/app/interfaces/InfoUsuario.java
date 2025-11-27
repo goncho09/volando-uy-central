@@ -204,6 +204,7 @@ public class InfoUsuario extends JFrame {
         gbc.weighty = 1.0;
         gbc.anchor = GridBagConstraints.NORTH;
         gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(50, 20, 50, 20);
         panelGlobal.add(panelUsuario, gbc);
         final JLabel label1 = new JLabel();
         label1.setText("Nickname:");

@@ -9,8 +9,8 @@
     <children>
       <grid id="e69fa" binding="dataPaqueteDisplay" layout-manager="GridBagLayout">
         <constraints>
-          <grid row="0" column="0" row-span="1" col-span="4" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-          <gridbag weightx="1.0" weighty="1.0"/>
+          <grid row="0" column="0" row-span="1" col-span="4" vsize-policy="3" hsize-policy="3" anchor="1" fill="1" indent="0" use-parent-layout="false"/>
+          <gridbag top="50" left="20" bottom="50" right="20" weightx="1.0" weighty="1.0"/>
         </constraints>
         <properties/>
         <border type="none"/>
@@ -142,7 +142,7 @@
           <component id="36213" class="javax.swing.JButton" binding="buttonVerRutaDeVuelo">
             <constraints>
               <grid row="7" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-              <gridbag weightx="0.0" weighty="1.0"/>
+              <gridbag top="10" left="0" bottom="0" right="0" weightx="0.0" weighty="1.0"/>
             </constraints>
             <properties>
               <text value="VER RUTA DE VUELO"/>
