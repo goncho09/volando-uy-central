@@ -2,18 +2,19 @@
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="com.app.Main">
   <grid id="27dc6" binding="menuPrincipal" layout-manager="GridBagLayout">
     <constraints>
-      <xy x="67" y="37" width="980" height="1150"/>
+      <xy x="337" y="348" width="780" height="949"/>
     </constraints>
     <properties>
-      <alignmentX value="0.5"/>
-      <alignmentY value="0.5"/>
+      <alignmentX value="0.0"/>
+      <alignmentY value="0.0"/>
+      <autoscrolls value="true"/>
     </properties>
     <border type="none"/>
     <children>
       <tabbedpane id="b26a8" binding="gestionUsuarios">
         <constraints>
           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-          <gridbag weightx="0.0" weighty="0.0"/>
+          <gridbag weightx="1.0" weighty="1.0"/>
         </constraints>
         <properties>
           <tabPlacement value="2"/>
@@ -47,7 +48,7 @@
                       <component id="b8d8e" class="javax.swing.JLabel">
                         <constraints>
                           <grid row="0" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
-                          <gridbag weightx="1.0" weighty="0.0"/>
+                          <gridbag top="20" left="0" bottom="0" right="20" weightx="1.0" weighty="0.0"/>
                         </constraints>
                         <properties>
                           <text value="Registrar Usuario"/>
@@ -55,8 +56,8 @@
                       </component>
                       <grid id="a1c5a" layout-manager="GridBagLayout">
                         <constraints>
-                          <grid row="1" column="0" row-span="1" col-span="2" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-                          <gridbag weightx="1.0" weighty="1.0"/>
+                          <grid row="1" column="0" row-span="1" col-span="2" vsize-policy="3" hsize-policy="3" anchor="1" fill="1" indent="0" use-parent-layout="false"/>
+                          <gridbag top="20" left="20" bottom="20" right="50" weightx="1.0" weighty="1.0"/>
                         </constraints>
                         <properties/>
                         <border type="none"/>
@@ -164,7 +165,7 @@
                               <grid id="19639" layout-manager="GridBagLayout">
                                 <constraints>
                                   <grid row="9" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-                                  <gridbag weightx="1.0" weighty="1.0"/>
+                                  <gridbag top="10" left="0" bottom="0" right="0" weightx="1.0" weighty="1.0"/>
                                 </constraints>
                                 <properties/>
                                 <border type="none"/>
@@ -452,7 +453,7 @@
                               <grid id="226b3" layout-manager="GridBagLayout">
                                 <constraints>
                                   <grid row="12" column="2" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-                                  <gridbag weightx="1.0" weighty="1.0"/>
+                                  <gridbag top="10" left="0" bottom="0" right="0" weightx="1.0" weighty="1.0"/>
                                 </constraints>
                                 <properties/>
                                 <border type="none"/>
@@ -590,13 +591,16 @@
                     <constraints>
                       <tabbedpane title="Consultar"/>
                     </constraints>
-                    <properties/>
+                    <properties>
+                      <alignmentX value="0.0"/>
+                      <alignmentY value="0.0"/>
+                    </properties>
                     <border type="none"/>
                     <children>
                       <grid id="92edd" layout-manager="GridBagLayout">
                         <constraints>
-                          <grid row="0" column="0" row-span="1" col-span="2" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-                          <gridbag weightx="1.0" weighty="0.0"/>
+                          <grid row="0" column="0" row-span="1" col-span="2" vsize-policy="3" hsize-policy="3" anchor="1" fill="1" indent="0" use-parent-layout="false"/>
+                          <gridbag top="50" left="20" bottom="20" right="50" weightx="1.0" weighty="1.0"/>
                         </constraints>
                         <properties/>
                         <border type="none"/>
@@ -625,7 +629,7 @@
                           <component id="d8e76" class="javax.swing.JButton" binding="consultarUsuarioButton">
                             <constraints>
                               <grid row="1" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                              <gridbag weightx="0.0" weighty="1.0"/>
+                              <gridbag top="10" left="0" bottom="0" right="0" weightx="0.0" weighty="1.0"/>
                             </constraints>
                             <properties>
                               <text value="Consultar Usuario"/>
@@ -644,8 +648,8 @@
                     <children>
                       <grid id="734cf" layout-manager="GridBagLayout">
                         <constraints>
-                          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-                          <gridbag weightx="1.0" weighty="0.0"/>
+                          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="1" fill="1" indent="0" use-parent-layout="false"/>
+                          <gridbag top="50" left="20" bottom="20" right="50" weightx="1.0" weighty="1.0"/>
                         </constraints>
                         <properties/>
                         <border type="none"/>
@@ -766,7 +770,7 @@
                               <grid id="19dd" layout-manager="GridBagLayout">
                                 <constraints>
                                   <grid row="7" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-                                  <gridbag weightx="1.0" weighty="1.0"/>
+                                  <gridbag top="10" left="0" bottom="0" right="0" weightx="1.0" weighty="1.0"/>
                                 </constraints>
                                 <properties/>
                                 <border type="none"/>
@@ -972,7 +976,7 @@
                               <grid id="21aa9" layout-manager="GridBagLayout">
                                 <constraints>
                                   <grid row="10" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-                                  <gridbag weightx="1.0" weighty="1.0"/>
+                                  <gridbag top="10" left="0" bottom="0" right="0" weightx="1.0" weighty="1.0"/>
                                 </constraints>
                                 <properties/>
                                 <border type="none"/>
@@ -1080,7 +1084,7 @@
               <grid id="40867" layout-manager="GridBagLayout">
                 <constraints>
                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="1" fill="1" indent="0" use-parent-layout="false"/>
-                  <gridbag weightx="1.0" weighty="0.0"/>
+                  <gridbag top="50" left="20" bottom="20" right="50" weightx="1.0" weighty="1.0"/>
                 </constraints>
                 <properties/>
                 <border type="none"/>
@@ -1097,7 +1101,7 @@
                   <grid id="a4da8" layout-manager="GridBagLayout">
                     <constraints>
                       <grid row="3" column="2" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-                      <gridbag weightx="1.0" weighty="0.0"/>
+                      <gridbag top="10" left="0" bottom="0" right="0" weightx="1.0" weighty="0.0"/>
                     </constraints>
                     <properties/>
                     <border type="none"/>
@@ -1170,8 +1174,8 @@
                     <children>
                       <grid id="95dd8" layout-manager="GridBagLayout">
                         <constraints>
-                          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-                          <gridbag weightx="1.0" weighty="0.0"/>
+                          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="1" fill="1" indent="0" use-parent-layout="false"/>
+                          <gridbag top="50" left="20" bottom="20" right="50" weightx="1.0" weighty="1.0"/>
                         </constraints>
                         <properties/>
                         <border type="none"/>
@@ -1247,7 +1251,7 @@
                           <grid id="1912f" layout-manager="GridBagLayout">
                             <constraints>
                               <grid row="4" column="2" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-                              <gridbag weightx="1.0" weighty="1.0"/>
+                              <gridbag top="10" left="0" bottom="0" right="0" weightx="1.0" weighty="1.0"/>
                             </constraints>
                             <properties/>
                             <border type="none"/>
@@ -1285,8 +1289,8 @@
                     <children>
                       <grid id="b4e6e" layout-manager="GridBagLayout">
                         <constraints>
-                          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-                          <gridbag weightx="1.0" weighty="0.0"/>
+                          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="1" fill="1" indent="0" use-parent-layout="false"/>
+                          <gridbag top="50" left="20" bottom="20" right="50" weightx="1.0" weighty="1.0"/>
                         </constraints>
                         <properties/>
                         <border type="none"/>
@@ -1326,7 +1330,7 @@
                           <grid id="31f63" layout-manager="GridBagLayout">
                             <constraints>
                               <grid row="2" column="1" row-span="1" col-span="2" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-                              <gridbag weightx="0.0" weighty="1.0"/>
+                              <gridbag top="10" left="0" bottom="0" right="0" weightx="0.0" weighty="1.0"/>
                             </constraints>
                             <properties/>
                             <border type="none"/>
@@ -1364,8 +1368,8 @@
                     <children>
                       <grid id="b4a32" layout-manager="GridBagLayout">
                         <constraints>
-                          <grid row="0" column="0" row-span="1" col-span="2" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-                          <gridbag weightx="1.0" weighty="0.0"/>
+                          <grid row="0" column="0" row-span="1" col-span="2" vsize-policy="3" hsize-policy="3" anchor="1" fill="1" indent="0" use-parent-layout="false"/>
+                          <gridbag top="50" left="20" bottom="20" right="50" weightx="1.0" weighty="1.0"/>
                         </constraints>
                         <properties/>
                         <border type="none"/>
@@ -1389,7 +1393,7 @@
                           <component id="90855" class="javax.swing.JButton" binding="jButtonConsultarPaquete">
                             <constraints>
                               <grid row="1" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                              <gridbag weightx="0.0" weighty="1.0"/>
+                              <gridbag top="10" left="0" bottom="0" right="0" weightx="0.0" weighty="1.0"/>
                             </constraints>
                             <properties>
                               <text value="CONSULTAR"/>
@@ -1408,8 +1412,8 @@
                     <children>
                       <grid id="9c7dc" layout-manager="GridBagLayout">
                         <constraints>
-                          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-                          <gridbag weightx="1.0" weighty="0.0"/>
+                          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="1" fill="1" indent="0" use-parent-layout="false"/>
+                          <gridbag top="50" left="20" bottom="20" right="50" weightx="1.0" weighty="1.0"/>
                         </constraints>
                         <properties/>
                         <border type="none"/>
@@ -1433,7 +1437,7 @@
                           <component id="fd0c5" class="javax.swing.JButton" binding="buttonConfirmarAgregarRutaPaquete">
                             <constraints>
                               <grid row="5" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                              <gridbag weightx="0.0" weighty="1.0"/>
+                              <gridbag top="10" left="0" bottom="0" right="0" weightx="0.0" weighty="1.0"/>
                             </constraints>
                             <properties>
                               <text value="CONFIRMAR"/>
@@ -1543,7 +1547,7 @@
                       <grid id="7c7db" binding="formVuelo" layout-manager="GridBagLayout">
                         <constraints>
                           <grid row="0" column="0" row-span="3" col-span="1" vsize-policy="3" hsize-policy="3" anchor="1" fill="1" indent="0" use-parent-layout="false"/>
-                          <gridbag weightx="1.0" weighty="1.0"/>
+                          <gridbag top="50" left="20" bottom="20" right="50" weightx="1.0" weighty="1.0"/>
                         </constraints>
                         <properties/>
                         <border type="none"/>
@@ -1702,7 +1706,7 @@
                           <grid id="eb939" layout-manager="GridBagLayout">
                             <constraints>
                               <grid row="9" column="1" row-span="1" col-span="3" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-                              <gridbag weightx="0.0" weighty="1.0"/>
+                              <gridbag top="10" left="0" bottom="0" right="0" weightx="0.0" weighty="1.0"/>
                             </constraints>
                             <properties/>
                             <border type="none"/>
@@ -1773,8 +1777,8 @@
                     <children>
                       <grid id="bdd19" binding="vueloPanel" layout-manager="GridBagLayout">
                         <constraints>
-                          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-                          <gridbag weightx="1.0" weighty="0.0"/>
+                          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="1" fill="1" indent="0" use-parent-layout="false"/>
+                          <gridbag top="50" left="20" bottom="20" right="50" weightx="1.0" weighty="1.0"/>
                         </constraints>
                         <properties/>
                         <border type="none"/>
@@ -1853,8 +1857,8 @@
                     <children>
                       <grid id="34993" binding="reservaPanel" layout-manager="GridBagLayout">
                         <constraints>
-                          <grid row="0" column="0" row-span="1" col-span="2" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-                          <gridbag weightx="1.0" weighty="0.0"/>
+                          <grid row="0" column="0" row-span="1" col-span="2" vsize-policy="3" hsize-policy="3" anchor="1" fill="1" indent="0" use-parent-layout="false"/>
+                          <gridbag top="50" left="20" bottom="20" right="50" weightx="1.0" weighty="1.0"/>
                         </constraints>
                         <properties/>
                         <border type="none"/>
@@ -2073,7 +2077,7 @@
                       <grid id="a9419" layout-manager="GridBagLayout">
                         <constraints>
                           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="1" fill="1" indent="0" use-parent-layout="false"/>
-                          <gridbag weightx="1.0" weighty="1.0"/>
+                          <gridbag top="50" left="20" bottom="20" right="50" weightx="1.0" weighty="1.0"/>
                         </constraints>
                         <properties/>
                         <border type="none"/>
@@ -2255,7 +2259,7 @@
                           <grid id="24744" layout-manager="GridBagLayout">
                             <constraints>
                               <grid row="14" column="0" row-span="1" col-span="3" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-                              <gridbag weightx="0.0" weighty="1.0"/>
+                              <gridbag top="10" left="0" bottom="0" right="0" weightx="0.0" weighty="1.0"/>
                             </constraints>
                             <properties/>
                             <border type="none"/>
@@ -2377,8 +2381,8 @@
                     <children>
                       <grid id="c2f49" layout-manager="GridBagLayout">
                         <constraints>
-                          <grid row="0" column="1" row-span="2" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-                          <gridbag weightx="0.0" weighty="0.0"/>
+                          <grid row="0" column="1" row-span="2" col-span="1" vsize-policy="3" hsize-policy="3" anchor="1" fill="1" indent="0" use-parent-layout="false"/>
+                          <gridbag top="50" left="20" bottom="20" right="50" weightx="1.0" weighty="1.0"/>
                         </constraints>
                         <properties/>
                         <border type="none"/>
@@ -2418,7 +2422,7 @@
                           <component id="8234a" class="javax.swing.JButton" binding="aprobarButtonAceptarRechazarRuta">
                             <constraints>
                               <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                              <gridbag weightx="1.0" weighty="1.0"/>
+                              <gridbag top="10" left="0" bottom="0" right="0" weightx="1.0" weighty="1.0"/>
                             </constraints>
                             <properties>
                               <text value="Aprobar"/>
@@ -2427,7 +2431,7 @@
                           <component id="b9048" class="javax.swing.JButton" binding="rechazarButtonAceptarRechazarRuta">
                             <constraints>
                               <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                              <gridbag weightx="1.0" weighty="1.0"/>
+                              <gridbag top="10" left="0" bottom="0" right="0" weightx="1.0" weighty="1.0"/>
                             </constraints>
                             <properties>
                               <text value="Rechazar"/>
@@ -2464,8 +2468,8 @@
                     <children>
                       <grid id="dbc19" layout-manager="GridBagLayout">
                         <constraints>
-                          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-                          <gridbag weightx="1.0" weighty="0.0"/>
+                          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="1" fill="1" indent="0" use-parent-layout="false"/>
+                          <gridbag top="50" left="20" bottom="20" right="50" weightx="1.0" weighty="1.0"/>
                         </constraints>
                         <properties/>
                         <border type="none"/>
@@ -2526,8 +2530,8 @@
                     <children>
                       <grid id="eeeaf" layout-manager="GridBagLayout">
                         <constraints>
-                          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-                          <gridbag weightx="0.0" weighty="0.0"/>
+                          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="1" fill="1" indent="0" use-parent-layout="false"/>
+                          <gridbag top="50" left="20" bottom="20" right="50" weightx="1.0" weighty="1.0"/>
                         </constraints>
                         <properties/>
                         <border type="none"/>
@@ -2559,7 +2563,7 @@
               <grid id="7e868" layout-manager="GridBagLayout">
                 <constraints>
                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="1" fill="1" indent="0" use-parent-layout="false"/>
-                  <gridbag weightx="1.0" weighty="1.0"/>
+                  <gridbag top="50" left="20" bottom="20" right="50" weightx="1.0" weighty="1.0"/>
                 </constraints>
                 <properties/>
                 <border type="none"/>
@@ -2648,7 +2652,7 @@
                   <grid id="efb6" layout-manager="GridBagLayout">
                     <constraints>
                       <grid row="8" column="2" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-                      <gridbag weightx="1.0" weighty="0.0"/>
+                      <gridbag top="10" left="0" bottom="0" right="0" weightx="1.0" weighty="0.0"/>
                     </constraints>
                     <properties/>
                     <border type="none"/>
