@@ -65,9 +65,11 @@ public class InfoReserva extends JFrame {
         gbc = new GridBagConstraints();
         gbc.gridx = 1;
         gbc.gridy = 0;
+        gbc.weightx = 1.0;
         gbc.weighty = 1.0;
         gbc.anchor = GridBagConstraints.NORTH;
         gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(50, 20, 50, 20);
         dataReservaPanel.add(dataReservaDisplay, gbc);
         final JLabel label1 = new JLabel();
         label1.setText("Cliente:");

@@ -130,6 +130,7 @@ public class InfoVuelo extends JFrame {
         gbc.weighty = 1.0;
         gbc.anchor = GridBagConstraints.NORTH;
         gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(50, 20, 50, 20);
         dataVueloPanel.add(dataVueloDisplay, gbc);
         fechaDespegue = new JLabel();
         fechaDespegue.setText("Label");
