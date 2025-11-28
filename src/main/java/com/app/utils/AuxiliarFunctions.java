@@ -503,7 +503,7 @@ public class AuxiliarFunctions {
             extension = nombre.substring(i); // incluye el punto
         }
 
-        Set<String> extensionesPermitidas = Set.of(".png", ".jpg", ".jpeg", ".webp");
+        Set<String> extensionesPermitidas = Set.of(".png", ".jpg", ".jpeg");
         if (!extensionesPermitidas.contains(extension)) {
             throw new IllegalArgumentException("Formato de imagen no soportado: " + extension);
         }
