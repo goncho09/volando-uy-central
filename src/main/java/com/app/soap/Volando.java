@@ -607,4 +607,15 @@ public class Volando implements VolandoServicePort {
         }
     }
 
+    @Override
+    public byte[] obtenerImagen(String nombre, TipoImagen tipo){
+        try {
+            return AuxiliarFunctions.obtenerImagen(nombre, tipo);
+        } catch (Exception e) {
+            System.out.println("Error obtenerImagen: " + e.getMessage());
+            throw new WebServiceException("Ha ocurrido un error.");
+        }
+    }
+
+
 }

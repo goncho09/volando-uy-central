@@ -1,5 +1,7 @@
 package com.app.utils;
 
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
@@ -512,6 +514,45 @@ public class AuxiliarFunctions {
 
         return nuevoArchivo;
     }
+
+    public static byte[] obtenerImagen(String nombre, TipoImagen tipo) throws IOException {
+
+        Path carpeta = getProjectRoot().resolve(BASE_DIR).resolve(tipo.getFolder());
+        Path imagen = carpeta.resolve(nombre);
+
+        if (Files.exists(imagen)) {
+            return Files.readAllBytes(imagen);
+        }
+
+        String recursoDefault;
+
+        switch (tipo) {
+            case USUARIO:
+                recursoDefault = "pictures/users/default.png";
+                break;
+            case RUTA:
+                recursoDefault = "pictures/rutas/default.png";
+                break;
+            case VUELO:
+                recursoDefault = "pictures/vuelos/default.png";
+                break;
+            default:
+                recursoDefault = "pictures/default.png"; // opcional
+        }
+
+        try (InputStream is = Thread.currentThread()
+                .getContextClassLoader()
+                .getResourceAsStream(recursoDefault)) {
+
+            if (is == null) {
+                throw new FileNotFoundException("No existe el recurso por defecto: " + recursoDefault);
+            }
+
+            return is.readAllBytes();
+        }
+    }
+
+
 
     public static void borrarImagen(String imgName, TipoImagen tipo) {
         Path path = getProjectRoot().resolve(BASE_DIR).resolve(tipo.getFolder()).resolve(imgName);

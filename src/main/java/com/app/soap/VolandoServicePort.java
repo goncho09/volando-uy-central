@@ -239,4 +239,8 @@ public interface VolandoServicePort {
     @WebMethod
     String guardarImagen(byte[] data, TipoImagen tipoImagen);
 
+    @WebMethod
+    byte[] obtenerImagen(String nombre, TipoImagen tipoImagen);
+
+
 }
