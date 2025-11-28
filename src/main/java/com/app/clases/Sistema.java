@@ -484,7 +484,7 @@ public class Sistema implements ISistema {
             throw new IllegalArgumentException("La fecha de nacimiento no puede ser en el futuro.");
         }
 
-        c.setUrlImage(cliente.getUrlImage());
+        c.setUrlImage(c.getUrlImage());
         c.setNombre(cliente.getNombre());
         c.setApellido(cliente.getApellido());
         c.setFechaNacimiento(fechaNac);
@@ -531,7 +531,7 @@ public class Sistema implements ISistema {
         }
 
         aerolineaExistente.setNombre(aerolinea.getNombre());
-        aerolineaExistente.setUrlImage(aerolinea.getUrlImage());
+        aerolineaExistente.setUrlImage(aerolineaExistente.getUrlImage());
         aerolineaExistente.setDescripcion(aerolinea.getDescripcion());
         aerolineaExistente.setLinkWeb(aerolinea.getLinkWeb());
         userDao.actualizar(aerolineaExistente);

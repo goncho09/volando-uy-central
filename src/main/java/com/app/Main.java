@@ -1185,7 +1185,6 @@ public class Main extends JFrame {
 
                     String urlImage = "/src/main/pictures/users/default.png";
 
-
                     DtAerolinea aerolinea = new DtAerolinea(
                             nicknameModificarAerolinea.getText(),
                             nombreModificarAerolinea.getText(),
