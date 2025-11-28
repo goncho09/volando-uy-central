@@ -300,8 +300,7 @@ public class Main extends JFrame {
 
         jComboBoxPaqueteConsultaPaqueteRutaVuelo.setModel(auxiliar.getComboPaqueteModel());
 
-        jComboBoxPaqueteComprarPaquete.setModel(auxiliar.getComboPaquetesConRutasModel());
-
+        jComboBoxPaqueteComprarPaquete.setModel(auxiliar.getComboPaqueteNoCompradoModel());
         jComboBoxPaqueteAgregarRuta.setModel(auxiliar.getComboPaqueteNoCompradoModel());
 
         jComboBoxRutaVueloAgregarRuta.setModel(auxiliar.getComboRutaDeVueloAerolineaModel());

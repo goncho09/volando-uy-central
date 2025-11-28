@@ -183,7 +183,7 @@ public class AltaDeVueloTest {
                 500,
                 30, LocalDate.now().toString(),
                 "default.png",
-                "https://www.youtube.com/watch?v=rNGWhSb447o",
+                "https://www.youtube.com/watch?v=TMh9BTBQ8Yc",
                 Arrays.asList(s.getCategoria("Negocios")),
                 s.getCiudad("Santiago", "Chile"),
                 s.getCiudad("Quito", "Ecuador"),0

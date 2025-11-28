@@ -36,7 +36,7 @@ public class AltaDeRutaDeVueloTest {
                 50,
                 LocalDate.now().toString(),
                 "default.png",
-                "https://www.youtube.com/watch?v=rNGWhSb447o",
+                "https://www.youtube.com/watch?v=TMh9BTBQ8Yc",
                 Arrays.asList(s.getCategoria("Turismo"), s.getCategoria("Lujo")),
                 s.getCiudad("Lima", "Perú"),
                 s.getCiudad("Montevideo", "Uruguay"),0
@@ -62,7 +62,7 @@ public class AltaDeRutaDeVueloTest {
                 50,
                 LocalDate.now().toString(),
                 "default.png",
-                "https://www.youtube.com/watch?v=rNGWhSb447o",
+                "https://www.youtube.com/watch?v=TMh9BTBQ8Yc",
                 Arrays.asList(s.getCategoria("Turismo"), s.getCategoria("Lujo")),
                 s.getCiudad("Lima", "Perú"),
                 s.getCiudad("Montevideo", "Uruguay"),0
@@ -86,7 +86,7 @@ public class AltaDeRutaDeVueloTest {
                 50,
                 LocalDate.now().toString(),
                 "default.png",
-                "https://www.youtube.com/watch?v=rNGWhSb447o",
+                "https://www.youtube.com/watch?v=TMh9BTBQ8Yc",
                 Arrays.asList(s.getCategoria("Turismo"), s.getCategoria("Lujo")),
                 s.getCiudad("Lima", "Perú"),
                 s.getCiudad("Montevideo", "Uruguay"),0
@@ -110,7 +110,7 @@ public class AltaDeRutaDeVueloTest {
                 50,
                 LocalDate.now().toString(),
                 "default.png",
-                "https://www.youtube.com/watch?v=rNGWhSb447o",
+                "https://www.youtube.com/watch?v=TMh9BTBQ8Yc",
                 Arrays.asList(s.getCategoria("Turismo"), s.getCategoria("Lujo")),
                 s.getCiudad("Lima", "Perú"),
                 s.getCiudad("Lima", "Perú"),0 // Ciudades iguales
@@ -134,7 +134,7 @@ public class AltaDeRutaDeVueloTest {
                 50,
                 LocalDate.now().toString(),
                 "default.png",
-                "https://www.youtube.com/watch?v=rNGWhSb447o",
+                "https://www.youtube.com/watch?v=TMh9BTBQ8Yc",
                 Arrays.asList(), // Categorías vacías
                 s.getCiudad("Lima", "Perú"),
                 s.getCiudad("Montevideo", "Uruguay"),0
@@ -159,7 +159,7 @@ public class AltaDeRutaDeVueloTest {
                 -10, // Equipaje extra negativo
                 LocalDate.now().toString(),
                 "default.png",
-                "https://www.youtube.com/watch?v=rNGWhSb447o",
+                "https://www.youtube.com/watch?v=TMh9BTBQ8Yc",
                 Arrays.asList(s.getCategoria("Turismo"), s.getCategoria("Lujo")),
                 s.getCiudad("Lima", "Perú"),
                 s.getCiudad("Montevideo", "Uruguay"),0
@@ -184,7 +184,7 @@ public class AltaDeRutaDeVueloTest {
                 50,
                 LocalDate.now().toString(),
                 "default.png",
-                "https://www.youtube.com/watch?v=rNGWhSb447o",
+                "https://www.youtube.com/watch?v=TMh9BTBQ8Yc",
                 Arrays.asList(s.getCategoria("Turismo"), s.getCategoria("Lujo")),
                 s.getCiudad("Lima", "Perú"),
                 s.getCiudad("Montevideo", "Uruguay"),0
@@ -208,7 +208,7 @@ public class AltaDeRutaDeVueloTest {
                 50,
                 LocalDate.now().toString(),
                 "default.png",
-                "https://www.youtube.com/watch?v=rNGWhSb447o",
+                "https://www.youtube.com/watch?v=TMh9BTBQ8Yc",
                 Arrays.asList(s.getCategoria("Turismo"), s.getCategoria("Lujo")),
                 s.getCiudad("Lima", "Perú"),
                 s.getCiudad("Montevideo", "Uruguay"),0
@@ -233,7 +233,7 @@ public class AltaDeRutaDeVueloTest {
                 50,
                 LocalDate.now().toString(),
                 "default.png",
-                "https://www.youtube.com/watch?v=rNGWhSb447o",
+                "https://www.youtube.com/watch?v=TMh9BTBQ8Yc",
                 Arrays.asList(s.getCategoria("Turismo"), s.getCategoria("Lujo")),
                 s.getCiudad("Lima", "Perú"),
                 s.getCiudad("Montevideo", "Uruguay"),0
@@ -258,7 +258,7 @@ public class AltaDeRutaDeVueloTest {
                 50,
                 LocalDate.now().toString(),
                 "default.png",
-                "https://www.youtube.com/watch?v=rNGWhSb447o",
+                "https://www.youtube.com/watch?v=TMh9BTBQ8Yc",
                 Arrays.asList(s.getCategoria("Turismo"), s.getCategoria("Lujo")),
                 s.getCiudad("Lima", "Perú"),
                 s.getCiudad("Montevideo", "Uruguay"),0

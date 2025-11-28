@@ -89,7 +89,7 @@ public class AgregarRutaDeVueloAPaqueteTest {
                                 "RutaInexistente", "No existe", "No existe corta",
                                 java.time.LocalTime.of(2, 0).toString(), 100, 200, 15,
                                 java.time.LocalDate.now().toString(), "default.png",
-                        "https://www.youtube.com/watch?v=rNGWhSb447o",
+                        "https://www.youtube.com/watch?v=TMh9BTBQ8Yc",
                                 java.util.Arrays.asList(),
                                 ciudadOrigen,
                                 ciudadDestino,0);

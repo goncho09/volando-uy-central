@@ -674,6 +674,10 @@ public class Sistema implements ISistema {
             throw new IllegalArgumentException("El paquete no puede ser nulo");
         }
 
+        if(estaPaqueteComprado(paquete)){
+            throw new IllegalArgumentException("El paquete no puede ser comprado");
+        }
+
         Cliente c = this.userDao.buscarCliente(cliente.getNickname());
         Paquete p = this.paqueteDao.buscar(paquete.getNombre());
 
@@ -682,6 +686,9 @@ public class Sistema implements ISistema {
         }
         if (p == null) {
             throw new IllegalArgumentException("El paquete no puede ser nulo");
+        }
+        if(p.getRutaEnPaquete() == null || p.getRutaEnPaquete().isEmpty()){
+            throw new IllegalArgumentException("El paquete no puede ser comprado");
         }
 
         for (CompraPaquete cp : c.getComprasPaquetes()) {
