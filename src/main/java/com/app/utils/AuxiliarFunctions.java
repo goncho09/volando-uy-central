@@ -534,7 +534,7 @@ public class AuxiliarFunctions {
                 recursoDefault = "pictures/rutas/default.png";
                 break;
             case VUELO:
-                recursoDefault = "pictures/vuelos/default.png";
+                recursoDefault = "pictures/vuelos/default.jpg";
                 break;
             default:
                 recursoDefault = "pictures/default.png"; // opcional
